@@ -70,6 +70,7 @@ const servicesData: PluridServerServicesData = {
 };
 
 const options: PluridServerPartialOptions = {
+    serverName: 'Performer Server',
     buildDirectory,
     open: openAtStart,
     debug,
