@@ -25,10 +25,12 @@ const handleGithubWebhook = (
     response: express.Response,
 ) => {
     console.log(request.body);
+
+    response.status(200).end();
 }
 
 
-const saveHook = async (
+const registerHook = async (
     hookPath: string,
     provider: CodeProvider,
 ) => {
@@ -52,21 +54,16 @@ const saveHook = async (
 }
 
 
-const registerHook = (
+const handleHook = (
     hookpath: string,
     provider: CodeProvider,
     instance: express.Express,
 ) => {
-    saveHook(
-        hookpath,
-        provider,
-    );
-
     switch (provider) {
         case 'bitbucket':
             break;
         case 'github':
-            instance.get(
+            instance.post(
                 hookpath,
                 handleGithubWebhook,
             );
@@ -88,10 +85,15 @@ const setupWebhook = async (
         instance,
     } = context;
 
-    registerHook(
+    handleHook(
         path,
         provider,
         instance,
+    );
+
+    registerHook(
+        path,
+        provider,
     );
 
     return {
