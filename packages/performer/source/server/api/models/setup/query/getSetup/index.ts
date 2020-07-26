@@ -12,6 +12,7 @@ const getSetup = async (
         triggers,
         repositories,
         builds,
+        providers,
     } = context;
 
     return {
@@ -21,6 +22,7 @@ const getSetup = async (
             triggers,
             repositories,
             builds,
+            providers,
         },
     };
 }
