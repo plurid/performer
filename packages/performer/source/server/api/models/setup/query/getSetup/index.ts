@@ -1,8 +1,27 @@
+import {
+    Context,
+} from '#server/data/interfaces';
+
+
+
 const getSetup = async (
-    input: any,
+    context: Context,
 ) => {
+    const {
+        webhooks,
+        triggers,
+        repositories,
+        builds,
+    } = context;
+
     return {
         status: true,
+        data: {
+            webhooks,
+            triggers,
+            repositories,
+            builds,
+        },
     };
 }
 

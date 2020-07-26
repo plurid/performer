@@ -25,13 +25,13 @@ export const types = gql`
 
     type Build {
         id: ID!
-        stages: [Stage]!
+        stages: [Stage!]
     }
 
     type Stage {
         id: ID!
         name: String!
-        results: [Result]!
+        results: [Result!]
     }
 
     type Result {

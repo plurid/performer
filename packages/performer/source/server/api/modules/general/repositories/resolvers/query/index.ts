@@ -1,4 +1,8 @@
 import {
+    Context,
+} from '#server/data/interfaces';
+
+import {
     Repositories,
 } from '#server/api/models';
 
@@ -7,7 +11,9 @@ import {
 export default {
     getRepositories: (
         _: any,
-        { input }: any,
-        context: any,
-    ) => Repositories.Query.getRepositories(),
+        __: any,
+        context: Context,
+    ) => Repositories.Query.getRepositories(
+        context,
+    ),
 };

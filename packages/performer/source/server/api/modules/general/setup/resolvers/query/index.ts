@@ -1,4 +1,8 @@
 import {
+    Context,
+} from '#server/data/interfaces';
+
+import {
     Setup,
 } from '#server/api/models';
 
@@ -7,7 +11,9 @@ import {
 export default {
     getSetup: (
         _: any,
-        { input }: any,
-        context: any,
-    ) => Setup.Query.getSetup(input),
+        __: any,
+        context: Context,
+    ) => Setup.Query.getSetup(
+        context,
+    ),
 };

@@ -1,4 +1,8 @@
 import {
+    Context,
+} from '#server/data/interfaces';
+
+import {
     Triggers,
 } from '#server/api/models';
 
@@ -7,7 +11,9 @@ import {
 export default {
     getTriggers: (
         _: any,
-        { input }: any,
-        context: any,
-    ) => Triggers.Query.getTriggers(),
+        __: any,
+        context: Context,
+    ) => Triggers.Query.getTriggers(
+        context,
+    ),
 };

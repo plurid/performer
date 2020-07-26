@@ -1,4 +1,8 @@
 import {
+    Context,
+} from '#server/data/interfaces';
+
+import {
     registerWebhook,
     handleWebhook,
 } from '#server/logic/webhooks';
@@ -7,7 +11,7 @@ import {
 
 const setupWebhook = async (
     input: any,
-    context: any,
+    context: Context,
 ) => {
     const {
         path,

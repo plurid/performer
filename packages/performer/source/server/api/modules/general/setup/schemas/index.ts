@@ -25,7 +25,16 @@ export const types = gql`
     }
 
     type Setup {
-        data: String!
+        webhooks: [Webhook!]
+        triggers: [Trigger!]
+        repositories: [Repository!]
+        builds: [Build!]
+    }
+
+    type Webhook {
+        id: String!
+        path: String!
+        provider: String!
     }
 `;
 

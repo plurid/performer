@@ -1,20 +1,8 @@
-// export interface GraphQLRoot {
-
-// }
-
-// export interface GraphQLArgsInputOf {
-
-// }
+import {
+    Context,
+} from '#server/data/interfaces';
 
 
 
 export default {
-    // a: (
-    //     _: GraphQLRoot,
-    //     { input }: GraphQLArgsInputOf<any>,
-    //     context: Context,
-    // ) => b(
-    //     input,
-    //     context,
-    // ),
 };
