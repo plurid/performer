@@ -2,6 +2,19 @@ import * as Types from './types';
 
 
 
+export const setProviders = (
+    state: Types.State,
+    action: Types.SetProvidersAction,
+): Types.State => {
+    return {
+        ...state,
+        providers: [
+            ...action.payload,
+        ],
+    };
+}
+
+
 export const setRepositories = (
     state: Types.State,
     action: Types.SetRepositoriesAction,
@@ -56,6 +69,7 @@ export const setBuilds = (
 
 
 export const resolvers = {
+    setProviders,
     setRepositories,
     setWebhooks,
     setTriggers,

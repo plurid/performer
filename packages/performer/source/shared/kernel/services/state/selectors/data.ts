@@ -4,17 +4,19 @@ import {
 
 
 
-const gettRepositories = (state: AppState) => state.data.repositories;
-const gettWebhooks = (state: AppState) => state.data.webhooks;
-const gettTriggers = (state: AppState) => state.data.triggers;
-const gettBuilds = (state: AppState) => state.data.builds;
+const getProviders = (state: AppState) => state.data.providers;
+const getRepositories = (state: AppState) => state.data.repositories;
+const getWebhooks = (state: AppState) => state.data.webhooks;
+const getTriggers = (state: AppState) => state.data.triggers;
+const getBuilds = (state: AppState) => state.data.builds;
 
 
 const selectors = {
-    gettRepositories,
-    gettWebhooks,
-    gettTriggers,
-    gettBuilds,
+    getProviders,
+    getRepositories,
+    getWebhooks,
+    getTriggers,
+    getBuilds,
 };
 
 

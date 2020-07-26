@@ -7,6 +7,13 @@ import {
 
 
 
+export const SET_PROVIDERS = 'SET_PROVIDERS';
+export interface SetProvidersAction {
+    type: typeof SET_PROVIDERS;
+    payload: string[];
+}
+
+
 export const SET_REPOSITORIES = 'SET_REPOSITORIES';
 export interface SetRepositoriesAction {
     type: typeof SET_REPOSITORIES;
@@ -37,6 +44,7 @@ export interface SetBuildsAction {
 
 
 export interface State {
+    providers: string[];
     repositories: Repository[];
     webhooks: Webhook[];
     triggers: Trigger[];
@@ -45,6 +53,7 @@ export interface State {
 
 
 export type Actions =
+    | SetProvidersAction
     | SetRepositoriesAction
     | SetWebhooksAction
     | SetTriggersAction

@@ -27,7 +27,7 @@ import {
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
-// import actions from '#kernel-services/state/actions';
+import actions from '#kernel-services/state/actions';
 
 
 
@@ -40,6 +40,11 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
+    dispatchSetProviders: typeof actions.data.setProviders;
+    dispatchSetRepositories: typeof actions.data.setRepositories;
+    dispatchSetWebhooks: typeof actions.data.setWebhooks;
+    dispatchSetTriggers: typeof actions.data.setTriggers;
+    dispatchSetBuilds: typeof actions.data.setBuilds;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -50,11 +55,18 @@ const Home: React.FC<HomeProperties> = (
     properties,
 ) => {
     /** properties */
-    // const {
-        // /** state */
+    const {
+        /** state */
         // stateGeneralTheme,
         // stateInteractionTheme,
-    // } = properties;
+
+        /** dispatch */
+        dispatchSetProviders,
+        dispatchSetRepositories,
+        dispatchSetWebhooks,
+        dispatchSetTriggers,
+        dispatchSetBuilds,
+    } = properties;
 
 
     /** effects */
@@ -77,6 +89,12 @@ const Home: React.FC<HomeProperties> = (
                 triggers,
                 webhooks,
             } = graphql.deleteTypenames(response.data);
+
+            dispatchSetProviders(providers);
+            dispatchSetRepositories(repositories);
+            dispatchSetWebhooks(webhooks);
+            dispatchSetTriggers(triggers);
+            dispatchSetBuilds(builds);
         }
 
         getSetup();
@@ -103,6 +121,31 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
+    dispatchSetProviders: (
+        providers,
+    ) => dispatch(
+        actions.data.setProviders(providers),
+    ),
+    dispatchSetRepositories: (
+        repositories,
+    ) => dispatch(
+        actions.data.setRepositories(repositories),
+    ),
+    dispatchSetWebhooks: (
+        webhooks,
+    ) => dispatch(
+        actions.data.setWebhooks(webhooks),
+    ),
+    dispatchSetTriggers: (
+        triggers,
+    ) => dispatch(
+        actions.data.setTriggers(triggers),
+    ),
+    dispatchSetBuilds: (
+        builds,
+    ) => dispatch(
+        actions.data.setBuilds(builds),
+    ),
 });
 
 

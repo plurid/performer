@@ -9,6 +9,16 @@ import {
 
 
 
+export const setProviders = (
+    providers: string[],
+): Types.SetProvidersAction => {
+    return {
+        type: Types.SET_PROVIDERS,
+        payload: providers,
+    };
+}
+
+
 export const setRepositories = (
     repositories: Repository[],
 ): Types.SetRepositoriesAction => {
@@ -51,6 +61,7 @@ export const setBuilds = (
 
 
 export const actions = {
+    setProviders,
     setRepositories,
     setWebhooks,
     setTriggers,
