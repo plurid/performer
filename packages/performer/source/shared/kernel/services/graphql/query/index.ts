@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 
 
 
-export const CURRENT_USER = gql`
-    query CurrentUser {
-        currentUser {
+export const GET_SETUP = gql`
+    query GetSetup {
+        getSetup {
             status
             errors {
                 type
@@ -12,7 +12,25 @@ export const CURRENT_USER = gql`
                 message
             }
             data {
-                username
+                webhooks {
+                    id
+                    path
+                    provider
+                }
+                triggers {
+                    id
+                    name
+                    repository
+                    path
+                    branch
+                }
+                repositories {
+                    id
+                }
+                builds {
+                    id
+                }
+                providers
             }
         }
     }
