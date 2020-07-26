@@ -24,29 +24,27 @@ const registerTrigger = async (
 ) => {
     const {
         id,
-        name,
         repository,
         branch,
     } = data;
 
     const triggerName = cleanTriggerName(
         [
-            id,
             repository,
             branch,
-            name,
+            id,
         ].join('_'),
     );
 
     const triggerPath = path.join(
         process.cwd(),
         BASE_PATH_TRIGGERS,
-        triggerName,
+        triggerName + '.json',
     );
 
     await fs.writeFile(
         triggerPath,
-        JSON.stringify(data),
+        JSON.stringify(data, null, 4),
     );
 }
 
