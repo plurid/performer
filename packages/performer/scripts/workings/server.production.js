@@ -9,6 +9,7 @@ const {
 export default {
     input,
     output,
+    external: externalPackages,
     plugins: [
         plugins.postcss(),
         plugins.url(),

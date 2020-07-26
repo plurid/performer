@@ -26,6 +26,12 @@ const output = [
     },
 ];
 
+const externalPackages = [
+    'https',
+    'fs',
+    'path',
+];
+
 const styledComponentsTransformer = createStyledComponentsTransformer({
     ssr: true,
     displayName: !isProduction,
@@ -71,4 +77,5 @@ module.exports = {
     input,
     output,
     plugins,
+    externalPackages,
 }
