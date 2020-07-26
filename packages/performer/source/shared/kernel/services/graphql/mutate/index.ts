@@ -2,9 +2,9 @@ import gql from 'graphql-tag';
 
 
 
-export const SETUP_CODE_PROVIDER = gql`
-    mutation SetupCodeProvider($input: InputSetupCodeProvider!) {
-        setupCodeProvider(input: $input) {
+export const SETUP_PROVIDER = gql`
+    mutation SetupProvider($input: InputSetupProvider!) {
+        setupProvider(input: $input) {
             status
             errors {
                 type
