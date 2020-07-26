@@ -5,3 +5,7 @@ export const GITHUB_PROVIDER = 'github';
 
 
 export const BITBUCKET_PROVIDER = 'github';
+
+
+
+export const BASE_PATH_REPOSITORIES = './data/repositories/';

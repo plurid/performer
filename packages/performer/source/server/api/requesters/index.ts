@@ -14,6 +14,23 @@ export const getRepositories = async (
 }
 
 
+export const getRepository = async (
+    provider: 'bitbucket' | 'github',
+    url: string,
+    name: string,
+) => {
+    switch (provider) {
+        case 'bitbucket':
+            return;
+        case 'github':
+            return github.getRepository(
+                url,
+                name,
+            );
+    }
+}
+
+
 export const getOwner = async (
     provider: 'bitbucket' | 'github',
 ) => {

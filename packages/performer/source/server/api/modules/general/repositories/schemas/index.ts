@@ -19,6 +19,7 @@ export const mutations = gql`
 export const inputs = gql`
     input InputLinkRepository {
         url: String!
+        name: String!
     }
 `;
 

@@ -1,5 +1,5 @@
 import {
-    getOwner,
+    getRepository,
 } from '#server/api/requesters';
 
 import {
@@ -12,8 +12,16 @@ const linkRepository = async (
     input: any,
     context: any,
 ) => {
-    const owner = await getOwner(GITHUB_PROVIDER);
+    const {
+        url,
+        name,
+    } = input;
 
+    await getRepository(
+        GITHUB_PROVIDER,
+        url,
+        name,
+    );
 
     return {
         status: true,
