@@ -6,7 +6,7 @@ export const GET_SETUP = gql`
     query GetSetup {
         getSetup {
             status
-            errors {
+            error {
                 type
                 path
                 message

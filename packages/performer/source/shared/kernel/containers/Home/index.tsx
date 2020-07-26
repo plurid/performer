@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+    useEffect,
+} from 'react';
 
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
@@ -9,8 +11,19 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    graphql,
+} from '@plurid/plurid-functions';
+
+import {
     StyledHome,
 } from './styled';
+
+import Head from '#kernel-components/Head';
+
+import client from '#kernel-services/graphql/client';
+import {
+    GET_SETUP,
+} from '#kernel-services/graphql/query';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -44,10 +57,36 @@ const Home: React.FC<HomeProperties> = (
     // } = properties;
 
 
+    /** effects */
+    useEffect(() => {
+        const getSetup = async () => {
+            const setupQuery = await client.query({
+                query: GET_SETUP,
+            });
+
+            const response = setupQuery.data.getSetup;
+
+            if (!response.status) {
+                return;
+            }
+
+            const {
+                builds,
+                providers,
+                repositories,
+                triggers,
+                webhooks,
+            } = graphql.deleteTypenames(response.data);
+        }
+
+        getSetup();
+    }, []);
+
+
     /** render */
     return (
         <StyledHome>
-            Home
+            <Head />
         </StyledHome>
     );
 }

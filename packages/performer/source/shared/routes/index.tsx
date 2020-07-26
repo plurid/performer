@@ -9,13 +9,15 @@ import NotFoundPlane from '../kernel/planes/NotFound';
 
 import Head from '../kernel/components/Head';
 
+import Home from '#kernel-containers/Home';
+
 
 
 const indexRoute: PluridRoute = {
     value: '/',
     exterior: {
         kind: 'react',
-        element: Head,
+        element: Home,
     },
     spaces: [
         {
