@@ -11,6 +11,13 @@ import {
     schemas,
 } from '#server/api';
 
+import {
+    Repository,
+    Webhook,
+    Trigger,
+    Build,
+} from '#server/data/interfaces';
+
 
 
 const setupGraphQLServer = (
@@ -32,18 +39,18 @@ const setupGraphQLServer = (
             /** TODO
              * load already registered elements
              */
-            const repositories: any[] = [];
-            const triggers: any[] = [];
-            const webhooks: any[] = [];
-            const builds: any[] = [];
+            const repositories: Repository[] = [];
+            const webhooks: Webhook[] = [];
+            const triggers: Trigger[] = [];
+            const builds: Build[] = [];
 
             return {
                 request: req,
                 response: res,
                 instance,
                 repositories,
-                triggers,
                 webhooks,
+                triggers,
                 builds,
             };
         },

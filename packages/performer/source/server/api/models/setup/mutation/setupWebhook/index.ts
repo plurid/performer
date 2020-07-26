@@ -11,6 +11,7 @@ import {
 
 import {
     CodeProvider,
+    Webhook,
 } from '#server/data/interfaces';
 
 import {
@@ -35,7 +36,7 @@ const registerHook = async (
     provider: CodeProvider,
 ) => {
     const id = uuid.generate();
-    const hookData = {
+    const hookData: Webhook = {
         id,
         path: hookPath,
         provider,
