@@ -3,12 +3,12 @@ import path from 'path';
 
 
 export const GITHUB_API = 'https://api.github.com/graphql';
-export const GITHUB_TOKEN = process.env.GITHUB_GRAPHQL_TOKEN || '';
+export const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
 export const GITHUB_PROVIDER = 'github';
 
 
 export const BITBUCKET_TOKEN = '';
-export const BITBUCKET_PROVIDER = 'github';
+export const BITBUCKET_PROVIDER = 'bitbucket';
 
 
 
