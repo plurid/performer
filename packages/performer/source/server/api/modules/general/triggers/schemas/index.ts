@@ -2,17 +2,21 @@ import gql from 'graphql-tag';
 
 
 
-export default gql`
+export const queries = gql`
     extend type Query {
         getTriggers: ResponseTriggers!
     }
+`;
 
+
+export const mutations = gql`
     extend type Mutation {
         addTrigger(input: InputAddTrigger!): Response!
     }
+`;
 
 
-    # types
+export const types = gql`
     type ResponseTriggers {
         status: Boolean!
         error: Error
@@ -23,15 +27,26 @@ export default gql`
         id: String!
         name: String!
         repository: String!
+        branch: String!
         path: String!
     }
+`;
 
 
-    # inputs
+export const inputs = gql`
     input InputAddTrigger {
         id: String
         name: String!
         repository: String!
+        branch: String!
         path: String!
     }
+`;
+
+
+export default gql`
+    ${queries}
+    ${mutations}
+    ${types}
+    ${inputs}
 `;
