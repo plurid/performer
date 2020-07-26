@@ -1,4 +1,8 @@
 import {
+    Express,
+} from 'express';
+
+import {
     ApolloServer,
 } from 'apollo-server-express';
 
@@ -10,7 +14,7 @@ import {
 
 
 const setupGraphQLServer = (
-    instance: any,
+    instance: Express,
 ) => {
     const playground = {
         faviconUrl: '/favicon.ico',
