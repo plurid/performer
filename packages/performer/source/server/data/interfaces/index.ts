@@ -42,4 +42,5 @@ export interface Context {
     triggers: Trigger[],
     repositories: Repository[],
     builds: Build[],
+    providers: string[];
 }

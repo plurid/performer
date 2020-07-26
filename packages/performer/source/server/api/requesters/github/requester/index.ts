@@ -7,8 +7,8 @@ import {
 } from '@apollo/client';
 
 import {
-    GITHUB_GRAPHQL_API,
-    GITHUB_GRAPHQL_TOKEN,
+    GITHUB_API,
+    GITHUB_TOKEN,
 } from '#server/data/constants';
 
 
@@ -17,7 +17,7 @@ export const requester = (
     token: string,
 ) => new ApolloClient({
     link: createHttpLink({
-        uri: GITHUB_GRAPHQL_API,
+        uri: GITHUB_API,
         credentials: 'include',
         fetch,
         headers: {
@@ -28,7 +28,7 @@ export const requester = (
 });
 
 
-const client = requester(GITHUB_GRAPHQL_TOKEN);
+const client = requester(GITHUB_TOKEN);
 
 
 export default client;

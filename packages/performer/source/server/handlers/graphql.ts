@@ -11,11 +11,19 @@ import {
     schemas,
 } from '#server/api';
 
+import {
+    Context,
+} from '#server/data/interfaces';
+
 import loadData from '#server/logic/loader';
 
 import {
     handleWebhooks,
 } from '#server/logic/webhooks';
+
+import {
+    getProviders,
+} from '#server/logic/providers';
 
 
 
@@ -28,6 +36,8 @@ const setupGraphQLServer = async (
         repositories,
         builds,
     } = await loadData();
+
+    const providers = await getProviders();
 
     handleWebhooks(
         webhooks,
@@ -47,7 +57,7 @@ const setupGraphQLServer = async (
             req,
             res,
         }: any) => {
-            return {
+            const context: Context = {
                 request: req,
                 response: res,
                 instance,
@@ -55,7 +65,10 @@ const setupGraphQLServer = async (
                 triggers,
                 repositories,
                 builds,
+                providers,
             };
+
+            return context;
         },
     });
 
