@@ -10,14 +10,14 @@ import {
 
 /** internal */
 import {
-    StyledBuildView,
+    StyledSetupView,
 } from './styled';
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface BuildViewProperties {
+export interface SetupViewProperties {
     /** required */
     /** - values */
     /** - methods */
@@ -27,7 +27,7 @@ export interface BuildViewProperties {
     /** - methods */
 }
 
-const BuildView: React.FC<BuildViewProperties> = (
+const SetupView: React.FC<SetupViewProperties> = (
     properties,
 ) => {
     /** properties */
@@ -44,40 +44,34 @@ const BuildView: React.FC<BuildViewProperties> = (
 
     /** render */
     return (
-        <StyledBuildView>
+        <StyledSetupView>
             <div>
                 <h1>
-                    providers
+                    setup provider
                 </h1>
             </div>
 
             <div>
                 <h1>
-                    repositories
+                    add repository
                 </h1>
             </div>
 
             <div>
                 <h1>
-                    webhooks
+                    setup webhook
                 </h1>
             </div>
 
             <div>
                 <h1>
-                    triggers
+                    add trigger
                 </h1>
             </div>
-
-            <div>
-                <h1>
-                    builds
-                </h1>
-            </div>
-        </StyledBuildView>
+        </StyledSetupView>
     );
 }
 
 
-export default BuildView;
+export default SetupView;
 /** [END] component */

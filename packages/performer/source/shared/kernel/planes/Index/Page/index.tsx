@@ -12,6 +12,7 @@ import {
 } from './styled';
 
 import InitialView from './components/InitialView';
+import SetupView from './components/SetupView';
 import BuildView from './components/BuildView';
 
 import { AppState } from '#kernel-services/state/store';
@@ -50,14 +51,14 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    ] = useState('initial');
+    ] = useState('setup');
 
 
     /** effect */
     useEffect(() => {
-        if (stateProviders.length > 0) {
-            setView('build');
-        }
+        // if (stateProviders.length > 0) {
+        //     setView('build');
+        // }
     }, [
         stateProviders,
     ]);
@@ -68,6 +69,10 @@ const Page: React.FC<PageProperties> = (
         <StyledPage>
             {view === 'initial' && (
                 <InitialView />
+            )}
+
+            {view === 'setup' && (
+                <SetupView />
             )}
 
             {view === 'build' && (
