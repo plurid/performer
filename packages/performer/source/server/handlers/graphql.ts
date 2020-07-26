@@ -25,6 +25,16 @@ const setupGraphQLServer = (
         typeDefs: schemas,
         resolvers,
         playground,
+        context: ({
+            req,
+            res,
+        }: any) => {
+            return {
+                request: req,
+                response: res,
+                instance,
+            };
+        },
     });
 
     graphQLServer.applyMiddleware({

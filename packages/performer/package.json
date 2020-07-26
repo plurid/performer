@@ -66,6 +66,7 @@
         "@rollup/plugin-commonjs": "^14.0.0",
         "@rollup/plugin-node-resolve": "^8.4.0",
         "apollo-server-express": "^2.16.0",
+        "body-parser": "^1.19.0",
         "cross-fetch": "^3.0.5",
         "dotenv": "^8.2.0",
         "graphql": "^15.3.0",
