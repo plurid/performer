@@ -1,3 +1,6 @@
+import {
+    Builds,
+} from '#server/api/models';
 
 
 
@@ -6,18 +9,10 @@ export default {
         _: any,
         { input }: any,
         context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
+    ) => Builds.Query.getBuild(input),
     getBuilds: (
         _: any,
         { input }: any,
         context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
-}
+    ) => Builds.Query.getBuilds(),
+};

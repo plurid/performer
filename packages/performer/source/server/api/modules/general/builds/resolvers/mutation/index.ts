@@ -17,13 +17,4 @@ export default {
     //     input,
     //     context,
     // ),
-    setupWebhook: (
-        _: any,
-        { input }: any,
-        context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
-}
+};

@@ -1,3 +1,6 @@
+import {
+    Triggers,
+} from '#server/api/models';
 
 
 
@@ -6,9 +9,5 @@ export default {
         _: any,
         { input }: any,
         context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
-}
+    ) => Triggers.Query.getTriggers(),
+};

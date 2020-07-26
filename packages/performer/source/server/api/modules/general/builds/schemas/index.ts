@@ -10,13 +10,6 @@ export const queries = gql`
 `;
 
 
-export const mutations = gql`
-    extend type Mutation {
-        setupWebhook(input: InputSetupWebhook!): Response!
-    }
-`;
-
-
 export const types = gql`
     type ResponseBuilds {
         status: Boolean!
@@ -49,11 +42,6 @@ export const types = gql`
 
 
 export const inputs = gql`
-    input InputSetupWebhook {
-        path: String!
-        type: String!
-    }
-
     input InputGetBuild {
         id: String!
     }
@@ -63,7 +51,6 @@ export const inputs = gql`
 
 export default gql`
     ${queries}
-    ${mutations}
     ${types}
     ${inputs}
 `;

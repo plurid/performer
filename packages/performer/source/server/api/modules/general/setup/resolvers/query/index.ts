@@ -1,3 +1,6 @@
+import {
+    Setup,
+} from '#server/api/models';
 
 
 
@@ -6,9 +9,5 @@ export default {
         _: any,
         { input }: any,
         context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
-}
+    ) => Setup.Query.getSetup(input),
+};

@@ -12,6 +12,7 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         initialSetup(input: InputInitialSetup!): Response!
+        setupWebhook(input: InputSetupWebhook!): Response!
     }
 `;
 
@@ -32,6 +33,11 @@ export const types = gql`
 export const inputs = gql`
     input InputInitialSetup {
         data: String!
+    }
+
+    input InputSetupWebhook {
+        path: String!
+        type: String!
     }
 `;
 

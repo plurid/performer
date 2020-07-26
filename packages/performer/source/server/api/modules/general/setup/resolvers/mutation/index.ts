@@ -1,29 +1,18 @@
-// export interface GraphQLRoot {
-
-// }
-
-// export interface GraphQLArgsInputOf {
-
-// }
+import {
+    Setup,
+} from '#server/api/models';
 
 
 
 export default {
-    // a: (
-    //     _: GraphQLRoot,
-    //     { input }: GraphQLArgsInputOf<any>,
-    //     context: Context,
-    // ) => b(
-    //     input,
-    //     context,
-    // ),
     initialSetup: (
         _: any,
         { input }: any,
         context: any,
-    ) => {
-        return {
-            status: true,
-        };
-    },
-}
+    ) => Setup.Mutation.initialSetup(input),
+    setupWebhook: (
+        _: any,
+        { input }: any,
+        context: any,
+    ) => Setup.Mutation.setupWebhook(input),
+};
