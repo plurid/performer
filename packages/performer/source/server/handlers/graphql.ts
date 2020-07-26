@@ -11,18 +11,20 @@ import {
     schemas,
 } from '#server/api';
 
-import {
-    Repository,
-    Webhook,
-    Trigger,
-    Build,
-} from '#server/data/interfaces';
+import loadData from '#server/logic/loader';
 
 
 
-const setupGraphQLServer = (
+const setupGraphQLServer = async (
     instance: Express,
 ) => {
+    const {
+        webhooks,
+        triggers,
+        repositories,
+        builds,
+    } = await loadData();
+
     const playground = {
         faviconUrl: '/favicon.ico',
         title: 'API · performer',
@@ -32,25 +34,17 @@ const setupGraphQLServer = (
         typeDefs: schemas,
         resolvers,
         playground,
-        context: ({
+        context: async ({
             req,
             res,
         }: any) => {
-            /** TODO
-             * load already registered elements
-             */
-            const repositories: Repository[] = [];
-            const webhooks: Webhook[] = [];
-            const triggers: Trigger[] = [];
-            const builds: Build[] = [];
-
             return {
                 request: req,
                 response: res,
                 instance,
-                repositories,
                 webhooks,
                 triggers,
+                repositories,
                 builds,
             };
         },
