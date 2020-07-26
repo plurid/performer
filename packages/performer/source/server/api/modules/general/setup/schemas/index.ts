@@ -37,7 +37,7 @@ export const inputs = gql`
 
     input InputSetupWebhook {
         path: String!
-        type: String!
+        provider: String!
     }
 `;
 

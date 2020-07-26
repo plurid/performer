@@ -8,6 +8,7 @@ import {
 } from '@plurid/plurid-functions';
 
 import {
+    BASE_PATH,
     BASE_PATH_TRIGGERS,
 } from '#server/data/constants';
 
@@ -37,7 +38,7 @@ const registerTrigger = async (
     );
 
     const triggerPath = path.join(
-        process.cwd(),
+        BASE_PATH,
         BASE_PATH_TRIGGERS,
         triggerName + '.json',
     );

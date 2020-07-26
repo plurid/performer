@@ -14,5 +14,8 @@ export default {
         _: any,
         { input }: any,
         context: any,
-    ) => Setup.Mutation.setupWebhook(input),
+    ) => Setup.Mutation.setupWebhook(
+        input,
+        context,
+    ),
 };
