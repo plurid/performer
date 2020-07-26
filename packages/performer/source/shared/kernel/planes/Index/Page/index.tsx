@@ -1,16 +1,14 @@
 import React from 'react';
 
 import {
-    PluridLink,
-    PluridRouterLink,
-} from '@plurid/plurid-react';
+    PluridPureButton,
+} from '@plurid/plurid-ui-react';
 
 import {
     StyledPage,
 } from './styled';
 
-// import pluridLogo from './assets/plurid-logo.png';
-import pluridLogoSVG from './assets/plurid-logo.svg';
+import performerLogo from './assets/performer-logo.png';
 
 
 
@@ -27,43 +25,28 @@ const Page: React.FC<any> = (
     return (
         <StyledPage>
             <div>
-                <a
-                    href="https://plurid.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <img src={pluridLogoSVG} alt="plurid logo" height={250} />
-                    {/* <img src={pluridLogo} alt="plurid logo" height={250} /> */}
-                </a>
+                <img src={performerLogo} alt="performer logo" height={250} />
             </div>
 
             <h1>
-                enjoy the plurid' exploration
+                performer
             </h1>
+
+            <h2>
+                Cloud-Native Continuous Integration/Continuous Delivery Build Pipeline
+            </h2>
 
             <div
                 style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    width: '200px',
+                    margin: '50px auto',
                 }}
             >
-                <PluridLink
-                    route="/page"
-                    style={{
-                        color: '#ccc',
-                    }}
-                >
-                    plurid self link
-                </PluridLink>
-
-                <PluridRouterLink
-                    route="/static"
-                    style={{
-                        color: '#ccc',
-                    }}
-                >
-                    router link to static page
-                </PluridRouterLink>
+                <PluridPureButton
+                    text="Initial Setup"
+                    atClick={() => {}}
+                    level={2}
+                />
             </div>
         </StyledPage>
     );
