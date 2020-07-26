@@ -1,76 +1,8 @@
-import express from 'express';
-
 import {
-    promises as fs,
-} from 'fs';
-import path from 'path';
+    registerWebhook,
+    handleWebhook,
+} from '#server/logic/webhooks';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    CodeProvider,
-    Webhook,
-} from '#server/data/interfaces';
-
-import {
-    BASE_PATH,
-    BASE_PATH_WEBHOOKS,
-} from '#server/data/constants';
-
-
-
-const handleGithubWebhook = (
-    request: express.Request,
-    response: express.Response,
-) => {
-    console.log(request.body);
-
-    response.status(200).end();
-}
-
-
-const registerHook = async (
-    hookPath: string,
-    provider: CodeProvider,
-) => {
-    const id = uuid.generate();
-    const hookData: Webhook = {
-        id,
-        path: hookPath,
-        provider,
-    };
-
-    const hookFilePath = path.join(
-        BASE_PATH,
-        BASE_PATH_WEBHOOKS,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        hookFilePath,
-        JSON.stringify(hookData, null, 4),
-    );
-}
-
-
-const handleHook = (
-    hookpath: string,
-    provider: CodeProvider,
-    instance: express.Express,
-) => {
-    switch (provider) {
-        case 'bitbucket':
-            break;
-        case 'github':
-            instance.post(
-                hookpath,
-                handleGithubWebhook,
-            );
-            break;
-    }
-}
 
 
 const setupWebhook = async (
@@ -86,15 +18,15 @@ const setupWebhook = async (
         instance,
     } = context;
 
-    handleHook(
+    registerWebhook(
+        path,
+        provider,
+    );
+
+    handleWebhook(
         path,
         provider,
         instance,
-    );
-
-    registerHook(
-        path,
-        provider,
     );
 
     return {

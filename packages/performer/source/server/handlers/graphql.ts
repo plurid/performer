@@ -13,6 +13,10 @@ import {
 
 import loadData from '#server/logic/loader';
 
+import {
+    handleWebhooks,
+} from '#server/logic/webhooks';
+
 
 
 const setupGraphQLServer = async (
@@ -24,6 +28,11 @@ const setupGraphQLServer = async (
         repositories,
         builds,
     } = await loadData();
+
+    handleWebhooks(
+        webhooks,
+        instance,
+    );
 
     const playground = {
         faviconUrl: '/favicon.ico',

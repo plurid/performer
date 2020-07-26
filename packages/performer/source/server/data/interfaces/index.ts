@@ -1,4 +1,6 @@
-export type CodeProvider = 'bitbucket' | 'github';
+export type CodeProvider =
+    | 'bitbucket'
+    | 'github';
 
 
 
@@ -15,7 +17,7 @@ export interface Build {
 export interface Webhook {
     id: string;
     path: string;
-    provider: string;
+    provider: CodeProvider;
 }
 
 
