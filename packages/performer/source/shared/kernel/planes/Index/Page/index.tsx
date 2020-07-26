@@ -1,56 +1,97 @@
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+} from 'react';
 
-import {
-    PluridPureButton,
-} from '@plurid/plurid-ui-react';
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
 
 import {
     StyledPage,
 } from './styled';
 
-import performerLogo from './assets/performer-logo.png';
+import InitialView from './components/InitialView';
+import BuildView from './components/BuildView';
+
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
 
 
 
-const Page: React.FC<any> = (
+export interface PageOwnProperties {
+}
+
+export interface PageStateProperties {
+    stateProviders: string[];
+}
+
+export interface PageDispatchProperties {
+}
+
+export type PageProperties = PageOwnProperties
+    & PageStateProperties
+    & PageDispatchProperties;
+
+const Page: React.FC<PageProperties> = (
     properties,
 ) => {
     /** properties */
-    // const {
-    //     plurid,
-    // } = properties;
+    const {
+        // plurid,
+
+        /** state */
+        stateProviders,
+    } = properties;
+
+
+    /** state */
+    const [
+        view,
+        setView,
+    ] = useState('initial');
+
+
+    /** effect */
+    useEffect(() => {
+        if (stateProviders.length > 0) {
+            setView('build');
+        }
+    }, [
+        stateProviders,
+    ]);
 
 
     /** render */
     return (
         <StyledPage>
-            <div>
-                <img src={performerLogo} alt="performer logo" height={250} />
-            </div>
+            {view === 'initial' && (
+                <InitialView />
+            )}
 
-            <h1>
-                performer
-            </h1>
-
-            <h2>
-                Cloud-Native Continuous Integration/Continuous Delivery Build Pipeline
-            </h2>
-
-            <div
-                style={{
-                    width: '200px',
-                    margin: '50px auto',
-                }}
-            >
-                <PluridPureButton
-                    text="Initial Setup"
-                    atClick={() => {}}
-                    level={2}
-                />
-            </div>
+            {view === 'build' && (
+                <BuildView />
+            )}
         </StyledPage>
     );
 }
 
 
-export default Page;
+const mapStateToProperties = (
+    state: AppState,
+): PageStateProperties => ({
+    stateProviders: selectors.data.getProviders(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): PageDispatchProperties => ({
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(Page);
