@@ -9,5 +9,8 @@ export default {
         _: any,
         { input }: any,
         context: any,
-    ) => Repositories.Mutation.linkRepository(input),
+    ) => Repositories.Mutation.linkRepository(
+        input,
+        context,
+    ),
 };
