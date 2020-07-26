@@ -24,9 +24,13 @@ import {
     setRouteHandlers,
 } from './handlers';
 
+import setup from './setup';
+
 
 
 /** ENVIRONMENT */
+setup();
+
 const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
