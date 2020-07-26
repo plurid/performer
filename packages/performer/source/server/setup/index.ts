@@ -9,6 +9,7 @@ import {
     BASE_PATH_TRIGGERS,
     BASE_PATH_BUILDS,
     BASE_PATH_BUILDLOGS,
+    BASE_PATH_BUILDQUEUE,
 } from '#server/data/constants';
 
 
@@ -20,6 +21,7 @@ const setup = () => {
     const triggersPath = path.join(BASE_PATH, BASE_PATH_TRIGGERS);
     const buildsPath = path.join(BASE_PATH, BASE_PATH_BUILDS);
     const buildlogsPath = path.join(BASE_PATH, BASE_PATH_BUILDLOGS);
+    const buildqueuePath = path.join(BASE_PATH, BASE_PATH_BUILDQUEUE);
 
     try {
         fs.mkdirSync(repositoriesPath, {
@@ -42,6 +44,10 @@ const setup = () => {
         });
 
         fs.mkdirSync(buildlogsPath, {
+            recursive: true,
+        });
+
+        fs.mkdirSync(buildqueuePath, {
             recursive: true,
         });
     } catch (error) {
