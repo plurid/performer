@@ -29,10 +29,22 @@ const setupGraphQLServer = (
             req,
             res,
         }: any) => {
+            /** TODO
+             * load already registered elements
+             */
+            const repositories: any[] = [];
+            const triggers: any[] = [];
+            const webhooks: any[] = [];
+            const builds: any[] = [];
+
             return {
                 request: req,
                 response: res,
                 instance,
+                repositories,
+                triggers,
+                webhooks,
+                builds,
             };
         },
     });
