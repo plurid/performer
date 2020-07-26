@@ -4,14 +4,19 @@ import {
 
 
 
-const initialSetup = async (
+const setupProvider = async (
     input: any,
     context: Context,
 ) => {
+    const {
+        token,
+    } = input;
+
+
     return {
         status: true,
     };
 }
 
 
-export default initialSetup;
+export default setupProvider;

@@ -9,11 +9,11 @@ import {
 
 
 export default {
-    initialSetup: (
+    setupProvider: (
         _: any,
         { input }: any,
         context: Context,
-    ) => Setup.Mutation.initialSetup(
+    ) => Setup.Mutation.setupProvider(
         input,
         context,
     ),

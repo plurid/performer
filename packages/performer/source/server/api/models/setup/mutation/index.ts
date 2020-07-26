@@ -1,9 +1,9 @@
-import initialSetup from './initialSetup';
+import setupProvider from './setupProvider';
 import setupWebhook from './setupWebhook';
 
 
 
 export default {
-    initialSetup,
+    setupProvider,
     setupWebhook,
 };
