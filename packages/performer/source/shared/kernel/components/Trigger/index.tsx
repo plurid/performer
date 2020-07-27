@@ -128,6 +128,11 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerID}
                         placeholder="id"
                         atChange={(event) => setTriggerID(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -137,6 +142,11 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerName}
                         placeholder="name"
                         atChange={(event) => setTriggerName(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -146,6 +156,11 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerRepository}
                         placeholder="repository"
                         atChange={(event) => setTriggerRepository(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -155,6 +170,11 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerBranch}
                         placeholder="branch"
                         atChange={(event) => setTriggerBranch(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -164,6 +184,11 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerPath}
                         placeholder="path"
                         atChange={(event) => setTriggerPath(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>

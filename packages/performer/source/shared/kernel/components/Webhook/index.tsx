@@ -130,6 +130,11 @@ const Webhook: React.FC<WebhookProperties> = (
                         text={webhookPath}
                         placeholder="/path/to/webhook"
                         atChange={(event) => setWebhookPath(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>

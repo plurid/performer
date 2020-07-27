@@ -138,8 +138,13 @@ const Provider: React.FC<ProviderProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={providerName}
-                        placeholder="name"
                         atChange={(event) => setProviderName(event.target.value)}
+                        placeholder="name"
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -147,8 +152,13 @@ const Provider: React.FC<ProviderProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={providerToken}
-                        placeholder="token"
                         atChange={(event) => setProviderToken(event.target.value)}
+                        placeholder="token"
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
                         level={2}
                     />
                 </div>
@@ -160,8 +170,9 @@ const Provider: React.FC<ProviderProperties> = (
                             setProvider();
                             action();
                         }}
-                        level={2}
                         disabled={!validProvider}
+                        theme={theme}
+                        level={2}
                     />
                 </div>
             </div>
