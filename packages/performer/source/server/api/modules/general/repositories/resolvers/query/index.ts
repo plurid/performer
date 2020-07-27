@@ -16,4 +16,12 @@ export default {
     ) => Repositories.Query.getRepositories(
         context,
     ),
+    getProviderRepositories: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Repositories.Query.getProviderRepositories(
+        input,
+        context,
+    ),
 };

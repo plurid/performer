@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 export const queries = gql`
     extend type Query {
         getRepositories: ResponseRepositories!
+        getProviderRepositories(input: InputGetProviderRepositories!): ResponseRepositories!
     }
 `;
 
@@ -30,6 +31,10 @@ export const types = gql`
 
 
 export const inputs = gql`
+    input InputGetProviderRepositories {
+        provider: String!
+    }
+
     input InputLinkRepository {
         url: String!
         name: String!
