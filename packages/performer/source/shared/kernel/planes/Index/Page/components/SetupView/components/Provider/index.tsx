@@ -17,6 +17,8 @@ import {
 
 
 /** internal */
+import ProviderSelector from './components/ProviderSelector';
+
 import {
     StyledProvider,
 } from './styled';
@@ -56,6 +58,10 @@ const Provider: React.FC<ProviderProperties> = (
 
     /** state */
     const [
+        selectedProvider,
+        setSelecterProvider,
+    ] = useState('');
+    const [
         providerToken,
         setProviderToken,
     ] = useState('');
@@ -71,15 +77,11 @@ const Provider: React.FC<ProviderProperties> = (
                     setup provider
                 </h1>
 
-                <div>
-                    <div>
-                        github
-                    </div>
-
-                    <div>
-                        bitbucket
-                    </div>
-                </div>
+                <ProviderSelector
+                    theme={theme}
+                    selectedProvider={selectedProvider}
+                    setSelecterProvider={setSelecterProvider}
+                />
 
                 <div>
                     <StyledPluridTextline
