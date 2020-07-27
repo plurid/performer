@@ -83,7 +83,7 @@ const Provider: React.FC<ProviderProperties> = (
 
     /** handlers */
     const setProvider = async () => {
-        if (validProvider) {
+        if (!validProvider) {
             return;
         }
 
@@ -93,13 +93,12 @@ const Provider: React.FC<ProviderProperties> = (
             name: providerName,
         };
 
-        const mutation = await client.mutate({
+        await client.mutate({
             mutation: SETUP_PROVIDER,
             variables: {
                 input,
             },
         });
-        console.log('mutation', mutation);
     }
 
 
@@ -108,12 +107,14 @@ const Provider: React.FC<ProviderProperties> = (
         if (
             providerName
             && providerToken
+            && selectedProvider
         ) {
             setValidProvider(true)
         } else {
             setValidProvider(false);
         }
     }, [
+        selectedProvider,
         providerToken,
         providerName,
     ]);
@@ -166,8 +167,8 @@ const Provider: React.FC<ProviderProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Set Provider"
-                        atClick={() => {
-                            setProvider();
+                        atClick={async () => {
+                            await setProvider();
                             action();
                         }}
                         disabled={!validProvider}
