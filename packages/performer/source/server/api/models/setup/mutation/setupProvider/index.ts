@@ -10,7 +10,10 @@ const setupProvider = async (
 ) => {
     const {
         token,
+        provider,
     } = input;
+
+    console.log('input', input);
 
 
     return {
