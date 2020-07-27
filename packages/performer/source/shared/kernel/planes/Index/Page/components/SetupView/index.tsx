@@ -1,17 +1,17 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+} from 'react';
 
-import {
-    PluridPureButton,
-    PluridTextline,
-} from '@plurid/plurid-ui-react';
 
 /** external */
 
 /** internal */
 import {
     StyledSetupView,
+    StyledPluridTextline,
+    StyledPluridPureButton,
 } from './styled';
 /** [END] imports */
 
@@ -43,97 +43,171 @@ const SetupView: React.FC<SetupViewProperties> = (
     // } = properties;
 
 
+    /** state */
+    const [phase, setPhase] = useState('PROVIDER');
+
+    const [providerToken, setProviderToken] = useState('');
+    const [webhookPath, setWebhookPath] = useState('');
+    const [triggerName, setTriggerName] = useState('');
+    const [triggerRepository, setTriggerRepository] = useState('');
+    const [triggerBranch, setTriggerBranch] = useState('');
+    const [triggerPath, setTriggerPath] = useState('');
+
+
     /** render */
     return (
         <StyledSetupView>
-            <div>
-                <h1>
-                    setup provider
-                </h1>
-
+            {phase === 'PROVIDER' && (
                 <div>
+                    <h1>
+                        setup provider
+                    </h1>
+
                     <div>
-                        github
+                        <div>
+                            github
+                        </div>
+
+                        <div>
+                            bitbucket
+                        </div>
                     </div>
 
                     <div>
-                        bitbucket
+                        <StyledPluridTextline
+                            text={providerToken}
+                            placeholder="token"
+                            atChange={(event) => setProviderToken(event.target.value)}
+                            level={2}
+                        />
+                    </div>
+
+                    <div>
+                        <StyledPluridPureButton
+                            text="Set Provider"
+                            atClick={() => {
+                                setPhase('REPOSITORY');
+                            }}
+                            level={2}
+                        />
                     </div>
                 </div>
+            )}
 
+
+            {phase === 'REPOSITORY' && (
                 <div>
-                    <PluridTextline
-                        text=""
-                        placeholder="token"
-                        atChange={() => {}}
-                    />
+                    <h1>
+                        add repository
+                    </h1>
+
+                    <div>
+                        select from list
+                    </div>
+
+                    <ul>
+                        <li>
+                            repo 1
+                        </li>
+                        <li>
+                            repo 2
+                        </li>
+                    </ul>
+
+                    <div>
+                        <StyledPluridPureButton
+                            text="Add Repository"
+                            atClick={() => {
+                                setPhase('WEBHOOK');
+                            }}
+                            level={2}
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
 
-            <div>
-                <h1>
-                    add repository
-                </h1>
 
+            {phase === 'WEBHOOK' && (
                 <div>
-                    select from list
+                    <h1>
+                        setup webhook
+                    </h1>
+
+                    <div>
+                        <StyledPluridTextline
+                            text={webhookPath}
+                            placeholder="path"
+                            atChange={(event) => setWebhookPath(event.target.value)}
+                            level={2}
+                        />
+                    </div>
+
+                    <div>
+                        <StyledPluridPureButton
+                            text="Setup Webhook"
+                            atClick={() => {
+                                setPhase('TRIGGER');
+                            }}
+                            level={2}
+                        />
+                    </div>
                 </div>
+            )}
 
-                <ul>
-                    <li>
-                        repo 1
-                    </li>
-                    <li>
-                        repo 2
-                    </li>
-                </ul>
-            </div>
 
-            <div>
-                <h1>
-                    setup webhook
-                </h1>
-
+            {phase === 'TRIGGER' && (
                 <div>
-                    <PluridTextline
-                        text=""
-                        placeholder="path"
-                        atChange={() => {}}
-                    />
+                    <h1>
+                        add trigger
+                    </h1>
+
+                    <div>
+                        <div>
+                            <StyledPluridTextline
+                                text={triggerName}
+                                placeholder="name"
+                                atChange={(event) => setTriggerName(event.target.value)}
+                                level={2}
+                            />
+                        </div>
+
+                        <div>
+                            <StyledPluridTextline
+                                text={triggerRepository}
+                                placeholder="repository"
+                                atChange={(event) => setTriggerRepository(event.target.value)}
+                                level={2}
+                            />
+                        </div>
+
+                        <div>
+                            <StyledPluridTextline
+                                text={triggerBranch}
+                                placeholder="branch"
+                                atChange={(event) => setTriggerBranch(event.target.value)}
+                                level={2}
+                            />
+                        </div>
+
+                        <div>
+                            <StyledPluridTextline
+                                text={triggerPath}
+                                placeholder="path"
+                                atChange={(event) => setTriggerPath(event.target.value)}
+                                level={2}
+                            />
+                        </div>
+
+                        <div>
+                            <StyledPluridPureButton
+                                text="Add Trigger"
+                                atClick={() => {}}
+                                level={2}
+                            />
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div>
-                <h1>
-                    add trigger
-                </h1>
-
-                <div>
-                    <PluridTextline
-                        text=""
-                        placeholder="name"
-                        atChange={() => {}}
-                    />
-
-                    <PluridTextline
-                        text=""
-                        placeholder="repository"
-                        atChange={() => {}}
-                    />
-
-                    <PluridTextline
-                        text=""
-                        placeholder="branch"
-                        atChange={() => {}}
-                    />
-
-                    <PluridTextline
-                        text=""
-                        placeholder="path"
-                        atChange={() => {}}
-                    />
-                </div>
-            </div>
+            )}
         </StyledSetupView>
     );
 }

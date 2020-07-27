@@ -19,30 +19,25 @@ const indexRoute: PluridRoute = {
         kind: 'react',
         element: Home,
     },
-    spaces: [
+    planes: [
         {
-            value: 'default',
-            universes: [
-                {
-                    value: 'default',
-                    clusters: [
-                        {
-                            value: 'default',
-                            planes: [
-                                {
-                                    value: '/page',
-                                    component: {
-                                        kind: 'react',
-                                        element: IndexPagePlane,
-                                    },
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
+            value: '/',
+            component: {
+                kind: 'react',
+                element: IndexPagePlane,
+            },
         },
     ],
+    defaultConfiguration: {
+        elements: {
+            plane: {
+                controls: {
+                    show: false,
+                },
+                width: 0.7,
+            },
+        },
+    },
 }
 
 
