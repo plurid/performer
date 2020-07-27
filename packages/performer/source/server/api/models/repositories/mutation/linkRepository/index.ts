@@ -22,8 +22,8 @@ const linkRepository = async (
     context: Context,
 ) => {
     const {
-        nameWithOwner,
         provider,
+        nameWithOwner,
     } = input;
 
     const repositoryData = await getRepositoryDataByNameWithOwner(

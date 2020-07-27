@@ -1,5 +1,14 @@
 import github from './github';
 
+import {
+    loadProviders,
+} from '#server/logic/loader';
+
+import {
+    BITBUCKET_PROVIDER,
+    GITHUB_PROVIDER,
+} from '#server/data/constants';
+
 
 
 export const getRepositoriesData = async (
@@ -15,13 +24,22 @@ export const getRepositoriesData = async (
 
 
 export const getRepositoryDataByNameWithOwner = async (
-    provider: 'bitbucket' | 'github',
+    providerID: string,
     nameWithOwner: string,
 ) => {
-    switch (provider) {
-        case 'bitbucket':
+    const providers = await loadProviders();
+    const provider = providers.find(
+        provider => provider.id === providerID,
+    );
+
+    if (!provider) {
+        return;
+    }
+
+    switch (provider.type) {
+        case BITBUCKET_PROVIDER:
             return;
-        case 'github':
+        case GITHUB_PROVIDER:
             return github.getRepositoryDataByNameWithOwner(
                 nameWithOwner,
             );
