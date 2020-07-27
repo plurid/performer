@@ -11,7 +11,7 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        setupProvider(input: InputSetupProvider!): Response!
+        setupProvider(input: InputSetupProvider!): ResponseProvider!
         setupWebhook(input: InputSetupWebhook!): Response!
     }
 `;
@@ -22,6 +22,12 @@ export const types = gql`
         status: Boolean!
         error: Error
         data: Setup
+    }
+
+    type ResponseProvider {
+        status: Boolean!
+        error: Error
+        data: string
     }
 
     type Setup {

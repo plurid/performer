@@ -1,6 +1,7 @@
 import {
     promises as fs,
 } from 'fs';
+
 import path from 'path';
 
 import {
@@ -42,6 +43,8 @@ const registerProvider = async (
         providerPath,
         JSON.stringify(provider, null, 4),
     );
+
+    return provider;
 }
 
 
@@ -55,7 +58,7 @@ const setupProvider = async (
         name
     } = input;
 
-    registerProvider(
+    const registeredProvider = await registerProvider(
         provider,
         token,
         name,
@@ -63,6 +66,7 @@ const setupProvider = async (
 
     return {
         status: true,
+        data: registeredProvider.id,
     };
 }
 
