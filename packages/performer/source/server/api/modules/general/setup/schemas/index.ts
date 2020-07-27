@@ -27,7 +27,7 @@ export const types = gql`
     type ResponseProvider {
         status: Boolean!
         error: Error
-        data: string
+        data: String
     }
 
     type Setup {
