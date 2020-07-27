@@ -11,4 +11,14 @@ export interface IStyledRepository {
 }
 
 export const StyledRepository = styled.div<IStyledRepository>`
+    ul {
+        text-align: left;
+        padding: 0;
+        margin: 20px 0;
+        background-color: ${
+            ({
+                theme,
+            }: IStyledRepository) => theme.backgroundColorSecondaryAlpha
+        }
+    }
 `;

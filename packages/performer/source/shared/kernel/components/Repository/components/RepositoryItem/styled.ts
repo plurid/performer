@@ -11,4 +11,25 @@ export interface IStyledRepositoryItem {
 }
 
 export const StyledRepositoryItem = styled.div<IStyledRepositoryItem>`
+    padding: 0.7rem;
+    user-select: none;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 30px auto;
+    grid-gap: 0.3rem;
+
+    :hover {
+        background-color: ${
+            ({
+                theme,
+            }: IStyledRepositoryItem) => theme.backgroundColorTertiary
+        }
+    }
+`;
+
+
+export const StyledRepositorySelected = styled.div`
+    display: grid;
+    place-content: center;
 `;

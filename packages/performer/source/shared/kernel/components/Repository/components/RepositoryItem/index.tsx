@@ -6,10 +6,16 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridIconValid,
+} from '@plurid/plurid-icons-react';
+
+
 /** external */
 /** internal */
 import {
     StyledRepositoryItem,
+    StyledRepositorySelected,
 } from './styled';
 /** [END] imports */
 
@@ -51,7 +57,13 @@ const RepositoryItem: React.FC<RepositoryItemProperties> = (
             theme={theme}
             onClick={() => select()}
         >
-            RepositoryItem
+            <StyledRepositorySelected>
+                <PluridIconValid />
+            </StyledRepositorySelected>
+
+            <div>
+                Repository Item
+            </div>
         </StyledRepositoryItem>
     );
 }
