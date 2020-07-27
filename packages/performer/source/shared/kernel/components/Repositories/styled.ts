@@ -18,6 +18,7 @@ export const StyledRepository = styled.div<IStyledRepository>`
         padding: 0;
         margin: 50px 0;
         max-height: 500px;
+        min-width: 400px;
         overflow: auto;
         background-color: ${
             ({
