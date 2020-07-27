@@ -51,7 +51,7 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    ] = useState('setup');
+    ] = useState('initial');
 
 
     /** effect */
@@ -68,7 +68,9 @@ const Page: React.FC<PageProperties> = (
     return (
         <StyledPage>
             {view === 'initial' && (
-                <InitialView />
+                <InitialView
+                    setView={setView}
+                />
             )}
 
             {view === 'setup' && (

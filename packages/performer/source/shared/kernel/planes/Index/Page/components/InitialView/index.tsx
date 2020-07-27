@@ -24,6 +24,7 @@ export interface InitialViewProperties {
     /** required */
     /** - values */
     /** - methods */
+    setView: React.Dispatch<React.SetStateAction<string>>;
 
     /** optional */
     /** - values */
@@ -34,15 +35,16 @@ const InitialView: React.FC<InitialViewProperties> = (
     properties,
 ) => {
     /** properties */
-    // const {
-    //     /** required */
-    //     /** - values */
-    //     /** - methods */
+    const {
+        /** required */
+        /** - values */
+        /** - methods */
+        setView,
 
-    //     /** optional */
-    //     /** - values */
-    //     /** - methods */
-    // } = properties;
+        /** optional */
+        /** - values */
+        /** - methods */
+    } = properties;
 
 
     /** render */
@@ -68,7 +70,9 @@ const InitialView: React.FC<InitialViewProperties> = (
             >
                 <PluridPureButton
                     text="Initial Setup"
-                    atClick={() => {}}
+                    atClick={() => {
+                        setView('setup')
+                    }}
                     level={2}
                 />
             </div>
