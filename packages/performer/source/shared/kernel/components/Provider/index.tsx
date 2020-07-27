@@ -66,7 +66,7 @@ const Provider: React.FC<ProviderProperties> = (
     const [
         selectedProvider,
         setSelectedProvider,
-    ] = useState('');
+    ] = useState('github');
     const [
         providerName,
         setProviderName,
