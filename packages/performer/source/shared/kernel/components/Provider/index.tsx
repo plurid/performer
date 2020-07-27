@@ -2,6 +2,7 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import {
@@ -67,20 +68,29 @@ const Provider: React.FC<ProviderProperties> = (
         setSelectedProvider,
     ] = useState('');
     const [
+        providerName,
+        setProviderName,
+    ] = useState('');
+    const [
         providerToken,
         setProviderToken,
     ] = useState('');
+    const [
+        validProvider,
+        setValidProvider,
+    ] = useState(false);
 
 
     /** handlers */
     const setProvider = async () => {
-        if (!providerToken || !selectedProvider) {
+        if (validProvider) {
             return;
         }
 
         const input = {
-            token: providerToken,
             provider: selectedProvider,
+            token: providerToken,
+            name: providerName,
         };
 
         const mutation = await client.mutate({
@@ -91,6 +101,22 @@ const Provider: React.FC<ProviderProperties> = (
         });
         console.log('mutation', mutation);
     }
+
+
+    /** effects */
+    useEffect(() => {
+        if (
+            providerName
+            && providerToken
+        ) {
+            setValidProvider(true)
+        } else {
+            setValidProvider(false);
+        }
+    }, [
+        providerToken,
+        providerName,
+    ]);
 
 
     /** render */
@@ -111,6 +137,15 @@ const Provider: React.FC<ProviderProperties> = (
 
                 <div>
                     <StyledPluridTextline
+                        text={providerName}
+                        placeholder="name"
+                        atChange={(event) => setProviderName(event.target.value)}
+                        level={2}
+                    />
+                </div>
+
+                <div>
+                    <StyledPluridTextline
                         text={providerToken}
                         placeholder="token"
                         atChange={(event) => setProviderToken(event.target.value)}
@@ -126,10 +161,7 @@ const Provider: React.FC<ProviderProperties> = (
                             action();
                         }}
                         level={2}
-                        disabled={
-                            !selectedProvider
-                            || !providerToken
-                        }
+                        disabled={!validProvider}
                     />
                 </div>
             </div>
