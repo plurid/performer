@@ -10,6 +10,16 @@ import {
 
 
 
+export const setActiveProviderID = (
+    providerID: string,
+): Types.SetActiveProviderIDAction => {
+    return {
+        type: Types.SET_ACTIVE_PROVIDER_ID,
+        payload: providerID,
+    };
+}
+
+
 export const setProviders = (
     providers: ClientProvider[],
 ): Types.SetProvidersAction => {
@@ -62,6 +72,7 @@ export const setBuilds = (
 
 
 export const actions = {
+    setActiveProviderID,
     setProviders,
     setRepositories,
     setWebhooks,

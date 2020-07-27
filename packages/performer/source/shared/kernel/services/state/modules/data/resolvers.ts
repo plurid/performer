@@ -2,6 +2,17 @@ import * as Types from './types';
 
 
 
+export const setActiveProviderID = (
+    state: Types.State,
+    action: Types.SetActiveProviderIDAction,
+): Types.State => {
+    return {
+        ...state,
+        activeProviderID: action.payload,
+    };
+}
+
+
 export const setProviders = (
     state: Types.State,
     action: Types.SetProvidersAction,
@@ -69,6 +80,7 @@ export const setBuilds = (
 
 
 export const resolvers = {
+    setActiveProviderID,
     setProviders,
     setRepositories,
     setWebhooks,

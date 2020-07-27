@@ -8,6 +8,13 @@ import {
 
 
 
+export const SET_ACTIVE_PROVIDER_ID = 'SET_ACTIVE_PROVIDER_ID';
+export interface SetActiveProviderIDAction {
+    type: typeof SET_ACTIVE_PROVIDER_ID;
+    payload: string;
+}
+
+
 export const SET_PROVIDERS = 'SET_PROVIDERS';
 export interface SetProvidersAction {
     type: typeof SET_PROVIDERS;
@@ -45,6 +52,7 @@ export interface SetBuildsAction {
 
 
 export interface State {
+    activeProviderID: string;
     providers: ClientProvider[];
     repositories: Repository[];
     webhooks: Webhook[];
@@ -54,6 +62,7 @@ export interface State {
 
 
 export type Actions =
+    | SetActiveProviderIDAction
     | SetProvidersAction
     | SetRepositoriesAction
     | SetWebhooksAction

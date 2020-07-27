@@ -15,6 +15,8 @@ export const reducer = (
     action: Types.Actions,
 ): Types.State => {
     switch(action.type) {
+        case Types.SET_ACTIVE_PROVIDER_ID:
+            return resolvers.setActiveProviderID(state, action);
         case Types.SET_PROVIDERS:
             return resolvers.setProviders(state, action);
         case Types.SET_REPOSITORIES:
