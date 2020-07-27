@@ -2,14 +2,14 @@ import github from './github';
 
 
 
-export const getRepositories = async (
+export const getRepositoriesData = async (
     provider: 'bitbucket' | 'github',
 ) => {
     switch (provider) {
         case 'bitbucket':
             return;
         case 'github':
-            return;
+            return github.getRepositoriesData();
     }
 }
 

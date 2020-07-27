@@ -20,6 +20,9 @@ export const QUERY_REPOSITORIES = gql`
                 totalCount
                 nodes {
                     nameWithOwner
+                    name
+                    databaseId
+                    isPrivate
                     defaultBranchRef {
                         target {
                             ... on Commit {

@@ -3,7 +3,7 @@ import path from 'path';
 
 
 export const GITHUB_API = 'https://api.github.com/graphql';
-export const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+export const GITHUB_TOKEN = process.env.GITHUB_ACCESS_TOKEN || '';
 export const GITHUB_PROVIDER = 'github';
 
 

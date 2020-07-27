@@ -11,6 +11,7 @@ import client from '../requester';
 
 import {
     VIEWER_LOGIN,
+    QUERY_REPOSITORIES,
 } from '../query';
 
 
@@ -93,4 +94,43 @@ export const getRepository = async (
 
     const zip = new Zip(resolvedArchivePath);
     zip.extractAllTo(resolvedDataPath, true);
+}
+
+
+export const getRepositoriesData = async () => {
+    try {
+        const query = await client.query({
+            query: QUERY_REPOSITORIES,
+        });
+
+        const {
+            data,
+        } = query;
+
+        if (!data) {
+            return;
+        }
+
+        const repositoriesData = data.repositories.nodes;
+
+        const repositories = repositoriesData.map(
+            (repository: any) => {
+                const {
+                    nameWithOwner,
+                    databaseId,
+                    isPrivate,
+                } = repository;
+
+                return {
+                    id: databaseId,
+                    name: nameWithOwner,
+                    isPrivate,
+                };
+            }
+        );
+
+        console.log('repositories', repositories);
+    } catch (error) {
+        return;
+    }
 }
