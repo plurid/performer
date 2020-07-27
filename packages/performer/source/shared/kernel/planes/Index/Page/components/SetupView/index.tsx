@@ -15,6 +15,7 @@ import {
 
 /** external */
 import Provider from '#kernel-components/Provider';
+import Webhook from '#kernel-components/Webhook';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -22,7 +23,6 @@ import actions from '#kernel-services/state/actions';
 
 
 /** internal */
-import Webhook from './components/Webhook';
 import Repository from './components/Repository';
 import Trigger from './components/Trigger';
 
@@ -77,7 +77,10 @@ const SetupView: React.FC<SetupViewProperties> = (
 
 
     /** state */
-    const [phase, setPhase] = useState('PROVIDER');
+    const [
+        phase,
+        setPhase,
+    ] = useState('PROVIDER');
 
 
     /** render */
@@ -102,7 +105,9 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'WEBHOOK' && (
                 <Webhook
                     theme={stateInteractionTheme}
-                    setPhase={setPhase}
+                    action={() => {
+                        setPhase('TRIGGER');
+                    }}
                 />
             )}
 
