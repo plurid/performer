@@ -1,6 +1,7 @@
 import * as Types from './types';
 
 import {
+    ClientProvider,
     Repository,
     Webhook,
     Trigger,
@@ -10,7 +11,7 @@ import {
 
 
 export const setProviders = (
-    providers: string[],
+    providers: ClientProvider[],
 ): Types.SetProvidersAction => {
     return {
         type: Types.SET_PROVIDERS,

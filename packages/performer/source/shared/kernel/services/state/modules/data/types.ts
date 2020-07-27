@@ -1,4 +1,5 @@
 import {
+    ClientProvider,
     Repository,
     Webhook,
     Trigger,
@@ -10,7 +11,7 @@ import {
 export const SET_PROVIDERS = 'SET_PROVIDERS';
 export interface SetProvidersAction {
     type: typeof SET_PROVIDERS;
-    payload: string[];
+    payload: ClientProvider[];
 }
 
 
@@ -44,7 +45,7 @@ export interface SetBuildsAction {
 
 
 export interface State {
-    providers: string[];
+    providers: ClientProvider[];
     repositories: Repository[];
     webhooks: Webhook[];
     triggers: Trigger[];

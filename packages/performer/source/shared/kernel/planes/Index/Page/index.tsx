@@ -7,9 +7,15 @@ import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
+
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
+
+import {
+    ClientProvider,
+} from '#server/data/interfaces';
+
 
 import InitialView from './components/InitialView';
 import SetupView from './components/SetupView';
@@ -25,7 +31,7 @@ export interface PageOwnProperties {
 }
 
 export interface PageStateProperties {
-    stateProviders: string[];
+    stateProviders: ClientProvider[];
 }
 
 export interface PageDispatchProperties {

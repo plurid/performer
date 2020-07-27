@@ -30,7 +30,11 @@ export const GET_SETUP = gql`
                 builds {
                     id
                 }
-                providers
+                providers {
+                    id
+                    name
+                    type
+                }
             }
         }
     }

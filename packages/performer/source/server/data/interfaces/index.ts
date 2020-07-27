@@ -15,6 +15,8 @@ export interface Provider {
     name: string;
 }
 
+export type ClientProvider = Omit<Provider, 'token'>;
+
 
 export interface Repository {
     id: string;
