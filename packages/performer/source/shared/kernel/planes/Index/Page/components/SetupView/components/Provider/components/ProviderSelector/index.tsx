@@ -8,8 +8,8 @@ import {
 
 
 /** external */
-import githubLogo from '#kernel-planes/Index/Page/assets/github-logo.png';
-import bitbucketLogo from '#kernel-planes/Index/Page/assets/bitbucket-logo.png';
+import githubLogo from '../../../../../../assets/github-logo.png';
+import bitbucketLogo from '../../../../../../assets/bitbucket-logo.png';
 
 
 /** internal */
@@ -61,14 +61,20 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
         >
             <ProviderIcon
                 theme={theme}
+                type="github"
                 image={githubLogo}
                 name="GitHub"
+                selectedProvider={selectedProvider}
+                setSelecterProvider={setSelecterProvider}
             />
 
             <ProviderIcon
                 theme={theme}
+                type="bitbucket"
                 image={bitbucketLogo}
                 name="BitBucket"
+                selectedProvider={selectedProvider}
+                setSelecterProvider={setSelecterProvider}
             />
         </StyledProviderSelector>
     );
