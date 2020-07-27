@@ -2,6 +2,7 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import {
@@ -12,12 +13,19 @@ import {
 /** external */
 import client from '#kernel-services/graphql/client';
 import {
+    GET_PROVIDER_REPOSITORIES,
+} from '#kernel-services/graphql/query';
+import {
     LINK_REPOSITORY,
 } from '#kernel-services/graphql/mutate';
 
 import {
     StyledPluridPureButton,
 } from '#kernel-services/styled';
+
+import {
+    Repository as IRepository,
+} from '#server/data/interfaces';
 
 
 /** internal */
@@ -62,6 +70,10 @@ const Repository: React.FC<RepositoryProperties> = (
 
     /** state */
     const [
+        providerRepositories,
+        setProviderRepositories,
+    ] = useState<IRepository[]>([]);
+    const [
         selectedRepositories,
         setSelectedRepositories,
     ] = useState<string[]>([]);
@@ -73,21 +85,64 @@ const Repository: React.FC<RepositoryProperties> = (
             return;
         }
 
-        for (const selectedRepository of selectedRepositories) {
+        // for (const selectedRepository of selectedRepositories) {
+        //     const input = {
+        //         url: '',
+        //         name: selectedRepository,
+        //     };
+
+        //     const mutation = await client.mutate({
+        //         mutation: LINK_REPOSITORY,
+        //         variables: {
+        //             input,
+        //         },
+        //     });
+        //     console.log('mutation', mutation);
+        // }
+    }
+
+    const handleSelect = (
+        id: string,
+    ) => {
+        if (!selectedRepositories.includes(id)) {
+            const updated = [
+                ...selectedRepositories,
+                id,
+            ];
+            setSelectedRepositories(updated);
+            return;
+        }
+
+        const updated = selectedRepositories.filter(repository => repository !== id);
+        setSelectedRepositories(updated);
+        return;
+    }
+
+
+    /** effects */
+    useEffect(() => {
+        const getProviderRepositories = async () => {
             const input = {
-                url: '',
-                name: selectedRepository,
+                provider: 'github',
             };
 
-            const mutation = await client.mutate({
-                mutation: LINK_REPOSITORY,
+            const query = await client.query({
+                query: GET_PROVIDER_REPOSITORIES,
                 variables: {
                     input,
                 },
             });
-            console.log('mutation', mutation);
+
+            const response = query.data.getProviderRepositories;
+            if (!response.status) {
+                return;
+            }
+
+            setProviderRepositories(response.data);
         }
-    }
+
+        getProviderRepositories();
+    }, []);
 
 
     /** render */
@@ -101,15 +156,21 @@ const Repository: React.FC<RepositoryProperties> = (
                 </h1>
 
                 <ul>
-                    <RepositoryItem
-                        theme={theme}
-                        select={() => {}}
-                    />
+                    {providerRepositories.map(repository => {
+                        const {
+                            id,
+                        } = repository;
 
-                    <RepositoryItem
-                        theme={theme}
-                        select={() => {}}
-                    />
+                        return (
+                            <RepositoryItem
+                                key={id}
+                                theme={theme}
+                                selected={selectedRepositories.includes(id)}
+                                select={handleSelect}
+                                data={repository}
+                            />
+                        );
+                    })}
                 </ul>
 
                 <div>
@@ -117,10 +178,10 @@ const Repository: React.FC<RepositoryProperties> = (
                         text="Link Repositories"
                         atClick={() => {
                             action();
-                            // linkRepositories();
+                            linkRepositories();
                         }}
                         level={2}
-                        // disabled={selectedRepositories.length === 0}
+                        disabled={selectedRepositories.length === 0}
                     />
                 </div>
             </div>

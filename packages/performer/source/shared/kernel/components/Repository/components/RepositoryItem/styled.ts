@@ -16,7 +16,7 @@ export const StyledRepositoryItem = styled.div<IStyledRepositoryItem>`
     cursor: pointer;
     display: grid;
     align-items: center;
-    grid-template-columns: 30px auto;
+    grid-template-columns: 30px auto 30px;
     grid-gap: 0.3rem;
 
     :hover {
@@ -29,7 +29,7 @@ export const StyledRepositoryItem = styled.div<IStyledRepositoryItem>`
 `;
 
 
-export const StyledRepositorySelected = styled.div`
+export const StyledRepositoryIcon = styled.div`
     display: grid;
     place-content: center;
 `;

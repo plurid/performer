@@ -14,11 +14,18 @@ export const StyledRepository = styled.div<IStyledRepository>`
     ul {
         text-align: left;
         padding: 0;
-        margin: 20px 0;
+        margin: 50px 0;
+        max-height: 500px;
+        overflow: auto;
         background-color: ${
             ({
                 theme,
             }: IStyledRepository) => theme.backgroundColorSecondaryAlpha
+        }
+        box-shadow: ${
+            ({
+                theme,
+            }: IStyledRepository) => theme.boxShadowUmbraInset
         }
     }
 `;

@@ -35,3 +35,17 @@ export const GET_SETUP = gql`
         }
     }
 `;
+
+
+export const GET_PROVIDER_REPOSITORIES = gql`
+    query GetProviderRepositories($input: InputGetProviderRepositories!) {
+        getProviderRepositories(input: $input) {
+            status
+            data {
+                id
+                name
+                isPrivate
+            }
+        }
+    }
+`;

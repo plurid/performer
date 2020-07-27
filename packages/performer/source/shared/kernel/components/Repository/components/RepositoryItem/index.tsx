@@ -8,14 +8,20 @@ import {
 
 import {
     PluridIconValid,
+    PluridIconLocked,
 } from '@plurid/plurid-icons-react';
 
 
 /** external */
+import {
+    Repository as IRepository,
+} from '#server/data/interfaces';
+
+
 /** internal */
 import {
     StyledRepositoryItem,
-    StyledRepositorySelected,
+    StyledRepositoryIcon,
 } from './styled';
 /** [END] imports */
 
@@ -26,8 +32,12 @@ export interface RepositoryItemProperties {
     /** required */
     /** - values */
     theme: Theme;
+    data: IRepository;
+    selected: boolean;
     /** - methods */
-    select: () => void;
+    select: (
+        id: string,
+    ) => void;
 
     /** optional */
     /** - values */
@@ -42,6 +52,8 @@ const RepositoryItem: React.FC<RepositoryItemProperties> = (
         /** required */
         /** - values */
         theme,
+        data,
+        selected,
         /** - methods */
         select,
 
@@ -50,20 +62,34 @@ const RepositoryItem: React.FC<RepositoryItemProperties> = (
         /** - methods */
     } = properties;
 
+    const {
+        id,
+        name,
+        isPrivate,
+    } = data;
+
 
     /** render */
     return (
         <StyledRepositoryItem
             theme={theme}
-            onClick={() => select()}
+            onClick={() => select(id)}
         >
-            <StyledRepositorySelected>
-                <PluridIconValid />
-            </StyledRepositorySelected>
+            <StyledRepositoryIcon>
+                {selected && (
+                    <PluridIconValid />
+                )}
+            </StyledRepositoryIcon>
 
             <div>
-                Repository Item
+                {name}
             </div>
+
+            <StyledRepositoryIcon>
+                {isPrivate && (
+                    <PluridIconLocked />
+                )}
+            </StyledRepositoryIcon>
         </StyledRepositoryItem>
     );
 }
