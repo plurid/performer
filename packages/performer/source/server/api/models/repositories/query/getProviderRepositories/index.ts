@@ -8,7 +8,7 @@ import {
 
 
 
-const getProviderRepositories = (
+const getProviderRepositories = async (
     input: any,
     context: Context,
 ) => {
@@ -16,12 +16,19 @@ const getProviderRepositories = (
         provider,
     } = input;
 
-    getRepositoriesData(
+    const repositories = await getRepositoriesData(
         provider,
     );
 
+    if (!repositories) {
+        return {
+            status: false,
+        };
+    }
+
     return {
         status: true,
+        data: repositories,
     };
 }
 

@@ -26,6 +26,8 @@ export const types = gql`
 
     type Repository {
         id: ID!
+        name: String!
+        isPrivate: Boolean!
     }
 `;
 

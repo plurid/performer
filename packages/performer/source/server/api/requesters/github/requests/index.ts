@@ -7,6 +7,10 @@ import {
     BASE_PATH_REPOSITORIES,
 } from '#server/data/constants';
 
+import {
+    Repository,
+} from '#server/data/interfaces';
+
 import client from '../requester';
 
 import {
@@ -111,25 +115,27 @@ export const getRepositoriesData = async () => {
             return;
         }
 
-        const repositoriesData = data.repositories.nodes;
+        const repositoriesData = data.viewer.repositories.nodes;
 
-        const repositories = repositoriesData.map(
-            (repository: any) => {
+        const repositories: Repository[] = repositoriesData.map(
+            (providerRepository: any) => {
                 const {
                     nameWithOwner,
                     databaseId,
                     isPrivate,
-                } = repository;
+                } = providerRepository;
 
-                return {
+                const repository: Repository = {
                     id: databaseId,
                     name: nameWithOwner,
                     isPrivate,
                 };
+
+                return repository;
             }
         );
 
-        console.log('repositories', repositories);
+        return repositories;
     } catch (error) {
         return;
     }

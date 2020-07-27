@@ -10,6 +10,8 @@ export type CodeProvider =
 
 export interface Repository {
     id: string;
+    name: string;
+    isPrivate: boolean;
 }
 
 

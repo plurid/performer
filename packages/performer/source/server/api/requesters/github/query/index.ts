@@ -16,20 +16,15 @@ export const VIEWER_LOGIN = gql`
 export const QUERY_REPOSITORIES = gql`
     query {
         viewer {
-            repositories(first: 10) {
+            repositories(
+                first: 100,
+                ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR]
+            ) {
                 totalCount
                 nodes {
                     nameWithOwner
-                    name
                     databaseId
                     isPrivate
-                    defaultBranchRef {
-                        target {
-                            ... on Commit {
-                                zipballUrl
-                            }
-                        }
-                    }
                 }
                 pageInfo {
                     endCursor
