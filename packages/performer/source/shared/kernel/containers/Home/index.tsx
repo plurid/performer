@@ -83,11 +83,11 @@ const Home: React.FC<HomeProperties> = (
             }
 
             const {
-                builds,
                 providers,
                 repositories,
-                triggers,
                 webhooks,
+                triggers,
+                builds,
             } = graphql.deleteTypenames(response.data);
 
             dispatchSetProviders(providers);
