@@ -20,6 +20,10 @@ import {
     BASE_PATH_WEBHOOKS,
 } from '#server/data/constants';
 
+import {
+    getRoutes,
+} from '#server/utilities';
+
 
 
 export const registerWebhook = async (
@@ -61,6 +65,11 @@ export const handleWebhook = (
     provider: CodeProvider,
     instance: express.Express,
 ) => {
+    const routes = getRoutes(instance);
+    if (routes.includes(hookpath)) {
+        return;
+    }
+
     switch (provider) {
         case 'bitbucket':
             break;

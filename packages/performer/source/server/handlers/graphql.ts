@@ -26,19 +26,6 @@ import {
 const setupGraphQLServer = async (
     instance: Express,
 ) => {
-    const {
-        providers,
-        repositories,
-        webhooks,
-        triggers,
-        builds,
-    } = await loadData();
-
-    handleWebhooks(
-        webhooks,
-        instance,
-    );
-
     const playground = {
         faviconUrl: '/favicon.ico',
         title: 'API · performer',
@@ -52,6 +39,19 @@ const setupGraphQLServer = async (
             req,
             res,
         }: any) => {
+            const {
+                providers,
+                repositories,
+                webhooks,
+                triggers,
+                builds,
+            } = await loadData();
+
+            handleWebhooks(
+                webhooks,
+                instance,
+            );
+
             const context: Context = {
                 request: req,
                 response: res,
