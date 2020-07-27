@@ -25,7 +25,7 @@ export interface ProviderIconProperties {
     name: string;
     selectedProvider: string;
     /** - methods */
-    setSelecterProvider: React.Dispatch<React.SetStateAction<string>>;
+    setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
 
     /** optional */
     /** - values */
@@ -45,7 +45,7 @@ const ProviderIcon: React.FC<ProviderIconProperties> = (
         name,
         selectedProvider,
         /** - methods */
-        setSelecterProvider,
+        setSelectedProvider,
 
         /** optional */
         /** - values */
@@ -60,9 +60,9 @@ const ProviderIcon: React.FC<ProviderIconProperties> = (
             selected={selectedProvider === type}
             onClick={() => {
                 if (selectedProvider !== type) {
-                    setSelecterProvider(type)
+                    setSelectedProvider(type)
                 } else {
-                    setSelecterProvider('');
+                    setSelectedProvider('');
                 }
             }}
         >

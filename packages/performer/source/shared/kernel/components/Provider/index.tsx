@@ -10,10 +10,15 @@ import {
 
 
 /** external */
+import client from '#kernel-services/graphql/client';
+import {
+    SETUP_PROVIDER,
+} from '#kernel-services/graphql/mutate';
+
 import {
     StyledPluridTextline,
     StyledPluridPureButton,
-} from '../../styled';
+} from '#kernel-services/styled';
 
 
 /** internal */
@@ -32,7 +37,7 @@ export interface ProviderProperties {
     /** - values */
     theme: Theme;
     /** - methods */
-    setPhase: React.Dispatch<React.SetStateAction<string>>;
+    action: () => void;
 
     /** optional */
     /** - values */
@@ -48,7 +53,7 @@ const Provider: React.FC<ProviderProperties> = (
         /** - values */
         theme,
         /** - methods */
-        setPhase,
+        action,
 
         /** optional */
         /** - values */
@@ -59,12 +64,33 @@ const Provider: React.FC<ProviderProperties> = (
     /** state */
     const [
         selectedProvider,
-        setSelecterProvider,
+        setSelectedProvider,
     ] = useState('');
     const [
         providerToken,
         setProviderToken,
     ] = useState('');
+
+
+    /** handle */
+    const setProvider = async () => {
+        if (!providerToken || !selectedProvider) {
+            return;
+        }
+
+        const input = {
+            token: providerToken,
+            provider: selectedProvider,
+        };
+
+        const mutation = await client.mutate({
+            mutation: SETUP_PROVIDER,
+            variables: {
+                input,
+            },
+        });
+        console.log('mutation', mutation);
+    }
 
 
     /** render */
@@ -80,7 +106,7 @@ const Provider: React.FC<ProviderProperties> = (
                 <ProviderSelector
                     theme={theme}
                     selectedProvider={selectedProvider}
-                    setSelecterProvider={setSelecterProvider}
+                    setSelectedProvider={setSelectedProvider}
                 />
 
                 <div>
@@ -96,9 +122,14 @@ const Provider: React.FC<ProviderProperties> = (
                     <StyledPluridPureButton
                         text="Set Provider"
                         atClick={() => {
-                            setPhase('REPOSITORY');
+                            setProvider();
+                            action();
                         }}
                         level={2}
+                        disabled={
+                            !selectedProvider
+                            || !providerToken
+                        }
                     />
                 </div>
             </div>

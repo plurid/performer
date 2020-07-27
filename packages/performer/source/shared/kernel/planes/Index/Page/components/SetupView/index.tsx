@@ -14,13 +14,14 @@ import {
 
 
 /** external */
+import Provider from '#kernel-components/Provider';
+
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
 
 /** internal */
-import Provider from './components/Provider';
 import Webhook from './components/Webhook';
 import Repository from './components/Repository';
 import Trigger from './components/Trigger';
@@ -85,7 +86,9 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'PROVIDER' && (
                 <Provider
                     theme={stateInteractionTheme}
-                    setPhase={setPhase}
+                    action={() => {
+                        setPhase('REPOSITORY');
+                    }}
                 />
             )}
 

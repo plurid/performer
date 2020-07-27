@@ -8,11 +8,12 @@ import {
 
 
 /** external */
-import githubLogo from '../../../../../../assets/github-logo.png';
-import bitbucketLogo from '../../../../../../assets/bitbucket-logo.png';
 
 
 /** internal */
+import githubLogo from './assets/github-logo.png';
+import bitbucketLogo from './assets/bitbucket-logo.png';
+
 import ProviderIcon from './components/ProviderIcon';
 
 import {
@@ -29,7 +30,7 @@ export interface ProviderSelectorProperties {
     theme: Theme;
     selectedProvider: string;
     /** - methods */
-    setSelecterProvider: React.Dispatch<React.SetStateAction<string>>;
+    setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
 
     /** optional */
     /** - values */
@@ -46,7 +47,7 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
         theme,
         selectedProvider,
         /** - methods */
-        setSelecterProvider,
+        setSelectedProvider,
 
         /** optional */
         /** - values */
@@ -65,7 +66,7 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
                 image={githubLogo}
                 name="GitHub"
                 selectedProvider={selectedProvider}
-                setSelecterProvider={setSelecterProvider}
+                setSelectedProvider={setSelectedProvider}
             />
 
             <ProviderIcon
@@ -74,7 +75,7 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
                 image={bitbucketLogo}
                 name="BitBucket"
                 selectedProvider={selectedProvider}
-                setSelecterProvider={setSelecterProvider}
+                setSelectedProvider={setSelectedProvider}
             />
         </StyledProviderSelector>
     );
