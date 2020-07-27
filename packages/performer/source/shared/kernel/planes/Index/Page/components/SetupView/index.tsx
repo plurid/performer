@@ -4,21 +4,36 @@ import React, {
     useState,
 } from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
+import {
+    Theme
+} from '@plurid/plurid-themes';
+
 
 /** external */
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
+
 
 /** internal */
+import Provider from './components/Provider';
+import Webhook from './components/Webhook';
+import Repository from './components/Repository';
+import Trigger from './components/Trigger';
+
 import {
     StyledSetupView,
-    StyledPluridTextline,
-    StyledPluridPureButton,
 } from './styled';
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface SetupViewProperties {
+export interface SetupViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
@@ -28,190 +43,90 @@ export interface SetupViewProperties {
     /** - methods */
 }
 
+export interface SetupViewStateProperties {
+    stateInteractionTheme: Theme;
+}
+
+export interface SetupViewDispatchProperties {
+}
+
+export type SetupViewProperties = SetupViewOwnProperties
+    & SetupViewStateProperties
+    & SetupViewDispatchProperties;
+
 const SetupView: React.FC<SetupViewProperties> = (
     properties,
 ) => {
     /** properties */
-    // const {
-    //     /** required */
-    //     /** - values */
-    //     /** - methods */
+    const {
+        /** own */
+        /** required */
+        /** - values */
+        /** - methods */
 
-    //     /** optional */
-    //     /** - values */
-    //     /** - methods */
-    // } = properties;
+        /** optional */
+        /** - values */
+        /** - methods */
+
+        /** state */
+        stateInteractionTheme,
+    } = properties;
 
 
     /** state */
     const [phase, setPhase] = useState('PROVIDER');
-
-    const [providerToken, setProviderToken] = useState('');
-    const [webhookPath, setWebhookPath] = useState('');
-    const [triggerName, setTriggerName] = useState('');
-    const [triggerRepository, setTriggerRepository] = useState('');
-    const [triggerBranch, setTriggerBranch] = useState('');
-    const [triggerPath, setTriggerPath] = useState('');
 
 
     /** render */
     return (
         <StyledSetupView>
             {phase === 'PROVIDER' && (
-                <div>
-                    <h1>
-                        setup provider
-                    </h1>
-
-                    <div>
-                        <div>
-                            github
-                        </div>
-
-                        <div>
-                            bitbucket
-                        </div>
-                    </div>
-
-                    <div>
-                        <StyledPluridTextline
-                            text={providerToken}
-                            placeholder="token"
-                            atChange={(event) => setProviderToken(event.target.value)}
-                            level={2}
-                        />
-                    </div>
-
-                    <div>
-                        <StyledPluridPureButton
-                            text="Set Provider"
-                            atClick={() => {
-                                setPhase('REPOSITORY');
-                            }}
-                            level={2}
-                        />
-                    </div>
-                </div>
+                <Provider
+                    theme={stateInteractionTheme}
+                    setPhase={setPhase}
+                />
             )}
-
 
             {phase === 'REPOSITORY' && (
-                <div>
-                    <h1>
-                        add repository
-                    </h1>
-
-                    <div>
-                        select from list
-                    </div>
-
-                    <ul>
-                        <li>
-                            repo 1
-                        </li>
-                        <li>
-                            repo 2
-                        </li>
-                    </ul>
-
-                    <div>
-                        <StyledPluridPureButton
-                            text="Add Repository"
-                            atClick={() => {
-                                setPhase('WEBHOOK');
-                            }}
-                            level={2}
-                        />
-                    </div>
-                </div>
+                <Repository
+                    theme={stateInteractionTheme}
+                    setPhase={setPhase}
+                />
             )}
-
 
             {phase === 'WEBHOOK' && (
-                <div>
-                    <h1>
-                        setup webhook
-                    </h1>
-
-                    <div>
-                        <StyledPluridTextline
-                            text={webhookPath}
-                            placeholder="path"
-                            atChange={(event) => setWebhookPath(event.target.value)}
-                            level={2}
-                        />
-                    </div>
-
-                    <div>
-                        <StyledPluridPureButton
-                            text="Setup Webhook"
-                            atClick={() => {
-                                setPhase('TRIGGER');
-                            }}
-                            level={2}
-                        />
-                    </div>
-                </div>
+                <Webhook
+                    theme={stateInteractionTheme}
+                    setPhase={setPhase}
+                />
             )}
 
-
             {phase === 'TRIGGER' && (
-                <div>
-                    <h1>
-                        add trigger
-                    </h1>
-
-                    <div>
-                        <div>
-                            <StyledPluridTextline
-                                text={triggerName}
-                                placeholder="name"
-                                atChange={(event) => setTriggerName(event.target.value)}
-                                level={2}
-                            />
-                        </div>
-
-                        <div>
-                            <StyledPluridTextline
-                                text={triggerRepository}
-                                placeholder="repository"
-                                atChange={(event) => setTriggerRepository(event.target.value)}
-                                level={2}
-                            />
-                        </div>
-
-                        <div>
-                            <StyledPluridTextline
-                                text={triggerBranch}
-                                placeholder="branch"
-                                atChange={(event) => setTriggerBranch(event.target.value)}
-                                level={2}
-                            />
-                        </div>
-
-                        <div>
-                            <StyledPluridTextline
-                                text={triggerPath}
-                                placeholder="path"
-                                atChange={(event) => setTriggerPath(event.target.value)}
-                                level={2}
-                            />
-                        </div>
-
-                        <div>
-                            <StyledPluridPureButton
-                                text="Add Trigger"
-                                atClick={() => {}}
-                                level={2}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <Trigger
+                    theme={stateInteractionTheme}
+                    setPhase={setPhase}
+                />
             )}
         </StyledSetupView>
     );
 }
 
 
-export default SetupView;
+const mapStateToProperties = (
+    state: AppState,
+): SetupViewStateProperties => ({
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): SetupViewDispatchProperties => ({
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(SetupView);
 /** [END] component */
