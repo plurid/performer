@@ -11,6 +11,10 @@ import {
     getRepositoryDataByNameWithOwner,
 } from '#server/api/requesters';
 
+import {
+    registerRepositoryMetadata,
+} from '#server/logic/repository';
+
 
 
 const linkRepository = async (
@@ -49,6 +53,8 @@ const linkRepository = async (
         zipURL,
         name,
     );
+
+    await registerRepositoryMetadata(repositoryData);
 
     return {
         status: true,

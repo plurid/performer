@@ -12,13 +12,11 @@ import {
     BASE_PATH_TRIGGERS,
 } from '#server/data/constants';
 
+import {
+    cleanFileName,
+} from '#server/utilities';
 
 
-const cleanTriggerName = (
-    name: string,
-) => {
-    return name.replace(/\//, '-');
-}
 
 const registerTrigger = async (
     data: any,
@@ -29,7 +27,7 @@ const registerTrigger = async (
         branch,
     } = data;
 
-    const triggerName = cleanTriggerName(
+    const triggerName = cleanFileName(
         [
             repository,
             branch,
