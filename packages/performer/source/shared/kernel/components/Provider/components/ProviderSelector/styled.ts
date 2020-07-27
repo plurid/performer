@@ -12,6 +12,6 @@ export interface IStyledProviderSelector {
 
 export const StyledProviderSelector = styled.div<IStyledProviderSelector>`
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
 `;

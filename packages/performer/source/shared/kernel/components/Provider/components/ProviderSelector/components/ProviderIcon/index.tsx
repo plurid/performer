@@ -70,7 +70,7 @@ const ProviderIcon: React.FC<ProviderIconProperties> = (
                 <img
                     src={image}
                     alt={name}
-                    height={70}
+                    height={50}
                 />
             </div>
 

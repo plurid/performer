@@ -69,14 +69,14 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
                 setSelectedProvider={setSelectedProvider}
             />
 
-            <ProviderIcon
+            {/* <ProviderIcon
                 theme={theme}
                 type="bitbucket"
                 image={bitbucketLogo}
                 name="BitBucket"
                 selectedProvider={selectedProvider}
                 setSelectedProvider={setSelectedProvider}
-            />
+            /> */}
         </StyledProviderSelector>
     );
 }
