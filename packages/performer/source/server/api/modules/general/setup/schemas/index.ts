@@ -25,11 +25,11 @@ export const types = gql`
     }
 
     type Setup {
+        providers: [Provider!]
+        repositories: [Repository!]
         webhooks: [Webhook!]
         triggers: [Trigger!]
-        repositories: [Repository!]
         builds: [Build!]
-        providers: [String!]
     }
 
     type Webhook {
@@ -37,13 +37,20 @@ export const types = gql`
         path: String!
         provider: String!
     }
+
+    type Provider {
+        id: ID!
+        name: String!
+        type: String!
+    }
 `;
 
 
 export const inputs = gql`
     input InputSetupProvider {
-        token: String!
         provider: String!
+        token: String!
+        name: String!
     }
 
     input InputSetupWebhook {

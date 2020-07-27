@@ -1,7 +1,48 @@
 import {
+    promises as fs,
+} from 'fs';
+import path from 'path';
+
+import {
+    uuid,
+} from '@plurid/plurid-functions';
+
+import {
     Context,
+    Provider,
+    CodeProvider,
 } from '#server/data/interfaces';
 
+import {
+    providersPath,
+} from '#server/data/constants';
+
+
+
+const registerProvider = async (
+    type: CodeProvider,
+    token: string,
+    name: string,
+) => {
+    const id = uuid.generate();
+
+    const provider: Provider = {
+        id,
+        type,
+        token,
+        name,
+    };
+
+    const providerPath = path.join(
+        providersPath,
+        id + '.json',
+    );
+
+    await fs.writeFile(
+        providerPath,
+        JSON.stringify(provider, null, 4),
+    );
+}
 
 
 const setupProvider = async (
@@ -9,12 +50,16 @@ const setupProvider = async (
     context: Context,
 ) => {
     const {
-        token,
         provider,
+        token,
+        name
     } = input;
 
-    console.log('input', input);
-
+    registerProvider(
+        provider,
+        token,
+        name,
+    );
 
     return {
         status: true,

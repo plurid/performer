@@ -8,6 +8,14 @@ export type CodeProvider =
 
 
 
+export interface Provider {
+    id: string;
+    token: string;
+    type: CodeProvider;
+    name: string;
+}
+
+
 export interface Repository {
     id: string;
     name: string;
@@ -44,5 +52,5 @@ export interface Context {
     triggers: Trigger[],
     repositories: Repository[],
     builds: Build[],
-    providers: string[];
+    providers: Provider[];
 }

@@ -21,23 +21,18 @@ import {
     handleWebhooks,
 } from '#server/logic/webhooks';
 
-import {
-    getProviders,
-} from '#server/logic/providers';
-
 
 
 const setupGraphQLServer = async (
     instance: Express,
 ) => {
     const {
+        providers,
+        repositories,
         webhooks,
         triggers,
-        repositories,
         builds,
     } = await loadData();
-
-    const providers = await getProviders();
 
     handleWebhooks(
         webhooks,

@@ -4,16 +4,18 @@ import {
 import path from 'path';
 
 import {
+    Provider,
+    Repository,
     Webhook,
     Trigger,
-    Repository,
     Build,
 } from '#server/data/interfaces';
 
 import {
+    providersPath,
+    repositoriesMetadataPath,
     webhooksPath,
     triggersPath,
-    repositoriesMetadataPath,
     buildsPath,
 } from '#server/data/constants';
 
@@ -40,6 +42,20 @@ const loadDataFromFiles = async <T>(
 }
 
 
+export const loadProviders = async () => {
+    const providers = await loadDataFromFiles<Provider>(providersPath);
+
+    return providers;
+}
+
+
+export const loadRepositories = async () => {
+    const repositories = await loadDataFromFiles<Repository>(repositoriesMetadataPath);
+
+    return repositories;
+}
+
+
 export const loadWebhooks = async () => {
     const webhooks = await loadDataFromFiles<Webhook>(webhooksPath);
 
@@ -54,13 +70,6 @@ export const loadTriggers = async () => {
 }
 
 
-export const loadRepositories = async () => {
-    const repositories = await loadDataFromFiles<Repository>(repositoriesMetadataPath);
-
-    return repositories;
-}
-
-
 export const loadBuilds = async () => {
     const builds = await loadDataFromFiles<Build>(buildsPath);
 
@@ -69,12 +78,14 @@ export const loadBuilds = async () => {
 
 
 const loadData = async () => {
+    const providers = await loadProviders();
+    const repositories = await loadRepositories();
     const webhooks = await loadWebhooks();
     const triggers = await loadTriggers();
-    const repositories = await loadRepositories();
     const builds = await loadBuilds();
 
     const data = {
+        providers,
         webhooks,
         triggers,
         repositories,

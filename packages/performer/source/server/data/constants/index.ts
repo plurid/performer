@@ -13,6 +13,7 @@ export const BITBUCKET_PROVIDER = 'bitbucket';
 
 
 export const BASE_PATH = process.cwd();
+export const BASE_PATH_PROVIDERS = './data/providers/';
 export const BASE_PATH_REPOSITORIES = './data/repositories/';
 export const BASE_PATH_REPOSITORIES_METADATA = './data/repositories/metadata/';
 export const BASE_PATH_TRIGGERS = './data/triggers/';
@@ -22,6 +23,7 @@ export const BASE_PATH_BUILDLOGS = './data/buildlogs/';
 export const BASE_PATH_BUILDQUEUE = './data/buildqueue/';
 
 
+export const providersPath = path.join(BASE_PATH, BASE_PATH_PROVIDERS);
 export const repositoriesPath = path.join(BASE_PATH, BASE_PATH_REPOSITORIES);
 export const repositoriesMetadataPath = path.join(BASE_PATH, BASE_PATH_REPOSITORIES_METADATA);
 export const triggersPath = path.join(BASE_PATH, BASE_PATH_TRIGGERS);
