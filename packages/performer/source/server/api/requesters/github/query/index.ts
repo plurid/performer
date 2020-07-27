@@ -34,3 +34,25 @@ export const QUERY_REPOSITORIES = gql`
         }
     }
 `;
+
+
+export const QUERY_REPOSITORY_BY_NAME_OWNER = gql`
+    query QueryRepositoryByNameOwner($name: String!, $owner: String!) {
+        repository(
+            name: $name
+            owner: $owner
+        ) {
+            nameWithOwner
+            name
+            databaseId
+            isPrivate
+            defaultBranchRef {
+                target {
+                    ... on Commit {
+                        zipballUrl
+                    }
+                }
+            }
+        }
+    }
+`;

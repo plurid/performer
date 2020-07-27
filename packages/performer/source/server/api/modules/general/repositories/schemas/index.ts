@@ -38,8 +38,8 @@ export const inputs = gql`
     }
 
     input InputLinkRepository {
-        url: String!
-        name: String!
+        nameWithOwner: String!
+        provider: String!
     }
 `;
 

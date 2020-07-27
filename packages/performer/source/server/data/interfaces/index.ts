@@ -22,6 +22,7 @@ export interface Repository {
     id: string;
     name: string;
     isPrivate: boolean;
+    zipURL?: string;
 }
 
 

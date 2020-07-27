@@ -8,6 +8,7 @@ import {
 
 import {
     getRepository,
+    getRepositoryDataByNameWithOwner,
 } from '#server/api/requesters';
 
 
@@ -17,13 +18,35 @@ const linkRepository = async (
     context: Context,
 ) => {
     const {
-        url,
-        name,
+        nameWithOwner,
+        provider,
     } = input;
+
+    const repositoryData = await getRepositoryDataByNameWithOwner(
+        provider,
+        nameWithOwner,
+    );
+
+    if (!repositoryData) {
+        return {
+            status: false,
+        };
+    }
+
+    const {
+        zipURL,
+        name,
+    } = repositoryData;
+
+    if (!zipURL) {
+        return {
+            status: false,
+        };
+    }
 
     await getRepository(
         GITHUB_PROVIDER,
-        url,
+        zipURL,
         name,
     );
 

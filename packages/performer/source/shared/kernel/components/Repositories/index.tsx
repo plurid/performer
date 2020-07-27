@@ -93,20 +93,30 @@ const Repository: React.FC<RepositoryProperties> = (
             return;
         }
 
-        // for (const selectedRepository of selectedRepositories) {
-        //     const input = {
-        //         url: '',
-        //         name: selectedRepository,
-        //     };
+        for (const selectedRepository of selectedRepositories) {
+            const repository = providerRepositories.find(repo => repo.id === selectedRepository);
 
-        //     const mutation = await client.mutate({
-        //         mutation: LINK_REPOSITORY,
-        //         variables: {
-        //             input,
-        //         },
-        //     });
-        //     console.log('mutation', mutation);
-        // }
+            if (!repository) {
+                continue;
+            }
+
+            const {
+                name,
+            } = repository;
+
+            const input = {
+                nameWithOwner: name,
+                provider: 'github',
+            };
+
+            const mutation = await client.mutate({
+                mutation: LINK_REPOSITORY,
+                variables: {
+                    input,
+                },
+            });
+            console.log('mutation', mutation);
+        }
     }
 
     const handleSelect = (

@@ -16,6 +16,7 @@ import client from '../requester';
 import {
     VIEWER_LOGIN,
     QUERY_REPOSITORIES,
+    QUERY_REPOSITORY_BY_NAME_OWNER,
 } from '../query';
 
 
@@ -136,6 +137,49 @@ export const getRepositoriesData = async () => {
         );
 
         return repositories;
+    } catch (error) {
+        return;
+    }
+}
+
+
+export const getRepositoryDataByNameWithOwner = async (
+    nameWithOwner: string,
+) => {
+    try {
+        const split = nameWithOwner.split('/');
+        const owner = split[0];
+        const name = split[1];
+
+        const query = await client.query({
+            query: QUERY_REPOSITORY_BY_NAME_OWNER,
+            variables: {
+                name,
+                owner,
+            },
+        });
+
+        const {
+            data,
+        } = query;
+
+        if (!data) {
+            return;
+        }
+
+        const {
+            defaultBranchRef,
+        } = data.repository;
+        const url = defaultBranchRef.target.zipballUrl;
+
+        const repositoryData: Repository = {
+            id: data.repository.databaseId,
+            isPrivate: data.repository.isPrivate,
+            name: data.repository.nameWithOwner,
+            zipURL: url,
+        };
+
+        return repositoryData;
     } catch (error) {
         return;
     }
