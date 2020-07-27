@@ -128,7 +128,7 @@ const Webhook: React.FC<WebhookProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={webhookPath}
-                        placeholder="path"
+                        placeholder="/path/to/webhook"
                         atChange={(event) => setWebhookPath(event.target.value)}
                         level={2}
                     />

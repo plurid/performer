@@ -9,6 +9,10 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridSpinner,
+} from '@plurid/plurid-ui-react';
+
 
 /** external */
 import client from '#kernel-services/graphql/client';
@@ -70,6 +74,10 @@ const Repository: React.FC<RepositoryProperties> = (
 
     /** state */
     const [
+        loading,
+        setLoading,
+    ] = useState(true);
+    const [
         providerRepositories,
         setProviderRepositories,
     ] = useState<IRepository[]>([]);
@@ -122,23 +130,30 @@ const Repository: React.FC<RepositoryProperties> = (
     /** effects */
     useEffect(() => {
         const getProviderRepositories = async () => {
-            const input = {
-                provider: 'github',
-            };
+            try {
+                const input = {
+                    provider: 'github',
+                };
 
-            const query = await client.query({
-                query: GET_PROVIDER_REPOSITORIES,
-                variables: {
-                    input,
-                },
-            });
+                const query = await client.query({
+                    query: GET_PROVIDER_REPOSITORIES,
+                    variables: {
+                        input,
+                    },
+                });
 
-            const response = query.data.getProviderRepositories;
-            if (!response.status) {
+                const response = query.data.getProviderRepositories;
+                if (!response.status) {
+                    setLoading(false);
+                    return;
+                }
+
+                setProviderRepositories(response.data);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
                 return;
             }
-
-            setProviderRepositories(response.data);
         }
 
         getProviderRepositories();
@@ -155,8 +170,18 @@ const Repository: React.FC<RepositoryProperties> = (
                     link repositories
                 </h1>
 
+                {loading && (
+                    <PluridSpinner />
+                )}
+
+                {!loading && providerRepositories.length === 0 && (
+                    <div>
+                        no repositories
+                    </div>
+                )}
+
                 <ul>
-                    {providerRepositories.map(repository => {
+                    {!loading && providerRepositories.map(repository => {
                         const {
                             id,
                         } = repository;

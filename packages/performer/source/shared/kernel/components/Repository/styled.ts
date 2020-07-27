@@ -11,6 +11,8 @@ export interface IStyledRepository {
 }
 
 export const StyledRepository = styled.div<IStyledRepository>`
+    position: relative;
+
     ul {
         text-align: left;
         padding: 0;
@@ -21,11 +23,11 @@ export const StyledRepository = styled.div<IStyledRepository>`
             ({
                 theme,
             }: IStyledRepository) => theme.backgroundColorSecondaryAlpha
-        }
+        };
         box-shadow: ${
             ({
                 theme,
             }: IStyledRepository) => theme.boxShadowUmbraInset
-        }
+        };
     }
 `;
