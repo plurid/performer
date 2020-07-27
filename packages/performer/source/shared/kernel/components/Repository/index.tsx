@@ -10,13 +10,19 @@ import {
 
 
 /** external */
+import client from '#kernel-services/graphql/client';
 import {
-    StyledPluridTextline,
+    LINK_REPOSITORY,
+} from '#kernel-services/graphql/mutate';
+
+import {
     StyledPluridPureButton,
-} from '../../styled';
+} from '#kernel-services/styled';
 
 
 /** internal */
+import RepositoryItem from './components/RepositoryItem';
+
 import {
     StyledRepository,
 } from './styled';
@@ -30,7 +36,7 @@ export interface RepositoryProperties {
     /** - values */
     theme: Theme;
     /** - methods */
-    setPhase: React.Dispatch<React.SetStateAction<string>>;
+    action: () => void;
 
     /** optional */
     /** - values */
@@ -46,12 +52,42 @@ const Repository: React.FC<RepositoryProperties> = (
         /** - values */
         theme,
         /** - methods */
-        setPhase,
+        action,
 
         /** optional */
         /** - values */
         /** - methods */
     } = properties;
+
+
+    /** state */
+    const [
+        selectedRepositories,
+        setSelectedRepositories,
+    ] = useState<string[]>([]);
+
+
+    /** handlers */
+    const linkRepositories = async () => {
+        if (selectedRepositories.length === 0) {
+            return;
+        }
+
+        for (const selectedRepository of selectedRepositories) {
+            const input = {
+                url: '',
+                name: selectedRepository,
+            };
+
+            const mutation = await client.mutate({
+                mutation: LINK_REPOSITORY,
+                variables: {
+                    input,
+                },
+            });
+            console.log('mutation', mutation);
+        }
+    }
 
 
     /** render */
@@ -64,26 +100,27 @@ const Repository: React.FC<RepositoryProperties> = (
                     link repositories
                 </h1>
 
-                <div>
-                    select from list
-                </div>
-
                 <ul>
-                    <li>
-                        repo 1
-                    </li>
-                    <li>
-                        repo 2
-                    </li>
+                    <RepositoryItem
+                        theme={theme}
+                        select={() => {}}
+                    />
+
+                    <RepositoryItem
+                        theme={theme}
+                        select={() => {}}
+                    />
                 </ul>
 
                 <div>
                     <StyledPluridPureButton
                         text="Link Repositories"
                         atClick={() => {
-                            setPhase('WEBHOOK');
+                            action();
+                            // linkRepositories();
                         }}
                         level={2}
+                        // disabled={selectedRepositories.length === 0}
                     />
                 </div>
             </div>

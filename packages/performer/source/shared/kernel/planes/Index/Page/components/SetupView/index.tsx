@@ -16,6 +16,8 @@ import {
 /** external */
 import Provider from '#kernel-components/Provider';
 import Webhook from '#kernel-components/Webhook';
+import Repository from '#kernel-components/Repository';
+import Trigger from '#kernel-components/Trigger';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -23,9 +25,6 @@ import actions from '#kernel-services/state/actions';
 
 
 /** internal */
-import Repository from './components/Repository';
-import Trigger from './components/Trigger';
-
 import {
     StyledSetupView,
 } from './styled';
@@ -98,7 +97,9 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'REPOSITORY' && (
                 <Repository
                     theme={stateInteractionTheme}
-                    setPhase={setPhase}
+                    action={() => {
+                        setPhase('WEBHOOK');
+                    }}
                 />
             )}
 
@@ -114,8 +115,9 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'TRIGGER' && (
                 <Trigger
                     theme={stateInteractionTheme}
-                    setPhase={setPhase}
-                    setView={setView}
+                    action={() => {
+                        setView('build');
+                    }}
                 />
             )}
         </StyledSetupView>

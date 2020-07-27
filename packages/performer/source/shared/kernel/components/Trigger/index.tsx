@@ -2,6 +2,7 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import {
@@ -10,10 +11,15 @@ import {
 
 
 /** external */
+import client from '#kernel-services/graphql/client';
+import {
+    ADD_TRIGGER,
+} from '#kernel-services/graphql/mutate';
+
 import {
     StyledPluridTextline,
     StyledPluridPureButton,
-} from '../../styled';
+} from '#kernel-services/styled';
 
 
 /** internal */
@@ -30,8 +36,7 @@ export interface TriggerProperties {
     /** - values */
     theme: Theme;
     /** - methods */
-    setPhase: React.Dispatch<React.SetStateAction<string>>;
-    setView: React.Dispatch<React.SetStateAction<string>>;
+    action: () => void;
 
     /** optional */
     /** - values */
@@ -47,8 +52,7 @@ const Trigger: React.FC<TriggerProperties> = (
         /** - values */
         theme,
         /** - methods */
-        setPhase,
-        setView,
+        action,
 
         /** optional */
         /** - values */
@@ -57,10 +61,56 @@ const Trigger: React.FC<TriggerProperties> = (
 
 
     /** state */
+    const [triggerID, setTriggerID] = useState('');
     const [triggerName, setTriggerName] = useState('');
     const [triggerRepository, setTriggerRepository] = useState('');
     const [triggerBranch, setTriggerBranch] = useState('');
     const [triggerPath, setTriggerPath] = useState('');
+    const [validTrigger, setValidTrigger] = useState(false);
+
+
+    /** handle */
+    const addTrigger = async () => {
+        if (!validTrigger) {
+            return;
+        }
+
+        const input = {
+            id: triggerID,
+            name: triggerName,
+            repository: triggerRepository,
+            branch: triggerBranch,
+            path: triggerPath,
+        };
+
+        const mutation = await client.mutate({
+            mutation: ADD_TRIGGER,
+            variables: {
+                input,
+            },
+        });
+        console.log('mutation', mutation);
+    }
+
+
+    /** effects */
+    useEffect(() => {
+        if (
+            triggerName
+            && triggerRepository
+            && triggerBranch
+            && triggerPath
+        ) {
+            setValidTrigger(true);
+        } else {
+            setValidTrigger(false);
+        }
+    }, [
+        triggerName,
+        triggerRepository,
+        triggerBranch,
+        triggerPath,
+    ]);
 
 
     /** render */
@@ -73,6 +123,15 @@ const Trigger: React.FC<TriggerProperties> = (
             </h1>
 
             <div>
+                <div>
+                    <StyledPluridTextline
+                        text={triggerID}
+                        placeholder="id"
+                        atChange={(event) => setTriggerID(event.target.value)}
+                        level={2}
+                    />
+                </div>
+
                 <div>
                     <StyledPluridTextline
                         text={triggerName}
@@ -113,9 +172,11 @@ const Trigger: React.FC<TriggerProperties> = (
                     <StyledPluridPureButton
                         text="Add Trigger"
                         atClick={() => {
-                            setView('build');
+                            action();
+                            addTrigger();
                         }}
                         level={2}
+                        disabled={!validTrigger}
                     />
                 </div>
             </div>

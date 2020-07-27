@@ -72,7 +72,7 @@ const Provider: React.FC<ProviderProperties> = (
     ] = useState('');
 
 
-    /** handle */
+    /** handlers */
     const setProvider = async () => {
         if (!providerToken || !selectedProvider) {
             return;
