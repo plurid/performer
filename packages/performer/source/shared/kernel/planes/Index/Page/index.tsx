@@ -74,7 +74,9 @@ const Page: React.FC<PageProperties> = (
             )}
 
             {view === 'setup' && (
-                <SetupView />
+                <SetupView
+                    setView={setView}
+                />
             )}
 
             {view === 'build' && (

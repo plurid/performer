@@ -61,7 +61,7 @@ const Repository: React.FC<RepositoryProperties> = (
         >
             <div>
                 <h1>
-                    add repository
+                    link repositories
                 </h1>
 
                 <div>
@@ -79,7 +79,7 @@ const Repository: React.FC<RepositoryProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text="Add Repository"
+                        text="Link Repositories"
                         atClick={() => {
                             setPhase('WEBHOOK');
                         }}

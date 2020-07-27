@@ -49,24 +49,40 @@ const BuildView: React.FC<BuildViewProperties> = (
                 <h1>
                     providers
                 </h1>
+
+                <div>
+                    add provider
+                </div>
             </div>
 
             <div>
                 <h1>
                     repositories
                 </h1>
+
+                <div>
+                    link repositories
+                </div>
             </div>
 
             <div>
                 <h1>
                     webhooks
                 </h1>
+
+                <div>
+                    add webhook
+                </div>
             </div>
 
             <div>
                 <h1>
                     triggers
                 </h1>
+
+                <div>
+                    add trigger
+                </div>
             </div>
 
             <div>

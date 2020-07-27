@@ -37,6 +37,7 @@ export interface SetupViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
+    setView: React.Dispatch<React.SetStateAction<string>>;
 
     /** optional */
     /** - values */
@@ -63,6 +64,7 @@ const SetupView: React.FC<SetupViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
+        setView,
 
         /** optional */
         /** - values */
@@ -105,6 +107,7 @@ const SetupView: React.FC<SetupViewProperties> = (
                 <Trigger
                     theme={stateInteractionTheme}
                     setPhase={setPhase}
+                    setView={setView}
                 />
             )}
         </StyledSetupView>

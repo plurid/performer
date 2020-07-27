@@ -31,6 +31,7 @@ export interface TriggerProperties {
     theme: Theme;
     /** - methods */
     setPhase: React.Dispatch<React.SetStateAction<string>>;
+    setView: React.Dispatch<React.SetStateAction<string>>;
 
     /** optional */
     /** - values */
@@ -47,6 +48,7 @@ const Trigger: React.FC<TriggerProperties> = (
         theme,
         /** - methods */
         setPhase,
+        setView,
 
         /** optional */
         /** - values */
@@ -110,7 +112,9 @@ const Trigger: React.FC<TriggerProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Add Trigger"
-                        atClick={() => {}}
+                        atClick={() => {
+                            setView('build');
+                        }}
                         level={2}
                     />
                 </div>
