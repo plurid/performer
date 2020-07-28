@@ -7,6 +7,7 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconEdit,
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
@@ -68,6 +69,8 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             </div>
 
             <div />
+
+            <div />
         </>
     );
 
@@ -87,6 +90,10 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
                     {provider}
                 </div>
 
+                <PluridIconEdit
+                    atClick={() => {}}
+                />
+
                 <PluridIconDelete
                     atClick={() => {}}
                 />
@@ -99,7 +106,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="2fr 1fr 30px"
+            rowTemplate="2fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
 

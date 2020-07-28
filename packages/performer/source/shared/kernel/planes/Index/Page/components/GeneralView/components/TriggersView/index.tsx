@@ -7,6 +7,7 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconEdit,
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
@@ -75,6 +76,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             </div>
 
             <div />
+
+            <div />
         </>
     );
 
@@ -104,6 +107,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
                     {path}
                 </div>
 
+                <PluridIconEdit
+                    atClick={() => {}}
+                />
+
                 <PluridIconDelete
                     atClick={() => {}}
                 />
@@ -116,7 +123,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="2fr 1fr 1fr 2fr 30px"
+            rowTemplate="2fr 1fr 1fr 2fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
 
