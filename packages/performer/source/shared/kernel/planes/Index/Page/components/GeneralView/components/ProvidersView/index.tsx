@@ -6,6 +6,10 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridPureButton,
+} from '@plurid/plurid-ui-react';
+
 
 /** external */
 import {
@@ -16,6 +20,9 @@ import {
 /** internal */
 import {
     StyledProvidersView,
+    StyledProvidersList,
+    StyledProvidersListItem,
+    StyledProvidersButton,
 } from './styled';
 /** [END] imports */
 
@@ -43,6 +50,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         /** required */
         /** - values */
         generalTheme,
+        interactionTheme,
         data,
         /** - methods */
 
@@ -57,12 +65,18 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         <StyledProvidersView
             theme={generalTheme}
         >
-            <div>
-                add provider
-            </div>
-
-            <div>
+            <StyledProvidersList>
                 <ul>
+                    <StyledProvidersListItem>
+                        <div>
+                            name
+                        </div>
+
+                        <div>
+                            type
+                        </div>
+                    </StyledProvidersListItem>
+
                     {data.map(provider => {
                         const {
                             id,
@@ -71,15 +85,30 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                         } = provider;
 
                         return (
-                            <li
+                            <StyledProvidersListItem
                                 key={id}
                             >
-                                {name} ({type})
-                            </li>
+                                <div>
+                                    {name}
+                                </div>
+
+                                <div>
+                                    {type}
+                                </div>
+                            </StyledProvidersListItem>
                         );
                     })}
                 </ul>
-            </div>
+            </StyledProvidersList>
+
+            <StyledProvidersButton>
+                <PluridPureButton
+                    text="Add Provider"
+                    atClick={() => {}}
+                    theme={interactionTheme}
+                    level={2}
+                />
+            </StyledProvidersButton>
         </StyledProvidersView>
     );
 }

@@ -45,7 +45,7 @@ export interface IStyledGeneralSelectorItem {
     selected: boolean;
 }
 
-export const StyledGeneralSelectorItem = styled.div<IStyledGeneralSelectorItem>`
+export const StyledGeneralSelectorItem = styled.li<IStyledGeneralSelectorItem>`
     padding: 0.7rem 1.4rem;
     user-select: none;
     cursor: pointer;
