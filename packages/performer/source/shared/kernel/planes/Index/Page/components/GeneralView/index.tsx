@@ -121,6 +121,12 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     ] = useState('providers');
 
 
+    /** handlers */
+    const openManual = () => {
+        window.open('https://manual.plurid.com/performer', '_blank');
+    }
+
+
     /** render */
     let renderSelectedView = (<></>);
     switch (selectedView) {
@@ -209,7 +215,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 <StyledGeneralHelp>
                     <ul>
                         <StyledGeneralHelpItem
-                            onClick={() => {}}
+                            onClick={() => openManual()}
                         >
                             <div>
                                 manual
