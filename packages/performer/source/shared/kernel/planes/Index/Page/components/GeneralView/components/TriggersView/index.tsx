@@ -116,7 +116,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="1fr 1fr 1fr 1fr 30px"
+            rowTemplate="2fr 1fr 1fr 2fr 30px"
             rowsHeader={rowsHeader}
             rows={rows}
 

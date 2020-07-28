@@ -121,7 +121,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="1fr 1fr 1fr 1fr 30px 30px"
+            rowTemplate="1fr 2fr 1fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
         />
