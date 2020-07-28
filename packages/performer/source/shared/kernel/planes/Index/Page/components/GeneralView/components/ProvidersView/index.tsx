@@ -65,8 +65,6 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     /** render */
     const rowsHeader = (
         <>
-            <div />
-
             <div>
                 name
             </div>
@@ -88,21 +86,28 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
         return (
             <>
-                {activeProviderID === id
-                ? (
-                    <PluridIconValid
-                        inactive={true}
-                    />
-                ) : (
-                    <div />
-                )}
-
-                <div>
+                <div
+                    style={{
+                        display: 'flex',
+                    }}
+                >
                     <PluridLinkButton
                         text={name}
                         atClick={() => {}}
                         inline={true}
                     />
+
+                    {activeProviderID === id
+                    ? (
+                        <PluridIconValid
+                            inactive={true}
+                            style={{
+                                marginLeft: '0.7rem',
+                            }}
+                        />
+                    ) : (
+                        <div />
+                    )}
                 </div>
 
                 <div>
@@ -121,7 +126,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="30px 3fr 1fr 30px"
+            rowTemplate="3fr 1fr 30px"
             rowsHeader={rowsHeader}
             rows={rows}
 
