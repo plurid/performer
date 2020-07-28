@@ -14,7 +14,8 @@ import {
 
 import {
     PluridIconAdd,
-    PluridIconTools,
+    PluridIconArrowRight,
+    PluridIconDocuments,
     PluridIconExternalLink,
 } from '@plurid/plurid-icons-react';
 
@@ -220,7 +221,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     {compactSelectors
                     && mouseOverSelectors
                     && (
-                        <PluridIconAdd
+                        <PluridIconArrowRight
                             atClick={() => setCompactSelectors(false)}
                         />
                     )}
@@ -266,7 +267,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 )}
 
                                 {compactSelectors && (
-                                    <PluridIconTools />
+                                    <PluridIconDocuments />
                                 )}
                             </StyledGeneralHelpItem>
                         </ul>
