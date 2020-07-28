@@ -34,7 +34,7 @@ const indexRoute: PluridRoute = {
                 controls: {
                     show: false,
                 },
-                width: 0.7,
+                // width: 0.7,
             },
         },
     },
