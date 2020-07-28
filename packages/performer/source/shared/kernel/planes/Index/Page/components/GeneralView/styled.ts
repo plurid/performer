@@ -21,6 +21,11 @@ export interface IStyledGeneralSelectors {
 }
 
 export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px auto 40px;
+
     background-color: ${
         ({
             theme,
@@ -39,9 +44,9 @@ export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
     }
 
     li {
+        cursor: pointer;
         padding: 0.7rem 1.4rem;
         user-select: none;
-        cursor: pointer;
     }
 `;
 
@@ -83,16 +88,26 @@ export const StyledGeneralPeformer = styled.div`
     display: grid;
     place-content: center;
     grid-gap: 0.5rem;
-    margin: 20px;
+    height: 100%;
     font-size: 0.9rem;
     text-align: center;
     user-select: none;
 `;
 
 export const StyledGeneralHelp = styled.div`
-    margin-top: 4rem;
-
     li {
         font-size: 0.9rem;
     }
+`;
+
+
+export const StyledGeneralHelpItem = styled.li`
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 30px;
+`;
+
+export const StyledGeneralHelpItemIcon = styled.div`
+    display: grid;
+    justify-items: right;
 `;

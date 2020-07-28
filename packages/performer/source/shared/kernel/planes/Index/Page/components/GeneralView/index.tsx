@@ -12,6 +12,10 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridIconExternalLink,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import performerLogo from '../../assets/performer-logo.png';
@@ -42,6 +46,8 @@ import {
     StyledGeneralSelectorItem,
     StyledGeneralPeformer,
     StyledGeneralHelp,
+    StyledGeneralHelpItem,
+    StyledGeneralHelpItemIcon,
     StyledGeneralSelected,
 } from './styled';
 /** [END] imports */
@@ -202,11 +208,17 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
                 <StyledGeneralHelp>
                     <ul>
-                        <li
+                        <StyledGeneralHelpItem
                             onClick={() => {}}
                         >
-                            manual
-                        </li>
+                            <div>
+                                manual
+                            </div>
+
+                            <StyledGeneralHelpItemIcon>
+                                <PluridIconExternalLink/>
+                            </StyledGeneralHelpItemIcon>
+                        </StyledGeneralHelpItem>
                     </ul>
                 </StyledGeneralHelp>
             </StyledGeneralSelectors>
