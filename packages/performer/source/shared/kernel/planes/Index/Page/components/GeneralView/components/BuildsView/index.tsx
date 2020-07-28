@@ -7,6 +7,8 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconValid,
+    PluridIconCircle,
     PluridIconEnter,
 } from '@plurid/plurid-icons-react';
 
@@ -21,6 +23,24 @@ import EntityView from '#kernel-components/EntityView';
 /** internal */
 /** [END] imports */
 
+
+const buildStatusIcons = {
+    RUNNING: PluridIconValid,
+    ERROR: PluridIconValid,
+    SUCCESS: PluridIconValid,
+    CANCELLED: PluridIconValid,
+};
+
+const durationTime = (
+    value: number,
+) => {
+    const minutes = Math.floor(value / 60);
+    const seconds = value - minutes * 60;
+
+    const timeString = `${minutes > 0 ? minutes + ' min' : ''} ${seconds} sec`;
+
+    return timeString;
+}
 
 
 /** [START] component */
@@ -58,16 +78,17 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     /** render */
     const rowsHeader = (
         <>
-            <div>
-                status
-            </div>
+            <PluridIconCircle
+                fill={true}
+                inactive={true}
+            />
 
             <div>
                 trigger
             </div>
 
             <div>
-                time
+                duration
             </div>
 
             <div>
@@ -87,22 +108,28 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             date,
         } = build;
 
+        const durationString = durationTime(time);
+
+        const dateString = new Date(date * 1000).toLocaleString();
+
+        const StatusIcon = buildStatusIcons[status];
+
         return (
             <>
-                <div>
-                    {status}
-                </div>
+                <StatusIcon
+                    inactive={true}
+                />
 
                 <div>
                     {trigger}
                 </div>
 
                 <div>
-                    {time}
+                    {durationString}
                 </div>
 
                 <div>
-                    {date}
+                    {dateString}
                 </div>
 
                 <PluridIconEnter
@@ -117,7 +144,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="60px auto 60px 120px 30px"
+            rowTemplate="30px auto 100px 180px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
         />
