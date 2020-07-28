@@ -28,6 +28,10 @@ export interface Repository {
 
 export interface Build {
     id: string;
+    status: string;
+    trigger: string;
+    time: number;
+    date: number;
 }
 
 

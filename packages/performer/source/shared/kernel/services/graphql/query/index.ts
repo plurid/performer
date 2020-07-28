@@ -31,6 +31,10 @@ export const GET_SETUP = gql`
                 }
                 builds {
                     id
+                    status
+                    trigger
+                    time
+                    date
                 }
                 providers {
                     id

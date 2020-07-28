@@ -25,6 +25,10 @@ export const types = gql`
 
     type Build {
         id: ID!
+        status: String!
+        trigger: String!
+        time: Int!
+        date: Int!
         stages: [Stage!]
     }
 

@@ -7,7 +7,7 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
-    PluridIconDelete,
+    PluridIconEnter,
 } from '@plurid/plurid-icons-react';
 
 
@@ -67,15 +67,11 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             </div>
 
             <div>
-                running time
+                time
             </div>
 
             <div>
-                running date
-            </div>
-
-            <div>
-                open
+                date
             </div>
 
             <div />
@@ -85,31 +81,31 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     const rows = data.map(build => {
         const {
             id,
+            status,
+            trigger,
+            time,
+            date,
         } = build;
 
         return (
             <>
                 <div>
-                    status
+                    {status}
                 </div>
 
                 <div>
-                    trigger
+                    {trigger}
                 </div>
 
                 <div>
-                    running time
+                    {time}
                 </div>
 
                 <div>
-                    running date
+                    {date}
                 </div>
 
-                <div>
-                    open
-                </div>
-
-                <PluridIconDelete
+                <PluridIconEnter
                     atClick={() => {}}
                 />
             </>
@@ -121,7 +117,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="1fr 2fr 1fr 1fr 30px 30px"
+            rowTemplate="60px auto 60px 120px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
         />
