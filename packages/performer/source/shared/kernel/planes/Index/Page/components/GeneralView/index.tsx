@@ -119,6 +119,10 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         selectedView,
         setSelectedView,
     ] = useState('providers');
+    const [
+        mouseOverSelectors,
+        setMouseOverSelectors,
+    ] = useState(false);
 
 
     /** handlers */
@@ -181,6 +185,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     return (
         <StyledGeneralView>
             <StyledGeneralSelectors
+                onMouseEnter={() => setMouseOverSelectors(true)}
+                onMouseLeave={() => setMouseOverSelectors(false)}
                 theme={stateGeneralTheme}
             >
                 <StyledGeneralPeformer>
@@ -213,19 +219,21 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 </ul>
 
                 <StyledGeneralHelp>
-                    <ul>
-                        <StyledGeneralHelpItem
-                            onClick={() => openManual()}
-                        >
-                            <div>
-                                manual
-                            </div>
+                    {mouseOverSelectors && (
+                        <ul>
+                            <StyledGeneralHelpItem
+                                onClick={() => openManual()}
+                            >
+                                <div>
+                                    manual
+                                </div>
 
-                            <StyledGeneralHelpItemIcon>
-                                <PluridIconExternalLink/>
-                            </StyledGeneralHelpItemIcon>
-                        </StyledGeneralHelpItem>
-                    </ul>
+                                <StyledGeneralHelpItemIcon>
+                                    <PluridIconExternalLink/>
+                                </StyledGeneralHelpItemIcon>
+                            </StyledGeneralHelpItem>
+                        </ul>
+                    )}
                 </StyledGeneralHelp>
             </StyledGeneralSelectors>
 

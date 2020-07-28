@@ -38,6 +38,7 @@ export const StyledEntityListItem = styled.li<IStyledEntityListItem>`
     };
     padding: 0.7rem;
     align-items: center;
+    min-height: 45px;
 `;
 
 
