@@ -128,7 +128,7 @@ const SetupView: React.FC<SetupViewProperties> = (
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {
-                        setView('build');
+                        setView('general');
                     }}
                 />
             )}

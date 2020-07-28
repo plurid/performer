@@ -19,7 +19,7 @@ import {
 
 import InitialView from './components/InitialView';
 import SetupView from './components/SetupView';
-import BuildView from './components/BuildView';
+import GeneralView from './components/GeneralView';
 
 import {
     StyledPage,
@@ -63,7 +63,7 @@ const Page: React.FC<PageProperties> = (
     /** effect */
     useEffect(() => {
         if (stateProviders.length > 0) {
-            setView('build');
+            setView('general');
         } else {
             setView('initial');
         }
@@ -90,9 +90,9 @@ const Page: React.FC<PageProperties> = (
                 />
             );
             break;
-        case 'build':
+        case 'general':
             renderView = (
-                <BuildView />
+                <GeneralView />
             );
             break;
     }

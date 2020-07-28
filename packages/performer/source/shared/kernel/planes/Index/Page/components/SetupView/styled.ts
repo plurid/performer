@@ -14,6 +14,17 @@ export const StyledSetupView = styled.div<IStyledSetupView>`
     min-height: 500px;
     display: grid;
     place-content: center;
+    padding: 3rem;
+
+    h1 {
+        font-size: 1.3rem;
+        margin: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        margin: 1.5rem;
+    }
 `;
 
 
