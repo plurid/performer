@@ -46,9 +46,11 @@ export interface SetupViewOwnProperties {
 
 export interface SetupViewStateProperties {
     stateInteractionTheme: Theme;
+    stateActiveProviderID: string;
 }
 
 export interface SetupViewDispatchProperties {
+    dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
 }
 
 export type SetupViewProperties = SetupViewOwnProperties
@@ -72,6 +74,10 @@ const SetupView: React.FC<SetupViewProperties> = (
 
         /** state */
         stateInteractionTheme,
+        stateActiveProviderID,
+
+        /** dispatch */
+        dispatchSetActiveProviderID,
     } = properties;
 
 
@@ -88,7 +94,10 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'PROVIDER' && (
                 <Provider
                     theme={stateInteractionTheme}
-                    action={() => {
+                    action={(
+                        providerID: string,
+                    ) => {
+                        dispatchSetActiveProviderID(providerID);
                         setPhase('REPOSITORY');
                     }}
                 />
@@ -97,6 +106,7 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'REPOSITORY' && (
                 <Repositories
                     theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
                     action={() => {
                         setPhase('WEBHOOK');
                     }}
@@ -106,6 +116,7 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'WEBHOOK' && (
                 <Webhook
                     theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
                     action={() => {
                         setPhase('TRIGGER');
                     }}
@@ -115,6 +126,7 @@ const SetupView: React.FC<SetupViewProperties> = (
             {phase === 'TRIGGER' && (
                 <Trigger
                     theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
                     action={() => {
                         setView('build');
                     }}
@@ -129,12 +141,18 @@ const mapStateToProperties = (
     state: AppState,
 ): SetupViewStateProperties => ({
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateActiveProviderID: selectors.data.getActiveProviderID(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): SetupViewDispatchProperties => ({
+    dispatchSetActiveProviderID: (
+        providerID,
+    ) => dispatch(
+        actions.data.setActiveProviderID(providerID),
+    ),
 });
 
 

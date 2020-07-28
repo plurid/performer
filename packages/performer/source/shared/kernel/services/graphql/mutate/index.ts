@@ -11,6 +11,7 @@ export const SETUP_PROVIDER = gql`
                 path
                 message
             }
+            data
         }
     }
 `;

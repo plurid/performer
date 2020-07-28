@@ -47,6 +47,7 @@ export interface RepositoryProperties {
     /** required */
     /** - values */
     theme: Theme;
+    providerID: string;
     /** - methods */
     action: () => void;
 
@@ -63,6 +64,7 @@ const Repository: React.FC<RepositoryProperties> = (
         /** required */
         /** - values */
         theme,
+        providerID,
         /** - methods */
         action,
 
@@ -141,8 +143,12 @@ const Repository: React.FC<RepositoryProperties> = (
     useEffect(() => {
         const getProviderRepositories = async () => {
             try {
+                if (!providerID) {
+                    return;
+                }
+
                 const input = {
-                    provider: 'github',
+                    provider: providerID,
                 };
 
                 const query = await client.query({
@@ -167,7 +173,9 @@ const Repository: React.FC<RepositoryProperties> = (
         }
 
         getProviderRepositories();
-    }, []);
+    }, [
+        providerID,
+    ]);
 
 
     /** render */

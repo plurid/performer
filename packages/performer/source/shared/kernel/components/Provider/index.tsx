@@ -38,7 +38,9 @@ export interface ProviderProperties {
     /** - values */
     theme: Theme;
     /** - methods */
-    action: () => void;
+    action: (
+        providerID: string,
+    ) => void;
 
     /** optional */
     /** - values */
@@ -93,12 +95,24 @@ const Provider: React.FC<ProviderProperties> = (
             name: providerName,
         };
 
-        await client.mutate({
+        const mutation = await client.mutate({
             mutation: SETUP_PROVIDER,
             variables: {
                 input,
             },
         });
+
+        const reponse = mutation.data.setupProvider;
+
+        if (!reponse.status) {
+            return;
+        }
+
+        const {
+            data,
+        } = reponse;
+
+        return data;
     }
 
 
@@ -168,8 +182,8 @@ const Provider: React.FC<ProviderProperties> = (
                     <StyledPluridPureButton
                         text="Set Provider"
                         atClick={async () => {
-                            await setProvider();
-                            action();
+                            const providerID = await setProvider();
+                            action(providerID);
                         }}
                         disabled={!validProvider}
                         theme={theme}

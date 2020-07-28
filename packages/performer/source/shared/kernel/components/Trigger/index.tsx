@@ -35,6 +35,7 @@ export interface TriggerProperties {
     /** required */
     /** - values */
     theme: Theme;
+    providerID: string;
     /** - methods */
     action: () => void;
 

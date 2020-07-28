@@ -39,6 +39,7 @@ export interface WebhookProperties {
     /** required */
     /** - values */
     theme: Theme;
+    providerID: string;
     /** - methods */
     action: () => void;
 

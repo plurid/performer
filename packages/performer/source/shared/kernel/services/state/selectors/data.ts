@@ -4,6 +4,7 @@ import {
 
 
 
+const getActiveProviderID = (state: AppState) => state.data.activeProviderID;
 const getProviders = (state: AppState) => state.data.providers;
 const getRepositories = (state: AppState) => state.data.repositories;
 const getWebhooks = (state: AppState) => state.data.webhooks;
@@ -12,6 +13,7 @@ const getBuilds = (state: AppState) => state.data.builds;
 
 
 const selectors = {
+    getActiveProviderID,
     getProviders,
     getRepositories,
     getWebhooks,
