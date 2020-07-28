@@ -107,7 +107,9 @@ const EntityView: React.FC<EntityViewProperties> = (
                 }}
             />
 
-            <StyledEntityList>
+            <StyledEntityList
+                theme={generalTheme}
+            >
                 <ul>
                     <StyledEntityListItem
                         rowTemplate={rowTemplate}

@@ -16,11 +16,42 @@ export const StyledEntityView = styled.div<IStyledEntityView>`
 `;
 
 
-export const StyledEntityList = styled.div`
+export interface IStyledEntityList {
+    theme: Theme;
+}
+
+export const StyledEntityList = styled.div<IStyledEntityList>`
     ul {
         padding: 0;
         margin: 0;
         list-style: none;
+
+        background-color: ${
+            ({
+                theme,
+            }: IStyledEntityList) => theme.backgroundColorSecondaryAlpha
+        };
+        box-shadow: ${
+            ({
+                theme,
+            }: IStyledEntityList) => theme.boxShadowUmbraInset
+        };
+    }
+
+    li:first-child {
+        background-color: ${
+            ({
+                theme,
+            }: IStyledEntityList) => theme.backgroundColorTertiary
+        };
+    }
+
+    li:hover:not(:first-child) {
+        background-color: ${
+            ({
+                theme,
+            }: IStyledEntityList) => theme.backgroundColorPrimary
+        };
     }
 `;
 

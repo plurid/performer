@@ -13,11 +13,10 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
-    PluridIconAdd,
     PluridIconToolbox,
     PluridIconRepository,
     PluridIconWebhook,
-    PluridIconEnter,
+    PluridIconNewStateline,
     PluridIconSpace,
     PluridIconArrowRight,
     PluridIconDocuments,
@@ -73,7 +72,7 @@ const generalSelectorsIcons = {
     providers: PluridIconToolbox,
     repositories: PluridIconRepository,
     webhooks: PluridIconWebhook,
-    triggers: PluridIconEnter,
+    triggers: PluridIconNewStateline,
     builds: PluridIconSpace,
 };
 
@@ -271,6 +270,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 onClick={() => openManual()}
                                 compactSelectors={compactSelectors}
                             >
+                                <PluridIconDocuments />
+
                                 {!compactSelectors && (
                                     <>
                                         <div>
@@ -279,10 +280,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
                                         <PluridIconExternalLink/>
                                     </>
-                                )}
-
-                                {compactSelectors && (
-                                    <PluridIconDocuments />
                                 )}
                             </StyledGeneralHelpItem>
                         </ul>

@@ -92,7 +92,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             </div>
 
             <div>
-                date
+                triggered
             </div>
 
             <div />
@@ -144,7 +144,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="30px auto 180px 180px 30px"
+            rowTemplate="30px auto 180px 200px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
         />

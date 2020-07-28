@@ -137,11 +137,12 @@ export interface IStyledGeneralHelpItem {
 export const StyledGeneralHelpItem = styled.li<IStyledGeneralHelpItem>`
     display: grid;
     align-items: center;
+    grid-gap: 0.5rem;
     grid-template-columns: ${
         ({
             compactSelectors,
         }: IStyledGeneralHelpItem) => compactSelectors
             ? '16px'
-            : 'auto 16px'
+            : '16px auto 16px'
     };
 `;
