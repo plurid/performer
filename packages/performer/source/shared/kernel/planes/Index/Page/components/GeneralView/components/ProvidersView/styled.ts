@@ -26,8 +26,9 @@ export const StyledProvidersList = styled.div`
 
 export const StyledProvidersListItem = styled.li`
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 3fr 1fr 30px;
     padding: 0.7rem;
+    align-items: center;
 `;
 
 

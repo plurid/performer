@@ -10,6 +10,10 @@ import {
     PluridPureButton,
 } from '@plurid/plurid-ui-react';
 
+import {
+    PluridIconDelete,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import {
@@ -75,6 +79,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                         <div>
                             type
                         </div>
+
+                        <div />
                     </StyledProvidersListItem>
 
                     {data.map(provider => {
@@ -95,6 +101,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                                 <div>
                                     {type}
                                 </div>
+
+                                <PluridIconDelete />
                             </StyledProvidersListItem>
                         );
                     })}
