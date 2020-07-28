@@ -65,6 +65,7 @@ export interface GeneralViewOwnProperties {
 
 export interface GeneralViewStateProperties {
     stateGeneralTheme: Theme;
+    stateActiveProviderID: string;
     stateProviders: ClientProvider[];
     stateRepositories: Repository[];
     stateWebhooks: Webhook[];
@@ -94,6 +95,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
         /** state */
         stateGeneralTheme,
+        stateActiveProviderID,
         stateProviders,
         stateRepositories,
         stateWebhooks,
@@ -117,6 +119,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 <ProvidersView
                     generalTheme={stateGeneralTheme}
                     interactionTheme={stateGeneralTheme}
+                    activeProviderID={stateActiveProviderID}
                     data={stateProviders}
                 />
             );
@@ -192,6 +195,7 @@ const mapStateToProperties = (
     state: AppState,
 ): GeneralViewStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateActiveProviderID: selectors.data.getActiveProviderID(state),
     stateProviders: selectors.data.getProviders(state),
     stateRepositories: selectors.data.getRepositories(state),
     stateWebhooks: selectors.data.getWebhooks(state),

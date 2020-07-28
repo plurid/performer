@@ -7,6 +7,7 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconValid,
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
@@ -29,6 +30,7 @@ export interface ProvidersViewProperties {
     /** - values */
     generalTheme: Theme;
     interactionTheme: Theme;
+    activeProviderID: string;
     data: ClientProvider[];
     /** - methods */
 
@@ -46,6 +48,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         /** - values */
         generalTheme,
         interactionTheme,
+        activeProviderID,
         data,
         /** - methods */
 
@@ -58,6 +61,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     /** render */
     const rowsHeader = (
         <>
+            <div />
+
             <div>
                 name
             </div>
@@ -72,12 +77,20 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
     const rows = data.map(provider => {
         const {
+            id,
             name,
             type,
         } = provider;
 
         return (
             <>
+                {activeProviderID === id
+                ? (
+                    <PluridIconValid />
+                ) : (
+                    <div />
+                )}
+
                 <div>
                     {name}
                 </div>
@@ -98,7 +111,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             generalTheme={generalTheme}
             interactionTheme={interactionTheme}
 
-            rowTemplate="3fr 1fr 30px"
+            rowTemplate="30px 3fr 1fr 30px"
             rowsHeader={rowsHeader}
             rows={rows}
 
