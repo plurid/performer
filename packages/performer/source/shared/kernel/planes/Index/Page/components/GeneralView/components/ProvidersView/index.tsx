@@ -132,6 +132,9 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
             actionButtonText="Add Provider"
             actionButtonClick={() => {}}
+
+            filterUpdate={(value: string) => {
+            }}
         />
     );
 }

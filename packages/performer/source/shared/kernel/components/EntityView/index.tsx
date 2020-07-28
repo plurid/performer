@@ -47,8 +47,9 @@ export interface EntityViewProperties {
     rows: any[];
 
     actionButtonText?: string;
-    actionButtonClick?: any;
     /** - methods */
+    actionButtonClick?: any;
+    filterUpdate?: any;
 
     /** optional */
     /** - values */
@@ -70,8 +71,9 @@ const EntityView: React.FC<EntityViewProperties> = (
         rows,
 
         actionButtonText,
-        actionButtonClick,
         /** - methods */
+        actionButtonClick,
+        filterUpdate,
 
         /** optional */
         /** - values */
@@ -93,8 +95,18 @@ const EntityView: React.FC<EntityViewProperties> = (
         >
             <PluridTextline
                 text={searchValue}
-                placeholder="search"
-                atChange={(event) => setSearchValue(event.target.value)}
+                placeholder="filter"
+                atChange={(event) => {
+                    const {
+                        value,
+                    } = event.target;
+
+                    setSearchValue(value);
+
+                    if (filterUpdate) {
+                        filterUpdate(value);
+                    }
+                }}
                 theme={interactionTheme}
                 spellCheck={false}
                 autoCapitalize="false"
