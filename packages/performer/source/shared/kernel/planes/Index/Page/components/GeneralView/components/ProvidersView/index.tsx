@@ -11,6 +11,10 @@ import {
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
+import {
+    PluridLinkButton,
+} from '@plurid/plurid-ui-react';
+
 
 /** external */
 import {
@@ -86,13 +90,19 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             <>
                 {activeProviderID === id
                 ? (
-                    <PluridIconValid />
+                    <PluridIconValid
+                        inactive={true}
+                    />
                 ) : (
                     <div />
                 )}
 
                 <div>
-                    {name}
+                    <PluridLinkButton
+                        text={name}
+                        atClick={() => {}}
+                        inline={true}
+                    />
                 </div>
 
                 <div>

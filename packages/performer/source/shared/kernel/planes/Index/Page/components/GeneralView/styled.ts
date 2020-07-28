@@ -37,6 +37,12 @@ export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
         padding: 0;
         margin: 0;
     }
+
+    li {
+        padding: 0.7rem 1.4rem;
+        user-select: none;
+        cursor: pointer;
+    }
 `;
 
 
@@ -46,9 +52,6 @@ export interface IStyledGeneralSelectorItem {
 }
 
 export const StyledGeneralSelectorItem = styled.li<IStyledGeneralSelectorItem>`
-    padding: 0.7rem 1.4rem;
-    user-select: none;
-    cursor: pointer;
     background-color: ${
         ({
             theme,
@@ -73,4 +76,23 @@ export interface IStyledGeneralSelected {
 
 export const StyledGeneralSelected = styled.div<IStyledGeneralSelected>`
     padding: 2rem;
+`;
+
+
+export const StyledGeneralPeformer = styled.div`
+    display: grid;
+    place-content: center;
+    grid-gap: 0.5rem;
+    margin: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+    user-select: none;
+`;
+
+export const StyledGeneralHelp = styled.div`
+    margin-top: 4rem;
+
+    li {
+        font-size: 0.9rem;
+    }
 `;

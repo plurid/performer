@@ -14,6 +14,8 @@ import {
 
 
 /** external */
+import performerLogo from '../../assets/performer-logo.png';
+
 import {
     ClientProvider,
     Repository,
@@ -38,6 +40,8 @@ import {
     StyledGeneralView,
     StyledGeneralSelectors,
     StyledGeneralSelectorItem,
+    StyledGeneralPeformer,
+    StyledGeneralHelp,
     StyledGeneralSelected,
 } from './styled';
 /** [END] imports */
@@ -167,6 +171,20 @@ const GeneralView: React.FC<GeneralViewProperties> = (
             <StyledGeneralSelectors
                 theme={stateGeneralTheme}
             >
+                <StyledGeneralPeformer>
+                    <div>
+                        <img
+                            src={performerLogo}
+                            alt="performer"
+                            height={30}
+                        />
+                    </div>
+
+                    <div>
+                        performer
+                    </div>
+                </StyledGeneralPeformer>
+
                 <ul>
                     {generalSelectors.map(selector => {
                         return (
@@ -181,6 +199,16 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         );
                     })}
                 </ul>
+
+                <StyledGeneralHelp>
+                    <ul>
+                        <li
+                            onClick={() => {}}
+                        >
+                            manual
+                        </li>
+                    </ul>
+                </StyledGeneralHelp>
             </StyledGeneralSelectors>
 
             <StyledGeneralSelected>
