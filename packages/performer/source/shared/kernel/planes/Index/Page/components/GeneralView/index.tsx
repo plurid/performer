@@ -14,6 +14,9 @@ import {
 
 import {
     PluridIconAdd,
+    PluridIconToolbox,
+    PluridIconEnter,
+    PluridIconSpace,
     PluridIconArrowRight,
     PluridIconDocuments,
     PluridIconExternalLink,
@@ -63,6 +66,14 @@ const generalSelectors = [
     'triggers',
     'builds',
 ];
+
+const generalSelectorsIcons = {
+    providers: PluridIconToolbox,
+    repositories: PluridIconAdd,
+    webhooks: PluridIconAdd,
+    triggers: PluridIconEnter,
+    builds: PluridIconSpace,
+};
 
 /** [START] component */
 export interface GeneralViewOwnProperties {
@@ -229,6 +240,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
                 <ul>
                     {generalSelectors.map(selector => {
+                        const Icon = generalSelectorsIcons[selector];
+
                         return (
                             <StyledGeneralSelectorItem
                                 key={selector}
@@ -237,7 +250,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 selected={selector === selectedView}
                                 compactSelectors={compactSelectors}
                             >
-                                <PluridIconAdd />
+                                <Icon />
 
                                 {!compactSelectors && (
                                     <div>
