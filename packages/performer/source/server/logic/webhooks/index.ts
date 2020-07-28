@@ -27,8 +27,8 @@ import {
 
 
 export const registerWebhook = async (
-    hookPath: string,
     provider: CodeProvider,
+    hookPath: string,
 ) => {
     const id = uuid.generate();
     const hookData: Webhook = {
@@ -61,8 +61,8 @@ export const handleGithubWebhook = (
 
 
 export const handleWebhook = (
-    hookpath: string,
     provider: CodeProvider,
+    hookpath: string,
     instance: express.Express,
 ) => {
     const routes = getRoutes(instance);
@@ -89,13 +89,13 @@ export const handleWebhooks = (
 ) => {
     for (const webhook of webhooks) {
         const {
-            path: hookpath,
             provider,
+            path: hookpath,
         } = webhook;
 
         handleWebhook(
-            hookpath,
             provider,
+            hookpath,
             instance,
         );
     }

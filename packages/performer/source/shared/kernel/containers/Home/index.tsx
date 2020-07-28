@@ -40,6 +40,7 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
+    dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
     dispatchSetProviders: typeof actions.data.setProviders;
     dispatchSetRepositories: typeof actions.data.setRepositories;
     dispatchSetWebhooks: typeof actions.data.setWebhooks;
@@ -61,6 +62,7 @@ const Home: React.FC<HomeProperties> = (
         // stateInteractionTheme,
 
         /** dispatch */
+        dispatchSetActiveProviderID,
         dispatchSetProviders,
         dispatchSetRepositories,
         dispatchSetWebhooks,
@@ -89,6 +91,12 @@ const Home: React.FC<HomeProperties> = (
                 triggers,
                 builds,
             } = graphql.deleteTypenames(response.data);
+
+            if (providers.length > 0) {
+                dispatchSetActiveProviderID(
+                    providers[0].id,
+                );
+            }
 
             dispatchSetProviders(providers);
             dispatchSetRepositories(repositories);
@@ -121,6 +129,11 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
+    dispatchSetActiveProviderID: (
+        providerID,
+    ) => dispatch(
+        actions.data.setActiveProviderID(providerID),
+    ),
     dispatchSetProviders: (
         providers,
     ) => dispatch(

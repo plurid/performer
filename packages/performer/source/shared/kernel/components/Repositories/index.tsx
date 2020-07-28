@@ -91,12 +91,17 @@ const Repository: React.FC<RepositoryProperties> = (
 
     /** handlers */
     const linkRepositories = async () => {
-        if (selectedRepositories.length === 0) {
+        if (
+            selectedRepositories.length === 0
+            || !providerID
+        ) {
             return;
         }
 
         for (const selectedRepository of selectedRepositories) {
-            const repository = providerRepositories.find(repo => repo.id === selectedRepository);
+            const repository = providerRepositories.find(
+                repository => repository.id === selectedRepository,
+            );
 
             if (!repository) {
                 continue;
@@ -107,8 +112,8 @@ const Repository: React.FC<RepositoryProperties> = (
             } = repository;
 
             const input = {
+                providerID,
                 nameWithOwner: name,
-                provider: 'github',
             };
 
             const mutation = await client.mutate({
@@ -148,7 +153,7 @@ const Repository: React.FC<RepositoryProperties> = (
                 }
 
                 const input = {
-                    provider: providerID,
+                    providerID,
                 };
 
                 const query = await client.query({

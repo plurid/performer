@@ -56,6 +56,7 @@ const Webhook: React.FC<WebhookProperties> = (
         /** required */
         /** - values */
         theme,
+        providerID,
         /** - methods */
         action,
 
@@ -66,19 +67,21 @@ const Webhook: React.FC<WebhookProperties> = (
 
 
     /** state */
-    const [webhookPath, setWebhookPath] = useState('');
-    const [chosenProvider, setChosenProvider] = useState('select');
+    const [
+        webhookPath,
+        setWebhookPath,
+    ] = useState('');
 
 
     /** handle */
     const setWebhook = async () => {
-        if (!webhookPath || chosenProvider === 'select') {
+        if (!webhookPath || !providerID) {
             return;
         }
 
         const input = {
+            providerID,
             path: webhookPath,
-            provider: chosenProvider,
         };
 
         const mutation = await client.mutate({
@@ -100,31 +103,6 @@ const Webhook: React.FC<WebhookProperties> = (
                 <h1>
                     setup webhook
                 </h1>
-
-                <PluridFormLeftRight>
-                    <div>
-                        provider
-                    </div>
-
-                    <div>
-                        <PluridDropdown
-                            selected={chosenProvider}
-                            selectables={[
-                                'github',
-                                'bitbucket',
-                            ]}
-                            atSelect={(selection) => {
-                                if (typeof selection === 'string') {
-                                    setChosenProvider(selection);
-                                }
-                            }}
-                            style={{
-                                fontSize: '1rem',
-                            }}
-                            width={110}
-                        />
-                    </div>
-                </PluridFormLeftRight>
 
                 <div>
                     <StyledPluridTextline
@@ -148,10 +126,7 @@ const Webhook: React.FC<WebhookProperties> = (
                             setWebhook();
                         }}
                         level={2}
-                        disabled={
-                            !webhookPath
-                            || chosenProvider === 'select'
-                        }
+                        disabled={!webhookPath}
                     />
                 </div>
             </div>

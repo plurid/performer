@@ -34,12 +34,12 @@ export const types = gql`
 
 export const inputs = gql`
     input InputGetProviderRepositories {
-        provider: String!
+        providerID: String!
     }
 
     input InputLinkRepository {
+        providerID: String!
         nameWithOwner: String!
-        provider: String!
     }
 `;
 

@@ -53,20 +53,20 @@ const setupProvider = async (
     context: Context,
 ) => {
     const {
-        provider,
+        type,
         token,
         name
     } = input;
 
-    const registeredProvider = await registerProvider(
-        provider,
+    const provider = await registerProvider(
+        type,
         token,
         name,
     );
 
     return {
         status: true,
-        data: registeredProvider.id,
+        data: provider.id,
     };
 }
 

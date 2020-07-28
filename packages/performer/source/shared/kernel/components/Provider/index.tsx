@@ -66,8 +66,8 @@ const Provider: React.FC<ProviderProperties> = (
 
     /** state */
     const [
-        selectedProvider,
-        setSelectedProvider,
+        providerType,
+        setProviderType,
     ] = useState('github');
     const [
         providerName,
@@ -90,7 +90,7 @@ const Provider: React.FC<ProviderProperties> = (
         }
 
         const input = {
-            provider: selectedProvider,
+            type: providerType,
             token: providerToken,
             name: providerName,
         };
@@ -119,16 +119,16 @@ const Provider: React.FC<ProviderProperties> = (
     /** effects */
     useEffect(() => {
         if (
-            providerName
+            providerType
             && providerToken
-            && selectedProvider
+            && providerName
         ) {
             setValidProvider(true)
         } else {
             setValidProvider(false);
         }
     }, [
-        selectedProvider,
+        providerType,
         providerToken,
         providerName,
     ]);
@@ -146,8 +146,8 @@ const Provider: React.FC<ProviderProperties> = (
 
                 <ProviderSelector
                     theme={theme}
-                    selectedProvider={selectedProvider}
-                    setSelectedProvider={setSelectedProvider}
+                    selectedProvider={providerType}
+                    setSelectedProvider={setProviderType}
                 />
 
                 <div>

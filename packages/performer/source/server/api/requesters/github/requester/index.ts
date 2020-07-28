@@ -8,7 +8,6 @@ import {
 
 import {
     GITHUB_API,
-    GITHUB_TOKEN,
 } from '#server/data/constants';
 
 
@@ -26,9 +25,3 @@ export const requester = (
     }),
     cache: new InMemoryCache(),
 });
-
-
-const client = requester(GITHUB_TOKEN);
-
-
-export default client;

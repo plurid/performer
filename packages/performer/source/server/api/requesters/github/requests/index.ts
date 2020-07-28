@@ -12,7 +12,7 @@ import {
     Repository,
 } from '#server/data/interfaces';
 
-import client, {
+import {
     requester,
 } from '../requester';
 

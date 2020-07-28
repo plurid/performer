@@ -13,11 +13,11 @@ const getProviderRepositories = async (
     context: Context,
 ) => {
     const {
-        provider,
+        providerID,
     } = input;
 
     const repositories = await getRepositoriesData(
-        provider,
+        providerID,
     );
 
     if (!repositories) {

@@ -54,14 +54,14 @@ export const types = gql`
 
 export const inputs = gql`
     input InputSetupProvider {
-        provider: String!
+        type: String!
         token: String!
         name: String!
     }
 
     input InputSetupWebhook {
+        providerID: String!
         path: String!
-        provider: String!
     }
 `;
 

@@ -7,6 +7,10 @@ import {
     handleWebhook,
 } from '#server/logic/webhooks';
 
+import {
+    getProvider,
+} from '#server/api/requesters';
+
 
 
 const setupWebhook = async (
@@ -15,21 +19,26 @@ const setupWebhook = async (
 ) => {
     const {
         path,
-        provider,
+        providerID,
     } = input;
+
+    const provider = await getProvider(providerID);
+    if (!provider) {
+        return;
+    }
 
     const {
         instance,
     } = context;
 
     registerWebhook(
+        provider.type,
         path,
-        provider,
     );
 
     handleWebhook(
+        provider.type,
         path,
-        provider,
         instance,
     );
 

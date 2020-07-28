@@ -1,8 +1,4 @@
 import {
-    GITHUB_PROVIDER,
-} from '#server/data/constants';
-
-import {
     Context,
 } from '#server/data/interfaces';
 
@@ -22,12 +18,12 @@ const linkRepository = async (
     context: Context,
 ) => {
     const {
-        provider,
+        providerID,
         nameWithOwner,
     } = input;
 
     const repositoryData = await getRepositoryDataByNameWithOwner(
-        provider,
+        providerID,
         nameWithOwner,
     );
 
@@ -49,7 +45,7 @@ const linkRepository = async (
     }
 
     await getRepository(
-        GITHUB_PROVIDER,
+        providerID,
         zipURL,
         name,
     );

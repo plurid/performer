@@ -11,7 +11,7 @@ import {
 
 
 
-export const getRepositoriesData = async (
+export const getProvider = async (
     providerID: string,
 ) => {
     const providers = await loadProviders();
@@ -19,6 +19,14 @@ export const getRepositoriesData = async (
         provider => provider.id === providerID,
     );
 
+    return provider;
+}
+
+
+export const getRepositoriesData = async (
+    providerID: string,
+) => {
+    const provider = await getProvider(providerID);
     if (!provider) {
         return;
     }
@@ -38,11 +46,7 @@ export const getRepositoryDataByNameWithOwner = async (
     providerID: string,
     nameWithOwner: string,
 ) => {
-    const providers = await loadProviders();
-    const provider = providers.find(
-        provider => provider.id === providerID,
-    );
-
+    const provider = await getProvider(providerID);
     if (!provider) {
         return;
     }
@@ -60,14 +64,19 @@ export const getRepositoryDataByNameWithOwner = async (
 
 
 export const getRepository = async (
-    provider: 'bitbucket' | 'github',
+    providerID: string,
     url: string,
     name: string,
 ) => {
-    switch (provider) {
-        case 'bitbucket':
+    const provider = await getProvider(providerID);
+    if (!provider) {
+        return;
+    }
+
+    switch (provider.type) {
+        case BITBUCKET_PROVIDER:
             return;
-        case 'github':
+        case GITHUB_PROVIDER:
             return github.getRepository(
                 url,
                 name,
@@ -79,19 +88,15 @@ export const getRepository = async (
 export const getOwner = async (
     providerID: string,
 ) => {
-    const providers = await loadProviders();
-    const provider = providers.find(
-        provider => provider.id === providerID,
-    );
-
+    const provider = await getProvider(providerID);
     if (!provider) {
         return;
     }
 
     switch (provider.type) {
-        case 'bitbucket':
+        case BITBUCKET_PROVIDER:
             return;
-        case 'github':
+        case GITHUB_PROVIDER:
             return github.getOwner(
                 provider,
             );
