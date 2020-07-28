@@ -57,13 +57,15 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    ] = useState('initial');
+    ] = useState('');
 
 
     /** effect */
     useEffect(() => {
         if (stateProviders.length > 0) {
             setView('build');
+        } else {
+            setView('initial');
         }
     }, [
         stateProviders,
@@ -71,23 +73,33 @@ const Page: React.FC<PageProperties> = (
 
 
     /** render */
-    return (
-        <StyledPage>
-            {view === 'initial' && (
+    let renderView = (<></>);
+
+    switch (view) {
+        case 'initial':
+            renderView = (
                 <InitialView
                     setView={setView}
                 />
-            )}
-
-            {view === 'setup' && (
+            );
+            break;
+        case 'setup':
+            renderView = (
                 <SetupView
                     setView={setView}
                 />
-            )}
-
-            {view === 'build' && (
+            );
+            break;
+        case 'build':
+            renderView = (
                 <BuildView />
-            )}
+            );
+            break;
+    }
+
+    return (
+        <StyledPage>
+            {renderView}
         </StyledPage>
     );
 }
