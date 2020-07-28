@@ -27,7 +27,9 @@ export const getRepositoriesData = async (
         case BITBUCKET_PROVIDER:
             return;
         case GITHUB_PROVIDER:
-            return github.getRepositoriesData();
+            return github.getRepositoriesData(
+                provider,
+            );
     }
 }
 
@@ -50,6 +52,7 @@ export const getRepositoryDataByNameWithOwner = async (
             return;
         case GITHUB_PROVIDER:
             return github.getRepositoryDataByNameWithOwner(
+                provider,
                 nameWithOwner,
             );
     }
@@ -74,12 +77,23 @@ export const getRepository = async (
 
 
 export const getOwner = async (
-    provider: 'bitbucket' | 'github',
+    providerID: string,
 ) => {
-    switch (provider) {
+    const providers = await loadProviders();
+    const provider = providers.find(
+        provider => provider.id === providerID,
+    );
+
+    if (!provider) {
+        return;
+    }
+
+    switch (provider.type) {
         case 'bitbucket':
             return;
         case 'github':
-            return github.getOwner();
+            return github.getOwner(
+                provider,
+            );
     }
 }

@@ -8,10 +8,13 @@ import {
 } from '#server/data/constants';
 
 import {
+    Provider,
     Repository,
 } from '#server/data/interfaces';
 
-import client from '../requester';
+import client, {
+    requester,
+} from '../requester';
 
 import {
     VIEWER_LOGIN,
@@ -21,7 +24,11 @@ import {
 
 
 
-export const getOwner = async () => {
+export const getOwner = async (
+    provider: Provider,
+) => {
+    const client = requester(provider.token);
+
     const query = await client.query({
         query: VIEWER_LOGIN,
     });
@@ -102,8 +109,12 @@ export const getRepository = async (
 }
 
 
-export const getRepositoriesData = async () => {
+export const getRepositoriesData = async (
+    provider: Provider,
+) => {
     try {
+        const client = requester(provider.token);
+
         const query = await client.query({
             query: QUERY_REPOSITORIES,
         });
@@ -144,9 +155,12 @@ export const getRepositoriesData = async () => {
 
 
 export const getRepositoryDataByNameWithOwner = async (
+    provider: Provider,
     nameWithOwner: string,
 ) => {
     try {
+        const client = requester(provider.token);
+
         const split = nameWithOwner.split('/');
         const owner = split[0];
         const name = split[1];
