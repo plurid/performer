@@ -1,12 +1,15 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+} from 'react';
 
 import {
     Theme,
 } from '@plurid/plurid-themes';
 
 import {
+    PluridTextline,
     PluridPureButton,
 } from '@plurid/plurid-ui-react';
 
@@ -64,11 +67,30 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     } = properties;
 
 
+    /** state */
+    const [
+        searchValue,
+        setSearchValue,
+    ] = useState('');
+
+
     /** render */
     return (
         <StyledProvidersView
             theme={generalTheme}
         >
+            <PluridTextline
+                text={searchValue}
+                placeholder="search"
+                atChange={(event) => setSearchValue(event.target.value)}
+                theme={interactionTheme}
+                level={2}
+                style={{
+                    width: '300px',
+                    marginBottom: '30px',
+                }}
+            />
+
             <StyledProvidersList>
                 <ul>
                     <StyledProvidersListItem>

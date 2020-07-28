@@ -6,6 +6,14 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridPureButton,
+} from '@plurid/plurid-ui-react';
+
+import {
+    PluridIconDelete,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import {
@@ -16,6 +24,9 @@ import {
 /** internal */
 import {
     StyledRepositoriesView,
+    StyledRepositoriesList,
+    StyledRepositoriesListItem,
+    StyledRepositoriesButton,
 } from './styled';
 /** [END] imports */
 
@@ -43,6 +54,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         /** required */
         /** - values */
         generalTheme,
+        interactionTheme,
         data,
         /** - methods */
 
@@ -57,12 +69,16 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         <StyledRepositoriesView
             theme={generalTheme}
         >
-            <div>
-                link repositories
-            </div>
-
-            <div>
+            <StyledRepositoriesList>
                 <ul>
+                    <StyledRepositoriesListItem>
+                        <div>
+                            name
+                        </div>
+
+                        <div />
+                    </StyledRepositoriesListItem>
+
                     {data.map(repository => {
                         const {
                             id,
@@ -70,15 +86,28 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
                         } = repository;
 
                         return (
-                            <li
+                            <StyledRepositoriesListItem
                                 key={id}
                             >
-                                {name}
-                            </li>
+                                <div>
+                                    {name}
+                                </div>
+
+                                <PluridIconDelete />
+                            </StyledRepositoriesListItem>
                         );
                     })}
                 </ul>
-            </div>
+            </StyledRepositoriesList>
+
+            <StyledRepositoriesButton>
+                <PluridPureButton
+                    text="Link Repositories"
+                    atClick={() => {}}
+                    theme={interactionTheme}
+                    level={2}
+                />
+            </StyledRepositoriesButton>
         </StyledRepositoriesView>
     );
 }
