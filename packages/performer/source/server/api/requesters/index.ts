@@ -12,12 +12,21 @@ import {
 
 
 export const getRepositoriesData = async (
-    provider: 'bitbucket' | 'github',
+    providerID: string,
 ) => {
-    switch (provider) {
-        case 'bitbucket':
+    const providers = await loadProviders();
+    const provider = providers.find(
+        provider => provider.id === providerID,
+    );
+
+    if (!provider) {
+        return;
+    }
+
+    switch (provider.type) {
+        case BITBUCKET_PROVIDER:
             return;
-        case 'github':
+        case GITHUB_PROVIDER:
             return github.getRepositoriesData();
     }
 }
