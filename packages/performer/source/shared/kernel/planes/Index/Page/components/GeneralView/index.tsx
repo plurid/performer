@@ -15,6 +15,8 @@ import {
 import {
     PluridIconAdd,
     PluridIconToolbox,
+    PluridIconRepository,
+    PluridIconWebhook,
     PluridIconEnter,
     PluridIconSpace,
     PluridIconArrowRight,
@@ -69,8 +71,8 @@ const generalSelectors = [
 
 const generalSelectorsIcons = {
     providers: PluridIconToolbox,
-    repositories: PluridIconAdd,
-    webhooks: PluridIconAdd,
+    repositories: PluridIconRepository,
+    webhooks: PluridIconWebhook,
     triggers: PluridIconEnter,
     builds: PluridIconSpace,
 };
