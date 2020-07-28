@@ -10,6 +10,10 @@ import {
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
+import {
+    PluridLinkButton,
+} from '@plurid/plurid-ui-react';
+
 
 /** external */
 import {
@@ -74,7 +78,11 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         return (
             <>
                 <div>
-                    {name}
+                    <PluridLinkButton
+                        text={name}
+                        atClick={() => {}}
+                        inline={true}
+                    />
                 </div>
 
                 <PluridIconDelete
