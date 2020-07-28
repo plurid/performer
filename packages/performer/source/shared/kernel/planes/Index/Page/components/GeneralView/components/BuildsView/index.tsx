@@ -6,23 +6,25 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridIconDelete,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import {
     Build,
 } from '#server/data/interfaces';
 
+import EntityView from '#kernel-components/EntityView';
 
 /** internal */
-import {
-    StyledProvidersView,
-} from './styled';
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface ProvidersViewProperties {
+export interface BuildsViewProperties {
     /** required */
     /** - values */
     generalTheme: Theme;
@@ -35,7 +37,7 @@ export interface ProvidersViewProperties {
     /** - methods */
 }
 
-const ProvidersView: React.FC<ProvidersViewProperties> = (
+const BuildsView: React.FC<BuildsViewProperties> = (
     properties,
 ) => {
     /** properties */
@@ -43,6 +45,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         /** required */
         /** - values */
         generalTheme,
+        interactionTheme,
         data,
         /** - methods */
 
@@ -53,31 +56,78 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
 
     /** render */
-    return (
-        <StyledProvidersView
-            theme={generalTheme}
-        >
+    const rowsHeader = (
+        <>
             <div>
-                <ul>
-                    {data.map(build => {
-                        const {
-                            id,
-                        } = build;
-
-                        return (
-                            <li
-                                key={id}
-                            >
-                                status - trigger - running time - running date - open
-                            </li>
-                        );
-                    })}
-                </ul>
+                status
             </div>
-        </StyledProvidersView>
+
+            <div>
+                trigger
+            </div>
+
+            <div>
+                running time
+            </div>
+
+            <div>
+                running date
+            </div>
+
+            <div>
+                open
+            </div>
+
+            <div />
+        </>
+    );
+
+    const rows = data.map(build => {
+        const {
+            id,
+        } = build;
+
+        return (
+            <>
+                <div>
+                    status
+                </div>
+
+                <div>
+                    trigger
+                </div>
+
+                <div>
+                    running time
+                </div>
+
+                <div>
+                    running date
+                </div>
+
+                <div>
+                    open
+                </div>
+
+                <PluridIconDelete
+                    atClick={() => {}}
+                />
+            </>
+        );
+    });
+
+    return (
+        <EntityView
+            generalTheme={generalTheme}
+            interactionTheme={interactionTheme}
+
+            rowTemplate="1fr 1fr 1fr 1fr 30px 30px"
+            rowsHeader={rowsHeader}
+            rows={rows}
+        />
     );
 }
 
 
-export default ProvidersView;
+export default BuildsView;
 /** [END] component */

@@ -7,10 +7,6 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
-    PluridPureButton,
-} from '@plurid/plurid-ui-react';
-
-import {
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
@@ -20,14 +16,9 @@ import {
     Repository,
 } from '#server/data/interfaces';
 
+import EntityView from '#kernel-components/EntityView';
 
 /** internal */
-import {
-    StyledRepositoriesView,
-    StyledRepositoriesList,
-    StyledRepositoriesListItem,
-    StyledRepositoriesButton,
-} from './styled';
 /** [END] imports */
 
 
@@ -65,50 +56,46 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
 
     /** render */
-    return (
-        <StyledRepositoriesView
-            theme={generalTheme}
-        >
-            <StyledRepositoriesList>
-                <ul>
-                    <StyledRepositoriesListItem>
-                        <div>
-                            name
-                        </div>
+    const rowsHeader = (
+        <>
+            <div>
+                name
+            </div>
 
-                        <div />
-                    </StyledRepositoriesListItem>
+            <div />
+        </>
+    );
 
-                    {data.map(repository => {
-                        const {
-                            id,
-                            name,
-                        } = repository;
+    const rows = data.map(repository => {
+        const {
+            name,
+        } = repository;
 
-                        return (
-                            <StyledRepositoriesListItem
-                                key={id}
-                            >
-                                <div>
-                                    {name}
-                                </div>
+        return (
+            <>
+                <div>
+                    {name}
+                </div>
 
-                                <PluridIconDelete />
-                            </StyledRepositoriesListItem>
-                        );
-                    })}
-                </ul>
-            </StyledRepositoriesList>
-
-            <StyledRepositoriesButton>
-                <PluridPureButton
-                    text="Link Repositories"
+                <PluridIconDelete
                     atClick={() => {}}
-                    theme={interactionTheme}
-                    level={2}
                 />
-            </StyledRepositoriesButton>
-        </StyledRepositoriesView>
+            </>
+        );
+    });
+
+    return (
+        <EntityView
+            generalTheme={generalTheme}
+            interactionTheme={interactionTheme}
+
+            rowTemplate="4fr 30px"
+            rowsHeader={rowsHeader}
+            rows={rows}
+
+            actionButtonText="Link Repositories"
+            actionButtonClick={() => {}}
+        />
     );
 }
 

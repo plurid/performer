@@ -1,17 +1,10 @@
 /** [START] imports */
 /** libraries */
-import React, {
-    useState,
-} from 'react';
+import React from 'react';
 
 import {
     Theme,
 } from '@plurid/plurid-themes';
-
-import {
-    PluridTextline,
-    PluridPureButton,
-} from '@plurid/plurid-ui-react';
 
 import {
     PluridIconDelete,
@@ -23,14 +16,9 @@ import {
     ClientProvider,
 } from '#server/data/interfaces';
 
+import EntityView from '#kernel-components/EntityView';
 
 /** internal */
-import {
-    StyledProvidersView,
-    StyledProvidersList,
-    StyledProvidersListItem,
-    StyledProvidersButton,
-} from './styled';
 /** [END] imports */
 
 
@@ -67,79 +55,56 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     } = properties;
 
 
-    /** state */
-    const [
-        searchValue,
-        setSearchValue,
-    ] = useState('');
-
-
     /** render */
-    return (
-        <StyledProvidersView
-            theme={generalTheme}
-        >
-            <PluridTextline
-                text={searchValue}
-                placeholder="search"
-                atChange={(event) => setSearchValue(event.target.value)}
-                theme={interactionTheme}
-                level={2}
-                style={{
-                    width: '300px',
-                    marginBottom: '30px',
-                }}
-            />
+    const rowsHeader = (
+        <>
+            <div>
+                name
+            </div>
 
-            <StyledProvidersList>
-                <ul>
-                    <StyledProvidersListItem>
-                        <div>
-                            name
-                        </div>
+            <div>
+                type
+            </div>
 
-                        <div>
-                            type
-                        </div>
+            <div />
+        </>
+    );
 
-                        <div />
-                    </StyledProvidersListItem>
+    const rows = data.map(provider => {
+        const {
+            name,
+            type,
+        } = provider;
 
-                    {data.map(provider => {
-                        const {
-                            id,
-                            name,
-                            type,
-                        } = provider;
+        return (
+            <>
+                <div>
+                    {name}
+                </div>
 
-                        return (
-                            <StyledProvidersListItem
-                                key={id}
-                            >
-                                <div>
-                                    {name}
-                                </div>
+                <div>
+                    {type}
+                </div>
 
-                                <div>
-                                    {type}
-                                </div>
-
-                                <PluridIconDelete />
-                            </StyledProvidersListItem>
-                        );
-                    })}
-                </ul>
-            </StyledProvidersList>
-
-            <StyledProvidersButton>
-                <PluridPureButton
-                    text="Add Provider"
+                <PluridIconDelete
                     atClick={() => {}}
-                    theme={interactionTheme}
-                    level={2}
                 />
-            </StyledProvidersButton>
-        </StyledProvidersView>
+            </>
+        );
+    });
+
+    return (
+        <EntityView
+            generalTheme={generalTheme}
+            interactionTheme={interactionTheme}
+
+            rowTemplate="3fr 1fr 30px"
+            rowsHeader={rowsHeader}
+            rows={rows}
+
+            actionButtonText="Add Provider"
+            actionButtonClick={() => {}}
+        />
     );
 }
 

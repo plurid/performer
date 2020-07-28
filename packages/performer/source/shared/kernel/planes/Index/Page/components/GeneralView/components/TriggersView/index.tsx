@@ -6,17 +6,19 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridIconDelete,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import {
     Trigger,
 } from '#server/data/interfaces';
 
+import EntityView from '#kernel-components/EntityView';
 
 /** internal */
-import {
-    StyledTriggersView,
-} from './styled';
 /** [END] imports */
 
 
@@ -43,6 +45,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         /** required */
         /** - values */
         generalTheme,
+        interactionTheme,
         data,
         /** - methods */
 
@@ -53,36 +56,73 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
 
     /** render */
+    const rowsHeader = (
+        <>
+            <div>
+                name
+            </div>
+
+            <div>
+                repository
+            </div>
+
+            <div>
+                branch
+            </div>
+
+            <div>
+                path
+            </div>
+
+            <div />
+        </>
+    );
+
+    const rows = data.map(trigger => {
+        const {
+            name,
+            repository,
+            branch,
+            path,
+        } = trigger;
+
+        return (
+            <>
+                <div>
+                    {name}
+                </div>
+
+                <div>
+                    {repository}
+                </div>
+
+                <div>
+                    {branch}
+                </div>
+
+                <div>
+                    {path}
+                </div>
+
+                <PluridIconDelete
+                    atClick={() => {}}
+                />
+            </>
+        );
+    });
+
     return (
-        <StyledTriggersView
-            theme={generalTheme}
-        >
-            <div>
-                add trigger
-            </div>
+        <EntityView
+            generalTheme={generalTheme}
+            interactionTheme={interactionTheme}
 
-            <div>
-                <ul>
-                    {data.map(trigger => {
-                        const {
-                            id,
-                            name,
-                            repository,
-                            branch,
-                            path,
-                        } = trigger;
+            rowTemplate="1fr 1fr 1fr 1fr 30px"
+            rowsHeader={rowsHeader}
+            rows={rows}
 
-                        return (
-                            <li
-                                key={id}
-                            >
-                                {name} - {repository} - {branch} - {path}
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
-        </StyledTriggersView>
+            actionButtonText="Add Trigger"
+            actionButtonClick={() => {}}
+        />
     );
 }
 

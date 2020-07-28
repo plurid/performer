@@ -6,17 +6,19 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridIconDelete,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import {
     Webhook,
 } from '#server/data/interfaces';
 
+import EntityView from '#kernel-components/EntityView';
 
 /** internal */
-import {
-    StyledWebhooksView,
-} from './styled';
 /** [END] imports */
 
 
@@ -43,6 +45,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         /** required */
         /** - values */
         generalTheme,
+        interactionTheme,
         data,
         /** - methods */
 
@@ -52,35 +55,57 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
     } = properties;
 
 
+
     /** render */
+    const rowsHeader = (
+        <>
+            <div>
+                path
+            </div>
+
+            <div>
+                provider
+            </div>
+
+            <div />
+        </>
+    );
+
+    const rows = data.map(webhook => {
+        const {
+            path,
+            provider
+        } = webhook;
+
+        return (
+            <>
+                <div>
+                    {path}
+                </div>
+
+                <div>
+                    {provider}
+                </div>
+
+                <PluridIconDelete
+                    atClick={() => {}}
+                />
+            </>
+        );
+    });
+
     return (
-        <StyledWebhooksView
-            theme={generalTheme}
-        >
-            <div>
-                add webhook
-            </div>
+        <EntityView
+            generalTheme={generalTheme}
+            interactionTheme={interactionTheme}
 
-            <div>
-                <ul>
-                    {data.map(webhook => {
-                        const {
-                            id,
-                            path,
-                            provider
-                        } = webhook;
+            rowTemplate="2fr 1fr 30px"
+            rowsHeader={rowsHeader}
+            rows={rows}
 
-                        return (
-                            <li
-                                key={id}
-                            >
-                                {path} ({provider})
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
-        </StyledWebhooksView>
+            actionButtonText="Add Webhook"
+            actionButtonClick={() => {}}
+        />
     );
 }
 
