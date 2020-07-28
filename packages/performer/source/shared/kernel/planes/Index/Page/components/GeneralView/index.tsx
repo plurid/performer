@@ -13,6 +13,8 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconAdd,
+    PluridIconTools,
     PluridIconExternalLink,
 } from '@plurid/plurid-icons-react';
 
@@ -47,7 +49,6 @@ import {
     StyledGeneralPeformer,
     StyledGeneralHelp,
     StyledGeneralHelpItem,
-    StyledGeneralHelpItemIcon,
     StyledGeneralSelected,
 } from './styled';
 /** [END] imports */
@@ -123,6 +124,10 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         mouseOverSelectors,
         setMouseOverSelectors,
     ] = useState(false);
+    const [
+        compactSelectors,
+        setCompactSelectors,
+    ] = useState(false);
 
 
     /** handlers */
@@ -183,24 +188,42 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     }
 
     return (
-        <StyledGeneralView>
+        <StyledGeneralView
+            compactSelectors={compactSelectors}
+        >
             <StyledGeneralSelectors
                 onMouseEnter={() => setMouseOverSelectors(true)}
                 onMouseLeave={() => setMouseOverSelectors(false)}
                 theme={stateGeneralTheme}
+                compactSelectors={compactSelectors}
             >
-                <StyledGeneralPeformer>
-                    <div>
-                        <img
-                            src={performerLogo}
-                            alt="performer"
-                            height={30}
-                        />
-                    </div>
+                <StyledGeneralPeformer
+                    compactSelectors={compactSelectors}
+                >
+                    {!compactSelectors && (
+                        <>
+                            <div>
+                                <img
+                                    src={performerLogo}
+                                    alt="performer"
+                                    height={30}
+                                    onClick={() => setCompactSelectors(true)}
+                                />
+                            </div>
 
-                    <div>
-                        performer
-                    </div>
+                            <div>
+                                performer
+                            </div>
+                        </>
+                    )}
+
+                    {compactSelectors
+                    && mouseOverSelectors
+                    && (
+                        <PluridIconAdd
+                            atClick={() => setCompactSelectors(false)}
+                        />
+                    )}
                 </StyledGeneralPeformer>
 
                 <ul>
@@ -211,8 +234,15 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 onClick={() => setSelectedView(selector)}
                                 theme={stateGeneralTheme}
                                 selected={selector === selectedView}
+                                compactSelectors={compactSelectors}
                             >
-                                {selector}
+                                <PluridIconAdd />
+
+                                {!compactSelectors && (
+                                    <div>
+                                        {selector}
+                                    </div>
+                                )}
                             </StyledGeneralSelectorItem>
                         );
                     })}
@@ -223,14 +253,21 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         <ul>
                             <StyledGeneralHelpItem
                                 onClick={() => openManual()}
+                                compactSelectors={compactSelectors}
                             >
-                                <div>
-                                    manual
-                                </div>
+                                {!compactSelectors && (
+                                    <>
+                                        <div>
+                                            manual
+                                        </div>
 
-                                <StyledGeneralHelpItemIcon>
-                                    <PluridIconExternalLink/>
-                                </StyledGeneralHelpItemIcon>
+                                        <PluridIconExternalLink/>
+                                    </>
+                                )}
+
+                                {compactSelectors && (
+                                    <PluridIconTools />
+                                )}
                             </StyledGeneralHelpItem>
                         </ul>
                     )}

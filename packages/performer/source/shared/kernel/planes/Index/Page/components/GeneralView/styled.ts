@@ -7,17 +7,25 @@ import {
 
 
 export interface IStyledGeneralView {
+    compactSelectors: boolean;
 }
 
 export const StyledGeneralView = styled.div<IStyledGeneralView>`
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: ${
+        ({
+            compactSelectors,
+        }: IStyledGeneralView) => compactSelectors
+            ? '60px 4fr'
+            : '1fr 4fr'
+    };
     min-height: 500px;
 `;
 
 
 export interface IStyledGeneralSelectors {
     theme: Theme;
+    compactSelectors: boolean;
 }
 
 export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
@@ -54,6 +62,7 @@ export const StyledGeneralSelectors = styled.div<IStyledGeneralSelectors>`
 export interface IStyledGeneralSelectorItem {
     theme: Theme;
     selected: boolean;
+    compactSelectors: boolean;
 }
 
 export const StyledGeneralSelectorItem = styled.li<IStyledGeneralSelectorItem>`
@@ -73,6 +82,18 @@ export const StyledGeneralSelectorItem = styled.li<IStyledGeneralSelectorItem>`
             }: IStyledGeneralSelectorItem) => theme.backgroundColorPrimary
         };
     }
+
+    display: grid;
+    grid-template-columns: ${
+        ({
+            compactSelectors,
+        }: IStyledGeneralSelectorItem) => compactSelectors
+            ? '16px'
+            : '16px auto'
+    };
+    grid-gap: 0.7rem;
+    height: 42px;
+    align-items: center;
 `;
 
 
@@ -84,7 +105,11 @@ export const StyledGeneralSelected = styled.div<IStyledGeneralSelected>`
 `;
 
 
-export const StyledGeneralPeformer = styled.div`
+export interface IStyledGeneralPeformer {
+    compactSelectors: boolean;
+}
+
+export const StyledGeneralPeformer = styled.div<IStyledGeneralPeformer>`
     display: grid;
     place-content: center;
     grid-gap: 0.5rem;
@@ -92,6 +117,10 @@ export const StyledGeneralPeformer = styled.div`
     font-size: 0.9rem;
     text-align: center;
     user-select: none;
+
+    img {
+        cursor: pointer;
+    }
 `;
 
 export const StyledGeneralHelp = styled.div`
@@ -101,13 +130,18 @@ export const StyledGeneralHelp = styled.div`
 `;
 
 
-export const StyledGeneralHelpItem = styled.li`
+export interface IStyledGeneralHelpItem {
+    compactSelectors: boolean;
+}
+
+export const StyledGeneralHelpItem = styled.li<IStyledGeneralHelpItem>`
     display: grid;
     align-items: center;
-    grid-template-columns: auto 30px;
-`;
-
-export const StyledGeneralHelpItemIcon = styled.div`
-    display: grid;
-    justify-items: right;
+    grid-template-columns: ${
+        ({
+            compactSelectors,
+        }: IStyledGeneralHelpItem) => compactSelectors
+            ? '16px'
+            : 'auto 16px'
+    };
 `;
