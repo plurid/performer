@@ -26,6 +26,8 @@ export const GET_SETUP = gql`
                 }
                 repositories {
                     id
+                    name
+                    isPrivate
                 }
                 builds {
                     id

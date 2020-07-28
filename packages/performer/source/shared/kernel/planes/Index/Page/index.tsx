@@ -62,9 +62,9 @@ const Page: React.FC<PageProperties> = (
 
     /** effect */
     useEffect(() => {
-        // if (stateProviders.length > 0) {
-        //     setView('build');
-        // }
+        if (stateProviders.length > 0) {
+            setView('build');
+        }
     }, [
         stateProviders,
     ]);
