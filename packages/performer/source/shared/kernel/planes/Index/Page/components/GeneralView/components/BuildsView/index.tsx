@@ -7,6 +7,11 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridIconQueue,
+    PluridIconRunning,
+    PluridIconWarning,
+    PluridIconStopped,
+    PluridIconTimeout,
     PluridIconValid,
     PluridIconCircle,
     PluridIconEnter,
@@ -26,12 +31,12 @@ import EntityView from '#kernel-components/EntityView';
 
 
 const buildStatusIcons = {
-    QUEUE: PluridIconValid,
-    RUNNING: PluridIconValid,
-    FAILED: PluridIconValid,
+    QUEUE: PluridIconQueue,
+    RUNNING: PluridIconRunning,
+    FAILED: PluridIconWarning,
     SUCCESS: PluridIconValid,
-    CANCELLED: PluridIconValid,
-    TIMEOUT: PluridIconValid,
+    CANCELLED: PluridIconStopped,
+    TIMEOUT: PluridIconTimeout,
 };
 
 const durationTime = (
