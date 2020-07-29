@@ -628,10 +628,10 @@
   resolved "https://registry.yarnpkg.com/@plurid/plurid-themes/-/plurid-themes-0.1.26.tgz#696ec2b8a57d6d95027ac2dc2a954dda142bdb82"
   integrity sha512-UOfta3WoTEC5p0ri11+7PM/hha5zGkxXQjYl8yhMho/uSRATyCal4Hpj49jSx4EjQoxfn65CPpRA8Z2SMRmRLQ==
 
-"@plurid/plurid-ui-react@^0.1.83":
-  version "0.1.83"
-  resolved "https://registry.yarnpkg.com/@plurid/plurid-ui-react/-/plurid-ui-react-0.1.83.tgz#e995414e1d5a03ccafc2f2f1f0ec47b1347aa849"
-  integrity sha512-eHAJqYty7Joh/sNYwJxG8ou93ccRXECss1ocLB2FxjXeIXZcDpOSkK5HCXNA0UteSTP+J4IpkqHG+hui0jDITw==
+"@plurid/plurid-ui-react@^0.1.84":
+  version "0.1.84"
+  resolved "https://registry.yarnpkg.com/@plurid/plurid-ui-react/-/plurid-ui-react-0.1.84.tgz#1f37521b5f84780059b4a9e73233010421b80277"
+  integrity sha512-pJGaxXUPgomjCA+amTaAwlxx8l4O+GlkXJQxctvrFE6kiTxkj/vaQhT1V4gB8L23gIF2sbD4sruRtfkIh2eQwA==
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -2924,10 +2924,10 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-loader@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-4.0.0.tgz#814434d4e1e2d5f430c70e85e78268db7f3cced1"
-  integrity sha512-/7d5slKnmY2S39FNifJ7JQ8MhcMM/rDIjAZ2Sc/Z8lnOWOmc10hijg28ovBtljY364pQaF01O2nj5AIBDnJ9vQ==
+css-loader@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-4.1.0.tgz#8d1ecb1ba280438c0b80444cc44e2caef96ae81a"
+  integrity sha512-oa8XGmieQF+dfTOpv89LQ2DxkBA+HABE2I8yq5xzf1ikKv6mcwkncFWCqVrgNc4rVsTBPrt5or1pW7u5WaNiKA==
   dependencies:
     camelcase "^6.0.0"
     cssesc "^3.0.0"
@@ -8841,10 +8841,10 @@ ts-loader@^8.0.1:
     micromatch "^4.0.0"
     semver "^6.0.0"
 
-tsconfig-paths-webpack-plugin@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-3.2.0.tgz#6e70bd42915ad0efb64d3385163f0c1270f3e04d"
-  integrity sha512-S/gOOPOkV8rIL4LurZ1vUdYCVgo15iX9ZMJ6wx6w2OgcpT/G4wMyHB6WM+xheSqGMrWKuxFul+aXpCju3wmj/g==
+tsconfig-paths-webpack-plugin@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-3.3.0.tgz#a7461723c20623ca9148621a5ce36532682ad2ff"
+  integrity sha512-MpQeZpwPY4gYASCUjY4yt2Zj8yv86O8f++3Ai4o0yI0fUC6G1syvnL9VuY71PBgimRYDQU47f12BEmJq9wRaSw==
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^4.0.0"
