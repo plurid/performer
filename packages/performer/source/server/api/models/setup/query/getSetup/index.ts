@@ -18,11 +18,21 @@ const getSetup = async (
     return {
         status: true,
         data: {
-            webhooks,
-            triggers,
-            repositories,
-            builds,
-            providers,
+            webhooks: [
+                ...webhooks,
+            ],
+            triggers: [
+                ...triggers,
+            ],
+            repositories: [
+                ...repositories,
+            ],
+            builds: [
+                ...builds,
+            ],
+            providers: [
+                ...providers,
+            ],
         },
     };
 }
