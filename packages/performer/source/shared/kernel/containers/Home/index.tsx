@@ -79,7 +79,6 @@ const Home: React.FC<HomeProperties> = (
             });
 
             const response = setupQuery.data.getSetup;
-            console.log('response', response);
 
             if (!response.status) {
                 return;
