@@ -24,11 +24,14 @@ import EntityView from '#kernel-components/EntityView';
 /** [END] imports */
 
 
+
 const buildStatusIcons = {
+    QUEUE: PluridIconValid,
     RUNNING: PluridIconValid,
-    ERROR: PluridIconValid,
+    FAILED: PluridIconValid,
     SUCCESS: PluridIconValid,
     CANCELLED: PluridIconValid,
+    TIMEOUT: PluridIconValid,
 };
 
 const durationTime = (

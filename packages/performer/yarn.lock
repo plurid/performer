@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@apollo/client@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.1.0.tgz#7cd4dcdd706f47b3ed3e18142e06daee97ac6fc9"
-  integrity sha512-Dvy5tQkz/I6U5g0BKmvA2S1tivCYcjgOyBd/kOu5CirXcILItTX/P/oI8ioglQvypy+TUYvGQWVRy9l91xgn2Q==
+"@apollo/client@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.1.1.tgz#7d57d037be8ee93694fbf82579f703e635c836c1"
+  integrity sha512-c5DxrU81p0B5BsyBXm+5uPJqLCX2epnBsd87PXfRwzDLbp/NiqnWp6a6c5vT5EV2LwJuCq1movmKthoy0gFb0w==
   dependencies:
     "@types/zen-observable" "^0.8.0"
     "@wry/context" "^0.5.2"
@@ -598,10 +598,10 @@
   resolved "https://registry.yarnpkg.com/@plurid/plurid-functions/-/plurid-functions-0.1.15.tgz#4900bf02bb36240e8d2cafd1d27c0e9712ac3ebf"
   integrity sha512-gTzhFlbK6G5jE+KBpcT4UlnO9poUOLLihXS3qwAYtu3ldSvGbu4g+bKJgaAwTBmS+t8B6vWntU5qXyi4pdX/7A==
 
-"@plurid/plurid-icons-react@^0.1.28":
-  version "0.1.28"
-  resolved "https://registry.yarnpkg.com/@plurid/plurid-icons-react/-/plurid-icons-react-0.1.28.tgz#10e19c1a6ec005014553c712c0af4b8355119080"
-  integrity sha512-NITiCDdVnvsMissUPmTbAFz6nGzyZfRuGhEZUfmgn864XjlWKWuHVQZXHYlwjO1BPZJLzpNAM9GatDg5NbykWQ==
+"@plurid/plurid-icons-react@^0.1.29":
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/@plurid/plurid-icons-react/-/plurid-icons-react-0.1.29.tgz#148d5439ffff6ffcd55bc0080423d8b28aa54902"
+  integrity sha512-KvrtNsiKNB3IaI5k4/s1sZX0LqTI0yN8HVoYiiStU5UpDNUKVXqSFXMzx0W5KlseXwKAK75mbT7LJZPcSi73cg==
 
 "@plurid/plurid-pubsub@^0.1.9":
   version "0.1.9"
@@ -1021,7 +1021,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^14.0.26":
+"@types/node@*":
   version "14.0.26"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.26.tgz#22a3b8a46510da8944b67bfc27df02c34a35331c"
   integrity sha512-W+fpe5s91FBGE0pEa0lnqGLL4USgpLgs4nokw16SrBBco/gQxuua7KnArSEOd5iaMqbbSHV10vUDkJYJJqpXKA==
@@ -1030,6 +1030,11 @@
   version "10.17.28"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.28.tgz#0e36d718a29355ee51cec83b42d921299200f6d9"
   integrity sha512-dzjES1Egb4c1a89C7lKwQh8pwjYmlOAG9dW1pBgxEk57tMrLnssOfEthz8kdkNaBd7lIqQx7APm5+mZ619IiCQ==
+
+"@types/node@^14.0.27":
+  version "14.0.27"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
+  integrity sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
