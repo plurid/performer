@@ -89,6 +89,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                 <div
                     style={{
                         display: 'flex',
+                        height: '20px',
+                        alignItems: 'center',
                     }}
                 >
                     <PluridLinkButton
