@@ -82,6 +82,10 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
                         text={name}
                         atClick={() => {}}
                         inline={true}
+                        style={{
+                            border: 'none',
+                            fontWeight: 'normal',
+                        }}
                     />
                 </div>
 

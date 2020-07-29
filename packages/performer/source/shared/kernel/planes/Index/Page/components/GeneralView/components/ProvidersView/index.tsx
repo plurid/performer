@@ -97,6 +97,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                         text={name}
                         atClick={() => {}}
                         inline={true}
+                        style={{
+                            border: 'none',
+                            fontWeight: 'normal',
+                        }}
                     />
 
                     {activeProviderID === id
