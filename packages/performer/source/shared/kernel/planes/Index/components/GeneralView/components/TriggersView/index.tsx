@@ -42,6 +42,7 @@ export interface TriggersViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
+    setGeneralView: any;
 
     /** optional */
     /** - values */
@@ -70,6 +71,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
+        setGeneralView,
 
         /** optional */
         /** - values */
@@ -185,7 +187,9 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             noRows="no triggers"
 
             actionButtonText="Add Trigger"
-            actionButtonClick={() => {}}
+            actionButtonClick={() => {
+                setGeneralView('add-trigger')
+            }}
         />
     );
 }

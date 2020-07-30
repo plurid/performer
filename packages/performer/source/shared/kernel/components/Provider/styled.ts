@@ -11,4 +11,7 @@ export interface IStyledProvider {
 }
 
 export const StyledProvider = styled.div<IStyledProvider>`
+    display: grid;
+    place-content: center;
+    text-align: center;
 `;

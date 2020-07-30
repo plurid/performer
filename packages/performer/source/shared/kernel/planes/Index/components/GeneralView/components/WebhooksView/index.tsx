@@ -42,6 +42,7 @@ export interface WebhooksViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
+    setGeneralView: any;
 
     /** optional */
     /** - values */
@@ -70,6 +71,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
+        setGeneralView,
 
         /** optional */
         /** - values */
@@ -167,7 +169,9 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             noRows="no webhooks"
 
             actionButtonText="Add Webhook"
-            actionButtonClick={() => {}}
+            actionButtonClick={() => {
+                setGeneralView('add-webhook');
+            }}
         />
     );
 }

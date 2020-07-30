@@ -11,4 +11,7 @@ export interface IStyledWebhook {
 }
 
 export const StyledWebhook = styled.div<IStyledWebhook>`
+    display: grid;
+    place-content: center;
+    text-align: center;
 `;

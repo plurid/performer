@@ -11,4 +11,7 @@ export interface IStyledTrigger {
 }
 
 export const StyledTrigger = styled.div<IStyledTrigger>`
+    display: grid;
+    place-content: center;
+    text-align: center;
 `;

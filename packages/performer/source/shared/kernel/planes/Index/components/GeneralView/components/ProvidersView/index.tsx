@@ -46,6 +46,7 @@ export interface ProvidersViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
+    setGeneralView: any;
 
     /** optional */
     /** - values */
@@ -75,6 +76,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
+        setGeneralView,
 
         /** optional */
         /** - values */
@@ -193,7 +195,9 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             noRows="no providers"
 
             actionButtonText="Add Provider"
-            actionButtonClick={() => {}}
+            actionButtonClick={() => {
+                setGeneralView('add-provider');
+            }}
 
             filterUpdate={(value: string) => {
             }}

@@ -12,6 +12,9 @@ export interface IStyledRepository {
 
 export const StyledRepository = styled.div<IStyledRepository>`
     position: relative;
+    display: grid;
+    place-content: center;
+    text-align: center;
 
     ul {
         text-align: left;

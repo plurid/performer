@@ -45,6 +45,7 @@ export interface RepositoriesViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
+    setGeneralView: any;
 
     /** optional */
     /** - values */
@@ -73,6 +74,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
+        setGeneralView,
 
         /** optional */
         /** - values */
@@ -163,7 +165,9 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             noRows="no repositories"
 
             actionButtonText="Link Repositories"
-            actionButtonClick={() => {}}
+            actionButtonClick={() => {
+                setGeneralView('link-repositories');
+            }}
         />
     );
 }

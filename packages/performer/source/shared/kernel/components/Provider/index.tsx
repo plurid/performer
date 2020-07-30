@@ -19,6 +19,7 @@ import {
 import {
     StyledPluridTextline,
     StyledPluridPureButton,
+    StyledPluridLinkButton,
 } from '#kernel-services/styled';
 
 
@@ -45,6 +46,7 @@ export interface ProviderProperties {
     /** optional */
     /** - values */
     /** - methods */
+    cancel?: () => void;
 }
 
 const Provider: React.FC<ProviderProperties> = (
@@ -61,6 +63,7 @@ const Provider: React.FC<ProviderProperties> = (
         /** optional */
         /** - values */
         /** - methods */
+        cancel,
     } = properties;
 
 
@@ -190,6 +193,17 @@ const Provider: React.FC<ProviderProperties> = (
                         level={2}
                     />
                 </div>
+
+                {cancel && (
+                    <div>
+                        <StyledPluridLinkButton
+                            text="cancel"
+                            atClick={() => cancel()}
+                            theme={theme}
+                            level={2}
+                        />
+                    </div>
+                )}
             </div>
         </StyledProvider>
     );
