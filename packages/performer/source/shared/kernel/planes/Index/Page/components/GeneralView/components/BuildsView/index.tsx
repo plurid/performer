@@ -89,6 +89,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             <PluridIconCircle
                 fill={true}
                 inactive={true}
+                size={20}
             />
 
             <div>
@@ -126,6 +127,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             <>
                 <StatusIcon
                     inactive={true}
+                    size={20}
                 />
 
                 <div>
