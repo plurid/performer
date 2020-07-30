@@ -288,6 +288,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         setFilteredRows(filteredRows);
     }, [
         stateProviders,
+        stateActiveProviderID,
     ]);
 
 
