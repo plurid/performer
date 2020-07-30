@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 import {
-    PluridPureButton,
     PluridTextline,
+    PluridPureButton,
+    PluridLinkButton,
 } from '@plurid/plurid-ui-react';
 
 
@@ -16,4 +17,11 @@ export const StyledPluridTextline = styled(PluridTextline)`
 export const StyledPluridPureButton = styled(PluridPureButton)`
     margin: 20px auto;
     width: 250px;
+`;
+
+
+export const StyledPluridLinkButton = styled(PluridLinkButton)`
+    display: grid;
+    place-content: center;
+    margin: 30px auto;
 `;

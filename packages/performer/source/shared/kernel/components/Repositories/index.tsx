@@ -26,6 +26,7 @@ import {
 
 import {
     StyledPluridPureButton,
+    StyledPluridLinkButton,
 } from '#kernel-services/styled';
 
 import {
@@ -38,6 +39,7 @@ import RepositoryItem from './components/RepositoryItem';
 
 import {
     StyledRepository,
+    StyledNoRepositories,
 } from './styled';
 /** [END] imports */
 
@@ -202,10 +204,12 @@ const Repository: React.FC<RepositoryProperties> = (
                     />
                 )}
 
-                {!loading && providerRepositories.length === 0 && (
-                    <div>
+                {!loading
+                && providerRepositories.length === 0
+                && (
+                    <StyledNoRepositories>
                         no repositories
-                    </div>
+                    </StyledNoRepositories>
                 )}
 
                 <ul>
@@ -241,7 +245,7 @@ const Repository: React.FC<RepositoryProperties> = (
 
                 {cancel && (
                     <div>
-                        <PluridLinkButton
+                        <StyledPluridLinkButton
                             text="cancel"
                             atClick={() => cancel()}
                             theme={theme}

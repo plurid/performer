@@ -36,6 +36,9 @@ const indexRoute: PluridRoute = {
             },
         },
     ],
+    view: [
+        '/',
+    ],
     defaultConfiguration: {
         elements: {
             plane: {

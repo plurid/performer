@@ -25,6 +25,8 @@ export const StyledEntityList = styled.div<IStyledEntityList>`
         padding: 0;
         margin: 0;
         list-style: none;
+        max-height: 300px;
+        overflow: auto;
 
         background-color: ${
             ({
