@@ -30,12 +30,32 @@ export const setProviders = (
 }
 
 
+export const removeProvider = (
+    id: string,
+): Types.RemoveProviderAction => {
+    return {
+        type: Types.REMOVE_PROVIDER,
+        payload: id,
+    };
+}
+
+
 export const setRepositories = (
     repositories: Repository[],
 ): Types.SetRepositoriesAction => {
     return {
         type: Types.SET_REPOSITORIES,
         payload: repositories,
+    };
+}
+
+
+export const removeRepository = (
+    id: string,
+): Types.RemoveRepositoryAction => {
+    return {
+        type: Types.REMOVE_REPOSITORY,
+        payload: id,
     };
 }
 
@@ -50,12 +70,32 @@ export const setWebhooks = (
 }
 
 
+export const removeWebhook = (
+    id: string,
+): Types.RemoveWebhookAction => {
+    return {
+        type: Types.REMOVE_WEBHOOK,
+        payload: id,
+    };
+}
+
+
 export const setTriggers = (
     triggers: Trigger[],
 ): Types.SetTriggersAction => {
     return {
         type: Types.SET_TRIGGERS,
         payload: triggers,
+    };
+}
+
+
+export const removeTrigger = (
+    id: string,
+): Types.RemoveTriggerAction => {
+    return {
+        type: Types.REMOVE_TRIGGER,
+        payload: id,
     };
 }
 
@@ -70,12 +110,25 @@ export const setBuilds = (
 }
 
 
+export const clearBuilds = (): Types.ClearBuildsAction => {
+    return {
+        type: Types.CLEAR_BUILDS,
+        payload: undefined,
+    };
+}
+
+
 
 export const actions = {
     setActiveProviderID,
     setProviders,
+    removeProvider,
     setRepositories,
+    removeRepository,
     setWebhooks,
+    removeWebhook,
     setTriggers,
+    removeTrigger,
     setBuilds,
+    clearBuilds,
 };
