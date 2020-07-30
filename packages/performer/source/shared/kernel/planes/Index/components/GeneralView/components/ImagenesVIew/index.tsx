@@ -252,7 +252,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 60px 60px 30px"
+            rowTemplate="auto 120px 120px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no imagenes"
