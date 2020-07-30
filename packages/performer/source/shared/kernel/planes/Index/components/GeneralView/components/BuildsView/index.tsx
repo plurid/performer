@@ -2,6 +2,7 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import { AnyAction } from 'redux';
@@ -113,6 +114,41 @@ const buildRowRenderer = (
 }
 
 
+const createSearchTerms = (
+    builds: Build[],
+) => {
+    const searchTerms = builds.map(
+        build => {
+            const {
+                id,
+                status,
+                trigger,
+                time,
+                date,
+            } = build;
+
+            const durationString = durationTime(time);
+            const dateString = new Date(date * 1000).toLocaleString();
+
+            const searchTerm = {
+                id,
+                data: [
+                    id,
+                    status.toLowerCase(),
+                    trigger.toLowerCase(),
+                    durationString.toLowerCase(),
+                    dateString.toLowerCase(),
+                ],
+            };
+
+            return searchTerm;
+        },
+    );
+
+    return searchTerms;
+}
+
+
 /** [START] component */
 export interface BuildsViewOwnProperties {
     /** required */
@@ -167,6 +203,10 @@ const BuildsView: React.FC<BuildsViewProperties> = (
 
 
     /** state */
+    const [searchTerms, setSearchTerms] = useState(
+        createSearchTerms(stateBuilds),
+    );
+
     const [filteredRows, setFilteredRows] = useState(
         stateBuilds.map(
             build => buildRowRenderer(
@@ -177,93 +217,33 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     );
 
 
+    /** functions */
     const filterUpdate = (
         rawValue: string,
     ) => {
         const value = rawValue.toLowerCase();
 
-        const filteredBuildsByTrigger = stateBuilds.filter(
-            build => build.trigger.toLowerCase().includes(value),
-        );
+        const searchIDs: string[] = [];
 
-        const filteredBuildsByID = stateBuilds.filter(
-            build => {
-                if (
-                    build.id.includes(value)
-                ) {
-                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
-                        if (filteredBuildByTrigger.id === build.id) {
-                            return false;
-                        }
+        for (const searchTerm of searchTerms) {
+            let added = false;
+            for (const searchTermData of searchTerm.data) {
+                if (searchTermData.includes(value)) {
+                    if (!added) {
+                        searchIDs.push(searchTerm.id);
+                        added = true;
                     }
-
-                    return true;
                 }
+            }
+        }
 
-                return false;
-            },
-        );
+        const filteredBuilds = stateBuilds.filter(stateBuild => {
+            if (searchIDs.includes(stateBuild.id)) {
+                return true;
+            }
 
-        const filteredBuildsByDuration = stateBuilds.filter(
-            build => {
-                if (
-                    durationTime(build.time).toLowerCase().includes(value)
-                ) {
-                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
-                        if (filteredBuildByTrigger.id === build.id) {
-                            return false;
-                        }
-                    }
-
-                    for (const filteredBuildByID of filteredBuildsByID) {
-                        if (filteredBuildByID.id === build.id) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-
-                return false;
-            },
-        );
-
-        const filteredBuildsByStatus = stateBuilds.filter(
-            build => {
-                if (
-                    build.status.toLowerCase().includes(value)
-                ) {
-                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
-                        if (filteredBuildByTrigger.id === build.id) {
-                            return false;
-                        }
-                    }
-
-                    for (const filteredBuildByID of filteredBuildsByID) {
-                        if (filteredBuildByID.id === build.id) {
-                            return false;
-                        }
-                    }
-
-                    for (const filteredBuildByDuration of filteredBuildsByDuration) {
-                        if (filteredBuildByDuration.id === build.id) {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-
-                return false;
-            },
-        );
-
-        const filteredBuilds = [
-            ...filteredBuildsByTrigger,
-            ...filteredBuildsByID,
-            ...filteredBuildsByDuration,
-            ...filteredBuildsByStatus,
-        ];
+            return false;
+        });
 
         const sortedBuilds = filteredBuilds.sort(
             compareValues('date', 'desc'),
@@ -278,6 +258,16 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             ),
         );
     }
+
+
+    /** effects */
+    useEffect(() => {
+        const searchTerms = createSearchTerms(stateBuilds);
+
+        setSearchTerms(searchTerms);
+    }, [
+        stateBuilds,
+    ]);
 
 
     /** render */
