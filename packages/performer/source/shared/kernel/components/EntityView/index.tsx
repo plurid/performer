@@ -13,15 +13,8 @@ import {
     PluridPureButton,
 } from '@plurid/plurid-ui-react';
 
-import {
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
-
 
 /** external */
-import {
-    ClientProvider,
-} from '#server/data/interfaces';
 
 
 /** internal */
@@ -30,6 +23,7 @@ import {
     StyledEntityList,
     StyledEntityListItem,
     StyledActionButton,
+    StyledNoRows,
 } from './styled';
 /** [END] imports */
 
@@ -42,13 +36,14 @@ export interface EntityViewProperties {
     generalTheme: Theme;
     interactionTheme: Theme;
 
-    rowsHeader: any;
+    rowsHeader: JSX.Element;
     rowTemplate: string;
-    rows: any[];
+    rows: JSX.Element[];
+    noRows: string;
 
     actionButtonText?: string;
     /** - methods */
-    actionButtonClick?: any;
+    actionButtonClick?: () => void;
     filterUpdate?: any;
 
     /** optional */
@@ -69,6 +64,7 @@ const EntityView: React.FC<EntityViewProperties> = (
         rowsHeader,
         rowTemplate,
         rows,
+        noRows,
 
         actionButtonText,
         /** - methods */
@@ -119,28 +115,36 @@ const EntityView: React.FC<EntityViewProperties> = (
                 }}
             />
 
-            <StyledEntityList
-                theme={generalTheme}
-            >
-                <ul>
-                    <StyledEntityListItem
-                        rowTemplate={rowTemplate}
-                    >
-                        {rowsHeader}
-                    </StyledEntityListItem>
+            {rows.length === 0 && (
+                <StyledNoRows>
+                    {noRows}
+                </StyledNoRows>
+            )}
 
-                    {rows.map(row => {
-                        return (
-                            <StyledEntityListItem
-                                key={Math.random() + ''}
-                                rowTemplate={rowTemplate}
-                            >
-                                {row}
-                            </StyledEntityListItem>
-                        );
-                    })}
-                </ul>
-            </StyledEntityList>
+            {rows.length !== 0 && (
+                <StyledEntityList
+                    theme={generalTheme}
+                >
+                    <ul>
+                        <StyledEntityListItem
+                            rowTemplate={rowTemplate}
+                        >
+                            {rowsHeader}
+                        </StyledEntityListItem>
+
+                        {rows.map(row => {
+                            return (
+                                <StyledEntityListItem
+                                    key={Math.random() + ''}
+                                    rowTemplate={rowTemplate}
+                                >
+                                    {row}
+                                </StyledEntityListItem>
+                            );
+                        })}
+                    </ul>
+                </StyledEntityList>
+            )}
 
             {actionButtonText && (
                 <StyledActionButton>

@@ -190,6 +190,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             rowTemplate="3fr 1fr 30px"
             rowsHeader={rowsHeader}
             rows={rows}
+            noRows="no providers"
 
             actionButtonText="Add Provider"
             actionButtonClick={() => {}}

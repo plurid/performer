@@ -160,6 +160,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             rowTemplate="4fr 30px"
             rowsHeader={rowsHeader}
             rows={rows}
+            noRows="no repositories"
 
             actionButtonText="Link Repositories"
             actionButtonClick={() => {}}

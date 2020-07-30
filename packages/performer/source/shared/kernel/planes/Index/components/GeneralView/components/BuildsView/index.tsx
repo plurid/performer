@@ -181,6 +181,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             rowTemplate="30px auto 180px 200px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
+            noRows="no builds"
         />
     );
 }

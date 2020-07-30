@@ -81,3 +81,9 @@ export const StyledActionButton = styled.div`
     bottom: 0;
     right: 0;
 `;
+
+
+export const StyledNoRows = styled.div`
+    margin: 20px 0;
+    text-align: center;
+`;

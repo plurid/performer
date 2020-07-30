@@ -164,6 +164,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             rowTemplate="2fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
+            noRows="no webhooks"
 
             actionButtonText="Add Webhook"
             actionButtonClick={() => {}}

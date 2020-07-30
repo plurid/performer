@@ -182,6 +182,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             rowTemplate="2fr 1fr 1fr 2fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={rows}
+            noRows="no triggers"
 
             actionButtonText="Add Trigger"
             actionButtonClick={() => {}}
