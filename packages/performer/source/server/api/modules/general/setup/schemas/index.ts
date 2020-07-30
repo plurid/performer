@@ -12,7 +12,9 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         setupProvider(input: InputSetupProvider!): ResponseProvider!
+        obliterateProvider(input: InputValueString!): Response!
         setupWebhook(input: InputSetupWebhook!): Response!
+        obliterateWebhook(input: InputValueString!): Response!
     }
 `;
 
@@ -53,6 +55,10 @@ export const types = gql`
 
 
 export const inputs = gql`
+    input InputValueString {
+        value: String!
+    }
+
     input InputSetupProvider {
         type: String!
         token: String!

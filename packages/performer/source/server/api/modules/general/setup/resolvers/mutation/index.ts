@@ -17,11 +17,27 @@ export default {
         input,
         context,
     ),
+    obliterateProvider: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Setup.Mutation.obliterateProvider(
+        input,
+        context,
+    ),
     setupWebhook: (
         _: any,
         { input }: any,
         context: Context,
     ) => Setup.Mutation.setupWebhook(
+        input,
+        context,
+    ),
+    obliterateWebhook: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Setup.Mutation.obliterateWebhook(
         input,
         context,
     ),
