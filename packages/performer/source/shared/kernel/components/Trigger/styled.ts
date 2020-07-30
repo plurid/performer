@@ -14,4 +14,5 @@ export const StyledTrigger = styled.div<IStyledTrigger>`
     display: grid;
     place-content: center;
     text-align: center;
+    min-height: 500px;
 `;

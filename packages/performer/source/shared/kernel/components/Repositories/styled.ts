@@ -15,6 +15,7 @@ export const StyledRepository = styled.div<IStyledRepository>`
     display: grid;
     place-content: center;
     text-align: center;
+    min-height: 500px;
 
     ul {
         text-align: left;
