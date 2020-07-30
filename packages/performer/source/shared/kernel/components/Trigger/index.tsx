@@ -42,6 +42,7 @@ export interface TriggerProperties {
 
     /** optional */
     /** - values */
+    editID?: string;
     /** - methods */
     cancel?: () => void;
 }
@@ -59,6 +60,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
         /** optional */
         /** - values */
+        editID,
         /** - methods */
         cancel,
     } = properties;
@@ -116,6 +118,20 @@ const Trigger: React.FC<TriggerProperties> = (
         triggerPath,
     ]);
 
+    useEffect(() => {
+        if (editID) {
+            // get trigger data
+            // and set values
+            setTriggerID(editID);
+            setTriggerName('');
+            setTriggerRepository('');
+            setTriggerBranch('');
+            setTriggerPath('');
+        }
+    }, [
+        editID,
+    ]);
+
 
     /** render */
     return (
@@ -123,7 +139,7 @@ const Trigger: React.FC<TriggerProperties> = (
             theme={theme}
         >
             <h1>
-                add trigger
+                {editID ? 'update' : 'add'} trigger
             </h1>
 
             <div>
@@ -199,7 +215,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text="Add Trigger"
+                        text={editID ? 'Update Trigger' : 'Add Trigger'}
                         atClick={() => {
                             action();
                             addTrigger();
