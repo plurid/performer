@@ -1,6 +1,4 @@
-import {
-    promises as fs,
-} from 'fs';
+import fs from 'fs';
 
 import path from 'path';
 
@@ -17,12 +15,20 @@ import {
 const deregisterTrigger = async (
     id: string,
 ) => {
-    const triggerPath = path.join(
-        triggersPath,
-        id + '.json',
-    );
+    try {
+        const triggerPath = path.join(
+            triggersPath,
+            id + '.json',
+        );
 
-    fs.unlink(triggerPath);
+        if (!fs.existsSync(triggerPath)) {
+            return;
+        }
+
+        fs.promises.unlink(triggerPath);
+    } catch (error) {
+        return;
+    }
 }
 
 

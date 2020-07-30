@@ -10,6 +10,10 @@ const deregisterRepository = async (
 ) => {
     try {
 
+        // if (!fs.existsSync(repositoryPath)) {
+        //     return;
+        // }
+
     } catch (error) {
         return;
     }

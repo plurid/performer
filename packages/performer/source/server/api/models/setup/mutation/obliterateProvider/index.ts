@@ -1,6 +1,4 @@
-import {
-    promises as fs,
-} from 'fs';
+import fs from 'fs';
 
 import path from 'path';
 
@@ -23,7 +21,11 @@ export const deregisterProvider = async (
             id + '.json',
         );
 
-        fs.unlink(providerPath);
+        if (!fs.existsSync(providerPath)) {
+            return;
+        }
+
+        fs.promises.unlink(providerPath);
     } catch (error) {
         return;
     }

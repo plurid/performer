@@ -1,6 +1,4 @@
-import {
-    promises as fs,
-} from 'fs';
+import fs from 'fs';
 
 import path from 'path';
 
@@ -23,7 +21,11 @@ export const deregisterWebhook = async (
             id + '.json',
         );
 
-        fs.unlink(webhookPath);
+        if (!fs.existsSync(webhookPath)) {
+            return;
+        }
+
+        fs.promises.unlink(webhookPath);
     } catch (error) {
         return;
     }
