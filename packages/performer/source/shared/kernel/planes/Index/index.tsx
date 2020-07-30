@@ -57,19 +57,20 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    ] = useState('');
+    ] = useState('initial');
+    // ] = useState('');
 
 
-    /** effect */
-    useEffect(() => {
-        if (stateProviders.length > 0) {
-            setView('general');
-        } else {
-            setView('initial');
-        }
-    }, [
-        stateProviders,
-    ]);
+    // /** effect */
+    // useEffect(() => {
+    //     if (stateProviders.length > 0) {
+    //         setView('general');
+    //     } else {
+    //         setView('initial');
+    //     }
+    // }, [
+    //     stateProviders,
+    // ]);
 
 
     /** render */
