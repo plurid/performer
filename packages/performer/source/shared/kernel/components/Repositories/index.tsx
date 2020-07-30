@@ -11,6 +11,7 @@ import {
 
 import {
     PluridSpinner,
+    PluridLinkButton,
 } from '@plurid/plurid-ui-react';
 
 
@@ -54,6 +55,7 @@ export interface RepositoryProperties {
     /** optional */
     /** - values */
     /** - methods */
+    cancel?: () => void;
 }
 
 const Repository: React.FC<RepositoryProperties> = (
@@ -71,6 +73,7 @@ const Repository: React.FC<RepositoryProperties> = (
         /** optional */
         /** - values */
         /** - methods */
+        cancel,
     } = properties;
 
 
@@ -194,7 +197,9 @@ const Repository: React.FC<RepositoryProperties> = (
                 </h1>
 
                 {loading && (
-                    <PluridSpinner />
+                    <PluridSpinner
+                        theme={theme}
+                    />
                 )}
 
                 {!loading && providerRepositories.length === 0 && (
@@ -228,10 +233,22 @@ const Repository: React.FC<RepositoryProperties> = (
                             action();
                             linkRepositories();
                         }}
-                        level={2}
                         disabled={selectedRepositories.length === 0}
+                        theme={theme}
+                        level={2}
                     />
                 </div>
+
+                {cancel && (
+                    <div>
+                        <PluridLinkButton
+                            text="cancel"
+                            atClick={() => cancel()}
+                            theme={theme}
+                            level={2}
+                        />
+                    </div>
+                )}
             </div>
         </StyledRepository>
     );

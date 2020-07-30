@@ -9,6 +9,10 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridLinkButton,
+} from '@plurid/plurid-ui-react';
+
 
 /** external */
 import client from '#kernel-services/graphql/client';
@@ -42,6 +46,7 @@ export interface TriggerProperties {
     /** optional */
     /** - values */
     /** - methods */
+    cancel?: () => void;
 }
 
 const Trigger: React.FC<TriggerProperties> = (
@@ -58,6 +63,7 @@ const Trigger: React.FC<TriggerProperties> = (
         /** optional */
         /** - values */
         /** - methods */
+        cancel,
     } = properties;
 
 
@@ -205,6 +211,17 @@ const Trigger: React.FC<TriggerProperties> = (
                         disabled={!validTrigger}
                     />
                 </div>
+
+                {cancel && (
+                    <div>
+                        <PluridLinkButton
+                            text="cancel"
+                            atClick={() => cancel()}
+                            theme={theme}
+                            level={2}
+                        />
+                    </div>
+                )}
             </div>
         </StyledTrigger>
     );

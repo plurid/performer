@@ -88,6 +88,11 @@ const SetupView: React.FC<SetupViewProperties> = (
     ] = useState('PROVIDER');
 
 
+    const cancelPhases = () => {
+        setView('general');
+    }
+
+
     /** render */
     return (
         <StyledSetupView>
@@ -110,6 +115,7 @@ const SetupView: React.FC<SetupViewProperties> = (
                     action={() => {
                         setPhase('WEBHOOK');
                     }}
+                    cancel={() => cancelPhases()}
                 />
             )}
 
@@ -120,6 +126,7 @@ const SetupView: React.FC<SetupViewProperties> = (
                     action={() => {
                         setPhase('TRIGGER');
                     }}
+                    cancel={() => cancelPhases()}
                 />
             )}
 
@@ -130,6 +137,7 @@ const SetupView: React.FC<SetupViewProperties> = (
                     action={() => {
                         setView('general');
                     }}
+                    cancel={() => cancelPhases()}
                 />
             )}
         </StyledSetupView>
