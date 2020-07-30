@@ -9,6 +9,7 @@ import {
     buildsPath,
     buildlogsPath,
     buildqueuePath,
+    imagenesPath,
 } from '#server/data/constants';
 
 
@@ -42,6 +43,10 @@ const makeDirectories = () => {
     });
 
     fs.mkdirSync(buildqueuePath, {
+        recursive: true,
+    });
+
+    fs.mkdirSync(imagenesPath, {
         recursive: true,
     });
 }
