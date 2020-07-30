@@ -8,6 +8,25 @@ import {
 
 
 
+const compare = (
+    a: any,
+    b: any,
+) => {
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+
+    let comparison = 0;
+
+    if (nameA > nameB) {
+        comparison = 1;
+    } else if (nameA < nameB) {
+        comparison = -1;
+    }
+
+    return comparison;
+}
+
+
 const getProviderRepositories = async (
     input: any,
     context: Context,
@@ -26,9 +45,13 @@ const getProviderRepositories = async (
         };
     }
 
+    const sortedRepositories = repositories.sort(compare);
+
     return {
         status: true,
-        data: repositories,
+        data: [
+            ...sortedRepositories,
+        ],
     };
 }
 
