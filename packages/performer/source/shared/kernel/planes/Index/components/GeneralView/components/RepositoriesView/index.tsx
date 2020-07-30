@@ -22,6 +22,11 @@ import {
 
 import EntityView from '#kernel-components/EntityView';
 
+import client from '#kernel-services/graphql/client';
+import {
+    UNLINK_REPOSITORY,
+} from '#kernel-services/graphql/mutate';
+
 /** internal */
 /** [END] imports */
 
@@ -59,6 +64,27 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
     } = properties;
 
 
+    /** handlers */
+    const unlinkRepository = async (
+        id: string,
+    ) => {
+        try {
+            const input = {
+                value: id,
+            };
+
+            await client.mutate({
+                mutation: UNLINK_REPOSITORY,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
+    }
+
+
     /** render */
     const rowsHeader = (
         <>
@@ -72,6 +98,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
     const rows = data.map(repository => {
         const {
+            id,
             name,
         } = repository;
 
@@ -90,7 +117,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
                 </div>
 
                 <PluridIconDelete
-                    atClick={() => {}}
+                    atClick={() => unlinkRepository(id)}
                 />
             </>
         );

@@ -19,6 +19,11 @@ import {
 
 import EntityView from '#kernel-components/EntityView';
 
+import client from '#kernel-services/graphql/client';
+import {
+    OBLITERATE_TRIGGER,
+} from '#kernel-services/graphql/mutate';
+
 /** internal */
 /** [END] imports */
 
@@ -56,6 +61,27 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     } = properties;
 
 
+    /** handlers */
+    const handleObliterateTrigger = async (
+        id: string,
+    ) => {
+        try {
+            const input = {
+                value: id,
+            };
+
+            await client.mutate({
+                mutation: OBLITERATE_TRIGGER,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
+    }
+
+
     /** render */
     const rowsHeader = (
         <>
@@ -83,6 +109,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
     const rows = data.map(trigger => {
         const {
+            id,
             name,
             repository,
             branch,
@@ -112,7 +139,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
                 />
 
                 <PluridIconDelete
-                    atClick={() => {}}
+                    atClick={() => handleObliterateTrigger(id)}
                 />
             </>
         );

@@ -23,6 +23,11 @@ import {
 
 import EntityView from '#kernel-components/EntityView';
 
+import client from '#kernel-services/graphql/client';
+import {
+    OBLITERATE_PROVIDER,
+} from '#kernel-services/graphql/mutate';
+
 /** internal */
 /** [END] imports */
 
@@ -60,6 +65,27 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         /** - values */
         /** - methods */
     } = properties;
+
+
+    /** handlers */
+    const handleObliterateProvider = async (
+        id: string,
+    ) => {
+        try {
+            const input = {
+                value: id,
+            };
+
+            await client.mutate({
+                mutation: OBLITERATE_PROVIDER,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
+    }
 
 
     /** render */
@@ -121,7 +147,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                 </div>
 
                 <PluridIconDelete
-                    atClick={() => {}}
+                    atClick={() => handleObliterateProvider(id)}
                 />
             </>
         );

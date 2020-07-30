@@ -19,6 +19,11 @@ import {
 
 import EntityView from '#kernel-components/EntityView';
 
+import client from '#kernel-services/graphql/client';
+import {
+    OBLITERATE_WEBHOOK,
+} from '#kernel-services/graphql/mutate';
+
 /** internal */
 /** [END] imports */
 
@@ -56,6 +61,26 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
     } = properties;
 
 
+    /** handlers */
+    const handleObliterateWebhook = async (
+        id: string,
+    ) => {
+        try {
+            const input = {
+                value: id,
+            };
+
+            await client.mutate({
+                mutation: OBLITERATE_WEBHOOK,
+                variables: {
+                    input,
+                },
+            });
+        } catch (error) {
+            return;
+        }
+    }
+
 
     /** render */
     const rowsHeader = (
@@ -76,6 +101,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
     const rows = data.map(webhook => {
         const {
+            id,
             path,
             provider
         } = webhook;
@@ -95,7 +121,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
                 />
 
                 <PluridIconDelete
-                    atClick={() => {}}
+                    atClick={() => handleObliterateWebhook(id)}
                 />
             </>
         );
