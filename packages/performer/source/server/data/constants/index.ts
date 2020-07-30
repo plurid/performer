@@ -19,6 +19,7 @@ export const BASE_PATH_WEBHOOKS = './data/webhooks/';
 export const BASE_PATH_BUILDS = './data/builds/';
 export const BASE_PATH_BUILDLOGS = './data/buildlogs/';
 export const BASE_PATH_BUILDQUEUE = './data/buildqueue/';
+export const BASE_PATH_IMAGENES = './data/imagenes/';
 
 
 export const providersPath = path.join(BASE_PATH, BASE_PATH_PROVIDERS);
@@ -29,3 +30,4 @@ export const webhooksPath = path.join(BASE_PATH, BASE_PATH_WEBHOOKS);
 export const buildsPath = path.join(BASE_PATH, BASE_PATH_BUILDS);
 export const buildlogsPath = path.join(BASE_PATH, BASE_PATH_BUILDLOGS);
 export const buildqueuePath = path.join(BASE_PATH, BASE_PATH_BUILDQUEUE);
+export const imagenesPath = path.join(BASE_PATH, BASE_PATH_IMAGENES);

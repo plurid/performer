@@ -45,6 +45,7 @@ const setupGraphQLServer = async (
                 webhooks,
                 triggers,
                 builds,
+                imagenes,
             } = await loadData();
 
             handleWebhooks(
@@ -61,6 +62,7 @@ const setupGraphQLServer = async (
                 repositories,
                 builds,
                 providers,
+                imagenes,
             };
 
             return context;

@@ -68,4 +68,5 @@ export interface Context {
     repositories: Repository[],
     builds: Build[],
     providers: Provider[];
+    imagenes: Imagene[];
 }

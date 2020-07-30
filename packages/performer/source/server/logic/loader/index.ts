@@ -9,6 +9,7 @@ import {
     Webhook,
     Trigger,
     Build,
+    Imagene,
 } from '#server/data/interfaces';
 
 import {
@@ -17,6 +18,7 @@ import {
     webhooksPath,
     triggersPath,
     buildsPath,
+    imagenesPath,
 } from '#server/data/constants';
 
 import {
@@ -85,12 +87,24 @@ export const loadBuilds = async () => {
 }
 
 
+export const loadImagenes = async () => {
+    const imagenes = await loadDataFromFiles<Imagene>(imagenesPath);
+
+    const sortedImagenes = imagenes.sort(
+        compareValues('name'),
+    );
+
+    return sortedImagenes;
+}
+
+
 const loadData = async () => {
     const providers = await loadProviders();
     const repositories = await loadRepositories();
     const webhooks = await loadWebhooks();
     const triggers = await loadTriggers();
     const builds = await loadBuilds();
+    const imagenes = await loadImagenes();
 
     const data = {
         providers,
@@ -98,6 +112,7 @@ const loadData = async () => {
         triggers,
         repositories,
         builds,
+        imagenes,
     };
 
     return data;
