@@ -1,6 +1,9 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+} from 'react';
 
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
@@ -17,6 +20,10 @@ import {
 
 
 /** external */
+import {
+    compareValues,
+} from '#server/utilities';
+
 import {
     Trigger,
 } from '#server/data/interfaces';
@@ -35,6 +42,104 @@ import actions from '#kernel-services/state/actions';
 /** internal */
 /** [END] imports */
 
+
+
+const triggerRowRenderer = (
+    trigger: Trigger,
+    handleObliterateTrigger: (
+        id: string,
+    ) => void,
+) => {
+    const {
+        id,
+        name,
+        repository,
+        branch,
+        path,
+    } = trigger;
+
+    return (
+        <>
+            <div>
+                {name}
+            </div>
+
+            <div>
+                {repository}
+            </div>
+
+            <div>
+                {branch}
+            </div>
+
+            <div>
+                {path}
+            </div>
+
+            <PluridIconEdit
+                atClick={() => {}}
+            />
+
+            <PluridIconDelete
+                atClick={() => handleObliterateTrigger(id)}
+            />
+        </>
+    );
+}
+
+
+const createSearchTerms = (
+    triggers: Trigger[],
+) => {
+    const searchTerms = triggers.map(
+        trigger => {
+            const {
+                id,
+                name,
+                repository,
+                branch,
+                path,
+            } = trigger;
+
+            const searchTerm = {
+                id,
+                data: [
+                    id,
+                    name.toLowerCase(),
+                    repository.toLowerCase(),
+                    branch.toLowerCase(),
+                    path.toLowerCase(),
+                ],
+            };
+
+            return searchTerm;
+        },
+    );
+
+    return searchTerms;
+}
+
+
+const getFilterIDs = (
+    filterTerms: any[],
+    value: string,
+) => {
+    const filterIDs: string[] = [];
+
+    for (const filterTerm of filterTerms) {
+        let added = false;
+        for (const filterTermData of filterTerm.data) {
+            if (filterTermData.includes(value)) {
+                if (!added) {
+                    filterIDs.push(filterTerm.id);
+                    added = true;
+                }
+            }
+        }
+    }
+
+    return filterIDs;
+}
 
 
 /** [START] component */
@@ -113,6 +218,62 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     }
 
 
+    /** state */
+    const [searchTerms, setSearchTerms] = useState(
+        createSearchTerms(stateTriggers),
+    );
+
+    const [filteredRows, setFilteredRows] = useState(
+        stateTriggers.map(
+            trigger => triggerRowRenderer(
+                trigger,
+                handleObliterateTrigger,
+            ),
+        ),
+    );
+
+
+    /** functions */
+    const filterUpdate = (
+        rawValue: string,
+    ) => {
+        const value = rawValue.toLowerCase();
+
+        const filterIDs = getFilterIDs(searchTerms, value);
+
+        const filteredTriggers = stateTriggers.filter(stateTrigger => {
+            if (filterIDs.includes(stateTrigger.id)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        const sortedTriggers = filteredTriggers.sort(
+            compareValues('name'),
+        );
+
+        setFilteredRows(
+            sortedTriggers.map(
+                trigger => triggerRowRenderer(
+                    trigger,
+                    handleObliterateTrigger,
+                ),
+            ),
+        );
+    }
+
+
+    /** effects */
+    useEffect(() => {
+        const searchTerms = createSearchTerms(stateTriggers);
+
+        setSearchTerms(searchTerms);
+    }, [
+        stateTriggers,
+    ]);
+
+
     /** render */
     const rowsHeader = (
         <>
@@ -138,44 +299,6 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         </>
     );
 
-    const rows = stateTriggers.map(trigger => {
-        const {
-            id,
-            name,
-            repository,
-            branch,
-            path,
-        } = trigger;
-
-        return (
-            <>
-                <div>
-                    {name}
-                </div>
-
-                <div>
-                    {repository}
-                </div>
-
-                <div>
-                    {branch}
-                </div>
-
-                <div>
-                    {path}
-                </div>
-
-                <PluridIconEdit
-                    atClick={() => {}}
-                />
-
-                <PluridIconDelete
-                    atClick={() => handleObliterateTrigger(id)}
-                />
-            </>
-        );
-    });
-
     return (
         <EntityView
             generalTheme={stateGeneralTheme}
@@ -183,13 +306,15 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
             rowTemplate="2fr 1fr 1fr 2fr 30px 30px"
             rowsHeader={rowsHeader}
-            rows={rows}
+            rows={filteredRows}
             noRows="no triggers"
 
             actionButtonText="Add Trigger"
             actionButtonClick={() => {
                 setGeneralView('add-trigger')
             }}
+
+            filterUpdate={filterUpdate}
         />
     );
 }
