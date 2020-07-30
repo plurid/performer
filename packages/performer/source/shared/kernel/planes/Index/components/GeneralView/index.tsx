@@ -98,6 +98,10 @@ export interface GeneralViewStateProperties {
 }
 
 export interface GeneralViewDispatchProperties {
+    dispatchDataRemoveProvider: typeof actions.data.removeProvider;
+    dispatchDataRemoveRepository: typeof actions.data.removeRepository;
+    dispatchDataRemoveTrigger: typeof actions.data.removeTrigger;
+    dispatchDataRemoveWebhook: typeof actions.data.removeWebhook;
 }
 
 export type GeneralViewProperties = GeneralViewOwnProperties
@@ -125,6 +129,12 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateWebhooks,
         stateTriggers,
         stateBuilds,
+
+        /** dispatch */
+        dispatchDataRemoveProvider,
+        dispatchDataRemoveRepository,
+        dispatchDataRemoveTrigger,
+        dispatchDataRemoveWebhook,
     } = properties;
 
 
@@ -159,6 +169,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     interactionTheme={stateGeneralTheme}
                     activeProviderID={stateActiveProviderID}
                     data={stateProviders}
+                    removeProvider={dispatchDataRemoveProvider}
                 />
             );
             break;
@@ -311,6 +322,26 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): GeneralViewDispatchProperties => ({
+    dispatchDataRemoveProvider: (
+        id,
+    ) => dispatch(
+        actions.data.removeProvider(id),
+    ),
+    dispatchDataRemoveRepository: (
+        id,
+    ) => dispatch(
+        actions.data.removeRepository(id),
+    ),
+    dispatchDataRemoveTrigger: (
+        id,
+    ) => dispatch(
+        actions.data.removeTrigger(id),
+    ),
+    dispatchDataRemoveWebhook: (
+        id,
+    ) => dispatch(
+        actions.data.removeWebhook(id),
+    ),
 });
 
 

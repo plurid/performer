@@ -42,6 +42,7 @@ export interface ProvidersViewProperties {
     activeProviderID: string;
     data: ClientProvider[];
     /** - methods */
+    removeProvider: any;
 
     /** optional */
     /** - values */
@@ -60,6 +61,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         activeProviderID,
         data,
         /** - methods */
+        removeProvider,
 
         /** optional */
         /** - values */
@@ -72,6 +74,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         id: string,
     ) => {
         try {
+            removeProvider(id);
+
             const input = {
                 value: id,
             };
