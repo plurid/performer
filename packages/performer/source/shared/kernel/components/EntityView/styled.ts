@@ -25,7 +25,8 @@ export const StyledEntityList = styled.div<IStyledEntityList>`
         padding: 0;
         margin: 0;
         list-style: none;
-        max-height: 300px;
+        min-height: 300px;
+        max-height: 800px;
         overflow: auto;
 
         background-color: ${
@@ -69,6 +70,7 @@ export const StyledEntityListItem = styled.li<IStyledEntityListItem>`
             rowTemplate,
         }: IStyledEntityListItem) => rowTemplate
     };
+    grid-gap: 0.3rem;
     padding: 0.7rem;
     align-items: center;
     min-height: 45px;

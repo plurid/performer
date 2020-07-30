@@ -90,7 +90,7 @@ const buildRowRenderer = (
             />
 
             <div>
-                {id}
+                {id.slice(0, 6)}
             </div>
 
             <div>
@@ -178,17 +178,43 @@ const BuildsView: React.FC<BuildsViewProperties> = (
 
 
     const filterUpdate = (
-        value: string,
+        rawValue: string,
     ) => {
-        const filteredBuildsByID = stateBuilds.filter(
-            build => build.id.includes(value),
-        );
+        const value = rawValue.toLowerCase();
 
         const filteredBuildsByTrigger = stateBuilds.filter(
+            build => build.trigger.toLowerCase().includes(value),
+        );
+
+        const filteredBuildsByID = stateBuilds.filter(
             build => {
                 if (
-                    build.trigger.includes(value)
+                    build.id.includes(value)
                 ) {
+                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
+                        if (filteredBuildByTrigger.id === build.id) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            },
+        );
+
+        const filteredBuildsByDuration = stateBuilds.filter(
+            build => {
+                if (
+                    durationTime(build.time).toLowerCase().includes(value)
+                ) {
+                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
+                        if (filteredBuildByTrigger.id === build.id) {
+                            return false;
+                        }
+                    }
+
                     for (const filteredBuildByID of filteredBuildsByID) {
                         if (filteredBuildByID.id === build.id) {
                             return false;
@@ -202,9 +228,41 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             },
         );
 
+        const filteredBuildsByStatus = stateBuilds.filter(
+            build => {
+                if (
+                    build.status.toLowerCase().includes(value)
+                ) {
+                    for (const filteredBuildByTrigger of filteredBuildsByTrigger) {
+                        if (filteredBuildByTrigger.id === build.id) {
+                            return false;
+                        }
+                    }
+
+                    for (const filteredBuildByID of filteredBuildsByID) {
+                        if (filteredBuildByID.id === build.id) {
+                            return false;
+                        }
+                    }
+
+                    for (const filteredBuildByDuration of filteredBuildsByDuration) {
+                        if (filteredBuildByDuration.id === build.id) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            },
+        );
+
         const filteredBuilds = [
-            ...filteredBuildsByID,
             ...filteredBuildsByTrigger,
+            ...filteredBuildsByID,
+            ...filteredBuildsByDuration,
+            ...filteredBuildsByStatus,
         ];
 
         const sortedBuilds = filteredBuilds.sort(
@@ -256,7 +314,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="30px 150px auto 180px 200px 30px"
+            rowTemplate="30px 60px auto 180px 200px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no builds"
