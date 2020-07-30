@@ -6,25 +6,10 @@ import {
     getRepositoriesData,
 } from '#server/api/requesters';
 
+import {
+    compareValues,
+} from '#server/utilities';
 
-
-const compare = (
-    a: any,
-    b: any,
-) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-
-    let comparison = 0;
-
-    if (nameA > nameB) {
-        comparison = 1;
-    } else if (nameA < nameB) {
-        comparison = -1;
-    }
-
-    return comparison;
-}
 
 
 const getProviderRepositories = async (
@@ -45,7 +30,7 @@ const getProviderRepositories = async (
         };
     }
 
-    const sortedRepositories = repositories.sort(compare);
+    const sortedRepositories = repositories.sort(compareValues('name'));
 
     return {
         status: true,
