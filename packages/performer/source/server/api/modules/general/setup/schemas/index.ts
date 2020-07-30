@@ -38,6 +38,7 @@ export const types = gql`
         webhooks: [Webhook!]
         triggers: [Trigger!]
         builds: [Build!]
+        imagenes: [Imagene!]
     }
 
     type Webhook {

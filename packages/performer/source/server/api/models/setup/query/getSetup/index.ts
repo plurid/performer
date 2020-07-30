@@ -13,6 +13,7 @@ const getSetup = async (
         repositories,
         builds,
         providers,
+        imagenes,
     } = context;
 
     return {
@@ -32,6 +33,9 @@ const getSetup = async (
             ],
             providers: [
                 ...providers,
+            ],
+            imagenes: [
+                ...imagenes,
             ],
         },
     };
