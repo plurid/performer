@@ -1,9 +1,9 @@
 import Query from './query';
-// import Mutation from './mutation';
+import Mutation from './mutation';
 
 
 
 export default {
     Query,
-    // Mutation,
+    Mutation,
 };

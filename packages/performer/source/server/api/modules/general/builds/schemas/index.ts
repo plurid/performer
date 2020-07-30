@@ -10,6 +10,13 @@ export const queries = gql`
 `;
 
 
+export const mutations = gql`
+    extend type Mutation {
+        clearBuilds: Response!
+    }
+`;
+
+
 export const types = gql`
     type ResponseBuilds {
         status: Boolean!
@@ -55,6 +62,7 @@ export const inputs = gql`
 
 export default gql`
     ${queries}
+    ${mutations}
     ${types}
     ${inputs}
 `;
