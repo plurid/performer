@@ -11,7 +11,6 @@ import {
 import {
     PluridFormLeftRight,
     PluridDropdown,
-    PluridLinkButton,
 } from '@plurid/plurid-ui-react';
 
 
@@ -135,7 +134,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
                 {cancel && (
                     <div>
-                        <PluridLinkButton
+                        <StyledPluridLinkButton
                             text="cancel"
                             atClick={() => cancel()}
                             theme={theme}

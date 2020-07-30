@@ -9,10 +9,6 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
-import {
-    PluridLinkButton,
-} from '@plurid/plurid-ui-react';
-
 
 /** external */
 import client from '#kernel-services/graphql/client';
@@ -214,7 +210,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
                 {cancel && (
                     <div>
-                        <PluridLinkButton
+                        <StyledPluridLinkButton
                             text="cancel"
                             atClick={() => cancel()}
                             theme={theme}
