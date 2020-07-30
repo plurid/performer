@@ -211,38 +211,46 @@ const Repository: React.FC<RepositoryProperties> = (
                     </StyledNoRepositories>
                 )}
 
-                <ul>
-                    {!loading && providerRepositories.map(repository => {
-                        const {
-                            id,
-                        } = repository;
+                {!loading
+                && providerRepositories.length > 0
+                && (
+                    <>
+                        <ul>
+                            {!loading && providerRepositories.map(repository => {
+                                const {
+                                    id,
+                                } = repository;
 
-                        return (
-                            <RepositoryItem
-                                key={id}
+                                return (
+                                    <RepositoryItem
+                                        key={id}
+                                        theme={theme}
+                                        selected={selectedRepositories.includes(id)}
+                                        select={handleSelect}
+                                        data={repository}
+                                    />
+                                );
+                            })}
+                        </ul>
+
+                        <div>
+                            <StyledPluridPureButton
+                                text="Link Repositories"
+                                atClick={() => {
+                                    action();
+                                    linkRepositories();
+                                }}
+                                disabled={selectedRepositories.length === 0}
                                 theme={theme}
-                                selected={selectedRepositories.includes(id)}
-                                select={handleSelect}
-                                data={repository}
+                                level={2}
                             />
-                        );
-                    })}
-                </ul>
+                        </div>
+                    </>
+                )}
 
-                <div>
-                    <StyledPluridPureButton
-                        text="Link Repositories"
-                        atClick={() => {
-                            action();
-                            linkRepositories();
-                        }}
-                        disabled={selectedRepositories.length === 0}
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                {cancel && (
+                {!loading
+                && cancel
+                && (
                     <div>
                         <StyledPluridLinkButton
                             text="cancel"
