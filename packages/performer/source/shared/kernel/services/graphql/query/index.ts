@@ -41,6 +41,12 @@ export const GET_SETUP = gql`
                     name
                     type
                 }
+                imagenes {
+                    id
+                    name
+                    version
+                    size
+                }
             }
         }
     }
