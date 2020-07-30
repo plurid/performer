@@ -2,6 +2,10 @@
 /** libraries */
 import React from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 import {
     Theme,
 } from '@plurid/plurid-themes';
@@ -27,24 +31,39 @@ import {
     UNLINK_REPOSITORY,
 } from '#kernel-services/graphql/mutate';
 
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
+
 /** internal */
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface RepositoriesViewProperties {
+export interface RepositoriesViewOwnProperties {
     /** required */
     /** - values */
-    generalTheme: Theme;
-    interactionTheme: Theme;
-    data: Repository[];
     /** - methods */
 
     /** optional */
     /** - values */
     /** - methods */
 }
+
+export interface RepositoriesViewStateProperties {
+    stateGeneralTheme: Theme;
+    stateInteractionTheme: Theme;
+    stateRepositories: Repository[];
+}
+
+export interface RepositoriesViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
+}
+
+export type RepositoriesViewProperties = RepositoriesViewOwnProperties
+    & RepositoriesViewStateProperties
+    & RepositoriesViewDispatchProperties;
 
 const RepositoriesView: React.FC<RepositoriesViewProperties> = (
     properties,
@@ -53,14 +72,19 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
     const {
         /** required */
         /** - values */
-        generalTheme,
-        interactionTheme,
-        data,
         /** - methods */
 
         /** optional */
         /** - values */
         /** - methods */
+
+        /** state */
+        stateGeneralTheme,
+        stateInteractionTheme,
+        stateRepositories,
+
+        /** dispatch */
+        dispatchRemoveEntity,
     } = properties;
 
 
@@ -69,6 +93,11 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         id: string,
     ) => {
         try {
+            dispatchRemoveEntity({
+                type: 'repository',
+                id,
+            });
+
             const input = {
                 value: id,
             };
@@ -96,7 +125,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         </>
     );
 
-    const rows = data.map(repository => {
+    const rows = stateRepositories.map(repository => {
         const {
             id,
             name,
@@ -125,8 +154,8 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
     return (
         <EntityView
-            generalTheme={generalTheme}
-            interactionTheme={interactionTheme}
+            generalTheme={stateGeneralTheme}
+            interactionTheme={stateInteractionTheme}
 
             rowTemplate="4fr 30px"
             rowsHeader={rowsHeader}
@@ -139,5 +168,28 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 }
 
 
-export default RepositoriesView;
+const mapStateToProperties = (
+    state: AppState,
+): RepositoriesViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateRepositories: selectors.data.getRepositories(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): RepositoriesViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch (
+        actions.data.removeEntity(payload),
+    ),
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(RepositoriesView);
 /** [END] component */

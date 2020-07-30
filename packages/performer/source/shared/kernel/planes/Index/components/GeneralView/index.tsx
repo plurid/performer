@@ -89,19 +89,9 @@ export interface GeneralViewOwnProperties {
 
 export interface GeneralViewStateProperties {
     stateGeneralTheme: Theme;
-    stateActiveProviderID: string;
-    stateProviders: ClientProvider[];
-    stateRepositories: Repository[];
-    stateWebhooks: Webhook[];
-    stateTriggers: Trigger[];
-    stateBuilds: Build[];
 }
 
 export interface GeneralViewDispatchProperties {
-    dispatchDataRemoveProvider: typeof actions.data.removeProvider;
-    dispatchDataRemoveRepository: typeof actions.data.removeRepository;
-    dispatchDataRemoveTrigger: typeof actions.data.removeTrigger;
-    dispatchDataRemoveWebhook: typeof actions.data.removeWebhook;
 }
 
 export type GeneralViewProperties = GeneralViewOwnProperties
@@ -123,18 +113,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
         /** state */
         stateGeneralTheme,
-        stateActiveProviderID,
-        stateProviders,
-        stateRepositories,
-        stateWebhooks,
-        stateTriggers,
-        stateBuilds,
 
         /** dispatch */
-        dispatchDataRemoveProvider,
-        dispatchDataRemoveRepository,
-        dispatchDataRemoveTrigger,
-        dispatchDataRemoveWebhook,
     } = properties;
 
 
@@ -164,49 +144,27 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     switch (selectedView) {
         case 'providers':
             renderSelectedView = (
-                <ProvidersView
-                    generalTheme={stateGeneralTheme}
-                    interactionTheme={stateGeneralTheme}
-                    activeProviderID={stateActiveProviderID}
-                    data={stateProviders}
-                    removeProvider={dispatchDataRemoveProvider}
-                />
+                <ProvidersView />
             );
             break;
         case 'repositories':
             renderSelectedView = (
-                <RepositoriesView
-                    generalTheme={stateGeneralTheme}
-                    interactionTheme={stateGeneralTheme}
-                    data={stateRepositories}
-                />
+                <RepositoriesView />
             );
             break;
         case 'webhooks':
             renderSelectedView = (
-                <WebhooksView
-                    generalTheme={stateGeneralTheme}
-                    interactionTheme={stateGeneralTheme}
-                    data={stateWebhooks}
-                />
+                <WebhooksView />
             );
             break;
         case 'triggers':
             renderSelectedView = (
-                <TriggersView
-                    generalTheme={stateGeneralTheme}
-                    interactionTheme={stateGeneralTheme}
-                    data={stateTriggers}
-                />
+                <TriggersView />
             );
             break;
         case 'builds':
             renderSelectedView = (
-                <BuildsView
-                    generalTheme={stateGeneralTheme}
-                    interactionTheme={stateGeneralTheme}
-                    data={stateBuilds}
-                />
+                <BuildsView />
             );
             break;
     }
@@ -310,38 +268,12 @@ const mapStateToProperties = (
     state: AppState,
 ): GeneralViewStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
-    stateActiveProviderID: selectors.data.getActiveProviderID(state),
-    stateProviders: selectors.data.getProviders(state),
-    stateRepositories: selectors.data.getRepositories(state),
-    stateWebhooks: selectors.data.getWebhooks(state),
-    stateTriggers: selectors.data.getTriggers(state),
-    stateBuilds: selectors.data.getBuilds(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): GeneralViewDispatchProperties => ({
-    dispatchDataRemoveProvider: (
-        id,
-    ) => dispatch(
-        actions.data.removeProvider(id),
-    ),
-    dispatchDataRemoveRepository: (
-        id,
-    ) => dispatch(
-        actions.data.removeRepository(id),
-    ),
-    dispatchDataRemoveTrigger: (
-        id,
-    ) => dispatch(
-        actions.data.removeTrigger(id),
-    ),
-    dispatchDataRemoveWebhook: (
-        id,
-    ) => dispatch(
-        actions.data.removeWebhook(id),
-    ),
 });
 
 

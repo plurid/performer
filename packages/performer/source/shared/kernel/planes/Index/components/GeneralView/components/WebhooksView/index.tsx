@@ -2,6 +2,10 @@
 /** libraries */
 import React from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 import {
     Theme,
 } from '@plurid/plurid-themes';
@@ -24,24 +28,39 @@ import {
     OBLITERATE_WEBHOOK,
 } from '#kernel-services/graphql/mutate';
 
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
+
 /** internal */
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface WebhooksViewProperties {
+export interface WebhooksViewOwnProperties {
     /** required */
     /** - values */
-    generalTheme: Theme;
-    interactionTheme: Theme;
-    data: Webhook[];
     /** - methods */
 
     /** optional */
     /** - values */
     /** - methods */
 }
+
+export interface WebhooksViewStateProperties {
+    stateGeneralTheme: Theme;
+    stateInteractionTheme: Theme;
+    stateWebhooks: Webhook[];
+}
+
+export interface WebhooksViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
+}
+
+export type WebhooksViewProperties = WebhooksViewOwnProperties
+    & WebhooksViewStateProperties
+    & WebhooksViewDispatchProperties;
 
 const WebhooksView: React.FC<WebhooksViewProperties> = (
     properties,
@@ -50,14 +69,19 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
     const {
         /** required */
         /** - values */
-        generalTheme,
-        interactionTheme,
-        data,
         /** - methods */
 
         /** optional */
         /** - values */
         /** - methods */
+
+        /** state */
+        stateGeneralTheme,
+        stateInteractionTheme,
+        stateWebhooks,
+
+        /** dispatch */
+        dispatchRemoveEntity,
     } = properties;
 
 
@@ -66,6 +90,11 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         id: string,
     ) => {
         try {
+            dispatchRemoveEntity({
+                type: 'webhook',
+                id,
+            });
+
             const input = {
                 value: id,
             };
@@ -99,7 +128,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         </>
     );
 
-    const rows = data.map(webhook => {
+    const rows = stateWebhooks.map(webhook => {
         const {
             id,
             path,
@@ -129,8 +158,8 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
     return (
         <EntityView
-            generalTheme={generalTheme}
-            interactionTheme={interactionTheme}
+            generalTheme={stateGeneralTheme}
+            interactionTheme={stateInteractionTheme}
 
             rowTemplate="2fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
@@ -143,5 +172,28 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 }
 
 
-export default WebhooksView;
+const mapStateToProperties = (
+    state: AppState,
+): WebhooksViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateWebhooks: selectors.data.getWebhooks(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): WebhooksViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch (
+        actions.data.removeEntity(payload),
+    ),
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(WebhooksView);
 /** [END] component */

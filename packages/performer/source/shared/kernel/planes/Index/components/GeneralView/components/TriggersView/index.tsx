@@ -2,6 +2,10 @@
 /** libraries */
 import React from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 import {
     Theme,
 } from '@plurid/plurid-themes';
@@ -24,24 +28,39 @@ import {
     OBLITERATE_TRIGGER,
 } from '#kernel-services/graphql/mutate';
 
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
+
 /** internal */
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface TriggersViewProperties {
+export interface TriggersViewOwnProperties {
     /** required */
     /** - values */
-    generalTheme: Theme;
-    interactionTheme: Theme;
-    data: Trigger[];
     /** - methods */
 
     /** optional */
     /** - values */
     /** - methods */
 }
+
+export interface TriggersViewStateProperties {
+    stateGeneralTheme: Theme;
+    stateInteractionTheme: Theme;
+    stateTriggers: Trigger[];
+}
+
+export interface TriggersViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
+}
+
+export type TriggersViewProperties = TriggersViewOwnProperties
+    & TriggersViewStateProperties
+    & TriggersViewDispatchProperties;
 
 const TriggersView: React.FC<TriggersViewProperties> = (
     properties,
@@ -50,14 +69,19 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     const {
         /** required */
         /** - values */
-        generalTheme,
-        interactionTheme,
-        data,
         /** - methods */
 
         /** optional */
         /** - values */
         /** - methods */
+
+        /** state */
+        stateGeneralTheme,
+        stateInteractionTheme,
+        stateTriggers,
+
+        /** dispatch */
+        dispatchRemoveEntity,
     } = properties;
 
 
@@ -66,6 +90,11 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         id: string,
     ) => {
         try {
+            dispatchRemoveEntity({
+                type: 'trigger',
+                id,
+            });
+
             const input = {
                 value: id,
             };
@@ -107,7 +136,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         </>
     );
 
-    const rows = data.map(trigger => {
+    const rows = stateTriggers.map(trigger => {
         const {
             id,
             name,
@@ -147,8 +176,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
     return (
         <EntityView
-            generalTheme={generalTheme}
-            interactionTheme={interactionTheme}
+            generalTheme={stateGeneralTheme}
+            interactionTheme={stateInteractionTheme}
 
             rowTemplate="2fr 1fr 1fr 2fr 30px 30px"
             rowsHeader={rowsHeader}
@@ -161,5 +190,28 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 }
 
 
-export default TriggersView;
+const mapStateToProperties = (
+    state: AppState,
+): TriggersViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateTriggers: selectors.data.getTriggers(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): TriggersViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch (
+        actions.data.removeEntity(payload),
+    ),
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(TriggersView);
 /** [END] component */

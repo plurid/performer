@@ -2,6 +2,10 @@
 /** libraries */
 import React from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 import {
     Theme,
 } from '@plurid/plurid-themes';
@@ -24,6 +28,10 @@ import {
 } from '#server/data/interfaces';
 
 import EntityView from '#kernel-components/EntityView';
+
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
 
 /** internal */
 /** [END] imports */
@@ -52,18 +60,29 @@ const durationTime = (
 
 
 /** [START] component */
-export interface BuildsViewProperties {
+export interface BuildsViewOwnProperties {
     /** required */
     /** - values */
-    generalTheme: Theme;
-    interactionTheme: Theme;
-    data: Build[];
     /** - methods */
 
     /** optional */
     /** - values */
     /** - methods */
 }
+
+export interface BuildsViewStateProperties {
+    stateGeneralTheme: Theme;
+    stateInteractionTheme: Theme;
+    stateBuilds: Build[];
+}
+
+export interface BuildsViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
+}
+
+export type BuildsViewProperties = BuildsViewOwnProperties
+    & BuildsViewStateProperties
+    & BuildsViewDispatchProperties;
 
 const BuildsView: React.FC<BuildsViewProperties> = (
     properties,
@@ -72,14 +91,19 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     const {
         /** required */
         /** - values */
-        generalTheme,
-        interactionTheme,
-        data,
         /** - methods */
 
         /** optional */
         /** - values */
         /** - methods */
+
+        /** state */
+        stateGeneralTheme,
+        stateInteractionTheme,
+        stateBuilds,
+
+        /** dispatch */
+        dispatchRemoveEntity,
     } = properties;
 
 
@@ -108,7 +132,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         </>
     );
 
-    const rows = data.map(build => {
+    const rows = stateBuilds.map(build => {
         const {
             id,
             status,
@@ -151,8 +175,8 @@ const BuildsView: React.FC<BuildsViewProperties> = (
 
     return (
         <EntityView
-            generalTheme={generalTheme}
-            interactionTheme={interactionTheme}
+            generalTheme={stateGeneralTheme}
+            interactionTheme={stateInteractionTheme}
 
             rowTemplate="30px auto 180px 200px 30px"
             rowsHeader={rowsHeader}
@@ -162,5 +186,28 @@ const BuildsView: React.FC<BuildsViewProperties> = (
 }
 
 
-export default BuildsView;
+const mapStateToProperties = (
+    state: AppState,
+): BuildsViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateBuilds: selectors.data.getBuilds(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): BuildsViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch (
+        actions.data.removeEntity(payload),
+    ),
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(BuildsView);
 /** [END] component */

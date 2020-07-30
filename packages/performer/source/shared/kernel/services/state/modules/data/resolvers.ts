@@ -2,6 +2,73 @@ import * as Types from './types';
 
 
 
+export const removeEntity = (
+    state: Types.State,
+    action: Types.RemoveEntityAction,
+): Types.State => {
+    const {
+        id,
+        type,
+    } = action.payload;
+
+    const newState = {
+        ...state,
+    };
+
+    let providers = [
+        ...newState.providers,
+    ];
+    let repositories = [
+        ...newState.repositories,
+    ];
+    let webhooks = [
+        ...newState.webhooks,
+    ];
+    let triggers = [
+        ...newState.triggers,
+    ];
+
+    switch (type) {
+        case 'provider':
+            providers = providers.filter(
+                provider => provider.id !== id
+            );
+            break;
+        case 'repository':
+            repositories = repositories.filter(
+                repository => repository.id !== id
+            );
+            break;
+        case 'webhook':
+            webhooks = webhooks.filter(
+                webhook => webhook.id !== id
+            );
+            break;
+        case 'trigger':
+            triggers = triggers.filter(
+                trigger => trigger.id !== id
+            );
+            break;
+    }
+
+    return {
+        ...newState,
+        providers: [
+            ...providers,
+        ],
+        repositories: [
+            ...repositories,
+        ],
+        webhooks: [
+            ...webhooks,
+        ],
+        triggers: [
+            ...triggers,
+        ],
+    };
+}
+
+
 export const setActiveProviderID = (
     state: Types.State,
     action: Types.SetActiveProviderIDAction,
@@ -26,27 +93,6 @@ export const setProviders = (
 }
 
 
-export const removeProvider = (
-    state: Types.State,
-    action: Types.RemoveProviderAction,
-): Types.State => {
-    const newState = {
-        ...state,
-    };
-
-    const newProviders = newState.providers.filter(
-        provider => provider.id !== action.payload,
-    );
-
-    return {
-        ...newState,
-        providers: [
-            ...newProviders,
-        ],
-    };
-}
-
-
 export const setRepositories = (
     state: Types.State,
     action: Types.SetRepositoriesAction,
@@ -55,27 +101,6 @@ export const setRepositories = (
         ...state,
         repositories: [
             ...action.payload,
-        ],
-    };
-}
-
-
-export const removeRepository = (
-    state: Types.State,
-    action: Types.RemoveRepositoryAction,
-): Types.State => {
-    const newState = {
-        ...state,
-    };
-
-    const newRepositories = newState.repositories.filter(
-        repository => repository.id !== action.payload,
-    );
-
-    return {
-        ...newState,
-        repositories: [
-            ...newRepositories,
         ],
     };
 }
@@ -94,27 +119,6 @@ export const setWebhooks = (
 }
 
 
-export const removeWebhook = (
-    state: Types.State,
-    action: Types.RemoveWebhookAction,
-): Types.State => {
-    const newState = {
-        ...state,
-    };
-
-    const newWebhooks = newState.webhooks.filter(
-        webhook => webhook.id !== action.payload,
-    );
-
-    return {
-        ...newState,
-        webhooks: [
-            ...newWebhooks,
-        ],
-    };
-}
-
-
 export const setTriggers = (
     state: Types.State,
     action: Types.SetTriggersAction,
@@ -123,27 +127,6 @@ export const setTriggers = (
         ...state,
         triggers: [
             ...action.payload,
-        ],
-    };
-}
-
-
-export const removeTrigger = (
-    state: Types.State,
-    action: Types.RemoveTriggerAction,
-): Types.State => {
-    const newState = {
-        ...state,
-    };
-
-    const newTriggers = newState.triggers.filter(
-        trigger => trigger.id !== action.payload,
-    );
-
-    return {
-        ...newState,
-        triggers: [
-            ...newTriggers,
         ],
     };
 }
@@ -175,15 +158,12 @@ export const clearBuilds = (
 
 
 export const resolvers = {
+    removeEntity,
     setActiveProviderID,
     setProviders,
-    removeProvider,
     setRepositories,
-    removeRepository,
     setWebhooks,
-    removeWebhook,
     setTriggers,
-    removeTrigger,
     setBuilds,
     clearBuilds,
 };

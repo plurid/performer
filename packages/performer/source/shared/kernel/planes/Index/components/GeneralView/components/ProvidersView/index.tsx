@@ -2,6 +2,10 @@
 /** libraries */
 import React from 'react';
 
+import { AnyAction } from 'redux';
+import { connect } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+
 import {
     Theme,
 } from '@plurid/plurid-themes';
@@ -28,26 +32,40 @@ import {
     OBLITERATE_PROVIDER,
 } from '#kernel-services/graphql/mutate';
 
+import { AppState } from '#kernel-services/state/store';
+import selectors from '#kernel-services/state/selectors';
+import actions from '#kernel-services/state/actions';
+
 /** internal */
 /** [END] imports */
 
 
 
 /** [START] component */
-export interface ProvidersViewProperties {
+export interface ProvidersViewOwnProperties {
     /** required */
     /** - values */
-    generalTheme: Theme;
-    interactionTheme: Theme;
-    activeProviderID: string;
-    data: ClientProvider[];
     /** - methods */
-    removeProvider: any;
 
     /** optional */
     /** - values */
     /** - methods */
 }
+
+export interface ProvidersViewStateProperties {
+    stateGeneralTheme: Theme;
+    stateInteractionTheme: Theme;
+    stateActiveProviderID: string;
+    stateProviders: ClientProvider[];
+}
+
+export interface ProvidersViewDispatchProperties {
+    dispatchRemoveEntity: typeof actions.data.removeEntity;
+}
+
+export type ProvidersViewProperties = ProvidersViewOwnProperties
+    & ProvidersViewStateProperties
+    & ProvidersViewDispatchProperties;
 
 const ProvidersView: React.FC<ProvidersViewProperties> = (
     properties,
@@ -56,16 +74,20 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     const {
         /** required */
         /** - values */
-        generalTheme,
-        interactionTheme,
-        activeProviderID,
-        data,
         /** - methods */
-        removeProvider,
 
         /** optional */
         /** - values */
         /** - methods */
+
+        /** state */
+        stateGeneralTheme,
+        stateInteractionTheme,
+        stateActiveProviderID,
+        stateProviders,
+
+        /** dispatch */
+        dispatchRemoveEntity,
     } = properties;
 
 
@@ -74,7 +96,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         id: string,
     ) => {
         try {
-            removeProvider(id);
+            dispatchRemoveEntity({
+                type: 'provider',
+                id,
+            });
 
             const input = {
                 value: id,
@@ -107,7 +132,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         </>
     );
 
-    const rows = data.map(provider => {
+    const rows = stateProviders.map(provider => {
         const {
             id,
             name,
@@ -133,7 +158,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                         }}
                     />
 
-                    {activeProviderID === id
+                    {stateActiveProviderID === id
                     ? (
                         <PluridIconValid
                             inactive={true}
@@ -159,8 +184,8 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
     return (
         <EntityView
-            generalTheme={generalTheme}
-            interactionTheme={interactionTheme}
+            generalTheme={stateGeneralTheme}
+            interactionTheme={stateInteractionTheme}
 
             rowTemplate="3fr 1fr 30px"
             rowsHeader={rowsHeader}
@@ -176,5 +201,29 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 }
 
 
-export default ProvidersView;
+const mapStateToProperties = (
+    state: AppState,
+): ProvidersViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
+    stateInteractionTheme: selectors.themes.getInteractionTheme(state),
+    stateActiveProviderID: selectors.data.getActiveProviderID(state),
+    stateProviders: selectors.data.getProviders(state),
+});
+
+
+const mapDispatchToProperties = (
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
+): ProvidersViewDispatchProperties => ({
+    dispatchRemoveEntity: (
+        payload,
+    ) => dispatch (
+        actions.data.removeEntity(payload),
+    ),
+});
+
+
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(ProvidersView);
 /** [END] component */

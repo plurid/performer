@@ -8,6 +8,23 @@ import {
 
 
 
+export type RemovableEntityType =
+    | 'provider'
+    | 'repository'
+    | 'webhook'
+    | 'trigger';
+
+export const REMOVE_ENTITY = 'REMOVE_ENTITY';
+export interface RemoveEntityPayload {
+    type: RemovableEntityType;
+    id: string;
+}
+export interface RemoveEntityAction {
+    type: typeof REMOVE_ENTITY;
+    payload: RemoveEntityPayload;
+}
+
+
 export const SET_ACTIVE_PROVIDER_ID = 'SET_ACTIVE_PROVIDER_ID';
 export interface SetActiveProviderIDAction {
     type: typeof SET_ACTIVE_PROVIDER_ID;
@@ -22,24 +39,10 @@ export interface SetProvidersAction {
 }
 
 
-export const REMOVE_PROVIDER = 'REMOVE_PROVIDER';
-export interface RemoveProviderAction {
-    type: typeof REMOVE_PROVIDER;
-    payload: string;
-}
-
-
 export const SET_REPOSITORIES = 'SET_REPOSITORIES';
 export interface SetRepositoriesAction {
     type: typeof SET_REPOSITORIES;
     payload: Repository[];
-}
-
-
-export const REMOVE_REPOSITORY = 'REMOVE_REPOSITORY';
-export interface RemoveRepositoryAction {
-    type: typeof REMOVE_REPOSITORY;
-    payload: string;
 }
 
 
@@ -50,24 +53,10 @@ export interface SetWebhooksAction {
 }
 
 
-export const REMOVE_WEBHOOK = 'REMOVE_WEBHOOK';
-export interface RemoveWebhookAction {
-    type: typeof REMOVE_WEBHOOK;
-    payload: string;
-}
-
-
 export const SET_TRIGGERS = 'SET_TRIGGERS';
 export interface SetTriggersAction {
     type: typeof SET_TRIGGERS;
     payload: Trigger[];
-}
-
-
-export const REMOVE_TRIGGER = 'REMOVE_TRIGGER';
-export interface RemoveTriggerAction {
-    type: typeof REMOVE_TRIGGER;
-    payload: string;
 }
 
 
@@ -96,14 +85,11 @@ export interface State {
 
 
 export type Actions =
+    | RemoveEntityAction
     | SetActiveProviderIDAction
     | SetProvidersAction
-    | RemoveProviderAction
     | SetRepositoriesAction
-    | RemoveRepositoryAction
     | SetWebhooksAction
-    | RemoveWebhookAction
     | SetTriggersAction
-    | RemoveTriggerAction
     | SetBuildsAction
     | ClearBuildsAction;
