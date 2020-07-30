@@ -1,6 +1,9 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+} from 'react';
 
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
@@ -18,6 +21,10 @@ import {
 
 /** external */
 import {
+    compareValues,
+} from '#server/utilities';
+
+import {
     Webhook,
 } from '#server/data/interfaces';
 
@@ -32,9 +39,78 @@ import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
+import {
+    getFilterIDs,
+} from '#kernel-services/utilities';
+
 /** internal */
 /** [END] imports */
 
+
+
+
+const webhookRowRenderer = (
+    webhook: Webhook,
+    handleWebhookEdit: (
+        id: string,
+    ) => void,
+    handleWebhookObliterate: (
+        id: string,
+    ) => void,
+) => {
+    const {
+        id,
+        path,
+        provider
+    } = webhook;
+
+    return (
+        <>
+            <div>
+                {path}
+            </div>
+
+            <div>
+                {provider}
+            </div>
+
+            <PluridIconEdit
+                atClick={() => handleWebhookEdit(id)}
+            />
+
+            <PluridIconDelete
+                atClick={() => handleWebhookObliterate(id)}
+            />
+        </>
+    );
+}
+
+
+const createSearchTerms = (
+    webhooks: Webhook[],
+) => {
+    const searchTerms = webhooks.map(
+        webhook => {
+            const {
+                id,
+                path,
+                provider
+            } = webhook;
+
+            const searchTerm = {
+                id,
+                data: [
+                    path.toLowerCase(),
+                    provider.toLowerCase(),
+                ],
+            };
+
+            return searchTerm;
+        },
+    );
+
+    return searchTerms;
+}
 
 
 /** [START] component */
@@ -88,7 +164,12 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
 
     /** handlers */
-    const handleObliterateWebhook = async (
+    const handleWebhookEdit = (
+        id: string,
+    ) => {
+    }
+
+    const handleWebhookObliterate = async (
         id: string,
     ) => {
         try {
@@ -113,6 +194,67 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
     }
 
 
+    /** state */
+    const [searchTerms, setSearchTerms] = useState(
+        createSearchTerms(stateWebhooks),
+    );
+
+    const [filteredRows, setFilteredRows] = useState(
+        stateWebhooks.map(
+            webhook => webhookRowRenderer(
+                webhook,
+                handleWebhookEdit,
+                handleWebhookObliterate,
+            ),
+        ),
+    );
+
+
+    /** functions */
+    const filterUpdate = (
+        rawValue: string,
+    ) => {
+        const value = rawValue.toLowerCase();
+
+        const filterIDs = getFilterIDs(
+            searchTerms,
+            value,
+        );
+
+        const filteredWebhooks = stateWebhooks.filter(stateWebhook => {
+            if (filterIDs.includes(stateWebhook.id)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        const sortedWebhooks = filteredWebhooks.sort(
+            compareValues('path'),
+        );
+
+        setFilteredRows(
+            sortedWebhooks.map(
+                webhook => webhookRowRenderer(
+                    webhook,
+                    handleWebhookEdit,
+                    handleWebhookObliterate,
+                ),
+            ),
+        );
+    }
+
+
+    /** effects */
+    useEffect(() => {
+        const searchTerms = createSearchTerms(stateWebhooks);
+
+        setSearchTerms(searchTerms);
+    }, [
+        stateWebhooks,
+    ]);
+
+
     /** render */
     const rowsHeader = (
         <>
@@ -130,34 +272,6 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         </>
     );
 
-    const rows = stateWebhooks.map(webhook => {
-        const {
-            id,
-            path,
-            provider
-        } = webhook;
-
-        return (
-            <>
-                <div>
-                    {path}
-                </div>
-
-                <div>
-                    {provider}
-                </div>
-
-                <PluridIconEdit
-                    atClick={() => {}}
-                />
-
-                <PluridIconDelete
-                    atClick={() => handleObliterateWebhook(id)}
-                />
-            </>
-        );
-    });
-
     return (
         <EntityView
             generalTheme={stateGeneralTheme}
@@ -165,13 +279,15 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
             rowTemplate="2fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
-            rows={rows}
+            rows={filteredRows}
             noRows="no webhooks"
 
             actionButtonText="Add Webhook"
             actionButtonClick={() => {
                 setGeneralView('add-webhook');
             }}
+
+            filterUpdate={filterUpdate}
         />
     );
 }

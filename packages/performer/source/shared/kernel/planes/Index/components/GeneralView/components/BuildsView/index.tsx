@@ -40,6 +40,10 @@ import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
+import {
+    getFilterIDs,
+} from '#kernel-services/utilities';
+
 /** internal */
 /** [END] imports */
 
@@ -223,22 +227,13 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     ) => {
         const value = rawValue.toLowerCase();
 
-        const searchIDs: string[] = [];
-
-        for (const searchTerm of searchTerms) {
-            let added = false;
-            for (const searchTermData of searchTerm.data) {
-                if (searchTermData.includes(value)) {
-                    if (!added) {
-                        searchIDs.push(searchTerm.id);
-                        added = true;
-                    }
-                }
-            }
-        }
+        const filterIDs = getFilterIDs(
+            searchTerms,
+            value,
+        );
 
         const filteredBuilds = stateBuilds.filter(stateBuild => {
-            if (searchIDs.includes(stateBuild.id)) {
+            if (filterIDs.includes(stateBuild.id)) {
                 return true;
             }
 

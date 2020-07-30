@@ -39,6 +39,10 @@ import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
+import {
+    getFilterIDs,
+} from '#kernel-services/utilities';
+
 /** internal */
 /** [END] imports */
 
@@ -104,7 +108,6 @@ const createSearchTerms = (
             const searchTerm = {
                 id,
                 data: [
-                    id,
                     name.toLowerCase(),
                     repository.toLowerCase(),
                     branch.toLowerCase(),
@@ -117,28 +120,6 @@ const createSearchTerms = (
     );
 
     return searchTerms;
-}
-
-
-const getFilterIDs = (
-    filterTerms: any[],
-    value: string,
-) => {
-    const filterIDs: string[] = [];
-
-    for (const filterTerm of filterTerms) {
-        let added = false;
-        for (const filterTermData of filterTerm.data) {
-            if (filterTermData.includes(value)) {
-                if (!added) {
-                    filterIDs.push(filterTerm.id);
-                    added = true;
-                }
-            }
-        }
-    }
-
-    return filterIDs;
 }
 
 
