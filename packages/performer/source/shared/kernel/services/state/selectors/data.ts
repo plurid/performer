@@ -10,6 +10,7 @@ const getRepositories = (state: AppState) => state.data.repositories;
 const getWebhooks = (state: AppState) => state.data.webhooks;
 const getTriggers = (state: AppState) => state.data.triggers;
 const getBuilds = (state: AppState) => state.data.builds;
+const getImagenes = (state: AppState) => state.data.imagenes;
 
 
 const selectors = {
@@ -19,6 +20,7 @@ const selectors = {
     getWebhooks,
     getTriggers,
     getBuilds,
+    getImagenes,
 };
 
 

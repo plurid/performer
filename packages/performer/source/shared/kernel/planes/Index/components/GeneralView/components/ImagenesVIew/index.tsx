@@ -17,10 +17,6 @@ import {
     PluridIconDelete,
 } from '@plurid/plurid-icons-react';
 
-import {
-    PluridLinkButton,
-} from '@plurid/plurid-ui-react';
-
 
 /** external */
 import {
@@ -28,15 +24,10 @@ import {
 } from '#server/utilities';
 
 import {
-    Repository,
+    Imagene,
 } from '#server/data/interfaces';
 
 import EntityView from '#kernel-components/EntityView';
-
-import client from '#kernel-services/graphql/client';
-import {
-    UNLINK_REPOSITORY,
-} from '#kernel-services/graphql/mutate';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -51,31 +42,33 @@ import {
 
 
 
-const repositoryRowRenderer = (
-    repository: Repository,
-    unlinkRepository: any,
+const imageneRowRenderer = (
+    imagene: Imagene,
+    handleImageneObliterate: any,
 ) => {
     const {
         id,
         name,
-    } = repository;
+        version,
+        size,
+    } = imagene;
 
     return (
         <>
             <div>
-                <PluridLinkButton
-                    text={name}
-                    atClick={() => {}}
-                    inline={true}
-                    style={{
-                        border: 'none',
-                        fontWeight: 'normal',
-                    }}
-                />
+                {name}
+            </div>
+
+            <div>
+                {version}
+            </div>
+
+            <div>
+                {size}
             </div>
 
             <PluridIconDelete
-                atClick={() => unlinkRepository(id)}
+                atClick={() => handleImageneObliterate(id)}
             />
         </>
     );
@@ -83,19 +76,24 @@ const repositoryRowRenderer = (
 
 
 const createSearchTerms = (
-    repositories: Repository[],
+    imagenes: Imagene[],
 ) => {
-    const searchTerms = repositories.map(
-        repository => {
+    const searchTerms = imagenes.map(
+        imagene => {
             const {
                 id,
                 name,
-            } = repository;
+                version,
+                size,
+            } = imagene;
+
 
             const searchTerm = {
                 id,
                 data: [
                     name.toLowerCase(),
+                    version.toLowerCase(),
+                    size,
                 ],
             };
 
@@ -108,7 +106,7 @@ const createSearchTerms = (
 
 
 /** [START] component */
-export interface RepositoriesViewOwnProperties {
+export interface ImagenesViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
@@ -119,21 +117,20 @@ export interface RepositoriesViewOwnProperties {
     /** - methods */
 }
 
-export interface RepositoriesViewStateProperties {
+export interface ImagenesViewStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
-    stateRepositories: Repository[];
+    stateImagenes: Imagene[];
 }
 
-export interface RepositoriesViewDispatchProperties {
-    dispatchRemoveEntity: typeof actions.data.removeEntity;
+export interface ImagenesViewDispatchProperties {
 }
 
-export type RepositoriesViewProperties = RepositoriesViewOwnProperties
-    & RepositoriesViewStateProperties
-    & RepositoriesViewDispatchProperties;
+export type ImagenesViewProperties = ImagenesViewOwnProperties
+    & ImagenesViewStateProperties
+    & ImagenesViewDispatchProperties;
 
-const RepositoriesView: React.FC<RepositoriesViewProperties> = (
+const ImagenesView: React.FC<ImagenesViewProperties> = (
     properties,
 ) => {
     /** properties */
@@ -150,49 +147,29 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         /** state */
         stateGeneralTheme,
         stateInteractionTheme,
-        stateRepositories,
+        stateImagenes,
 
         /** dispatch */
-        dispatchRemoveEntity,
     } = properties;
 
 
     /** handlers */
-    const unlinkRepository = async (
+    const handleImageneObliterate = (
         id: string,
     ) => {
-        try {
-            dispatchRemoveEntity({
-                type: 'repository',
-                id,
-            });
-
-            const input = {
-                value: id,
-            };
-
-            await client.mutate({
-                mutation: UNLINK_REPOSITORY,
-                variables: {
-                    input,
-                },
-            });
-        } catch (error) {
-            return;
-        }
     }
 
 
     /** state */
     const [searchTerms, setSearchTerms] = useState(
-        createSearchTerms(stateRepositories),
+        createSearchTerms(stateImagenes),
     );
 
     const [filteredRows, setFilteredRows] = useState(
-        stateRepositories.map(
-            repository => repositoryRowRenderer(
-                repository,
-                unlinkRepository,
+        stateImagenes.map(
+            imagene => imageneRowRenderer(
+                imagene,
+                handleImageneObliterate,
             ),
         ),
     );
@@ -209,23 +186,23 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             value,
         );
 
-        const filteredRepositories = stateRepositories.filter(stateRepository => {
-            if (filterIDs.includes(stateRepository.id)) {
+        const filteredImagenes = stateImagenes.filter(stateImagene => {
+            if (filterIDs.includes(stateImagene.id)) {
                 return true;
             }
 
             return false;
         });
 
-        const sortedRepositories = filteredRepositories.sort(
-            compareValues('name'),
+        const sortedImagenes = filteredImagenes.sort(
+            compareValues('date', 'desc'),
         );
 
         setFilteredRows(
-            sortedRepositories.map(
-                repository => repositoryRowRenderer(
-                    repository,
-                    unlinkRepository,
+            sortedImagenes.map(
+                imagene => imageneRowRenderer(
+                    imagene,
+                    handleImageneObliterate,
                 ),
             ),
         );
@@ -234,11 +211,11 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateRepositories);
+        const searchTerms = createSearchTerms(stateImagenes);
 
         setSearchTerms(searchTerms);
     }, [
-        stateRepositories,
+        stateImagenes,
     ]);
 
 
@@ -247,6 +224,14 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         <>
             <div>
                 name
+            </div>
+
+            <div>
+                version
+            </div>
+
+            <div>
+                size
             </div>
 
             <div />
@@ -258,14 +243,14 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="4fr 30px"
+            rowTemplate="auto 60px 60px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
-            noRows="no repositories"
+            noRows="no imagenes"
 
-            actionButtonText="Link Repositories"
+            actionButtonText="Add Imagene"
             actionButtonClick={() => {
-                setGeneralView('link-repositories');
+                setGeneralView('add-imagene');
             }}
 
             filterUpdate={filterUpdate}
@@ -276,26 +261,21 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
 const mapStateToProperties = (
     state: AppState,
-): RepositoriesViewStateProperties => ({
+): ImagenesViewStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
-    stateRepositories: selectors.data.getRepositories(state),
+    stateImagenes: selectors.data.getImagenes(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): RepositoriesViewDispatchProperties => ({
-    dispatchRemoveEntity: (
-        payload,
-    ) => dispatch (
-        actions.data.removeEntity(payload),
-    ),
+): ImagenesViewDispatchProperties => ({
 });
 
 
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(RepositoriesView);
+)(ImagenesView);
 /** [END] component */

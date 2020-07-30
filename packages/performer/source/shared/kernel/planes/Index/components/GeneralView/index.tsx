@@ -18,6 +18,7 @@ import {
     PluridIconWebhook,
     PluridIconNewStateline,
     PluridIconSpace,
+    PluridIconTools,
     PluridIconArrowRight,
     PluridIconDocuments,
     PluridIconExternalLink,
@@ -31,6 +32,7 @@ import Provider from '#kernel-components/Provider';
 import Repositories from '#kernel-components/Repositories';
 import Webhook from '#kernel-components/Webhook';
 import Trigger from '#kernel-components/Trigger';
+import Imagene from '#kernel-components/Imagene';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -43,6 +45,7 @@ import RepositoriesView from './components/RepositoriesView';
 import TriggersView from './components/TriggersView';
 import WebhooksView from './components/WebhooksView';
 import BuildsView from './components/BuildsView';
+import ImagenesView from './components/ImagenesVIew';
 
 import {
     StyledGeneralView,
@@ -63,6 +66,7 @@ const generalSelectors = [
     'webhooks',
     'triggers',
     'builds',
+    'imagenes',
 ];
 
 const generalSelectorsIcons = {
@@ -71,6 +75,7 @@ const generalSelectorsIcons = {
     webhooks: PluridIconWebhook,
     triggers: PluridIconNewStateline,
     builds: PluridIconSpace,
+    imagenes: PluridIconTools,
 };
 
 /** [START] component */
@@ -178,6 +183,13 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'builds':
             renderSelectedView = (
                 <BuildsView />
+            );
+            break;
+        case 'imagenes':
+            renderSelectedView = (
+                <ImagenesView
+                    setGeneralView={setGeneralView}
+                />
             );
             break;
     }
@@ -311,6 +323,17 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'add-trigger':
             return (
                 <Trigger
+                    theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'add-imagene':
+            return (
+                <Imagene
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {

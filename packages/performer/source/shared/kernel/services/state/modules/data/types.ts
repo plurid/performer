@@ -4,6 +4,7 @@ import {
     Webhook,
     Trigger,
     Build,
+    Imagene,
 } from '#server/data/interfaces';
 
 
@@ -81,6 +82,7 @@ export interface State {
     webhooks: Webhook[];
     triggers: Trigger[];
     builds: Build[];
+    imagenes: Imagene[];
 }
 
 

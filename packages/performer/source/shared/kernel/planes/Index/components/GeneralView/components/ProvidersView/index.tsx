@@ -1,6 +1,9 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+} from 'react';
 
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
@@ -22,6 +25,10 @@ import {
 
 /** external */
 import {
+    compareValues,
+} from '#server/utilities';
+
+import {
     ClientProvider,
 } from '#server/data/interfaces';
 
@@ -36,9 +43,98 @@ import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
 import actions from '#kernel-services/state/actions';
 
+import {
+    getFilterIDs,
+} from '#kernel-services/utilities';
+
 /** internal */
 /** [END] imports */
 
+
+
+const providerRowRenderer = (
+    provider: ClientProvider,
+    dispatchSetActiveProviderID: any,
+    stateActiveProviderID: string,
+    handleObliterateProvider: any,
+) => {
+    const {
+        id,
+        name,
+        type,
+    } = provider;
+
+    return (
+        <>
+            <div
+                style={{
+                    display: 'flex',
+                    height: '20px',
+                    alignItems: 'center',
+                }}
+            >
+                <PluridLinkButton
+                    text={name}
+                    atClick={() => {
+                        dispatchSetActiveProviderID(id);
+                    }}
+                    inline={true}
+                    style={{
+                        border: 'none',
+                        fontWeight: 'normal',
+                    }}
+                />
+
+                {stateActiveProviderID === id
+                ? (
+                    <PluridIconValid
+                        inactive={true}
+                        style={{
+                            marginLeft: '0.7rem',
+                        }}
+                    />
+                ) : (
+                    <div />
+                )}
+            </div>
+
+            <div>
+                {type}
+            </div>
+
+            <PluridIconDelete
+                atClick={() => handleObliterateProvider(id)}
+            />
+        </>
+    );
+}
+
+
+const createSearchTerms = (
+    providers: ClientProvider[],
+) => {
+    const searchTerms = providers.map(
+        provider => {
+            const {
+                id,
+                name,
+                type,
+            } = provider;
+
+            const searchTerm = {
+                id,
+                data: [
+                    name.toLowerCase(),
+                    type.toLowerCase(),
+                ],
+            };
+
+            return searchTerm;
+        },
+    );
+
+    return searchTerms;
+}
 
 
 /** [START] component */
@@ -121,6 +217,69 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
     }
 
 
+    /** state */
+    const [searchTerms, setSearchTerms] = useState(
+        createSearchTerms(stateProviders),
+    );
+
+    const [filteredRows, setFilteredRows] = useState(
+        stateProviders.map(
+            provider => providerRowRenderer(
+                provider,
+                dispatchSetActiveProviderID,
+                stateActiveProviderID,
+                handleObliterateProvider,
+            ),
+        ),
+    );
+
+
+    /** functions */
+    const filterUpdate = (
+        rawValue: string,
+    ) => {
+        const value = rawValue.toLowerCase();
+
+        const filterIDs = getFilterIDs(
+            searchTerms,
+            value,
+        );
+
+        const filteredProviders = stateProviders.filter(stateProvider => {
+            if (filterIDs.includes(stateProvider.id)) {
+                return true;
+            }
+
+            return false;
+        });
+
+        const sortedProviders = filteredProviders.sort(
+            compareValues('name'),
+        );
+
+        setFilteredRows(
+            sortedProviders.map(
+                provider => providerRowRenderer(
+                    provider,
+                    dispatchSetActiveProviderID,
+                    stateActiveProviderID,
+                    handleObliterateProvider,
+                ),
+            ),
+        );
+    }
+
+
+    /** effects */
+    useEffect(() => {
+        const searchTerms = createSearchTerms(stateProviders);
+
+        setSearchTerms(searchTerms);
+    }, [
+        stateProviders,
+    ]);
+
+
     /** render */
     const rowsHeader = (
         <>
@@ -136,58 +295,6 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         </>
     );
 
-    const rows = stateProviders.map(provider => {
-        const {
-            id,
-            name,
-            type,
-        } = provider;
-
-        return (
-            <>
-                <div
-                    style={{
-                        display: 'flex',
-                        height: '20px',
-                        alignItems: 'center',
-                    }}
-                >
-                    <PluridLinkButton
-                        text={name}
-                        atClick={() => {
-                            dispatchSetActiveProviderID(id);
-                        }}
-                        inline={true}
-                        style={{
-                            border: 'none',
-                            fontWeight: 'normal',
-                        }}
-                    />
-
-                    {stateActiveProviderID === id
-                    ? (
-                        <PluridIconValid
-                            inactive={true}
-                            style={{
-                                marginLeft: '0.7rem',
-                            }}
-                        />
-                    ) : (
-                        <div />
-                    )}
-                </div>
-
-                <div>
-                    {type}
-                </div>
-
-                <PluridIconDelete
-                    atClick={() => handleObliterateProvider(id)}
-                />
-            </>
-        );
-    });
-
     return (
         <EntityView
             generalTheme={stateGeneralTheme}
@@ -195,7 +302,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
             rowTemplate="3fr 1fr 30px"
             rowsHeader={rowsHeader}
-            rows={rows}
+            rows={filteredRows}
             noRows="no providers"
 
             actionButtonText="Add Provider"
@@ -203,8 +310,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                 setGeneralView('add-provider');
             }}
 
-            filterUpdate={(value: string) => {
-            }}
+            filterUpdate={filterUpdate}
         />
     );
 }

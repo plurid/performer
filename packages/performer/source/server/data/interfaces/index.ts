@@ -35,6 +35,14 @@ export interface Build {
 }
 
 
+export interface Imagene {
+    id: string;
+    name: string;
+    version: string;
+    size: number;
+}
+
+
 export interface Webhook {
     id: string;
     path: string;

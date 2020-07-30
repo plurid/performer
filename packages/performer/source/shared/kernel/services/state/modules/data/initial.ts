@@ -9,4 +9,5 @@ export const initialState: Types.State = {
     webhooks: [],
     triggers: [],
     builds: [],
+    imagenes: [],
 };
