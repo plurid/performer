@@ -31,6 +31,8 @@ export const reducer = (
             return resolvers.setBuilds(state, action);
         case Types.CLEAR_BUILDS:
             return resolvers.clearBuilds(state, action);
+        case Types.SET_IMAGENES:
+            return resolvers.setImagenes(state, action);
         default:
             return {
                 ...state,

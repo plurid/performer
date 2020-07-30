@@ -6,6 +6,7 @@ import {
     Webhook,
     Trigger,
     Build,
+    Imagene,
 } from '#server/data/interfaces';
 
 
@@ -88,6 +89,16 @@ export const clearBuilds = (): Types.ClearBuildsAction => {
 }
 
 
+export const setImagenes = (
+    imagenes: Imagene[],
+): Types.SetImagenesAction => {
+    return {
+        type: Types.SET_IMAGENES,
+        payload: imagenes,
+    };
+}
+
+
 
 export const actions = {
     removeEntity,
@@ -98,4 +109,5 @@ export const actions = {
     setTriggers,
     setBuilds,
     clearBuilds,
+    setImagenes,
 };

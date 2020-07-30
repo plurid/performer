@@ -156,6 +156,19 @@ export const clearBuilds = (
 }
 
 
+export const setImagenes = (
+    state: Types.State,
+    action: Types.SetImagenesAction,
+): Types.State => {
+    return {
+        ...state,
+        imagenes: [
+            ...action.payload,
+        ],
+    };
+}
+
+
 
 export const resolvers = {
     removeEntity,
@@ -166,4 +179,5 @@ export const resolvers = {
     setTriggers,
     setBuilds,
     clearBuilds,
+    setImagenes,
 };

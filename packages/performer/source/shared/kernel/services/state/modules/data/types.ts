@@ -13,7 +13,8 @@ export type RemovableEntityType =
     | 'provider'
     | 'repository'
     | 'webhook'
-    | 'trigger';
+    | 'trigger'
+    | 'imagene';
 
 export const REMOVE_ENTITY = 'REMOVE_ENTITY';
 export interface RemoveEntityPayload {
@@ -74,6 +75,13 @@ export interface ClearBuildsAction {
 }
 
 
+export const SET_IMAGENES = 'SET_IMAGENES';
+export interface SetImagenesAction {
+    type: typeof SET_IMAGENES;
+    payload: Imagene[];
+}
+
+
 
 export interface State {
     activeProviderID: string;
@@ -94,4 +102,5 @@ export type Actions =
     | SetWebhooksAction
     | SetTriggersAction
     | SetBuildsAction
-    | ClearBuildsAction;
+    | ClearBuildsAction
+    | SetImagenesAction;
