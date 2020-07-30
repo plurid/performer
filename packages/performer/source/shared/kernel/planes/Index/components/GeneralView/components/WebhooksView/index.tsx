@@ -287,7 +287,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="2fr 1fr 30px 30px"
+            rowTemplate="auto 120px 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no webhooks"
