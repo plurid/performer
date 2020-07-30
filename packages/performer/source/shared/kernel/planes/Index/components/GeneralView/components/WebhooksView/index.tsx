@@ -247,9 +247,19 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateWebhooks);
+        const searchTerms = createSearchTerms(
+            stateWebhooks,
+        );
+        const filteredRows = stateWebhooks.map(
+            webhook => webhookRowRenderer(
+                webhook,
+                handleWebhookEdit,
+                handleWebhookObliterate,
+            ),
+        );
 
         setSearchTerms(searchTerms);
+        setFilteredRows(filteredRows);
     }, [
         stateWebhooks,
     ]);

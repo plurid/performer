@@ -211,9 +211,18 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateImagenes);
+        const searchTerms = createSearchTerms(
+            stateImagenes,
+        );
+        const filteredRows = stateImagenes.map(
+            imagene => imageneRowRenderer(
+                imagene,
+                handleImageneObliterate,
+            ),
+        );
 
         setSearchTerms(searchTerms);
+        setFilteredRows(filteredRows);
     }, [
         stateImagenes,
     ]);

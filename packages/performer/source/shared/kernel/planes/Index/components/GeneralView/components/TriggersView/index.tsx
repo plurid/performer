@@ -247,9 +247,18 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateTriggers);
+        const searchTerms = createSearchTerms(
+            stateTriggers,
+        );
+        const filteredRows = stateTriggers.map(
+            trigger => triggerRowRenderer(
+                trigger,
+                handleObliterateTrigger,
+            ),
+        );
 
         setSearchTerms(searchTerms);
+        setFilteredRows(filteredRows);
     }, [
         stateTriggers,
     ]);

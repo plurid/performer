@@ -234,9 +234,18 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateRepositories);
+        const searchTerms = createSearchTerms(
+            stateRepositories,
+        );
+        const filteredRows = stateRepositories.map(
+            repository => repositoryRowRenderer(
+                repository,
+                unlinkRepository,
+            ),
+        );
 
         setSearchTerms(searchTerms);
+        setFilteredRows(filteredRows);
     }, [
         stateRepositories,
     ]);

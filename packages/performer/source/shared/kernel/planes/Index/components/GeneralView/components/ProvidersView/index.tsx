@@ -272,9 +272,20 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(stateProviders);
+        const searchTerms = createSearchTerms(
+            stateProviders,
+        );
+        const filteredRows = stateProviders.map(
+            provider => providerRowRenderer(
+                provider,
+                dispatchSetActiveProviderID,
+                stateActiveProviderID,
+                handleObliterateProvider,
+            ),
+        );
 
         setSearchTerms(searchTerms);
+        setFilteredRows(filteredRows);
     }, [
         stateProviders,
     ]);
