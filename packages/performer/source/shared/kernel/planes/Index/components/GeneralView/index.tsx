@@ -134,6 +134,14 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         setGeneralView,
     ] = useState('general');
     const [
+        webhookEditID,
+        setWebhookEditID,
+    ] = useState('');
+    const [
+        triggerEditID,
+        setTriggerEditID,
+    ] = useState('');
+    const [
         mouseOverSelectors,
         setMouseOverSelectors,
     ] = useState(false);

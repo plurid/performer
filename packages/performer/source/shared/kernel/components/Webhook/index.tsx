@@ -2,16 +2,12 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import {
     Theme,
 } from '@plurid/plurid-themes';
-
-import {
-    PluridFormLeftRight,
-    PluridDropdown,
-} from '@plurid/plurid-ui-react';
 
 
 /** external */
@@ -46,6 +42,7 @@ export interface WebhookProperties {
 
     /** optional */
     /** - values */
+    editID?: string;
     /** - methods */
     cancel?: () => void;
 }
@@ -64,6 +61,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
         /** optional */
         /** - values */
+        editID,
         /** - methods */
         cancel,
     } = properties;
@@ -77,8 +75,17 @@ const Webhook: React.FC<WebhookProperties> = (
 
 
     /** handle */
+    const updateWebhook = async () => {
+
+    }
+
     const setWebhook = async () => {
         if (!webhookPath || !providerID) {
+            return;
+        }
+
+        if (editID) {
+            await updateWebhook();
             return;
         }
 
@@ -97,6 +104,17 @@ const Webhook: React.FC<WebhookProperties> = (
     }
 
 
+    /** effects */
+    useEffect(() => {
+        if (editID) {
+            // get webhook data
+            // and setWebhookPath
+        }
+    }, [
+        editID,
+    ]);
+
+
     /** render */
     return (
         <StyledWebhook
@@ -104,7 +122,7 @@ const Webhook: React.FC<WebhookProperties> = (
         >
             <div>
                 <h1>
-                    setup webhook
+                    {editID ? 'update' : 'setup'} webhook
                 </h1>
 
                 <div>
@@ -123,7 +141,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text="Setup Webhook"
+                        text={editID ? 'Update Webhook' : 'Setup Webhook'}
                         atClick={() => {
                             action();
                             setWebhook();
