@@ -8,42 +8,30 @@ import {
 } from '@plurid/plurid-functions';
 
 import {
-    BASE_PATH,
-    BASE_PATH_TRIGGERS,
+    triggersPath,
 } from '#server/data/constants';
 
 import {
-    cleanFileName,
-} from '#server/utilities';
+    Trigger,
+} from '#server/data/interfaces';
 
 
 
 const registerTrigger = async (
-    data: any,
+    trigger: Trigger,
 ) => {
     const {
         id,
-        repository,
-        branch,
-    } = data;
-
-    const triggerName = cleanFileName(
-        [
-            repository,
-            branch,
-            id,
-        ].join('_'),
-    );
+    } = trigger;
 
     const triggerPath = path.join(
-        BASE_PATH,
-        BASE_PATH_TRIGGERS,
-        triggerName + '.json',
+        triggersPath,
+        id + '.json',
     );
 
     await fs.writeFile(
         triggerPath,
-        JSON.stringify(data, null, 4),
+        JSON.stringify(trigger, null, 4),
     );
 }
 
@@ -61,7 +49,7 @@ const addTrigger = async (
 
     const generatedID = id || uuid.generate();
 
-    const triggerData = {
+    const trigger: Trigger = {
         id: generatedID,
         name,
         repository,
@@ -69,7 +57,7 @@ const addTrigger = async (
         path,
     };
 
-    await registerTrigger(triggerData);
+    await registerTrigger(trigger);
 
     return {
         status: true,

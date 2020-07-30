@@ -12,6 +12,7 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         addTrigger(input: InputAddTrigger!): Response!
+        obliterateTrigger(input: InputValueString!): Response!
     }
 `;
 

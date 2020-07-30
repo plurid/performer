@@ -16,8 +16,7 @@ import {
 } from '#server/data/interfaces';
 
 import {
-    BASE_PATH,
-    BASE_PATH_WEBHOOKS,
+    webhooksPath,
 } from '#server/data/constants';
 
 import {
@@ -38,8 +37,7 @@ export const registerWebhook = async (
     };
 
     const hookFilePath = path.join(
-        BASE_PATH,
-        BASE_PATH_WEBHOOKS,
+        webhooksPath,
         id + '.json',
     );
 

@@ -16,4 +16,12 @@ export default {
     ) => Triggers.Mutation.addTrigger(
         input,
     ),
+    obliterateTrigger: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Triggers.Mutation.obliterateTrigger(
+        input,
+        context,
+    ),
 };

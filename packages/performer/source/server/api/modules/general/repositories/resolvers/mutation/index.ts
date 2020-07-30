@@ -17,4 +17,12 @@ export default {
         input,
         context,
     ),
+    delinkRepository: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Repositories.Mutation.delinkRepository(
+        input,
+        context,
+    ),
 };

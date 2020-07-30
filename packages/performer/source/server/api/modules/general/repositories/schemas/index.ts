@@ -13,6 +13,7 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         linkRepository(input: InputLinkRepository!): Response!
+        delinkRepository(input: InputValueString!): Response!
     }
 `;
 
