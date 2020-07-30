@@ -46,6 +46,7 @@ export interface HomeDispatchProperties {
     dispatchSetWebhooks: typeof actions.data.setWebhooks;
     dispatchSetTriggers: typeof actions.data.setTriggers;
     dispatchSetBuilds: typeof actions.data.setBuilds;
+    dispatchSetImagenes: typeof actions.data.setImagenes;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -68,6 +69,7 @@ const Home: React.FC<HomeProperties> = (
         dispatchSetWebhooks,
         dispatchSetTriggers,
         dispatchSetBuilds,
+        dispatchSetImagenes,
     } = properties;
 
 
@@ -90,6 +92,7 @@ const Home: React.FC<HomeProperties> = (
                 webhooks,
                 triggers,
                 builds,
+                imagenes,
             } = graphql.deleteTypenames(response.data);
 
             if (providers.length > 0) {
@@ -103,6 +106,7 @@ const Home: React.FC<HomeProperties> = (
             dispatchSetWebhooks(webhooks);
             dispatchSetTriggers(triggers);
             dispatchSetBuilds(builds);
+            dispatchSetImagenes(imagenes);
         }
 
         getSetup();
@@ -158,6 +162,11 @@ const mapDispatchToProperties = (
         builds,
     ) => dispatch(
         actions.data.setBuilds(builds),
+    ),
+    dispatchSetImagenes: (
+        imagenes,
+    ) => dispatch(
+        actions.data.setImagenes(imagenes),
     ),
 });
 
