@@ -62,6 +62,7 @@ export interface ProvidersViewStateProperties {
 
 export interface ProvidersViewDispatchProperties {
     dispatchRemoveEntity: typeof actions.data.removeEntity;
+    dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
 }
 
 export type ProvidersViewProperties = ProvidersViewOwnProperties
@@ -90,6 +91,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
 
         /** dispatch */
         dispatchRemoveEntity,
+        dispatchSetActiveProviderID,
     } = properties;
 
 
@@ -152,7 +154,9 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
                 >
                     <PluridLinkButton
                         text={name}
-                        atClick={() => {}}
+                        atClick={() => {
+                            dispatchSetActiveProviderID(id);
+                        }}
                         inline={true}
                         style={{
                             border: 'none',
@@ -223,6 +227,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch (
         actions.data.removeEntity(payload),
+    ),
+    dispatchSetActiveProviderID: (
+        id,
+    ) => dispatch (
+        actions.data.setActiveProviderID(id),
     ),
 });
 
