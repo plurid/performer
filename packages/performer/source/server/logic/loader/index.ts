@@ -19,6 +19,10 @@ import {
     buildsPath,
 } from '#server/data/constants';
 
+import {
+    compareValues,
+} from '#server/utilities';
+
 
 
 const loadDataFromFiles = async <T>(
@@ -73,7 +77,11 @@ export const loadTriggers = async () => {
 export const loadBuilds = async () => {
     const builds = await loadDataFromFiles<Build>(buildsPath);
 
-    return builds;
+    const sortedBuilds = builds.sort(
+        compareValues('date', 'desc'),
+    );
+
+    return sortedBuilds;
 }
 
 

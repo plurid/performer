@@ -1,6 +1,8 @@
 /** [START] imports */
 /** libraries */
-import React from 'react';
+import React, {
+    useState,
+} from 'react';
 
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
@@ -23,6 +25,10 @@ import {
 
 
 /** external */
+import {
+    compareValues,
+} from '#server/utilities';
+
 import {
     Build,
 } from '#server/data/interfaces';
@@ -58,6 +64,54 @@ const durationTime = (
     return timeString;
 }
 
+const buildRowRenderer = (
+    build: Build,
+    openBuild: (id: string) => void,
+) => {
+    const {
+        id,
+        status,
+        trigger,
+        time,
+        date,
+    } = build;
+
+    const durationString = durationTime(time);
+
+    const dateString = new Date(date * 1000).toLocaleString();
+
+    const StatusIcon = buildStatusIcons[status];
+
+    return (
+        <>
+            <StatusIcon
+                inactive={true}
+                size={20}
+            />
+
+            <div>
+                {id}
+            </div>
+
+            <div>
+                {trigger}
+            </div>
+
+            <div>
+                {durationString}
+            </div>
+
+            <div>
+                {dateString}
+            </div>
+
+            <PluridIconEnter
+                atClick={() => openBuild(id)}
+            />
+        </>
+    );
+}
+
 
 /** [START] component */
 export interface BuildsViewOwnProperties {
@@ -77,7 +131,6 @@ export interface BuildsViewStateProperties {
 }
 
 export interface BuildsViewDispatchProperties {
-    dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
 export type BuildsViewProperties = BuildsViewOwnProperties
@@ -103,8 +156,70 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         stateBuilds,
 
         /** dispatch */
-        dispatchRemoveEntity,
     } = properties;
+
+
+    /** handlers */
+    const openBuild = (
+        id: string,
+    ) => {
+    }
+
+
+    /** state */
+    const [filteredRows, setFilteredRows] = useState(
+        stateBuilds.map(
+            build => buildRowRenderer(
+                build,
+                openBuild,
+            ),
+        ),
+    );
+
+
+    const filterUpdate = (
+        value: string,
+    ) => {
+        const filteredBuildsByID = stateBuilds.filter(
+            build => build.id.includes(value),
+        );
+
+        const filteredBuildsByTrigger = stateBuilds.filter(
+            build => {
+                if (
+                    build.trigger.includes(value)
+                ) {
+                    for (const filteredBuildByID of filteredBuildsByID) {
+                        if (filteredBuildByID.id === build.id) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return false;
+            },
+        );
+
+        const filteredBuilds = [
+            ...filteredBuildsByID,
+            ...filteredBuildsByTrigger,
+        ];
+
+        const sortedBuilds = filteredBuilds.sort(
+            compareValues('date', 'desc'),
+        );
+
+        setFilteredRows(
+            sortedBuilds.map(
+                build => buildRowRenderer(
+                    build,
+                    openBuild,
+                ),
+            ),
+        );
+    }
 
 
     /** render */
@@ -115,6 +230,10 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 inactive={true}
                 size={20}
             />
+
+            <div>
+                id
+            </div>
 
             <div>
                 trigger
@@ -132,56 +251,17 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         </>
     );
 
-    const rows = stateBuilds.map(build => {
-        const {
-            id,
-            status,
-            trigger,
-            time,
-            date,
-        } = build;
-
-        const durationString = durationTime(time);
-
-        const dateString = new Date(date * 1000).toLocaleString();
-
-        const StatusIcon = buildStatusIcons[status];
-
-        return (
-            <>
-                <StatusIcon
-                    inactive={true}
-                    size={20}
-                />
-
-                <div>
-                    {trigger}
-                </div>
-
-                <div>
-                    {durationString}
-                </div>
-
-                <div>
-                    {dateString}
-                </div>
-
-                <PluridIconEnter
-                    atClick={() => {}}
-                />
-            </>
-        );
-    });
-
     return (
         <EntityView
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="30px auto 180px 200px 30px"
+            rowTemplate="30px 150px auto 180px 200px 30px"
             rowsHeader={rowsHeader}
-            rows={rows}
+            rows={filteredRows}
             noRows="no builds"
+
+            filterUpdate={filterUpdate}
         />
     );
 }
@@ -199,11 +279,6 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): BuildsViewDispatchProperties => ({
-    dispatchRemoveEntity: (
-        payload,
-    ) => dispatch (
-        actions.data.removeEntity(payload),
-    ),
 });
 
 
