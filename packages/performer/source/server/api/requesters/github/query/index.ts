@@ -18,7 +18,12 @@ export const QUERY_REPOSITORIES = gql`
         viewer {
             repositories(
                 first: 100,
+                affiliations:[OWNER, ORGANIZATION_MEMBER, COLLABORATOR]
                 ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR]
+                orderBy: {
+                    field: NAME,
+                    direction: ASC
+                }
             ) {
                 totalCount
                 nodes {
