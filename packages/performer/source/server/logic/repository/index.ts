@@ -51,7 +51,6 @@ export const registerRepositoryMetadata = async (
 }
 
 
-
 export const getActiveRepository = async (
     repositoryName: string,
 ) => {
@@ -70,8 +69,7 @@ export const getActiveRepository = async (
 }
 
 
-
-export const updateRootRepository = (
+export const updateRootRepository = async (
     repositoryName: string,
 ) => {
     const repositoryPath = path.join(

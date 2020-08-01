@@ -98,3 +98,15 @@ export interface Commit {
     removed: string[];
     modified: string[];
 }
+
+
+export interface BuildData {
+    id: string;
+    commit: string;
+    trigger: Trigger;
+    date: number;
+    repositoryPath: string;
+    repositoryRootPath: string;
+    repositoryWorkPath: string;
+    branchName: string;
+}

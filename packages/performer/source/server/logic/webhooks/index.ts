@@ -85,6 +85,10 @@ export const handleGithubWebhook = async (
         /** OK */
         response.status(200).end();
 
+        await updateRootRepository(
+            repositoryName,
+        );
+
         const commit: Commit = {
             id: headCommit.id,
             added: headCommit.added,
@@ -92,13 +96,9 @@ export const handleGithubWebhook = async (
             modified: headCommit.modified,
         };
 
-        handleTriggers(
+        await handleTriggers(
             commit,
             branchName,
-            repositoryName,
-        );
-
-        updateRootRepository(
             repositoryName,
         );
     } catch (error) {

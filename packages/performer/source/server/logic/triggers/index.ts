@@ -20,6 +20,7 @@ import {
     Performer,
     PerformerStage,
     Commit,
+    BuildData,
 } from '#server/data/interfaces';
 
 import {
@@ -105,7 +106,6 @@ export const handleTriggers = async (
             branchName,
         );
     }
-
 }
 
 
@@ -116,15 +116,10 @@ export const handleTrigger = async (
     branchName: string,
 ) => {
     try {
-        const buildDate = Math.floor(Date.now() / 1000);
-        const buildData = {
-            commit: commit.id,
-            trigger: {
-                ...trigger,
-            },
-            date: buildDate,
-        };
+        // TODO
+        // create build object and push it up the queue
 
+        const buildID = uuid.generate();
 
         const repositoryPath = path.join(
             repositoriesPath,
@@ -136,76 +131,104 @@ export const handleTrigger = async (
             '/root',
         );
 
-        const workDirectory = '/' + commit.id + '_' + buildData.trigger.id;
-        const workDirectoryPath = path.join(
+        const repositoryWork = '/' + buildID;
+        const repositoryWorkPath = path.join(
             repositoryPath,
-            workDirectory,
+            repositoryWork,
         );
-        await fs.mkdir(workDirectoryPath, {
-            recursive: true,
-        });
 
-        await copyDirectory(
+        const buildDate = Math.floor(Date.now() / 1000);
+        const buildData: BuildData = {
+            id: buildID,
+            commit: commit.id,
+            trigger: {
+                ...trigger,
+            },
+            date: buildDate,
+            branchName,
+            repositoryPath,
             repositoryRootPath,
-            workDirectoryPath,
-        );
-
-        const gitCommandFetchOrigin = 'git fetch origin';
-        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
-
-        execSync(gitCommandFetchOrigin, {
-            cwd: workDirectoryPath,
-        });
-        execSync(gitCommandResetHardBranch, {
-            cwd: workDirectoryPath,
-        });
-
-
-        const performerFilePath = path.join(
-            workDirectoryPath,
-            '/' + buildData.trigger.file,
-        );
-        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-        const performerObject = yaml.safeLoad(performerFile);
-
-        if (!performerObject || typeof performerObject === 'string') {
-            return;
-        }
-
-        const performerData: any = performerObject;
-
-        const performer: Performer = {
-            ...performerData,
-            timeout: performerData.timeout ?? 600,
+            repositoryWorkPath,
         };
 
-        handlePerformer(
-            buildData,
-            performer,
-            workDirectoryPath,
-            performerFilePath,
-        );
+        triggerWork(buildData);
     } catch (error) {
         return;
     }
 }
 
 
+export const triggerWork = async (
+    buildData: BuildData,
+) => {
+    const {
+        branchName,
+        repositoryRootPath,
+        repositoryWorkPath,
+    } = buildData;
+
+
+    await fs.mkdir(repositoryWorkPath, {
+        recursive: true,
+    });
+
+    await copyDirectory(
+        repositoryRootPath,
+        repositoryWorkPath,
+    );
+
+    const gitCommandFetchOrigin = 'git fetch origin';
+    const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+
+    execSync(gitCommandFetchOrigin, {
+        cwd: repositoryWorkPath,
+    });
+    execSync(gitCommandResetHardBranch, {
+        cwd: repositoryWorkPath,
+    });
+
+
+    const performerFilePath = path.join(
+        repositoryWorkPath,
+        '/' + buildData.trigger.file,
+    );
+    const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+    const performerObject = yaml.safeLoad(performerFile);
+
+    if (!performerObject || typeof performerObject === 'string') {
+        return;
+    }
+
+    const performerData: any = performerObject;
+
+    const performer: Performer = {
+        ...performerData,
+        timeout: performerData.timeout ?? 600,
+    };
+
+    handlePerformer(
+        buildData,
+        performer,
+        repositoryWorkPath,
+        performerFilePath,
+    );
+}
+
+
 export const handlePerformer = async (
-    buildData: any,
+    buildData: BuildData,
     performer: Performer,
     workDirectoryPath: string,
     performerFilePath: string,
 ) => {
     const {
+        id,
         trigger,
         date,
     } = buildData;
 
-    const buildID = uuid.generate();
-
     const queueBuild: Build = {
-        id: buildID,
+        id,
         date,
         status: 'QUEUED',
         time: 0,
