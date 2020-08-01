@@ -239,7 +239,7 @@ export const handleStage = async (
     saveBuildlog(
         id,
         index,
-        spawnResult.toString(),
+        spawnResult.output.toString(),
     );
 }
 
