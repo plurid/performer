@@ -4,6 +4,10 @@ import {
 
 import path from 'path';
 
+import {
+    execSync,
+} from 'child_process';
+
 import express from 'express';
 
 import ncp from 'ncp';
@@ -134,6 +138,22 @@ export const getActiveTrigger = async (
 }
 
 
+export const copyDirectory = async (
+    source: string,
+    destination: string,
+) => {
+    return new Promise((resolve, reject) => {
+        ncp(source, destination, (error) => {
+            if (error) {
+                reject(0);
+            }
+
+            resolve();
+        });
+    })
+}
+
+
 export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
@@ -177,12 +197,12 @@ export const handleGithubWebhook = async (
             date: Math.floor(Date.now() / 1000),
         };
 
+
         const repositoryPath = path.join(
             repositoriesPath,
             './github',
             '/' + repositoryName,
         );
-
         const repositoryRootPath = path.join(
             repositoryPath,
             '/root',
@@ -191,16 +211,26 @@ export const handleGithubWebhook = async (
         const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
         const workDirectoryPath = path.join(
             repositoryPath,
+            workDirectory,
         );
         await fs.mkdir(workDirectoryPath, {
             recursive: true,
         });
 
-        // copy root to a new directory named
-        ncp(repositoryRootPath, workDirectoryPath);
+        await copyDirectory(
+            repositoryRootPath,
+            workDirectoryPath,
+        );
 
-        // switch to that directory and checkout to the branch
-        // checkout the commit
+        const gitCommandFetchOrigin = 'git fetch origin';
+        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+
+        execSync(gitCommandFetchOrigin, {
+            cwd: workDirectoryPath,
+        });
+        execSync(gitCommandResetHardBranch, {
+            cwd: workDirectoryPath,
+        });
 
         console.log('body', request.body);
         console.log('-----');
