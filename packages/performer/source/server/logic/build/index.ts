@@ -229,7 +229,7 @@ export const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    const spawnResult = spawnSync(actionCommand, {
+    const output = execSync(actionCommand, {
         cwd: commandDirectory,
         env: {
             ...environment,
@@ -239,7 +239,7 @@ export const handleStage = async (
     saveBuildlog(
         id,
         index,
-        spawnResult.stdout.toString('utf-8'),
+        output.toString('utf-8'),
     );
 }
 
