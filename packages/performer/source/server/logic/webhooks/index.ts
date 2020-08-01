@@ -56,12 +56,86 @@ export const registerWebhook = async (
 }
 
 
+export const getActiveRepository = async (
+    repositoryName: string,
+) => {
+    const repositories = await loadRepositories();
+    let activeRepository: Repository | undefined;
+    for (const watchedRepository of repositories) {
+        if (watchedRepository.name === repositoryName) {
+            activeRepository = {
+                ...watchedRepository,
+            };
+            break;
+        }
+    }
+
+    return activeRepository;
+}
+
+
+export const getActiveTrigger = async (
+    branchName: string,
+    headCommit: any,
+) => {
+    const triggers = await loadTriggers();
+    let activeTrigger: Trigger | undefined;
+    for (const watchedTrigger of triggers) {
+        let triggerSet = false;
+        if (watchedTrigger.branch === branchName) {
+            for (const addedFile of headCommit.added) {
+                if (addedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+
+            for (const removedFile of headCommit.removed) {
+                if (removedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+
+            for (const modifiedFile of headCommit.modified) {
+                if (modifiedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+        }
+    }
+
+    return activeTrigger;
+}
+
+
 export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
 ) => {
     try {
-
         const data = request.body;
 
         const {
@@ -73,71 +147,21 @@ export const handleGithubWebhook = async (
         const branchName = ref.replace('refs/heads/', '');
         const repositoryName = repository.full_name;
 
-        const repositories = await loadRepositories();
-        let activeRepository: Repository | undefined;
-        for (const watchedRepository of repositories) {
-            if (watchedRepository.name === repositoryName) {
-                activeRepository = {
-                    ...watchedRepository,
-                };
-            }
-        }
-
+        const activeRepository = await getActiveRepository(
+            repositoryName
+        );
         if (!activeRepository) {
+            /** No Content */
             response.status(204).end();
             return;
         }
 
-        const triggers = await loadTriggers();
-        let activeTrigger: Trigger | undefined;
-        for (const watchedTrigger of triggers) {
-            let triggerSet = false;
-            if (watchedTrigger.branch === branchName) {
-                for (const addedFile of headCommit.added) {
-                    if (addedFile.includes(watchedTrigger.path)) {
-                        activeTrigger = {
-                            ...watchedTrigger,
-                        };
-                        triggerSet = true;
-                        break;
-                    }
-                }
-
-                if (triggerSet) {
-                    break;
-                }
-
-                for (const removedFile of headCommit.removed) {
-                    if (removedFile.includes(watchedTrigger.path)) {
-                        activeTrigger = {
-                            ...watchedTrigger,
-                        };
-                        triggerSet = true;
-                        break;
-                    }
-                }
-
-                if (triggerSet) {
-                    break;
-                }
-
-                for (const modifiedFile of headCommit.modified) {
-                    if (modifiedFile.includes(watchedTrigger.path)) {
-                        activeTrigger = {
-                            ...watchedTrigger,
-                        };
-                        triggerSet = true;
-                        break;
-                    }
-                }
-
-                if (triggerSet) {
-                    break;
-                }
-            }
-        }
-
+        const activeTrigger = await getActiveTrigger(
+            branchName,
+            headCommit,
+        );
         if (!activeTrigger) {
+            /** No Content */
             response.status(204).end();
             return;
         }
@@ -153,8 +177,10 @@ export const handleGithubWebhook = async (
         console.log('-----');
         console.log('buildData', buildData);
 
+        /** OK */
         response.status(200).end();
     } catch (error) {
+        /** Bad Request */
         response.status(400).end();
         return;
     }
