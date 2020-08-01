@@ -21,7 +21,7 @@ import {
 
 import {
     getRoutes,
-} from '#server/utilities';
+} from '#server/utilities/routes';
 
 import {
     getActiveRepository,

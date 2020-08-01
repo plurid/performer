@@ -29,9 +29,12 @@ import {
 } from '#server/data/constants';
 
 import {
-    copyDirectory,
     removeDuplicates,
-} from '#server/utilities';
+} from '#server/utilities/general';
+
+import {
+    copyDirectory,
+} from '#server/utilities/copy';
 
 import {
     loadTriggers,
