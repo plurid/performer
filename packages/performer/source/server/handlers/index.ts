@@ -1,7 +1,31 @@
+import {
+    Express,
+} from 'express';
+
 import PluridServer from '@plurid/plurid-react-server';
+
+import {
+    loadWebhooks,
+} from '#server/logic/loader';
+
+import {
+    handleWebhooks,
+} from '#server/logic/webhooks';
 
 import setupGraphQLServer from './graphql';
 
+
+
+const setupWebhooks = async (
+    instance: Express,
+) => {
+    const webhooks = await loadWebhooks();
+
+    handleWebhooks(
+        webhooks,
+        instance,
+    );
+}
 
 
 export const setRouteHandlers = (
@@ -18,6 +42,8 @@ export const setRouteHandlers = (
             ),
         );
     });
+
+    setupWebhooks(instance);
 
     setupGraphQLServer(instance);
 }
