@@ -1,4 +1,4 @@
-import {
+import syncFs, {
     promises as fs,
 } from 'fs';
 
@@ -239,7 +239,7 @@ export const handleStage = async (
     saveBuildlog(
         id,
         index,
-        spawnResult.output.toString(),
+        spawnResult.stdout.toString('utf-8'),
     );
 }
 
