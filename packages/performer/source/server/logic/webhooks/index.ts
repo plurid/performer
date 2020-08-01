@@ -82,6 +82,7 @@ export const handleGithubWebhook = async (
     }
 
     if (!activeRepository) {
+        response.status(404).end();
         return;
     }
 
@@ -135,6 +136,7 @@ export const handleGithubWebhook = async (
     }
 
     if (!activeTrigger) {
+        response.status(404).end();
         return;
     }
 
