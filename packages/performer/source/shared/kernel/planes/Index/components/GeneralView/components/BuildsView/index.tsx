@@ -103,7 +103,10 @@ const buildRowRenderer = (
             </div>
 
             <div>
-                {durationString}
+                {status === 'QUEUE'
+                    ? '—'
+                    : durationString
+                }
             </div>
 
             <div>
