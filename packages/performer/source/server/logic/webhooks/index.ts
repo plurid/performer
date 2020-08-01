@@ -164,74 +164,78 @@ const handleTrigger = async (
     repositoryName: string,
     branchName: string,
 ) => {
-    const buildDate = Math.floor(Date.now() / 1000);
-    const buildData = {
-        commit: headCommit.id,
-        trigger: {
-            ...activeTrigger,
-        },
-        date: buildDate,
-    };
+    try {
+        const buildDate = Math.floor(Date.now() / 1000);
+        const buildData = {
+            commit: headCommit.id,
+            trigger: {
+                ...activeTrigger,
+            },
+            date: buildDate,
+        };
 
 
-    const repositoryPath = path.join(
-        repositoriesPath,
-        './github',
-        '/' + repositoryName,
-    );
-    const repositoryRootPath = path.join(
-        repositoryPath,
-        '/root',
-    );
+        const repositoryPath = path.join(
+            repositoriesPath,
+            './github',
+            '/' + repositoryName,
+        );
+        const repositoryRootPath = path.join(
+            repositoryPath,
+            '/root',
+        );
 
-    const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
-    const workDirectoryPath = path.join(
-        repositoryPath,
-        workDirectory,
-    );
-    await fs.mkdir(workDirectoryPath, {
-        recursive: true,
-    });
+        const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
+        const workDirectoryPath = path.join(
+            repositoryPath,
+            workDirectory,
+        );
+        await fs.mkdir(workDirectoryPath, {
+            recursive: true,
+        });
 
-    await copyDirectory(
-        repositoryRootPath,
-        workDirectoryPath,
-    );
+        await copyDirectory(
+            repositoryRootPath,
+            workDirectoryPath,
+        );
 
-    const gitCommandFetchOrigin = 'git fetch origin';
-    const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+        const gitCommandFetchOrigin = 'git fetch origin';
+        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
 
-    execSync(gitCommandFetchOrigin, {
-        cwd: workDirectoryPath,
-    });
-    execSync(gitCommandResetHardBranch, {
-        cwd: workDirectoryPath,
-    });
+        execSync(gitCommandFetchOrigin, {
+            cwd: workDirectoryPath,
+        });
+        execSync(gitCommandResetHardBranch, {
+            cwd: workDirectoryPath,
+        });
 
 
-    const performerFilePath = path.join(
-        workDirectoryPath,
-        '/' + buildData.trigger.file,
-    );
-    const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-    const performerObject = yaml.safeLoad(performerFile);
+        const performerFilePath = path.join(
+            workDirectoryPath,
+            '/' + buildData.trigger.file,
+        );
+        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+        const performerObject = yaml.safeLoad(performerFile);
 
-    if (!performerObject || typeof performerObject === 'string') {
+        if (!performerObject || typeof performerObject === 'string') {
+            return;
+        }
+
+        const performerData: any = performerObject;
+
+        const performer: Performer = {
+            ...performerData,
+            timeout: performerData.timeout ?? 600,
+        };
+
+        handlePerformer(
+            performer,
+            workDirectoryPath,
+            performerFilePath,
+        );
+    } catch (error) {
         return;
     }
-
-    const performerData: any = performerObject;
-
-    const performer: Performer = {
-        ...performerData,
-        timeout: performerData.timeout ?? 600,
-    };
-
-    handlePerformer(
-        performer,
-        workDirectoryPath,
-        performerFilePath,
-    );
 }
 
 
