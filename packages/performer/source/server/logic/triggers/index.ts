@@ -19,7 +19,7 @@ import {
 } from '#server/logic/loader';
 
 import {
-    triggerWork,
+    pushToBuildQueue,
 } from '#server/logic/build';
 
 import {
@@ -106,9 +106,6 @@ export const handleTrigger = async (
     branchName: string,
 ) => {
     try {
-        // TODO
-        // create build object and push it up the queue
-
         const buildID = uuid.generate();
 
         const repositoryPath = path.join(
@@ -141,7 +138,7 @@ export const handleTrigger = async (
             repositoryWorkPath,
         };
 
-        triggerWork(buildData);
+        pushToBuildQueue(buildData);
     } catch (error) {
         return;
     }

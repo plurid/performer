@@ -19,6 +19,8 @@ import {
 
 import {
     buildlogsPath,
+    buildqueuePath,
+    buildsPath,
 } from '#server/data/constants';
 
 import {
@@ -27,7 +29,61 @@ import {
 
 
 
-export const triggerWork = async (
+export const pushToBuildQueue = async (
+    buildData: BuildData,
+) => {
+    const buildlogName = buildData.id + '.json';
+
+    const buildlogPath = path.join(
+        buildqueuePath,
+        buildlogName,
+    );
+
+    await fs.writeFile(
+        buildlogPath,
+        JSON.stringify(buildData, null, 4),
+    );
+
+    await writeBuildFile(
+        buildData.id,
+        'QUEUE',
+        buildData.trigger.id,
+        0,
+        buildData.date,
+    );
+}
+
+
+export const writeBuildFile = async (
+    id: string,
+    status: any,
+    trigger: string,
+    time: number,
+    date: number,
+) => {
+    const build: Build = {
+        id,
+        status,
+        trigger,
+        time,
+        date,
+    };
+
+    const buildFile = id + '.json';
+
+    const buildPath = path.join(
+        buildqueuePath,
+        buildFile,
+    );
+
+    await fs.writeFile(
+        buildPath,
+        JSON.stringify(build, null, 4),
+    );
+}
+
+
+export const triggerBuild = async (
     buildData: BuildData,
 ) => {
     const {
