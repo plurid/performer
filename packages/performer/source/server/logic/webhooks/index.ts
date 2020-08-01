@@ -304,6 +304,7 @@ const handleStage = async (
         command,
         imagene,
         directory,
+        environment,
     } = stage;
 
     const {
@@ -321,9 +322,14 @@ const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    execSync(actionCommand, {
+    const output = execSync(actionCommand, {
         cwd: commandDirectory,
+        env: {
+            ...environment,
+        },
     });
+
+    console.log(output.toString('utf-8'));
 }
 
 
