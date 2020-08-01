@@ -13,6 +13,9 @@ import {
 import {
     CodeProvider,
     Webhook,
+    Repository,
+    Trigger,
+    Build,
 } from '#server/data/interfaces';
 
 import {
@@ -22,6 +25,11 @@ import {
 import {
     getRoutes,
 } from '#server/utilities';
+
+import {
+    loadRepositories,
+    loadTriggers,
+} from '#server/logic/loader';
 
 
 
@@ -48,11 +56,98 @@ export const registerWebhook = async (
 }
 
 
-export const handleGithubWebhook = (
+export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
 ) => {
-    console.log(request.body);
+    const data = request.body;
+
+    const {
+        ref,
+        head_commit: headCommit,
+        repository,
+    } = data;
+
+    const branchName = ref.replace('refs/heads/', '');
+    const repositoryName = repository.full_name;
+
+    const repositories = await loadRepositories();
+    let activeRepository: Repository | undefined;
+    for (const watchedRepository of repositories) {
+        if (watchedRepository.name === repositoryName) {
+            activeRepository = {
+                ...watchedRepository,
+            };
+        }
+    }
+
+    if (!activeRepository) {
+        return;
+    }
+
+    const triggers = await loadTriggers();
+    let activeTrigger: Trigger | undefined;
+    for (const watchedTrigger of triggers) {
+        let triggerSet = false;
+        if (watchedTrigger.branch === branchName) {
+            for (const addedFile of headCommit.added) {
+                if (addedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+
+            for (const removedFile of headCommit.removed) {
+                if (removedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+
+            for (const modifiedFile of headCommit.modified) {
+                if (modifiedFile.includes(watchedTrigger.path)) {
+                    activeTrigger = {
+                        ...watchedTrigger,
+                    };
+                    triggerSet = true;
+                    break;
+                }
+            }
+
+            if (triggerSet) {
+                break;
+            }
+        }
+    }
+
+    if (!activeTrigger) {
+        return;
+    }
+
+    const buildData = {
+        commit: headCommit.id,
+        branch: branchName,
+        trigger: activeTrigger.name,
+        date: Math.floor(Date.now() / 1000),
+    };
+
+    console.log('body', request.body);
+    console.log('-----');
+    console.log('buildData', buildData);
 
     response.status(200).end();
 }
