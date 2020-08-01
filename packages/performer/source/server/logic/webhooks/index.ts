@@ -6,6 +6,8 @@ import path from 'path';
 
 import express from 'express';
 
+import ncp from 'ncp';
+
 import {
     uuid,
 } from '@plurid/plurid-functions';
@@ -20,6 +22,7 @@ import {
 
 import {
     webhooksPath,
+    repositoriesPath,
 } from '#server/data/constants';
 
 import {
@@ -168,10 +171,36 @@ export const handleGithubWebhook = async (
 
         const buildData = {
             commit: headCommit.id,
-            branch: branchName,
-            trigger: activeTrigger.name,
+            trigger: {
+                ...activeTrigger,
+            },
             date: Math.floor(Date.now() / 1000),
         };
+
+        const repositoryPath = path.join(
+            repositoriesPath,
+            './github',
+            '/' + repositoryName,
+        );
+
+        const repositoryRootPath = path.join(
+            repositoryPath,
+            '/root',
+        );
+
+        const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
+        const workDirectoryPath = path.join(
+            repositoryPath,
+        );
+        await fs.mkdir(workDirectoryPath, {
+            recursive: true,
+        });
+
+        // copy root to a new directory named
+        ncp(repositoryRootPath, workDirectoryPath);
+
+        // switch to that directory and checkout to the branch
+        // checkout the commit
 
         console.log('body', request.body);
         console.log('-----');
