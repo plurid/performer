@@ -72,7 +72,7 @@ export const writeBuildFile = async (
     const buildFile = id + '.json';
 
     const buildPath = path.join(
-        buildqueuePath,
+        buildsPath,
         buildFile,
     );
 
