@@ -157,6 +157,30 @@ export const copyDirectory = async (
 }
 
 
+const handleTriggers = async (
+    headCommit: any,
+    branchName: string,
+    repositoryName: string,
+) => {
+    const activeTriggers = await getActiveTriggers(
+        branchName,
+        headCommit,
+    );
+    if (activeTriggers.length == 0) {
+        return;
+    }
+
+    for (const trigger of activeTriggers) {
+        handleTrigger(
+            headCommit,
+            trigger,
+            repositoryName,
+            branchName,
+        );
+    }
+
+}
+
 
 const handleTrigger = async (
     headCommit: any,
@@ -303,6 +327,23 @@ const handleStage = async (
 }
 
 
+const updateRootRepository = (
+    repositoryName: string,
+) => {
+    const repositoryPath = path.join(
+        repositoriesPath,
+        './github',
+        '/' + repositoryName,
+    );
+
+    const gitCommandFetchOrigin = 'git fetch origin';
+
+    execSync(gitCommandFetchOrigin, {
+        cwd: repositoryPath,
+    });
+}
+
+
 export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
@@ -328,27 +369,18 @@ export const handleGithubWebhook = async (
             return;
         }
 
-
         /** OK */
         response.status(200).end();
 
-
-        const activeTriggers = await getActiveTriggers(
-            branchName,
+        handleTriggers(
             headCommit,
+            branchName,
+            repositoryName,
         );
-        if (activeTriggers.length == 0) {
-            return;
-        }
 
-        for (const trigger of activeTriggers) {
-            handleTrigger(
-                headCommit,
-                trigger,
-                repositoryName,
-                branchName,
-            );
-        }
+        updateRootRepository(
+            repositoryName,
+        );
     } catch (error) {
         /** Bad Request */
         response.status(400).end();
