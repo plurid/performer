@@ -31,6 +31,7 @@ import {
 import {
     webhooksPath,
     repositoriesPath,
+    buildlogsPath,
 } from '#server/data/constants';
 
 import {
@@ -253,6 +254,7 @@ const handleTrigger = async (
         };
 
         handlePerformer(
+            buildData,
             performer,
             workDirectoryPath,
             performerFilePath,
@@ -264,10 +266,26 @@ const handleTrigger = async (
 
 
 export const handlePerformer = async (
+    buildData: any,
     performer: Performer,
     workDirectoryPath: string,
     performerFilePath: string,
 ) => {
+    const {
+        trigger,
+        date,
+    } = buildData;
+
+    const buildID = uuid.generate();
+
+    const queueBuild: Build = {
+        id: buildID,
+        date,
+        status: 'QUEUED',
+        time: 0,
+        trigger: trigger.id,
+    };
+
     const {
         stages,
         timeout,
@@ -283,20 +301,21 @@ export const handlePerformer = async (
         performerFilePath,
     };
 
-    for (const stage of stages) {
+    for (const [index, stage] of stages.entries()) {
         handleStage(
+            queueBuild,
             stage,
+            index,
             performContext,
         );
     }
-
-    console.log('performer', performer);
-
 }
 
 
 const handleStage = async (
+    build: Build,
     stage: PerformerStage,
+    index: number,
     performContext: any,
 ) => {
     const {
@@ -329,7 +348,11 @@ const handleStage = async (
         },
     });
 
-    console.log(output.toString('utf-8'));
+    saveBuildlog(
+        build.id,
+        index,
+        output.toString('utf-8'),
+    );
 }
 
 
@@ -347,6 +370,22 @@ const updateRootRepository = (
     execSync(gitCommandFetchOrigin, {
         cwd: repositoryPath,
     });
+}
+
+
+const saveBuildlog = (
+    buildID: string,
+    stageIndex: number,
+    data: string,
+) => {
+    const buildlogName = buildID + '_' + stageIndex;
+
+    const buildlogPath = path.join(
+        buildlogsPath,
+        buildlogName,
+    );
+
+    fs.writeFile(buildlogPath, data);
 }
 
 
