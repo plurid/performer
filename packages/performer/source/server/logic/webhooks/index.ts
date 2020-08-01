@@ -60,98 +60,104 @@ export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
 ) => {
-    const data = request.body;
+    try {
 
-    const {
-        ref,
-        head_commit: headCommit,
-        repository,
-    } = data;
+        const data = request.body;
 
-    const branchName = ref.replace('refs/heads/', '');
-    const repositoryName = repository.full_name;
+        const {
+            ref,
+            head_commit: headCommit,
+            repository,
+        } = data;
 
-    const repositories = await loadRepositories();
-    let activeRepository: Repository | undefined;
-    for (const watchedRepository of repositories) {
-        if (watchedRepository.name === repositoryName) {
-            activeRepository = {
-                ...watchedRepository,
-            };
-        }
-    }
+        const branchName = ref.replace('refs/heads/', '');
+        const repositoryName = repository.full_name;
 
-    if (!activeRepository) {
-        response.status(204).end();
-        return;
-    }
-
-    const triggers = await loadTriggers();
-    let activeTrigger: Trigger | undefined;
-    for (const watchedTrigger of triggers) {
-        let triggerSet = false;
-        if (watchedTrigger.branch === branchName) {
-            for (const addedFile of headCommit.added) {
-                if (addedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
-                    break;
-                }
-            }
-
-            if (triggerSet) {
-                break;
-            }
-
-            for (const removedFile of headCommit.removed) {
-                if (removedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
-                    break;
-                }
-            }
-
-            if (triggerSet) {
-                break;
-            }
-
-            for (const modifiedFile of headCommit.modified) {
-                if (modifiedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
-                    break;
-                }
-            }
-
-            if (triggerSet) {
-                break;
+        const repositories = await loadRepositories();
+        let activeRepository: Repository | undefined;
+        for (const watchedRepository of repositories) {
+            if (watchedRepository.name === repositoryName) {
+                activeRepository = {
+                    ...watchedRepository,
+                };
             }
         }
-    }
 
-    if (!activeTrigger) {
-        response.status(204).end();
+        if (!activeRepository) {
+            response.status(204).end();
+            return;
+        }
+
+        const triggers = await loadTriggers();
+        let activeTrigger: Trigger | undefined;
+        for (const watchedTrigger of triggers) {
+            let triggerSet = false;
+            if (watchedTrigger.branch === branchName) {
+                for (const addedFile of headCommit.added) {
+                    if (addedFile.includes(watchedTrigger.path)) {
+                        activeTrigger = {
+                            ...watchedTrigger,
+                        };
+                        triggerSet = true;
+                        break;
+                    }
+                }
+
+                if (triggerSet) {
+                    break;
+                }
+
+                for (const removedFile of headCommit.removed) {
+                    if (removedFile.includes(watchedTrigger.path)) {
+                        activeTrigger = {
+                            ...watchedTrigger,
+                        };
+                        triggerSet = true;
+                        break;
+                    }
+                }
+
+                if (triggerSet) {
+                    break;
+                }
+
+                for (const modifiedFile of headCommit.modified) {
+                    if (modifiedFile.includes(watchedTrigger.path)) {
+                        activeTrigger = {
+                            ...watchedTrigger,
+                        };
+                        triggerSet = true;
+                        break;
+                    }
+                }
+
+                if (triggerSet) {
+                    break;
+                }
+            }
+        }
+
+        if (!activeTrigger) {
+            response.status(204).end();
+            return;
+        }
+
+        const buildData = {
+            commit: headCommit.id,
+            branch: branchName,
+            trigger: activeTrigger.name,
+            date: Math.floor(Date.now() / 1000),
+        };
+
+        console.log('body', request.body);
+        console.log('-----');
+        console.log('buildData', buildData);
+
+        response.status(200).end();
+    } catch (error) {
+        response.status(400).end();
         return;
     }
-
-    const buildData = {
-        commit: headCommit.id,
-        branch: branchName,
-        trigger: activeTrigger.name,
-        date: Math.floor(Date.now() / 1000),
-    };
-
-    console.log('body', request.body);
-    console.log('-----');
-    console.log('buildData', buildData);
-
-    response.status(200).end();
 }
 
 
