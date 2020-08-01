@@ -57,6 +57,7 @@ export const registerWebhook = async (
 }
 
 
+
 export const handleGithubWebhook = async (
     request: express.Request,
     response: express.Response,
@@ -70,11 +71,19 @@ export const handleGithubWebhook = async (
             repository,
         } = data;
 
+        if (
+            !ref
+            || !headCommit
+            || !repository
+        ) {
+            return;
+        }
+
         const branchName = ref.replace('refs/heads/', '');
         const repositoryName = repository.full_name;
 
         const activeRepository = await getActiveRepository(
-            repositoryName
+            repositoryName,
         );
         if (!activeRepository) {
             /** No Content */
