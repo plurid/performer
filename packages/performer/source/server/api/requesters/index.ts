@@ -65,7 +65,6 @@ export const getRepositoryDataByNameWithOwner = async (
 
 export const getRepository = async (
     providerID: string,
-    url: string,
     name: string,
 ) => {
     const provider = await getProvider(providerID);
@@ -78,7 +77,7 @@ export const getRepository = async (
             return;
         case GITHUB_PROVIDER:
             return github.getRepository(
-                url,
+                provider.token,
                 name,
             );
     }

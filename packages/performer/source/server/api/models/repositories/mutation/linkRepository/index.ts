@@ -34,11 +34,10 @@ const linkRepository = async (
     }
 
     const {
-        zipURL,
         name,
     } = repositoryData;
 
-    if (!zipURL) {
+    if (!name) {
         return {
             status: false,
         };
@@ -46,11 +45,12 @@ const linkRepository = async (
 
     await getRepository(
         providerID,
-        zipURL,
         name,
     );
 
-    await registerRepositoryMetadata(repositoryData);
+    await registerRepositoryMetadata(
+        repositoryData,
+    );
 
     return {
         status: true,

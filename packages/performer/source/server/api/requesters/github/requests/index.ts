@@ -1,7 +1,8 @@
-import https from 'https';
 import fs from 'fs';
 import path from 'path';
-import Zip from 'adm-zip';
+import {
+    exec,
+} from 'child_process';
 
 import {
     BASE_PATH_REPOSITORIES,
@@ -52,60 +53,46 @@ export const getOwner = async (
 
 
 export const downloadRepository = async (
-    url: string,
-    filepath: string,
+    token: string,
+    name: string,
+    repositoryPath: string,
 ) => {
+    const gitCloneCommand = `git clone https://${token}@github.com/${name}.git ./root`;
+
     return new Promise((resolve, reject) => {
-        https.get(url, response => {
-            response.on('data', (data) => {
-                fs.appendFileSync(
-                    filepath,
-                    data,
-                );
-            });
-
-            response.on('end', () => {
-                resolve(filepath);
-            });
-
-            response.on('error', () => {
+        exec(gitCloneCommand, {
+            cwd: repositoryPath,
+        }, (error) => {
+            if (error) {
                 reject(0);
-            })
+            }
+
+            resolve();
         });
     });
 }
 
 
 export const getRepository = async (
-    url: string,
+    token: string,
     name: string,
 ) => {
     const repositoryPath = BASE_PATH_REPOSITORIES + 'github/' + name;
     const resolvedRepositoryPath = path.join(process.cwd(), repositoryPath);
-    const resolvedArchivePath = path.join(resolvedRepositoryPath, '/archive.zip');
-    const resolvedDataPath = path.join(resolvedRepositoryPath, '/data');
 
     try {
         fs.mkdirSync(repositoryPath, {
-            recursive: true,
-        });
-
-        fs.mkdirSync(resolvedDataPath, {
             recursive: true,
         });
     } catch (error) {
         return;
     }
 
-
     await downloadRepository(
-        url,
-        resolvedArchivePath,
+        token,
+        name,
+        resolvedRepositoryPath,
     );
-
-
-    const zip = new Zip(resolvedArchivePath);
-    zip.extractAllTo(resolvedDataPath, true);
 }
 
 
