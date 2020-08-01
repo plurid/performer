@@ -30,6 +30,7 @@ const externalPackages = [
     'https',
     'fs',
     'path',
+    'child_process',
 ];
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
