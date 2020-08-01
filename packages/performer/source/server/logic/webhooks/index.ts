@@ -295,7 +295,7 @@ const handleStage = async (
         ? path.join(
             workDirectoryPath,
             directory,
-        ) : performerFilePath;
+        ) : path.dirname(performerFilePath);
 
     execSync(actionCommand, {
         cwd: commandDirectory,
