@@ -6,6 +6,7 @@ import path from 'path';
 
 import {
     execSync,
+    spawnSync,
 } from 'child_process';
 
 import yaml from 'js-yaml';
@@ -228,7 +229,7 @@ export const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    const output = execSync(actionCommand, {
+    const spawnResult = spawnSync(actionCommand, {
         cwd: commandDirectory,
         env: {
             ...environment,
@@ -238,7 +239,7 @@ export const handleStage = async (
     saveBuildlog(
         id,
         index,
-        output.toString('utf-8'),
+        spawnResult.toString(),
     );
 }
 
