@@ -12,6 +12,10 @@ import {
     handleWebhooks,
 } from '#server/logic/webhooks';
 
+import {
+    BuildQueueWatcher,
+} from '#server/logic/queue';
+
 import setupGraphQLServer from './graphql';
 
 
@@ -46,4 +50,7 @@ export const setRouteHandlers = (
     setupWebhooks(instance);
 
     setupGraphQLServer(instance);
+
+    const buildQueue = new BuildQueueWatcher();
+    buildQueue.startWatcher();
 }

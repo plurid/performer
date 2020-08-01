@@ -146,19 +146,13 @@ export const handlePerformer = async (
     workDirectoryPath: string,
     performerFilePath: string,
 ) => {
+    const start = Date.now();
+
     const {
         id,
         trigger,
         date,
     } = buildData;
-
-    const queueBuild: Build = {
-        id,
-        date,
-        status: 'QUEUED',
-        time: 0,
-        trigger: trigger.id,
-    };
 
     const {
         stages,
@@ -176,21 +170,34 @@ export const handlePerformer = async (
     };
 
     for (const [index, stage] of stages.entries()) {
-        handleStage(
-            queueBuild,
+        await handleStage(
+            id,
             stage,
             index,
             performContext,
+            start,
         );
     }
+
+    const end = Date.now();
+    const time = Math.floor((end - start) / 1000);
+
+    writeBuildFile(
+        id,
+        'SUCCESS',
+        trigger.id,
+        time,
+        date,
+    );
 }
 
 
 export const handleStage = async (
-    build: Build,
+    id: string,
     stage: PerformerStage,
     index: number,
     performContext: any,
+    start: number,
 ) => {
     const {
         name,
@@ -223,7 +230,7 @@ export const handleStage = async (
     });
 
     saveBuildlog(
-        build.id,
+        id,
         index,
         output.toString('utf-8'),
     );
