@@ -9,6 +9,7 @@ import {
     Webhook,
     Trigger,
     Build,
+    BuildData,
     Imagene,
 } from '#server/data/interfaces';
 
@@ -18,6 +19,7 @@ import {
     webhooksPath,
     triggersPath,
     buildsPath,
+    buildqueuePath,
     imagenesPath,
 } from '#server/data/constants';
 
@@ -73,6 +75,13 @@ export const loadTriggers = async () => {
     const triggers = await loadDataFromFiles<Trigger>(triggersPath);
 
     return triggers;
+}
+
+
+export const loadBuildsQueued = async () => {
+    const buildsQueued = await loadDataFromFiles<BuildData>(buildqueuePath);
+
+    return buildsQueued;
 }
 
 
