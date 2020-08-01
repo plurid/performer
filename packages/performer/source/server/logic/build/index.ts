@@ -50,6 +50,7 @@ export const pushToBuildQueue = async (
         buildData.trigger.id,
         0,
         buildData.date,
+        [],
     );
 }
 
