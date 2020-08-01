@@ -1,3 +1,5 @@
+import ncp from 'ncp';
+
 import express from 'express';
 
 
@@ -54,4 +56,30 @@ export const compareValues = <T>(
                 : comparison
         );
     };
+}
+
+
+export const copyDirectory = async (
+    source: string,
+    destination: string,
+) => {
+    return new Promise((resolve, reject) => {
+        ncp(source, destination, (error) => {
+            if (error) {
+                reject(0);
+            }
+
+            resolve();
+        });
+    });
+}
+
+
+export const removeDuplicates = <T>(
+    data: T[],
+    key: string,
+) => {
+    return data.filter(
+        (obj, pos, arr) => arr.map(mapObj => mapObj[key]).indexOf(obj[key]) === pos
+    );
 }

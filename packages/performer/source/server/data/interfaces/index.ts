@@ -90,3 +90,11 @@ export interface PerformerStage {
     environment?: any;
     secretsEnvironment?: any;
 }
+
+
+export interface Commit {
+    id: string;
+    added: string[];
+    removed: string[];
+    modified: string[];
+}

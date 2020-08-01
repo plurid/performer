@@ -5,12 +5,21 @@ import {
 import path from 'path';
 
 import {
+    execSync,
+} from 'child_process';
+
+import {
     Repository,
 } from '#server/data/interfaces';
 
 import {
+    repositoriesPath,
     repositoriesMetadataPath,
 } from '#server/data/constants';
+
+import {
+    loadRepositories,
+} from '#server/logic/loader';
 
 import {
     cleanFileName,
@@ -39,4 +48,41 @@ export const registerRepositoryMetadata = async (
         repositoryFilePath,
         JSON.stringify(repository, null, 4),
     );
+}
+
+
+
+export const getActiveRepository = async (
+    repositoryName: string,
+) => {
+    const repositories = await loadRepositories();
+    let activeRepository: Repository | undefined;
+    for (const watchedRepository of repositories) {
+        if (watchedRepository.name === repositoryName) {
+            activeRepository = {
+                ...watchedRepository,
+            };
+            break;
+        }
+    }
+
+    return activeRepository;
+}
+
+
+
+export const updateRootRepository = (
+    repositoryName: string,
+) => {
+    const repositoryPath = path.join(
+        repositoriesPath,
+        './github',
+        '/' + repositoryName,
+    );
+
+    const gitCommandFetchOrigin = 'git fetch origin';
+
+    execSync(gitCommandFetchOrigin, {
+        cwd: repositoryPath,
+    });
 }
