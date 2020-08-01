@@ -1,3 +1,9 @@
+import syncFs, {
+    promises as fs,
+} from 'fs';
+
+import path from 'path';
+
 import {
     buildqueuePath,
 } from '#server/data/constants';
@@ -44,7 +50,36 @@ class BuildQueueWatcher {
         await removeFromQueue(buildData.id);
     }
 
-    async startWatcher() {
+    async handleFile(
+        filename: string,
+    ) {
+        try {
+            const filepath = path.join(
+                buildqueuePath,
+                '/' + filename,
+            );
+
+            const exists = syncFs.existsSync(filepath);
+            if (!exists) {
+                return;
+            }
+
+            const rawData = await fs.readFile(filepath, 'utf-8');
+            const data: BuildData = JSON.parse(rawData);
+
+            this.handleQueuedBuild(data);
+        } catch (error) {
+            return;
+        }
+    }
+
+    startWatcher() {
+        syncFs.watch(buildqueuePath, (
+            _,
+            filename,
+        ) => {
+            this.handleFile(filename);
+        });
     }
 }
 
