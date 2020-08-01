@@ -54,6 +54,8 @@ class BuildQueueWatcher {
         filename: string,
     ) {
         try {
+            this.inQueue += 1;
+
             const filepath = path.join(
                 buildqueuePath,
                 '/' + filename,
@@ -67,7 +69,9 @@ class BuildQueueWatcher {
             const rawData = await fs.readFile(filepath, 'utf-8');
             const data: BuildData = JSON.parse(rawData);
 
-            this.handleQueuedBuild(data);
+            await this.handleQueuedBuild(data);
+
+            this.inQueue -= 1;
         } catch (error) {
             return;
         }
