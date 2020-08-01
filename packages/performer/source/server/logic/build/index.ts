@@ -60,6 +60,7 @@ export const writeBuildFile = async (
     trigger: string,
     time: number,
     date: number,
+    stages: string[],
 ) => {
     const build: Build = {
         id,
@@ -67,6 +68,7 @@ export const writeBuildFile = async (
         trigger,
         time,
         date,
+        stages,
     };
 
     const buildFile = id + '.json';
@@ -182,12 +184,15 @@ export const handlePerformer = async (
     const end = Date.now();
     const time = Math.floor((end - start) / 1000);
 
+    const stagesNames = stages.map(stage => stage.name);
+
     writeBuildFile(
         id,
         'SUCCESS',
         trigger.id,
         time,
         date,
+        stagesNames,
     );
 }
 

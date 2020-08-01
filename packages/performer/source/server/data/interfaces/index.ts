@@ -32,6 +32,7 @@ export interface Build {
     trigger: string;
     time: number;
     date: number;
+    stages: string[];
 }
 
 
