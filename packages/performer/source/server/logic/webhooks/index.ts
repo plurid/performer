@@ -25,6 +25,7 @@ import {
     Trigger,
     Build,
     Performer,
+    PerformerStage,
 } from '#server/data/interfaces';
 
 import {
@@ -228,15 +229,73 @@ const handleTrigger = async (
 
     handlePerformer(
         performer,
+        workDirectoryPath,
+        performerFilePath,
     );
 }
 
 
 export const handlePerformer = async (
     performer: Performer,
+    workDirectoryPath: string,
+    performerFilePath: string,
 ) => {
+    const {
+        stages,
+        timeout,
+        nodejs,
+        secrets,
+    } = performer;
+
+    const performContext = {
+        timeout,
+        nodejs,
+        secrets,
+        workDirectoryPath,
+        performerFilePath,
+    };
+
+    for (const stage of stages) {
+        handleStage(
+            stage,
+            performContext,
+        );
+    }
+
     console.log('performer', performer);
 
+}
+
+
+const handleStage = async (
+    stage: PerformerStage,
+    performContext: any,
+) => {
+    const {
+        name,
+        command,
+        imagene,
+        directory,
+    } = stage;
+
+    const {
+        workDirectoryPath,
+        performerFilePath,
+    } = performContext;
+
+    const imageneCommand = imagene === 'demand' ? '' : imagene;
+
+    const actionCommand = `${imageneCommand} ${command}`;
+
+    const commandDirectory = directory
+        ? path.join(
+            workDirectoryPath,
+            directory,
+        ) : performerFilePath;
+
+    execSync(actionCommand, {
+        cwd: commandDirectory,
+    });
 }
 
 
