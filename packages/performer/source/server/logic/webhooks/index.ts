@@ -24,6 +24,7 @@ import {
     Repository,
     Trigger,
     Build,
+    Performer,
 } from '#server/data/interfaces';
 
 import {
@@ -83,60 +84,59 @@ export const getActiveRepository = async (
 }
 
 
-export const getActiveTrigger = async (
+const removeDuplicates = <T>(
+    data: T[],
+    key: string,
+) => {
+    return data.filter(
+        (obj, pos, arr) => arr.map(mapObj => mapObj[key]).indexOf(obj[key]) === pos
+    );
+}
+
+
+export const getActiveTriggers = async (
     branchName: string,
     headCommit: any,
 ) => {
     const triggers = await loadTriggers();
-    let activeTrigger: Trigger | undefined;
+
+    let activeTriggers: Trigger[] = [];
+
     for (const watchedTrigger of triggers) {
-        let triggerSet = false;
         if (watchedTrigger.branch === branchName) {
             for (const addedFile of headCommit.added) {
                 if (addedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
+                    activeTriggers.push(
+                        watchedTrigger,
+                    );
                     break;
                 }
-            }
-
-            if (triggerSet) {
-                break;
             }
 
             for (const removedFile of headCommit.removed) {
                 if (removedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
+                    activeTriggers.push(
+                        watchedTrigger,
+                    );
                     break;
                 }
-            }
-
-            if (triggerSet) {
-                break;
             }
 
             for (const modifiedFile of headCommit.modified) {
                 if (modifiedFile.includes(watchedTrigger.path)) {
-                    activeTrigger = {
-                        ...watchedTrigger,
-                    };
-                    triggerSet = true;
+                    activeTriggers.push(
+                        watchedTrigger,
+                    );
                     break;
                 }
-            }
-
-            if (triggerSet) {
-                break;
             }
         }
     }
 
-    return activeTrigger;
+    return removeDuplicates(
+        activeTriggers,
+        'id',
+    );
 }
 
 
@@ -153,6 +153,90 @@ export const copyDirectory = async (
             resolve();
         });
     })
+}
+
+
+
+const handleTrigger = async (
+    headCommit: any,
+    activeTrigger: Trigger,
+    repositoryName: string,
+    branchName: string,
+) => {
+    const buildDate = Math.floor(Date.now() / 1000);
+    const buildData = {
+        commit: headCommit.id,
+        trigger: {
+            ...activeTrigger,
+        },
+        date: buildDate,
+    };
+
+
+    const repositoryPath = path.join(
+        repositoriesPath,
+        './github',
+        '/' + repositoryName,
+    );
+    const repositoryRootPath = path.join(
+        repositoryPath,
+        '/root',
+    );
+
+    const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
+    const workDirectoryPath = path.join(
+        repositoryPath,
+        workDirectory,
+    );
+    await fs.mkdir(workDirectoryPath, {
+        recursive: true,
+    });
+
+    await copyDirectory(
+        repositoryRootPath,
+        workDirectoryPath,
+    );
+
+    const gitCommandFetchOrigin = 'git fetch origin';
+    const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+
+    execSync(gitCommandFetchOrigin, {
+        cwd: workDirectoryPath,
+    });
+    execSync(gitCommandResetHardBranch, {
+        cwd: workDirectoryPath,
+    });
+
+
+    const performerFilePath = path.join(
+        workDirectoryPath,
+        '/' + buildData.trigger.file,
+    );
+    const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+    const performerObject = yaml.safeLoad(performerFile);
+
+    if (!performerObject || typeof performerObject === 'string') {
+        return;
+    }
+
+    const performerData: any = performerObject;
+
+    const performer: Performer = {
+        ...performerData,
+        timeout: performerData.timeout ?? 600,
+    };
+
+    handlePerformer(
+        performer,
+    );
+}
+
+
+export const handlePerformer = async (
+    performer: Performer,
+) => {
+    console.log('performer', performer);
+
 }
 
 
@@ -181,71 +265,27 @@ export const handleGithubWebhook = async (
             return;
         }
 
-        const activeTrigger = await getActiveTrigger(
-            branchName,
-            headCommit,
-        );
-        if (!activeTrigger) {
-            /** No Content */
-            response.status(204).end();
-            return;
-        }
-
-        const buildData = {
-            commit: headCommit.id,
-            trigger: {
-                ...activeTrigger,
-            },
-            date: Math.floor(Date.now() / 1000),
-        };
-
-
-        const repositoryPath = path.join(
-            repositoriesPath,
-            './github',
-            '/' + repositoryName,
-        );
-        const repositoryRootPath = path.join(
-            repositoryPath,
-            '/root',
-        );
-
-        const workDirectory = '/' + headCommit.id + '_' + buildData.trigger.id;
-        const workDirectoryPath = path.join(
-            repositoryPath,
-            workDirectory,
-        );
-        await fs.mkdir(workDirectoryPath, {
-            recursive: true,
-        });
-
-        await copyDirectory(
-            repositoryRootPath,
-            workDirectoryPath,
-        );
-
-        const gitCommandFetchOrigin = 'git fetch origin';
-        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
-
-        execSync(gitCommandFetchOrigin, {
-            cwd: workDirectoryPath,
-        });
-        execSync(gitCommandResetHardBranch, {
-            cwd: workDirectoryPath,
-        });
-
-
-        const performerFilePath = path.join(
-            workDirectoryPath,
-            '/' + buildData.trigger.file,
-        );
-        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-        const performer = yaml.safeLoad(performerFile);
-        console.log('performer', performer);
-
 
         /** OK */
         response.status(200).end();
+
+
+        const activeTriggers = await getActiveTriggers(
+            branchName,
+            headCommit,
+        );
+        if (activeTriggers.length == 0) {
+            return;
+        }
+
+        for (const trigger of activeTriggers) {
+            handleTrigger(
+                headCommit,
+                trigger,
+                repositoryName,
+                branchName,
+            );
+        }
     } catch (error) {
         /** Bad Request */
         response.status(400).end();

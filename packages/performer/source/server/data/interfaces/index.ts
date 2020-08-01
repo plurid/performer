@@ -71,3 +71,22 @@ export interface Context {
     providers: Provider[];
     imagenes: Imagene[];
 }
+
+
+
+export interface Performer {
+    stages: PerformerStage[];
+    timeout: number;
+    secrets?: any;
+    nodejs?: any;
+}
+
+
+export interface PerformerStage {
+    name: string;
+    imagene: string;
+    command: string;
+    directory?: any;
+    environment?: any;
+    secretsEnvironment?: any;
+}
