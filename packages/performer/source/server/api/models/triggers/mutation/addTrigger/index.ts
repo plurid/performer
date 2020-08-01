@@ -45,6 +45,7 @@ const addTrigger = async (
         repository,
         branch,
         path,
+        file,
     } = input;
 
     const generatedID = id || uuid.generate();
@@ -55,6 +56,7 @@ const addTrigger = async (
         repository,
         branch,
         path,
+        file,
     };
 
     await registerTrigger(trigger);

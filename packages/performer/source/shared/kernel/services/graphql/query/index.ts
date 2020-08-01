@@ -21,8 +21,9 @@ export const GET_SETUP = gql`
                     id
                     name
                     repository
-                    path
                     branch
+                    path
+                    file
                 }
                 repositories {
                     id

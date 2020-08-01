@@ -72,6 +72,7 @@ const Trigger: React.FC<TriggerProperties> = (
     const [triggerRepository, setTriggerRepository] = useState('');
     const [triggerBranch, setTriggerBranch] = useState('');
     const [triggerPath, setTriggerPath] = useState('');
+    const [triggerFile, setTriggerFile] = useState('');
     const [validTrigger, setValidTrigger] = useState(false);
 
 
@@ -87,6 +88,7 @@ const Trigger: React.FC<TriggerProperties> = (
             repository: triggerRepository,
             branch: triggerBranch,
             path: triggerPath,
+            file: triggerFile,
         };
 
         const mutation = await client.mutate({
@@ -106,6 +108,7 @@ const Trigger: React.FC<TriggerProperties> = (
             && triggerRepository
             && triggerBranch
             && triggerPath
+            && triggerFile
         ) {
             setValidTrigger(true);
         } else {
@@ -116,6 +119,7 @@ const Trigger: React.FC<TriggerProperties> = (
         triggerRepository,
         triggerBranch,
         triggerPath,
+        triggerFile,
     ]);
 
     useEffect(() => {
@@ -127,6 +131,7 @@ const Trigger: React.FC<TriggerProperties> = (
             setTriggerRepository('');
             setTriggerBranch('');
             setTriggerPath('');
+            setTriggerFile('');
         }
     }, [
         editID,
@@ -204,6 +209,20 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerPath}
                         placeholder="path"
                         atChange={(event) => setTriggerPath(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
+                        level={2}
+                    />
+                </div>
+
+                <div>
+                    <StyledPluridTextline
+                        text={triggerFile}
+                        placeholder="performer"
+                        atChange={(event) => setTriggerFile(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"

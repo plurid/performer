@@ -56,6 +56,7 @@ export interface Trigger {
     repository: string;
     branch: string;
     path: string;
+    file: string;
 }
 
 

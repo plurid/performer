@@ -30,6 +30,7 @@ export const types = gql`
         repository: String!
         branch: String!
         path: String!
+        file: String!
     }
 `;
 
@@ -41,6 +42,7 @@ export const inputs = gql`
         repository: String!
         branch: String!
         path: String!
+        file: String!
     }
 `;
 

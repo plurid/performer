@@ -60,6 +60,7 @@ const triggerRowRenderer = (
         repository,
         branch,
         path,
+        file,
     } = trigger;
 
     return (
@@ -78,6 +79,10 @@ const triggerRowRenderer = (
 
             <div>
                 {path}
+            </div>
+
+            <div>
+                {file}
             </div>
 
             <PluridIconEdit
@@ -283,6 +288,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
                 path
             </div>
 
+            <div>
+                performer
+            </div>
+
             <div />
 
             <div />
@@ -294,7 +303,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="2fr 1fr 1fr 2fr 30px 30px"
+            rowTemplate="2fr 1fr 0.5fr 2fr 2fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no triggers"
