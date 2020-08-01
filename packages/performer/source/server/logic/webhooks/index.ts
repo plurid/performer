@@ -12,6 +12,8 @@ import express from 'express';
 
 import ncp from 'ncp';
 
+import yaml from 'js-yaml';
+
 import {
     uuid,
 } from '@plurid/plurid-functions';
@@ -232,9 +234,15 @@ export const handleGithubWebhook = async (
             cwd: workDirectoryPath,
         });
 
-        console.log('body', request.body);
-        console.log('-----');
-        console.log('buildData', buildData);
+
+        const performerFilePath = path.join(
+            workDirectoryPath,
+            '/' + buildData.trigger.file,
+        );
+        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+        const performer = yaml.safeLoad(performerFile);
+        console.log('performer', performer);
+
 
         /** OK */
         response.status(200).end();
