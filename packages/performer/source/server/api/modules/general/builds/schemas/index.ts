@@ -34,7 +34,12 @@ export const types = gql`
     type ResponseBuidlLogs {
         status: Boolean!
         error: Error
-        data: [BuildLog!]
+        data: ResponseBuidlLogsData
+    }
+
+    type ResponseBuidlLogsData {
+        build: Build!
+        results: [BuildLog!]
     }
 
     type Build {

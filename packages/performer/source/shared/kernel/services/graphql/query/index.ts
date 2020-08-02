@@ -73,8 +73,17 @@ export const GET_BUILD_LOGS = gql`
         getBuildLogs(input: $input) {
             status
             data {
-                name
-                data
+                build {
+                    status
+                    trigger
+                    time
+                    date
+                    stages
+                }
+                results {
+                    name
+                    data
+                }
             }
         }
     }

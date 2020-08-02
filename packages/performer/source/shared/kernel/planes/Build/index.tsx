@@ -21,12 +21,12 @@ import {
     PluridComponentProperty,
 } from '@plurid/plurid-react';
 
-import {
-    PluridIconArrowRight,
-} from '@plurid/plurid-icons-react';
-
 
 /** external */
+import {
+    Build,
+} from '#server/data/interfaces';
+
 import client from '#kernel-services/graphql/client';
 import {
     GET_BUILD_LOGS,
@@ -98,6 +98,10 @@ const Build: React.FC<BuildProperties> = (
         buildLogs,
         setBuildLogs,
     ] = useState<any[]>([]);
+    const [
+        build,
+        setBuild,
+    ] = useState<Build | null>(null);
 
 
     /** effect */
@@ -125,7 +129,8 @@ const Build: React.FC<BuildProperties> = (
                     data,
                 } = response;
 
-                setBuildLogs(data);
+                setBuild(data.build);
+                setBuildLogs(data.results);
             } catch (error) {
                 return;
             }
@@ -150,11 +155,11 @@ const Build: React.FC<BuildProperties> = (
                 theme={stateGeneralTheme}
             >
                 <StyledBuildTitle>
-                    Build
+                    {build && build.trigger}
                 </StyledBuildTitle>
 
                 <ul>
-                    {buildLogs.map((buildLog, index) => {
+                    {build && build.stages.map((stage, index) => {
                         return (
                             <StyledGeneralSelectorItem
                                 key={uuid.generate()}
@@ -167,7 +172,7 @@ const Build: React.FC<BuildProperties> = (
                                 </StyledGeneralSelectorIcon>
 
                                 <div>
-                                    {buildLog.name}
+                                    {stage}
                                 </div>
                             </StyledGeneralSelectorItem>
                         );

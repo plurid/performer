@@ -32,14 +32,17 @@ const getBuildLogs = async (
         stages,
     } = build;
 
-    const results = getBuildLogsLogic(
+    const results = await getBuildLogsLogic(
         value,
         stages,
     );
 
     return {
         status: true,
-        data: results,
+        data: {
+            build,
+            results,
+        },
     };
 }
 
