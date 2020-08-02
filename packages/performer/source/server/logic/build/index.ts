@@ -1,4 +1,4 @@
-import syncFs, {
+import {
     promises as fs,
 } from 'fs';
 
@@ -6,7 +6,7 @@ import path from 'path';
 
 import {
     execSync,
-    spawnSync,
+    spawn,
 } from 'child_process';
 
 import yaml from 'js-yaml';
@@ -219,9 +219,7 @@ export const handleStage = async (
         performerFilePath,
     } = performContext;
 
-    const imageneCommand = imagene === 'demand' ? '' : imagene;
-
-    const actionCommand = `${imageneCommand} ${command}`;
+    const actionCommand = `${imagene} ${command}`;
 
     const commandDirectory = directory
         ? path.join(
@@ -229,19 +227,47 @@ export const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    const output = execSync(actionCommand, {
+    const child = spawn(imagene, [command], {
         cwd: commandDirectory,
         env: {
             ...environment,
         },
     });
 
-    saveBuildlog(
-        actionCommand,
-        id,
-        index,
-        output.toString('utf-8'),
+    const childData: string[] = [];
+
+    child.stdout.on(
+        'data',
+        (data) => {
+            childData.push(data.toString());
+        }
     );
+
+    child.stdout.on(
+        'close',
+        () => {
+            saveBuildlog(
+                actionCommand,
+                id,
+                index,
+                childData.join(''),
+            );
+        }
+    );
+
+    // const output = execSync(actionCommand, {
+    //     cwd: commandDirectory,
+    //     env: {
+    //         ...environment,
+    //     },
+    // });
+
+    // saveBuildlog(
+    //     actionCommand,
+    //     id,
+    //     index,
+    //     output.toString('utf-8'),
+    // );
 }
 
 
