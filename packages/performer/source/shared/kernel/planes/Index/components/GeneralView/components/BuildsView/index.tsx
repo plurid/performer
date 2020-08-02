@@ -14,6 +14,12 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
+    PluridApplicationConfigurator,
+    PluridPubSub,
+    TOPICS,
+} from '@plurid/plurid-react';
+
+import {
     PluridIconQueue,
     PluridIconRunning,
     PluridIconWarning,
@@ -49,6 +55,8 @@ import {
 
 
 
+const pluridPubSub = new PluridPubSub();
+
 const buildStatusIcons = {
     QUEUE: PluridIconQueue,
     RUNNING: PluridIconRunning,
@@ -71,7 +79,9 @@ const durationTime = (
 
 const buildRowRenderer = (
     build: Build,
-    openBuild: (id: string) => void,
+    openBuild: (
+        id: string,
+    ) => void,
 ) => {
     const {
         id,
@@ -206,6 +216,12 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     const openBuild = (
         id: string,
     ) => {
+        pluridPubSub.publish(
+            TOPICS.VIEW_ADD_PLANE,
+            {
+                plane: `/build/${id}`,
+            },
+        );
     }
 
 
@@ -298,17 +314,23 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     );
 
     return (
-        <EntityView
-            generalTheme={stateGeneralTheme}
-            interactionTheme={stateInteractionTheme}
+        <>
+            <PluridApplicationConfigurator
+                pubsub={pluridPubSub}
+            />
 
-            rowTemplate="30px 60px auto 180px 200px 30px"
-            rowsHeader={rowsHeader}
-            rows={filteredRows}
-            noRows="no builds"
+            <EntityView
+                generalTheme={stateGeneralTheme}
+                interactionTheme={stateInteractionTheme}
 
-            filterUpdate={filterUpdate}
-        />
+                rowTemplate="30px 60px auto 180px 200px 30px"
+                rowsHeader={rowsHeader}
+                rows={filteredRows}
+                noRows="no builds"
+
+                filterUpdate={filterUpdate}
+            />
+        </>
     );
 }
 

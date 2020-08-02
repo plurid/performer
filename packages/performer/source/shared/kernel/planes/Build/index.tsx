@@ -10,6 +10,11 @@ import {
     Theme,
 } from '@plurid/plurid-themes';
 
+import {
+    PluridComponentProperty,
+} from '@plurid/plurid-react';
+
+
 /** external */
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -25,6 +30,7 @@ import {
 
 /** [START] component */
 export interface BuildOwnProperties {
+    plurid: PluridComponentProperty;
 }
 
 export interface BuildStateProperties {
@@ -43,17 +49,24 @@ const Build: React.FC<BuildProperties> = (
     properties,
 ) => {
     /** properties */
-    // const {
-        // /** state */
+    const {
+        /** own */
+        plurid,
+
+        /** state */
         // stateGeneralTheme,
         // stateInteractionTheme,
-    // } = properties;
+    } = properties;
+
+    const {
+        id,
+    } = plurid.route.plane.parameters;
 
 
     /** render */
     return (
         <StyledBuild>
-            Build
+            Build {id}
         </StyledBuild>
     );
 }
