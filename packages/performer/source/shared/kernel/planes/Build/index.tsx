@@ -21,6 +21,10 @@ import {
     PluridComponentProperty,
 } from '@plurid/plurid-react';
 
+import {
+    PluridIconArrowRight,
+} from '@plurid/plurid-icons-react';
+
 
 /** external */
 import client from '#kernel-services/graphql/client';
@@ -35,6 +39,12 @@ import selectors from '#kernel-services/state/selectors';
 /** internal */
 import {
     StyledBuild,
+    StyledGeneralSelectors,
+    StyledGeneralSelectorItem,
+    StyledGeneralSelectorIcon,
+    StyledBuildTitle,
+    StyledBuildLog,
+    StyledBuildLogData,
 } from './styled';
 /** [END] imports */
 
@@ -66,7 +76,7 @@ const Build: React.FC<BuildProperties> = (
         plurid,
 
         /** state */
-        // stateGeneralTheme,
+        stateGeneralTheme,
         // stateInteractionTheme,
     } = properties;
 
@@ -76,6 +86,14 @@ const Build: React.FC<BuildProperties> = (
 
 
     /** state */
+    const [
+        selectedStage,
+        setSelectedStage,
+    ] = useState(-1);
+    const [
+        activeStage,
+        setActiveStage,
+    ] = useState<any>(null);
     const [
         buildLogs,
         setBuildLogs,
@@ -118,37 +136,52 @@ const Build: React.FC<BuildProperties> = (
         id,
     ]);
 
+    useEffect(() => {
+        setActiveStage(buildLogs[selectedStage]);
+    }, [
+        selectedStage,
+    ]);
+
+
     /** render */
     return (
         <StyledBuild>
-            Build
+            <StyledGeneralSelectors
+                theme={stateGeneralTheme}
+            >
+                <StyledBuildTitle>
+                    Build
+                </StyledBuildTitle>
 
-            <div>
-                {buildLogs.map(buildLog => {
-                    const {
-                        name,
-                        data,
-                    } = buildLog;
-
-                    return (
-                        <div
-                            key={uuid.generate()}
-                        >
-                            <div>
-                                {name}
-                            </div>
-
-                            <div
-                                style={{
-                                    whiteSpace: 'pre-line',
-                                }}
+                <ul>
+                    {buildLogs.map((buildLog, index) => {
+                        return (
+                            <StyledGeneralSelectorItem
+                                key={uuid.generate()}
+                                theme={stateGeneralTheme}
+                                selected={selectedStage === index}
+                                onClick={() => setSelectedStage(index)}
                             >
-                                {data}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
+                                <StyledGeneralSelectorIcon>
+                                    {index}
+                                </StyledGeneralSelectorIcon>
+
+                                <div>
+                                    {buildLog.name}
+                                </div>
+                            </StyledGeneralSelectorItem>
+                        );
+                    })}
+                </ul>
+            </StyledGeneralSelectors>
+
+            <StyledBuildLog>
+                {activeStage && (
+                    <StyledBuildLogData>
+                        {activeStage.data}
+                    </StyledBuildLogData>
+                )}
+            </StyledBuildLog>
         </StyledBuild>
     );
 }
