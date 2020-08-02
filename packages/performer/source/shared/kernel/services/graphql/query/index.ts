@@ -66,3 +66,16 @@ export const GET_PROVIDER_REPOSITORIES = gql`
         }
     }
 `;
+
+
+export const GET_BUILD_LOGS = gql`
+    query GetBuildLogs($input: InputValueString!) {
+        getBuildLogs(input: $input) {
+            status
+            data {
+                name
+                data
+            }
+        }
+    }
+`;
