@@ -76,6 +76,8 @@ export const handleGithubWebhook = async (
             || !headCommit
             || !repository
         ) {
+            /** No Content */
+            response.status(204).end();
             return;
         }
 
