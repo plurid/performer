@@ -265,7 +265,7 @@ export const getBuildLogs = async (
     id: string,
     stages: string[],
 ) => {
-    if (length === 0) {
+    if (stages.length === 0) {
         return [];
     }
 
