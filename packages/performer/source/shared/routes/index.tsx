@@ -22,7 +22,7 @@ const indexRoute: PluridRoute = {
     },
     planes: [
         {
-            value: '/',
+            value: '/dashboard',
             component: {
                 kind: 'react',
                 element: IndexPlane,
@@ -37,7 +37,7 @@ const indexRoute: PluridRoute = {
         },
     ],
     view: [
-        '/',
+        '/dashboard',
     ],
     defaultConfiguration: {
         elements: {
