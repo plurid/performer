@@ -6,6 +6,7 @@ export const queries = gql`
     extend type Query {
         getBuilds: ResponseBuilds!
         getBuild(input: InputGetBuild!): ResponseBuild!
+        getBuildLogs(input: InputValueString!): ResponseBuidlLogs!
     }
 `;
 
@@ -30,23 +31,23 @@ export const types = gql`
         data: Build
     }
 
+    type ResponseBuidlLogs {
+        status: Boolean!
+        error: Error
+        data: [BuildLog!]
+    }
+
     type Build {
         id: ID!
         status: String!
         trigger: String!
         time: Int!
         date: Int!
-        stages: [Stage!]
+        stages: [String!]
     }
 
-    type Stage {
-        id: ID!
+    type BuildLog {
         name: String!
-        results: [Result!]
-    }
-
-    type Result {
-        timestamp: Int!
         data: String!
     }
 `;

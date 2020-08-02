@@ -258,3 +258,32 @@ export const saveBuildlog = (
 
     fs.writeFile(buildlogPath, data);
 }
+
+
+
+export const getBuildLogs = async (
+    id: string,
+    stages: string[],
+) => {
+    if (length === 0) {
+        return [];
+    }
+
+    const results: any[] = [];
+
+    for (const [index, stage] of stages.entries()) {
+        const logname = id + '_' + index;
+        const logPath = path.join(
+            buildlogsPath,
+            '/' + logname,
+        );
+        const data = await fs.readFile(logPath, 'utf-8');
+        const result = {
+            name: stage,
+            data,
+        };
+        results.push(result);
+    }
+
+    return results;
+}

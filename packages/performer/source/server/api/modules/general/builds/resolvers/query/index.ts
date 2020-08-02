@@ -17,6 +17,14 @@ export default {
         input,
         context,
     ),
+    getBuildLogs: (
+        _: any,
+        { input }: any,
+        context: Context,
+    ) => Builds.Query.getBuildLogs(
+        input,
+        context,
+    ),
     getBuilds: (
         _: any,
         __: any,
