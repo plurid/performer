@@ -258,7 +258,8 @@ export const saveBuildlog = (
         buildlogName,
     );
 
-    const dataLog = actionCommand + '\n' + data;
+    const dataLog = '> ' + actionCommand + '\n'
+        + data;
 
     fs.writeFile(buildlogPath, dataLog);
 }
