@@ -237,6 +237,7 @@ export const handleStage = async (
     });
 
     saveBuildlog(
+        actionCommand,
         id,
         index,
         output.toString('utf-8'),
@@ -245,6 +246,7 @@ export const handleStage = async (
 
 
 export const saveBuildlog = (
+    actionCommand: string,
     buildID: string,
     stageIndex: number,
     data: string,
@@ -256,7 +258,9 @@ export const saveBuildlog = (
         buildlogName,
     );
 
-    fs.writeFile(buildlogPath, data);
+    const dataLog = actionCommand + '\n' + data;
+
+    fs.writeFile(buildlogPath, dataLog);
 }
 
 
