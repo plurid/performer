@@ -227,47 +227,43 @@ export const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    const child = spawn(imagene, [command], {
-        cwd: commandDirectory,
-        env: {
-            ...environment,
-        },
+    return new Promise ((resolve, reject) => {
+        const child = spawn(imagene, [command], {
+            cwd: commandDirectory,
+            env: {
+                ...environment,
+            },
+        });
+
+        const childData: string[] = [];
+
+        child.stdout.on(
+            'data',
+            (data) => {
+                childData.push(data.toString());
+            }
+        );
+
+        child.stdout.on(
+            'close',
+            () => {
+                saveBuildlog(
+                    actionCommand,
+                    id,
+                    index,
+                    childData.join(''),
+                );
+                resolve();
+            }
+        );
+
+        child.stdout.on(
+            'error',
+            () => {
+                reject();
+            }
+        );
     });
-
-    const childData: string[] = [];
-
-    child.stdout.on(
-        'data',
-        (data) => {
-            childData.push(data.toString());
-        }
-    );
-
-    child.stdout.on(
-        'close',
-        () => {
-            saveBuildlog(
-                actionCommand,
-                id,
-                index,
-                childData.join(''),
-            );
-        }
-    );
-
-    // const output = execSync(actionCommand, {
-    //     cwd: commandDirectory,
-    //     env: {
-    //         ...environment,
-    //     },
-    // });
-
-    // saveBuildlog(
-    //     actionCommand,
-    //     id,
-    //     index,
-    //     output.toString('utf-8'),
-    // );
 }
 
 
