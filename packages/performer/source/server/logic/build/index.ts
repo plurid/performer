@@ -292,8 +292,6 @@ export const handleStage = async (
         readableStream.on('end', async () => {
             logStream.end();
 
-            await container.remove();
-
             saveBuildlog(
                 command,
                 id,
