@@ -4,6 +4,8 @@ import {
 
 import path from 'path';
 
+import stream from 'stream';
+
 import {
     execSync,
     spawn,
@@ -225,7 +227,6 @@ export const handleStage = async (
     start: number,
 ) => {
     const {
-        name,
         command,
         imagene,
         directory,
@@ -234,113 +235,72 @@ export const handleStage = async (
 
     const {
         workDirectoryPath,
-        performerFilePath,
     } = performContext;
-
-    const actionCommand = `${imagene} ${command}`;
-
-    const commandDirectory = directory
-        ? path.join(
-            workDirectoryPath,
-            directory,
-        ) : path.dirname(performerFilePath);
 
     const resolvedImagene = resolveImagene(imagene);
 
     const containerName = uuid.generate();
 
-    const volumes: any = {};
-    volumes[workDirectoryPath] = '/app';
-
     const workingDir = '/app' + directory;
 
 
     return new Promise (async (resolve, reject) => {
+        const Env = environment
+            ? [
+                ...environment
+            ] : [];
+
         const container = await docker.createContainer({
             Image: resolvedImagene,
-            Cmd: [
-                command,
-            ],
             name: containerName,
-            Env: [
-                ...environment,
-            ],
+            Cmd: command.split(' '),
+            Env,
             Volumes: {
-                ...volumes,
+                '/app': {},
+            },
+            HostConfig: {
+                Binds: [
+                    `${workDirectoryPath}:/app`,
+                ],
             },
             WorkingDir: workingDir,
         });
-        console.log('container', container.id);
 
-        const startedContainer = await container.start();
-        console.log('startedContainer', startedContainer);
+        await container.start();
 
-        const logStream = await container.logs();
+        const streamData: string[] = [];
 
+        const logStream = new stream.PassThrough();
+        logStream.on('data', (chunk) => {
+            streamData.push(chunk.toString('utf8'));
+        });
 
-        // const child = spawn(imagene, [command], {
-        //     cwd: commandDirectory,
-        //     env: {
-        //         ...environment,
-        //     },
-        // });
+        const readableStream = await container.logs({
+            follow: true,
+            stdout: true,
+            stderr: true,
+        });
 
-        const childData: string[] = [];
-
-        logStream.on(
-            'data',
-            (data) => {
-                childData.push(data.toString());
-            }
+        container.modem.demuxStream(
+            readableStream,
+            logStream,
+            logStream,
         );
 
-        logStream.on(
-            'close',
-            () => {
-                saveBuildlog(
-                    actionCommand,
-                    id,
-                    index,
-                    childData.join(''),
-                );
-                resolve();
-            }
-        );
+        readableStream.on('end', async () => {
+            logStream.end();
 
-        logStream.on(
-            'error',
-            (error) => {
-                console.log(error);
-                reject();
-            }
-        );
+            await container.remove();
 
-        // child.stdout.on(
-        //     'data',
-        //     (data) => {
-        //         childData.push(data.toString());
-        //     }
-        // );
+            saveBuildlog(
+                command,
+                id,
+                index,
+                streamData.join(''),
+            );
 
-        // child.stdout.on(
-        //     'close',
-        //     () => {
-        //         saveBuildlog(
-        //             actionCommand,
-        //             id,
-        //             index,
-        //             childData.join(''),
-        //         );
-        //         resolve();
-        //     }
-        // );
-
-        // child.stdout.on(
-        //     'error',
-        //     () => {
-        //         reject();
-        //     }
-        // );
+            resolve();
+        });
     });
 }
 
