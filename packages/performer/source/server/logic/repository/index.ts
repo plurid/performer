@@ -79,8 +79,13 @@ export const updateRootRepository = async (
     );
 
     const gitCommandFetchOrigin = 'git fetch origin';
+    const gitCommandPull = 'git pull';
 
     execSync(gitCommandFetchOrigin, {
+        cwd: repositoryPath,
+    });
+
+    execSync(gitCommandPull, {
         cwd: repositoryPath,
     });
 }
