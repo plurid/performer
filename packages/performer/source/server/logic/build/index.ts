@@ -213,6 +213,8 @@ const resolveImagene = (
     switch (imagene) {
         case 'ubuntu':
             return 'ubuntu:20.04';
+        case 'nodejs':
+            return 'node:12.18.3';
     }
 
     return;
