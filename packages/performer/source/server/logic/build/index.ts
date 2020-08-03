@@ -297,6 +297,14 @@ export const runDockerCommand = async (
         ? command.split(' ')[0]
         : command[0];
 
+    const SHORT_SHA = commit.slice(0, 8);
+
+    const tag = resolveDockerTag(
+        command,
+        SHORT_SHA,
+    );
+
+
     if (commandType.startsWith('build')) {
         return new Promise (async (resolve, reject) => {
             const dockerContext = path.join(
@@ -305,12 +313,6 @@ export const runDockerCommand = async (
             );
 
             const srcFiles = await fs.readdir(dockerContext);
-
-            const SHORT_SHA = commit.slice(0, 8);
-            const tag = resolveDockerTag(
-                command,
-                SHORT_SHA,
-            );
 
             const image = await docker.buildImage(
                 {
@@ -369,6 +371,74 @@ export const runDockerCommand = async (
             });
         });
     }
+
+
+    if (commandType.startsWith('push')) {
+        return new Promise (async (resolve, reject) => {
+            try {
+                const image = docker.getImage(tag);
+
+                const authconfig = {
+                    username: '',
+                    password: '',
+                    auth: '',
+                    email: '',
+                    serveraddress: 'https://index.docker.io/v2/',
+                };
+
+                const imageStream = await image.push({
+                    authconfig,
+                });
+
+                const streamData: string[] = [];
+
+                const logStream = new stream.PassThrough();
+                logStream.on('data', (chunk) => {
+                    const rawData = chunk.toString('utf-8');
+
+                    try {
+                        const split = rawData.split('\n');
+
+                        for (const value of split) {
+                            const data = JSON.parse(value);
+
+                            const {
+                                stream,
+                            } = data;
+
+                            if (stream) {
+                                streamData.push(stream);
+                            }
+                        }
+                    } catch (error) {
+                        return;
+                    }
+                });
+
+                imageStream.pipe(logStream);
+
+                logStream.on('end', async () => {
+                    logStream.end();
+
+                    const lineCommand = typeof command === 'string'
+                        ? command
+                        : command.join(' ');
+
+                    saveBuildlog(
+                        lineCommand,
+                        id,
+                        index,
+                        streamData.join(''),
+                    );
+
+                    resolve();
+                });
+            } catch (error) {
+                reject();
+                return;
+            }
+        });
+    }
 }
 
 
@@ -382,6 +452,13 @@ export const resolveDockerTag = (
 
     for (const [index, value] of split.entries()) {
         if (value === '-t' || value === '--tag') {
+            const tag = split[index + 1] || '';
+            const tagShortSha = tag.replace('$SHORT_SHA', commitShortSHA);
+
+            return tagShortSha;
+        }
+
+        if (value === 'push') {
             const tag = split[index + 1] || '';
             const tagShortSha = tag.replace('$SHORT_SHA', commitShortSHA);
 
