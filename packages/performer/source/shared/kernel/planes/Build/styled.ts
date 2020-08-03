@@ -102,9 +102,6 @@ export const StyledBuildLogData = styled.div`
     white-space: pre-line;
     font-family: 'Inconsolata', 'Courier New', Courier, monospace;
     line-height: 1.3;
-    padding: 2rem;
-    max-height: 470px;
+    max-height: calc(500px - 4rem);
     overflow: auto;
-    margin: -2rem;
-    margin-bottom: 0;
 `;
