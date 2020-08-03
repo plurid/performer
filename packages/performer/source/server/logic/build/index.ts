@@ -12,6 +12,10 @@ import {
 import yaml from 'js-yaml';
 
 import {
+    uuid,
+} from '@plurid/plurid-functions';
+
+import {
     Build,
     Performer,
     PerformerStage,
@@ -27,6 +31,8 @@ import {
 import {
     copyDirectory,
 } from '#server/utilities/copy';
+
+import docker from '#server/engine';
 
 
 
@@ -199,6 +205,18 @@ export const handlePerformer = async (
 }
 
 
+const resolveImagene = (
+    imagene: string,
+) => {
+    switch (imagene) {
+        case 'ubuntu':
+            return 'ubuntu:20.04';
+    }
+
+    return;
+}
+
+
 export const handleStage = async (
     id: string,
     stage: PerformerStage,
@@ -227,24 +245,56 @@ export const handleStage = async (
             directory,
         ) : path.dirname(performerFilePath);
 
-    return new Promise ((resolve, reject) => {
-        const child = spawn(imagene, [command], {
-            cwd: commandDirectory,
-            env: {
+    const resolvedImagene = resolveImagene(imagene);
+
+    const containerName = uuid.generate();
+
+    const volumes: any = {};
+    volumes[workDirectoryPath] = '/app';
+
+    const workingDir = '/app' + directory;
+
+
+    return new Promise (async (resolve, reject) => {
+        const container = await docker.createContainer({
+            Image: resolvedImagene,
+            Cmd: [
+                command,
+            ],
+            name: containerName,
+            Env: [
                 ...environment,
+            ],
+            Volumes: {
+                ...volumes,
             },
+            WorkingDir: workingDir,
         });
+        console.log('container', container.id);
+
+        const startedContainer = await container.start();
+        console.log('startedContainer', startedContainer);
+
+        const logStream = await container.logs();
+
+
+        // const child = spawn(imagene, [command], {
+        //     cwd: commandDirectory,
+        //     env: {
+        //         ...environment,
+        //     },
+        // });
 
         const childData: string[] = [];
 
-        child.stdout.on(
+        logStream.on(
             'data',
             (data) => {
                 childData.push(data.toString());
             }
         );
 
-        child.stdout.on(
+        logStream.on(
             'close',
             () => {
                 saveBuildlog(
@@ -257,12 +307,40 @@ export const handleStage = async (
             }
         );
 
-        child.stdout.on(
+        logStream.on(
             'error',
-            () => {
+            (error) => {
+                console.log(error);
                 reject();
             }
         );
+
+        // child.stdout.on(
+        //     'data',
+        //     (data) => {
+        //         childData.push(data.toString());
+        //     }
+        // );
+
+        // child.stdout.on(
+        //     'close',
+        //     () => {
+        //         saveBuildlog(
+        //             actionCommand,
+        //             id,
+        //             index,
+        //             childData.join(''),
+        //         );
+        //         resolve();
+        //     }
+        // );
+
+        // child.stdout.on(
+        //     'error',
+        //     () => {
+        //         reject();
+        //     }
+        // );
     });
 }
 
