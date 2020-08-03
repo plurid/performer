@@ -164,6 +164,7 @@ export const handlePerformer = async (
         id,
         trigger,
         date,
+        commit,
     } = buildData;
 
     const {
@@ -188,6 +189,7 @@ export const handlePerformer = async (
             index,
             performContext,
             start,
+            commit,
         );
     }
 
@@ -215,6 +217,10 @@ const resolveImagene = (
             return 'ubuntu:20.04';
         case 'nodejs':
             return 'node:12.18.3';
+        case 'docker':
+            return 'docker';
+        case 'kubectl':
+            return 'kubectl';
     }
 
     return;
@@ -227,10 +233,184 @@ export const handleStage = async (
     index: number,
     performContext: any,
     start: number,
+    commit: string,
+) => {
+    const {
+        imagene,
+    } = stage;
+
+    const resolvedImagene = resolveImagene(imagene);
+
+    if (!resolvedImagene) {
+        return;
+    }
+
+    if (resolvedImagene === 'docker') {
+        await runDockerCommand(
+            id,
+            stage,
+            index,
+            performContext,
+            commit,
+        );
+        return;
+    }
+
+    if (resolvedImagene === 'kubectl') {
+        await runKubernetesCommand(
+            id,
+            stage,
+            index,
+            performContext,
+        );
+        return;
+    }
+
+    await runInContainer(
+        id,
+        stage,
+        index,
+        performContext,
+        resolvedImagene,
+    );
+}
+
+
+export const runDockerCommand = async (
+    id: string,
+    stage: PerformerStage,
+    index: number,
+    performContext: any,
+    commit: string,
 ) => {
     const {
         command,
-        imagene,
+        directory,
+    } = stage;
+
+    const {
+        workDirectoryPath,
+    } = performContext;
+
+    const commandType = typeof command === 'string'
+        ? command.split(' ')[0]
+        : command[0];
+
+    if (commandType.startsWith('build')) {
+        return new Promise (async (resolve, reject) => {
+            const dockerContext = path.join(
+                workDirectoryPath,
+                directory || '/',
+            );
+
+            const srcFiles = await fs.readdir(dockerContext);
+
+            const SHORT_SHA = commit.slice(0, 8);
+            const tag = resolveDockerTag(
+                command,
+                SHORT_SHA,
+            );
+
+            const image = await docker.buildImage(
+                {
+                    context: dockerContext,
+                    src: [
+                        ...srcFiles,
+                    ],
+                },
+                {
+                    t: tag,
+                },
+            );
+
+            const streamData: string[] = [];
+
+            const logStream = new stream.PassThrough();
+            logStream.on('data', (chunk) => {
+                const rawData = chunk.toString('utf-8');
+
+                try {
+                    const split = rawData.split('\n');
+
+                    for (const value of split) {
+                        const data = JSON.parse(value);
+
+                        const {
+                            stream,
+                        } = data;
+
+                        if (stream) {
+                            streamData.push(stream);
+                        }
+                    }
+                } catch (error) {
+                    return;
+                }
+            });
+
+            image.pipe(logStream);
+
+            logStream.on('end', async () => {
+                logStream.end();
+
+                const lineCommand = typeof command === 'string'
+                    ? command
+                    : command.join(' ');
+
+                saveBuildlog(
+                    lineCommand,
+                    id,
+                    index,
+                    streamData.join(''),
+                );
+
+                resolve();
+            });
+        });
+    }
+}
+
+
+export const resolveDockerTag = (
+    command: string | string[],
+    commitShortSHA: string,
+) => {
+    const split = typeof command === 'string'
+        ? command.split(' ')
+        : command.join(' ').split(' ');
+
+    for (const [index, value] of split.entries()) {
+        if (value === '-t' || value === '--tag') {
+            const tag = split[index + 1] || '';
+            const tagShortSha = tag.replace('$SHORT_SHA', commitShortSHA);
+
+            return tagShortSha;
+        }
+    }
+
+    return '';
+}
+
+
+export const runKubernetesCommand = async (
+    id: string,
+    stage: PerformerStage,
+    index: number,
+    performContext: any,
+) => {
+
+}
+
+
+export const runInContainer = (
+    id: string,
+    stage: PerformerStage,
+    index: number,
+    performContext: any,
+    imagene: string,
+) => {
+    const {
+        command,
         directory,
         environment,
     } = stage;
@@ -239,23 +419,24 @@ export const handleStage = async (
         workDirectoryPath,
     } = performContext;
 
-    const resolvedImagene = resolveImagene(imagene);
-
-    const containerName = uuid.generate();
-
-    const workingDir = '/app' + directory;
-
-
     return new Promise (async (resolve, reject) => {
+        const containerName = uuid.generate();
+
+        const workingDir = '/app' + directory;
+
         const Env = environment
             ? [
                 ...environment
             ] : [];
 
+        const Cmd = typeof command === 'string'
+            ? command.split(' ')
+            : command;
+
         const container = await docker.createContainer({
-            Image: resolvedImagene,
+            Image: imagene,
             name: containerName,
-            Cmd: command.split(' '),
+            Cmd,
             Env,
             Volumes: {
                 '/app': {},
@@ -292,8 +473,12 @@ export const handleStage = async (
         readableStream.on('end', async () => {
             logStream.end();
 
+            const lineCommand = typeof command === 'string'
+                ? command
+                : command.join(' ');
+
             saveBuildlog(
-                command,
+                lineCommand,
                 id,
                 index,
                 streamData.join(''),
@@ -306,7 +491,7 @@ export const handleStage = async (
 
 
 export const saveBuildlog = (
-    actionCommand: string,
+    command: string,
     buildID: string,
     stageIndex: number,
     data: string,
@@ -318,12 +503,11 @@ export const saveBuildlog = (
         buildlogName,
     );
 
-    const dataLog = '> ' + actionCommand + '\n'
+    const dataLog = '> ' + command + '\n'
         + data;
 
     fs.writeFile(buildlogPath, dataLog);
 }
-
 
 
 export const getBuildLogs = async (

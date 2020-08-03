@@ -86,9 +86,9 @@ export interface Performer {
 export interface PerformerStage {
     name: string;
     imagene: string;
-    command: string;
-    directory?: any;
-    environment?: any;
+    command: string | string[];
+    directory?: string;
+    environment?: string[];
     secretsEnvironment?: any;
 }
 
