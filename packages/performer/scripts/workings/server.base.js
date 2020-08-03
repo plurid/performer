@@ -27,10 +27,11 @@ const output = [
 ];
 
 const externalPackages = [
-    'https',
-    'fs',
-    'path',
     'child_process',
+    'fs',
+    'https',
+    'path',
+    'stream',
 ];
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
