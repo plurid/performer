@@ -8,7 +8,6 @@ import stream from 'stream';
 
 import {
     execSync,
-    spawn,
 } from 'child_process';
 
 import yaml from 'js-yaml';
@@ -119,9 +118,11 @@ export const triggerBuild = async (
 
     execSync(gitCommandFetchOrigin, {
         cwd: repositoryWorkPath,
+        stdio: 'ignore',
     });
     execSync(gitCommandResetHardBranch, {
         cwd: repositoryWorkPath,
+        stdio: 'ignore',
     });
 
 

@@ -18,10 +18,6 @@ import {
 
 import setupGraphQLServer from './graphql';
 
-// import {
-//     testContainer,
-// } from '#server/engine/build-test';
-
 
 
 const setupWebhooks = async (
@@ -54,8 +50,6 @@ export const setRouteHandlers = (
     setupWebhooks(instance);
 
     setupGraphQLServer(instance);
-
-    // testContainer();
 
     const buildQueue = new BuildQueueWatcher();
     buildQueue.startWatcher();
