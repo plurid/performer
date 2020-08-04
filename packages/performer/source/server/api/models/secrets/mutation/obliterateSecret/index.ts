@@ -16,16 +16,16 @@ const deregisterSecret = async (
     id: string,
 ) => {
     try {
-        const triggerPath = path.join(
+        const secretPath = path.join(
             secretsPath,
             id + '.json',
         );
 
-        if (!fs.existsSync(triggerPath)) {
+        if (!fs.existsSync(secretPath)) {
             return;
         }
 
-        fs.promises.unlink(triggerPath);
+        fs.promises.unlink(secretPath);
     } catch (error) {
         return;
     }
@@ -37,10 +37,10 @@ const obliterateSecret = async (
     context: Context,
 ) => {
     const {
-        id,
+        value,
     } = input;
 
-    deregisterSecret(id);
+    deregisterSecret(value);
 
     return {
         status: true,
