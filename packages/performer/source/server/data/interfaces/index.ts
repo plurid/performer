@@ -65,7 +65,6 @@ export interface Trigger {
 
 export interface Performer {
     stages: PerformerStage[];
-    project: string;
     timeout: number;
     secrets?: string[];
     nodejs?: any;
@@ -76,7 +75,6 @@ export interface PerformerStage {
     name: string;
     imagene: string;
     command: string | string[];
-    project: string;
     directory?: string;
     environment?: string[];
     secretsEnvironment?: string[];

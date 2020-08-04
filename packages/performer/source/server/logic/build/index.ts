@@ -113,6 +113,7 @@ export const triggerBuild = async (
         branchName,
         repositoryRootPath,
         repositoryWorkPath,
+        trigger,
     } = buildData;
 
 
@@ -140,7 +141,7 @@ export const triggerBuild = async (
 
     const performerFilePath = path.join(
         repositoryWorkPath,
-        '/' + buildData.trigger.file,
+        '/' + trigger.file,
     );
     const performerFile = await fs.readFile(performerFilePath, 'utf-8');
     const performerObject = yaml.safeLoad(performerFile);
@@ -161,6 +162,7 @@ export const triggerBuild = async (
         performer,
         repositoryWorkPath,
         performerFilePath,
+        trigger.project,
     );
 }
 
@@ -170,6 +172,7 @@ export const handlePerformer = async (
     performer: Performer,
     workDirectoryPath: string,
     performerFilePath: string,
+    project: string,
 ) => {
     const start = Date.now();
 
@@ -185,7 +188,6 @@ export const handlePerformer = async (
         timeout,
         nodejs,
         secrets,
-        project,
     } = performer;
 
     const performContext: PerformContext = {
@@ -204,6 +206,7 @@ export const handlePerformer = async (
             performContext,
             start,
             commit,
+            project,
         );
     }
 
@@ -241,6 +244,7 @@ export const resolveImagene = (
     return;
 }
 
+
 export const resolveSecrets = async (
     project: string,
     secretsPerformer: string[] | undefined,
@@ -255,7 +259,6 @@ export const resolveSecrets = async (
 
     for (const storedSecret of storedSecrets) {
         if (storedSecret.project === project) {
-
             indexedProjectSecrets[storedSecret.name] = {
                 ...storedSecret,
             };
@@ -277,6 +280,7 @@ export const resolveSecrets = async (
     return secretsValues;
 }
 
+
 export const handleStage = async (
     id: string,
     stage: PerformerStage,
@@ -284,12 +288,12 @@ export const handleStage = async (
     performContext: PerformContext,
     start: number,
     commit: string,
+    project: string,
 ) => {
     const {
         imagene,
         environment,
         secretsEnvironment,
-        project,
     } = stage;
 
     const {
