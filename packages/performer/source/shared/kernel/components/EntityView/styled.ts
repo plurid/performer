@@ -69,10 +69,11 @@ export const StyledEntityListItem = styled.li<IStyledEntityListItem>`
             rowTemplate,
         }: IStyledEntityListItem) => rowTemplate
     };
-    grid-gap: 0.3rem;
+    grid-gap: 0.5rem;
     padding: 0.7rem;
     align-items: center;
     min-height: 45px;
+    word-break: break-all;
 `;
 
 
