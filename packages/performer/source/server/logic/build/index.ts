@@ -423,6 +423,7 @@ export const runDockerCommand = async (
                     src: [
                         ...srcFiles,
                     ],
+
                 },
                 {
                     t: tag,
