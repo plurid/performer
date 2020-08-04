@@ -2,14 +2,16 @@ import fs from 'fs';
 
 import {
     providersPath,
+    imagenesPath,
     repositoriesPath,
     repositoriesMetadataPath,
     webhooksPath,
+    projectsPath,
+    secretsPath,
     triggersPath,
     buildsPath,
     buildlogsPath,
     buildqueuePath,
-    imagenesPath,
 } from '#server/data/constants';
 
 
@@ -27,6 +29,14 @@ const makeDirectories = () => {
     });
 
     fs.mkdirSync(webhooksPath, {
+        recursive: true,
+    });
+
+    fs.mkdirSync(projectsPath, {
+        recursive: true,
+    });
+
+    fs.mkdirSync(secretsPath, {
         recursive: true,
     });
 
