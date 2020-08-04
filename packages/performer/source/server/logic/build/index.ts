@@ -405,7 +405,7 @@ export const runDockerCommand = async (
             const dockerFileContext = path.join(
                 workDirectoryPath,
                 directory || '/',
-                dockerfile,
+                dockerfile.replace('dockerfile', ''),
             );
             console.log('dockerFileContext', dockerFileContext);
 
