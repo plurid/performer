@@ -18,7 +18,18 @@
 </h1>
 
 
-Performer is a build system specialized for the `NodeJS` runtime.
+Performer is a service or self-hosted system task-runner/builder based on GitOps.
+
+Specialized support for the runtimes
+
++ `NodeJS`
+
+Performer uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
+
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/plurid/performer/master/about/screenshots/ss-1.png" height="500px">
+</p>
 
 
 
