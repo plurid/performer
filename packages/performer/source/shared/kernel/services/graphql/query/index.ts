@@ -57,6 +57,7 @@ export const GET_SETUP = gql`
                     trigger
                     time
                     date
+                    project
                 }
             }
         }

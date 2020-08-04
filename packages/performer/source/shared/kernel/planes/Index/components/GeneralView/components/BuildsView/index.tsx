@@ -89,6 +89,7 @@ const buildRowRenderer = (
         trigger,
         time,
         date,
+        project,
     } = build;
 
     const durationString = durationTime(time);
@@ -121,6 +122,10 @@ const buildRowRenderer = (
 
             <div>
                 {dateString}
+            </div>
+
+            <div>
+                {project}
             </div>
 
             <PluridIconEnter
@@ -309,6 +314,10 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 triggered
             </div>
 
+            <div>
+                project
+            </div>
+
             <div />
         </>
     );
@@ -323,7 +332,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 generalTheme={stateGeneralTheme}
                 interactionTheme={stateInteractionTheme}
 
-                rowTemplate="30px 60px auto 180px 200px 30px"
+                rowTemplate="30px 60px auto 180px 200px 200px 30px"
                 rowsHeader={rowsHeader}
                 rows={filteredRows}
                 noRows="no builds"
