@@ -35,6 +35,12 @@ import {
 
 import docker from '#server/engine';
 
+import {
+    DOCKER_AUTH_USERNAME,
+    DOCKER_AUTH_PASSWORD,
+    DOCKER_AUTH_SERVER_ADDRESS,
+} from '#server/data/constants';
+
 
 
 export const pushToBuildQueue = async (
@@ -361,7 +367,7 @@ export const runDockerCommand = async (
                     : command.join(' ');
 
                 saveBuildlog(
-                    lineCommand,
+                    lineCommand.replace('$SHORT_SHA', SHORT_SHA),
                     id,
                     index,
                     streamData.join(''),
@@ -379,11 +385,9 @@ export const runDockerCommand = async (
                 const image = docker.getImage(tag);
 
                 const authconfig = {
-                    username: '',
-                    password: '',
-                    auth: '',
-                    email: '',
-                    serveraddress: 'https://index.docker.io/v2/',
+                    username: DOCKER_AUTH_USERNAME,
+                    password: DOCKER_AUTH_PASSWORD,
+                    serveraddress: DOCKER_AUTH_SERVER_ADDRESS,
                 };
 
                 const imageStream = await image.push({
@@ -425,7 +429,7 @@ export const runDockerCommand = async (
                         : command.join(' ');
 
                     saveBuildlog(
-                        lineCommand,
+                        lineCommand.replace('$SHORT_SHA', SHORT_SHA),
                         id,
                         index,
                         streamData.join(''),
