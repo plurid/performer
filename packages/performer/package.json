@@ -1,10 +1,10 @@
 {
     "name": "@plurid/performer",
     "version": "0.0.0",
-    "description": "Cloud-Native Continuous Integration/Continuous Delivery Build Pipeline",
+    "description": "Cloud-Native Continuous Integration/Continuous Delivery Builder",
     "keywords": [
         "cloud-native",
-        "build pipeline",
+        "builder",
         "performer"
     ],
     "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
