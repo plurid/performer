@@ -8,35 +8,27 @@ const getSetup = async (
     context: Context,
 ) => {
     const {
-        webhooks,
-        triggers,
-        repositories,
-        builds,
         providers,
         imagenes,
+        webhooks,
+        repositories,
+        projects,
+        secrets,
+        triggers,
+        builds,
     } = context;
 
     return {
         status: true,
         data: {
-            webhooks: [
-                ...webhooks,
-            ],
-            triggers: [
-                ...triggers,
-            ],
-            repositories: [
-                ...repositories,
-            ],
-            builds: [
-                ...builds,
-            ],
-            providers: [
-                ...providers,
-            ],
-            imagenes: [
-                ...imagenes,
-            ],
+            providers,
+            imagenes,
+            webhooks,
+            repositories,
+            projects,
+            secrets,
+            triggers,
+            builds,
         },
     };
 }

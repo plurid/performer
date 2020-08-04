@@ -4,6 +4,7 @@ import {
 import path from 'path';
 
 import {
+    Project,
     Provider,
     Repository,
     Webhook,
@@ -14,13 +15,15 @@ import {
 } from '#server/data/interfaces';
 
 import {
+    imagenesPath,
     providersPath,
     repositoriesMetadataPath,
     webhooksPath,
+    projectsPath,
+    secretsPath,
     triggersPath,
     buildsPath,
     buildqueuePath,
-    imagenesPath,
 } from '#server/data/constants';
 
 import {
@@ -71,6 +74,19 @@ export const loadWebhooks = async () => {
 }
 
 
+export const loadProjects = async () => {
+    const projects = await loadDataFromFiles<Project>(projectsPath);
+
+    return projects;
+}
+
+export const loadSecrets = async () => {
+    const secrets = await loadDataFromFiles<Project>(secretsPath);
+
+    return secrets;
+}
+
+
 export const loadTriggers = async () => {
     const triggers = await loadDataFromFiles<Trigger>(triggersPath);
 
@@ -109,19 +125,23 @@ export const loadImagenes = async () => {
 
 const loadData = async () => {
     const providers = await loadProviders();
+    const imagenes = await loadImagenes();
     const repositories = await loadRepositories();
     const webhooks = await loadWebhooks();
+    const projects = await loadProjects();
+    const secrets = await loadSecrets();
     const triggers = await loadTriggers();
     const builds = await loadBuilds();
-    const imagenes = await loadImagenes();
 
     const data = {
         providers,
-        webhooks,
-        triggers,
-        repositories,
-        builds,
         imagenes,
+        repositories,
+        webhooks,
+        projects,
+        secrets,
+        triggers,
+        builds,
     };
 
     return data;

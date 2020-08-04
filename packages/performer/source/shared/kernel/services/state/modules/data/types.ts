@@ -1,20 +1,24 @@
 import {
     ClientProvider,
+    Imagene,
     Repository,
+    Project,
+    Secret,
     Webhook,
     Trigger,
     Build,
-    Imagene,
 } from '#server/data/interfaces';
 
 
 
 export type RemovableEntityType =
     | 'provider'
+    | 'imagene'
     | 'repository'
     | 'webhook'
-    | 'trigger'
-    | 'imagene';
+    | 'project'
+    | 'secret'
+    | 'trigger';
 
 export const REMOVE_ENTITY = 'REMOVE_ENTITY';
 export interface RemoveEntityPayload {
@@ -41,6 +45,13 @@ export interface SetProvidersAction {
 }
 
 
+export const SET_IMAGENES = 'SET_IMAGENES';
+export interface SetImagenesAction {
+    type: typeof SET_IMAGENES;
+    payload: Imagene[];
+}
+
+
 export const SET_REPOSITORIES = 'SET_REPOSITORIES';
 export interface SetRepositoriesAction {
     type: typeof SET_REPOSITORIES;
@@ -52,6 +63,20 @@ export const SET_WEBHOOKS = 'SET_WEBHOOKS';
 export interface SetWebhooksAction {
     type: typeof SET_WEBHOOKS;
     payload: Webhook[];
+}
+
+
+export const SET_PROJECTS = 'SET_PROJECTS';
+export interface SetProjectsAction {
+    type: typeof SET_PROJECTS;
+    payload: Project[];
+}
+
+
+export const SET_SECRETS = 'SET_SECRETS';
+export interface SetSecretsAction {
+    type: typeof SET_SECRETS;
+    payload: Secret[];
 }
 
 
@@ -75,22 +100,17 @@ export interface ClearBuildsAction {
 }
 
 
-export const SET_IMAGENES = 'SET_IMAGENES';
-export interface SetImagenesAction {
-    type: typeof SET_IMAGENES;
-    payload: Imagene[];
-}
-
-
 
 export interface State {
     activeProviderID: string;
     providers: ClientProvider[];
+    imagenes: Imagene[];
     repositories: Repository[];
     webhooks: Webhook[];
+    projects: Project[];
+    secrets: Secret[];
     triggers: Trigger[];
     builds: Build[];
-    imagenes: Imagene[];
 }
 
 
@@ -98,9 +118,11 @@ export type Actions =
     | RemoveEntityAction
     | SetActiveProviderIDAction
     | SetProvidersAction
+    | SetImagenesAction
     | SetRepositoriesAction
     | SetWebhooksAction
+    | SetProjectsAction
+    | SetSecretsAction
     | SetTriggersAction
     | SetBuildsAction
-    | ClearBuildsAction
-    | SetImagenesAction;
+    | ClearBuildsAction;

@@ -1,11 +1,12 @@
 import merge from 'lodash.merge';
 
-import builds from './builds/resolvers';
+import setup from './setup/resolvers';
 import imagenes from './imagenes/resolvers';
 import repositories from './repositories/resolvers';
+import projects from './projects/resolvers';
 import secrets from './secrets/resolvers';
-import setup from './setup/resolvers';
 import triggers from './triggers/resolvers';
+import builds from './builds/resolvers';
 
 
 
@@ -21,12 +22,13 @@ const generateResolvers = (...imports: any[]) => {
 }
 
 const resolvers = generateResolvers(
-    builds,
+    setup,
     imagenes,
     repositories,
+    projects,
     secrets,
-    setup,
     triggers,
+    builds,
 );
 
 

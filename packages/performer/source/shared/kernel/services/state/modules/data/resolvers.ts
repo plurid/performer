@@ -93,6 +93,19 @@ export const setProviders = (
 }
 
 
+export const setImagenes = (
+    state: Types.State,
+    action: Types.SetImagenesAction,
+): Types.State => {
+    return {
+        ...state,
+        imagenes: [
+            ...action.payload,
+        ],
+    };
+}
+
+
 export const setRepositories = (
     state: Types.State,
     action: Types.SetRepositoriesAction,
@@ -113,6 +126,32 @@ export const setWebhooks = (
     return {
         ...state,
         webhooks: [
+            ...action.payload,
+        ],
+    };
+}
+
+
+export const setProjects = (
+    state: Types.State,
+    action: Types.SetProjectsAction,
+): Types.State => {
+    return {
+        ...state,
+        projects: [
+            ...action.payload,
+        ],
+    };
+}
+
+
+export const setSecrets = (
+    state: Types.State,
+    action: Types.SetSecretsAction,
+): Types.State => {
+    return {
+        ...state,
+        secrets: [
             ...action.payload,
         ],
     };
@@ -156,28 +195,17 @@ export const clearBuilds = (
 }
 
 
-export const setImagenes = (
-    state: Types.State,
-    action: Types.SetImagenesAction,
-): Types.State => {
-    return {
-        ...state,
-        imagenes: [
-            ...action.payload,
-        ],
-    };
-}
-
-
 
 export const resolvers = {
     removeEntity,
     setActiveProviderID,
     setProviders,
+    setImagenes,
     setRepositories,
     setWebhooks,
+    setProjects,
+    setSecrets,
     setTriggers,
     setBuilds,
     clearBuilds,
-    setImagenes,
 };

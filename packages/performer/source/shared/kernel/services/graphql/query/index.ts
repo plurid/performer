@@ -12,31 +12,6 @@ export const GET_SETUP = gql`
                 message
             }
             data {
-                webhooks {
-                    id
-                    path
-                    provider
-                }
-                triggers {
-                    id
-                    name
-                    repository
-                    branch
-                    path
-                    file
-                }
-                repositories {
-                    id
-                    name
-                    isPrivate
-                }
-                builds {
-                    id
-                    status
-                    trigger
-                    time
-                    date
-                }
                 providers {
                     id
                     name
@@ -47,6 +22,38 @@ export const GET_SETUP = gql`
                     name
                     version
                     size
+                }
+                repositories {
+                    id
+                    name
+                    isPrivate
+                }
+                webhooks {
+                    id
+                    path
+                    provider
+                }
+                projects {
+                    id
+                    name
+                }
+                secrets {
+                    name
+                }
+                triggers {
+                    id
+                    name
+                    repository
+                    branch
+                    path
+                    file
+                }
+                builds {
+                    id
+                    status
+                    trigger
+                    time
+                    date
                 }
             }
         }

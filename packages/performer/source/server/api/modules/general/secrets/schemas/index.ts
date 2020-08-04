@@ -3,25 +3,25 @@ import gql from 'graphql-tag';
 
 
 export default gql`
-    extend type Query {
-        getSecret: ResponseSecret!
-    }
-
     extend type Mutation {
+        storeSecret(input: InputStoreSecret!): Response!
+        obliterateSecret(input: InputValueString!): Response!
         generateSecretsKeychain(input: InputSecretsKeychain!): Response!
     }
 
-
-    # types
-    type ResponseSecret {
-        status: Boolean!
-        error: Error
-        data: String
+    type Secret {
+        name: String!
+        project: String!
     }
-
 
     # inputs
     input InputSecretsKeychain {
         name: String!
+    }
+
+    input InputStoreSecret {
+        name: String!
+        value: String!
+        project: String!
     }
 `;

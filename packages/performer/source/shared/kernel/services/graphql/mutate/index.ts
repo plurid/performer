@@ -70,6 +70,35 @@ export const ADD_TRIGGER = gql`
     }
 `;
 
+
+export const OBLITERATE_PROJECT = gql`
+    mutation ObliterateProject($input: InputValueString!) {
+        obliterateProject(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+export const OBLITERATE_SECRET = gql`
+    mutation ObliterateSecret($input: InputValueString!) {
+        obliterateSecret(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 export const OBLITERATE_TRIGGER = gql`
     mutation ObliterateTrigger($input: InputValueString!) {
         obliterateTrigger(input: $input) {

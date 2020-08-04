@@ -24,4 +24,4 @@ export {
     reducer,
     resolvers,
     Types,
-}
+};

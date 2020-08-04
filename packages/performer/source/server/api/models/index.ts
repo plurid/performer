@@ -1,3 +1,4 @@
+import Projects from './projects';
 import Builds from './builds';
 import Imagenes from './imagenes';
 import Repositories from './repositories';
@@ -8,6 +9,7 @@ import Triggers from './triggers';
 
 
 export {
+    Projects,
     Builds,
     Imagenes,
     Repositories,

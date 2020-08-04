@@ -19,6 +19,8 @@ import {
     PluridIconNewStateline,
     PluridIconSpace,
     PluridIconTools,
+    PluridIconDeauthored,
+    PluridIconApps,
     PluridIconArrowRight,
     PluridIconDocuments,
     PluridIconExternalLink,
@@ -29,10 +31,12 @@ import {
 import performerLogo from '../../assets/performer-logo.png';
 
 import Provider from '#kernel-components/Provider';
+import Imagene from '#kernel-components/Imagene';
 import Repositories from '#kernel-components/Repositories';
+import Project from '#kernel-components/Project';
+import Secret from '#kernel-components/Secret';
 import Webhook from '#kernel-components/Webhook';
 import Trigger from '#kernel-components/Trigger';
-import Imagene from '#kernel-components/Imagene';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -40,12 +44,14 @@ import actions from '#kernel-services/state/actions';
 
 
 /** internal */
+import ProjectsView from './components/ProjectsView';
 import ProvidersView from './components/ProvidersView';
 import RepositoriesView from './components/RepositoriesView';
 import TriggersView from './components/TriggersView';
 import WebhooksView from './components/WebhooksView';
 import BuildsView from './components/BuildsView';
 import ImagenesView from './components/ImagenesVIew';
+import SecretsView from './components/SecretsView';
 
 import {
     StyledGeneralView,
@@ -62,20 +68,24 @@ import {
 
 const generalSelectors = [
     'providers',
+    'imagenes',
     'repositories',
     'webhooks',
+    'projects',
+    'secrets',
     'triggers',
     'builds',
-    'imagenes',
 ];
 
 const generalSelectorsIcons = {
     providers: PluridIconToolbox,
+    imagenes: PluridIconTools,
     repositories: PluridIconRepository,
     webhooks: PluridIconWebhook,
+    projects: PluridIconApps,
+    secrets: PluridIconDeauthored,
     triggers: PluridIconNewStateline,
     builds: PluridIconSpace,
-    imagenes: PluridIconTools,
 };
 
 /** [START] component */
@@ -160,6 +170,13 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     /** render */
     let renderSelectedView = (<></>);
     switch (selectedView) {
+        case 'projects':
+            renderSelectedView = (
+                <ProjectsView
+                    setGeneralView={setGeneralView}
+                />
+            );
+            break;
         case 'providers':
             renderSelectedView = (
                 <ProvidersView
@@ -196,6 +213,13 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'imagenes':
             renderSelectedView = (
                 <ImagenesView
+                    setGeneralView={setGeneralView}
+                />
+            );
+            break;
+        case 'secrets':
+            renderSelectedView = (
+                <SecretsView
                     setGeneralView={setGeneralView}
                 />
             );
@@ -306,11 +330,42 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
+        case 'add-imagene':
+            return (
+                <Imagene
+                    theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
         case 'link-repositories':
             return (
                 <Repositories
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'add-project':
+            return (
+                <Project
+                    theme={stateInteractionTheme}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'add-secret':
+            return (
+                <Secret
+                    theme={stateInteractionTheme}
                     action={() => {
                         setGeneralView('general');
                     }}
@@ -331,17 +386,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'add-trigger':
             return (
                 <Trigger
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'add-imagene':
-            return (
-                <Imagene
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {

@@ -42,11 +42,13 @@ export interface HomeStateProperties {
 export interface HomeDispatchProperties {
     dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
     dispatchSetProviders: typeof actions.data.setProviders;
+    dispatchSetImagenes: typeof actions.data.setImagenes;
     dispatchSetRepositories: typeof actions.data.setRepositories;
     dispatchSetWebhooks: typeof actions.data.setWebhooks;
+    dispatchSetProjects: typeof actions.data.setProjects;
+    dispatchSetSecrets: typeof actions.data.setSecrets;
     dispatchSetTriggers: typeof actions.data.setTriggers;
     dispatchSetBuilds: typeof actions.data.setBuilds;
-    dispatchSetImagenes: typeof actions.data.setImagenes;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -65,11 +67,13 @@ const Home: React.FC<HomeProperties> = (
         /** dispatch */
         dispatchSetActiveProviderID,
         dispatchSetProviders,
+        dispatchSetImagenes,
         dispatchSetRepositories,
         dispatchSetWebhooks,
+        dispatchSetProjects,
+        dispatchSetSecrets,
         dispatchSetTriggers,
         dispatchSetBuilds,
-        dispatchSetImagenes,
     } = properties;
 
 
@@ -88,11 +92,13 @@ const Home: React.FC<HomeProperties> = (
 
             const {
                 providers,
+                imagenes,
                 repositories,
                 webhooks,
+                projects,
+                secrets,
                 triggers,
                 builds,
-                imagenes,
             } = graphql.deleteTypenames(response.data);
 
             if (providers.length > 0) {
@@ -102,11 +108,13 @@ const Home: React.FC<HomeProperties> = (
             }
 
             dispatchSetProviders(providers);
+            dispatchSetImagenes(imagenes);
             dispatchSetRepositories(repositories);
             dispatchSetWebhooks(webhooks);
+            dispatchSetProjects(projects);
+            dispatchSetSecrets(secrets);
             dispatchSetTriggers(triggers);
             dispatchSetBuilds(builds);
-            dispatchSetImagenes(imagenes);
         }
 
         getSetup();
@@ -143,6 +151,11 @@ const mapDispatchToProperties = (
     ) => dispatch(
         actions.data.setProviders(providers),
     ),
+    dispatchSetImagenes: (
+        imagenes,
+    ) => dispatch(
+        actions.data.setImagenes(imagenes),
+    ),
     dispatchSetRepositories: (
         repositories,
     ) => dispatch(
@@ -153,6 +166,16 @@ const mapDispatchToProperties = (
     ) => dispatch(
         actions.data.setWebhooks(webhooks),
     ),
+    dispatchSetProjects: (
+        projects,
+    ) => dispatch(
+        actions.data.setProjects(projects),
+    ),
+    dispatchSetSecrets: (
+        secrets,
+    ) => dispatch(
+        actions.data.setSecrets(secrets),
+    ),
     dispatchSetTriggers: (
         triggers,
     ) => dispatch(
@@ -162,11 +185,6 @@ const mapDispatchToProperties = (
         builds,
     ) => dispatch(
         actions.data.setBuilds(builds),
-    ),
-    dispatchSetImagenes: (
-        imagenes,
-    ) => dispatch(
-        actions.data.setImagenes(imagenes),
     ),
 });
 

@@ -61,20 +61,6 @@ export interface Trigger {
 }
 
 
-export interface Context {
-    request: express.Request,
-    response: express.Response,
-    instance: express.Express,
-    webhooks: Webhook[],
-    triggers: Trigger[],
-    repositories: Repository[],
-    builds: Build[],
-    providers: Provider[];
-    imagenes: Imagene[];
-}
-
-
-
 export interface Performer {
     stages: PerformerStage[];
     timeout: number;
@@ -110,4 +96,36 @@ export interface BuildData {
     repositoryRootPath: string;
     repositoryWorkPath: string;
     branchName: string;
+}
+
+
+export interface Project {
+    id: string;
+    name: string;
+}
+
+
+export interface Secret {
+    name: string;
+}
+
+export interface SecretStored {
+    name: string;
+    value: string;
+}
+
+
+
+export interface Context {
+    request: express.Request,
+    response: express.Response,
+    instance: express.Express,
+    providers: Provider[];
+    imagenes: Imagene[];
+    repositories: Repository[],
+    webhooks: Webhook[],
+    projects: Project[],
+    secrets: Secret[],
+    triggers: Trigger[],
+    builds: Build[],
 }

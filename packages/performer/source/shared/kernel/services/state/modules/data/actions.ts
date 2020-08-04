@@ -2,11 +2,13 @@ import * as Types from './types';
 
 import {
     ClientProvider,
+    Imagene,
     Repository,
+    Project,
+    Secret,
     Webhook,
     Trigger,
     Build,
-    Imagene,
 } from '#server/data/interfaces';
 
 
@@ -41,12 +43,42 @@ export const setProviders = (
 }
 
 
+export const setImagenes = (
+    imagenes: Imagene[],
+): Types.SetImagenesAction => {
+    return {
+        type: Types.SET_IMAGENES,
+        payload: imagenes,
+    };
+}
+
+
 export const setRepositories = (
     repositories: Repository[],
 ): Types.SetRepositoriesAction => {
     return {
         type: Types.SET_REPOSITORIES,
         payload: repositories,
+    };
+}
+
+
+export const setProjects = (
+    projects: Project[],
+): Types.SetProjectsAction => {
+    return {
+        type: Types.SET_PROJECTS,
+        payload: projects,
+    };
+}
+
+
+export const setSecrets = (
+    secrets: Secret[],
+): Types.SetSecretsAction => {
+    return {
+        type: Types.SET_SECRETS,
+        payload: secrets,
     };
 }
 
@@ -89,25 +121,17 @@ export const clearBuilds = (): Types.ClearBuildsAction => {
 }
 
 
-export const setImagenes = (
-    imagenes: Imagene[],
-): Types.SetImagenesAction => {
-    return {
-        type: Types.SET_IMAGENES,
-        payload: imagenes,
-    };
-}
-
-
 
 export const actions = {
     removeEntity,
     setActiveProviderID,
     setProviders,
+    setImagenes,
     setRepositories,
+    setProjects,
+    setSecrets,
     setWebhooks,
     setTriggers,
     setBuilds,
     clearBuilds,
-    setImagenes,
 };

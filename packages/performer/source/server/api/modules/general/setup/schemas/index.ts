@@ -34,11 +34,13 @@ export const types = gql`
 
     type Setup {
         providers: [Provider!]
+        imagenes: [Imagene!]
         repositories: [Repository!]
         webhooks: [Webhook!]
+        projects: [Project!]
+        secrets: [Secret!]
         triggers: [Trigger!]
         builds: [Build!]
-        imagenes: [Imagene!]
     }
 
     type Webhook {
