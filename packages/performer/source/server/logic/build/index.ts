@@ -21,6 +21,7 @@ import {
     Performer,
     PerformerStage,
     BuildData,
+    PerformContext,
 } from '#server/data/interfaces';
 
 import {
@@ -187,7 +188,7 @@ export const handlePerformer = async (
         project,
     } = performer;
 
-    const performContext = {
+    const performContext: PerformContext = {
         timeout,
         nodejs,
         secrets,
@@ -223,7 +224,7 @@ export const handlePerformer = async (
 }
 
 
-const resolveImagene = (
+export const resolveImagene = (
     imagene: string,
 ) => {
     switch (imagene) {
@@ -240,18 +241,60 @@ const resolveImagene = (
     return;
 }
 
+export const resolveSecrets = async (
+    project: string,
+    secretsPerformer: string[] | undefined,
+    secretsEnvironment: string[] | undefined
+) => {
+    if (!secretsPerformer || !secretsEnvironment) {
+        return [];
+    }
+
+    const storedSecrets = await loadStoredSecrets();
+    const indexedProjectSecrets: any = {};
+
+    for (const storedSecret of storedSecrets) {
+        if (storedSecret.project === project) {
+
+            indexedProjectSecrets[storedSecret.name] = {
+                ...storedSecret,
+            };
+        }
+    }
+
+    const secretsValues: string[] = [];
+
+    for (const secretEnvironment of secretsEnvironment) {
+        if (secretsPerformer.includes(secretEnvironment)) {
+            const secret = indexedProjectSecrets[secretEnvironment];
+            if (secret) {
+                const secretValue = `${secret.name}=${secret.value}`;
+                secretsValues.push(secretValue);
+            }
+        }
+    }
+
+    return secretsValues;
+}
 
 export const handleStage = async (
     id: string,
     stage: PerformerStage,
     index: number,
-    performContext: any,
+    performContext: PerformContext,
     start: number,
     commit: string,
 ) => {
     const {
         imagene,
+        environment,
+        secretsEnvironment,
+        project,
     } = stage;
+
+    const {
+        secrets,
+    } = performContext;
 
     const resolvedImagene = resolveImagene(imagene);
 
@@ -259,11 +302,17 @@ export const handleStage = async (
         return;
     }
 
-    const storedSecrets = await loadStoredSecrets();
+    const resolvedSecretsEnvironment = await resolveSecrets(
+        project,
+        secrets,
+        secretsEnvironment,
+    );
 
-    // based on the project,
-    // and the stage environment/secret environment
-    // prepare the execution environment
+    const environmentValues = [
+        ...(environment || []),
+        ...resolvedSecretsEnvironment,
+    ];
+
 
     if (resolvedImagene === 'docker') {
         await runDockerCommand(
@@ -272,6 +321,7 @@ export const handleStage = async (
             index,
             performContext,
             commit,
+            environmentValues,
         );
         return;
     }
@@ -282,6 +332,7 @@ export const handleStage = async (
             stage,
             index,
             performContext,
+            environmentValues,
         );
         return;
     }
@@ -292,6 +343,7 @@ export const handleStage = async (
         index,
         performContext,
         resolvedImagene,
+        environmentValues,
     );
 }
 
@@ -302,6 +354,7 @@ export const runDockerCommand = async (
     index: number,
     performContext: any,
     commit: string,
+    environment: string[],
 ) => {
     const {
         command,
@@ -489,7 +542,8 @@ export const runKubernetesCommand = async (
     id: string,
     stage: PerformerStage,
     index: number,
-    performContext: any,
+    performContext: PerformContext,
+    environment: string[],
 ) => {
 
 }
@@ -501,11 +555,11 @@ export const runInContainer = (
     index: number,
     performContext: any,
     imagene: string,
+    environment: string[],
 ) => {
     const {
         command,
         directory,
-        environment,
     } = stage;
 
     const {
@@ -517,10 +571,9 @@ export const runInContainer = (
 
         const workingDir = '/app' + directory;
 
-        const Env = environment
-            ? [
-                ...environment
-            ] : [];
+        const Env =  [
+            ...environment
+        ];
 
         const Cmd = typeof command === 'string'
             ? command.split(' ')

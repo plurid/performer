@@ -67,7 +67,7 @@ export interface Performer {
     stages: PerformerStage[];
     project: string;
     timeout: number;
-    secrets?: any;
+    secrets?: string[];
     nodejs?: any;
 }
 
@@ -79,7 +79,16 @@ export interface PerformerStage {
     project: string;
     directory?: string;
     environment?: string[];
-    secretsEnvironment?: any;
+    secretsEnvironment?: string[];
+}
+
+
+export interface PerformContext {
+    timeout: number;
+    nodejs: any;
+    secrets?: string[]
+    workDirectoryPath: string;
+    performerFilePath: string;
 }
 
 
