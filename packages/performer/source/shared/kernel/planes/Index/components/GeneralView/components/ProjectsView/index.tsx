@@ -263,9 +263,9 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             rows={filteredRows}
             noRows="no projects"
 
-            actionButtonText="Add Project"
+            actionButtonText="Generate Project"
             actionButtonClick={() => {
-                setGeneralView('add-project');
+                setGeneralView('generate-project');
             }}
 
             filterUpdate={filterUpdate}

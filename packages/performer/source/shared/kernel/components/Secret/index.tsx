@@ -162,7 +162,7 @@ const Secret: React.FC<SecretProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={secretProject}
-                        placeholder="value"
+                        placeholder="project"
                         atChange={(event) => setSecretProject(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"

@@ -308,9 +308,9 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             rows={filteredRows}
             noRows="no triggers"
 
-            actionButtonText="Add Trigger"
+            actionButtonText="Generate Trigger"
             actionButtonClick={() => {
-                setGeneralView('add-trigger')
+                setGeneralView('generate-trigger')
             }}
 
             filterUpdate={filterUpdate}

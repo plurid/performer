@@ -144,7 +144,7 @@ const Trigger: React.FC<TriggerProperties> = (
             theme={theme}
         >
             <h1>
-                {editID ? 'update' : 'add'} trigger
+                {editID ? 'update' : 'generate'} trigger
             </h1>
 
             <div>
@@ -234,7 +234,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text={editID ? 'Update Trigger' : 'Add Trigger'}
+                        text={editID ? 'Update Trigger' : 'Generate Trigger'}
                         atClick={() => {
                             action();
                             addTrigger();

@@ -352,7 +352,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'add-project':
+        case 'generate-project':
             return (
                 <Project
                     theme={stateInteractionTheme}
@@ -372,7 +372,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'add-webhook':
+        case 'generate-webhook':
             return (
                 <Webhook
                     theme={stateInteractionTheme}
@@ -383,7 +383,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'add-trigger':
+        case 'generate-trigger':
             return (
                 <Trigger
                     theme={stateInteractionTheme}

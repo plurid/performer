@@ -122,7 +122,7 @@ const Webhook: React.FC<WebhookProperties> = (
         >
             <div>
                 <h1>
-                    {editID ? 'update' : 'setup'} webhook
+                    {editID ? 'update' : 'generate'} webhook
                 </h1>
 
                 <div>
@@ -141,7 +141,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text={editID ? 'Update Webhook' : 'Setup Webhook'}
+                        text={editID ? 'Update Webhook' : 'Generate Webhook'}
                         atClick={() => {
                             action();
                             setWebhook();

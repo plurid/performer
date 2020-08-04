@@ -292,9 +292,9 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             rows={filteredRows}
             noRows="no webhooks"
 
-            actionButtonText="Add Webhook"
+            actionButtonText="Generate Webhook"
             actionButtonClick={() => {
-                setGeneralView('add-webhook');
+                setGeneralView('generate-webhook');
             }}
 
             filterUpdate={filterUpdate}
