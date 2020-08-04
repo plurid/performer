@@ -82,8 +82,16 @@ export const loadProjects = async () => {
     return projects;
 }
 
-export const loadSecrets = async () => {
+
+export const loadStoredSecrets = async () => {
     const storedSecrets = await loadDataFromFiles<SecretStored>(secretsPath);
+
+    return storedSecrets;
+}
+
+
+export const loadSecrets = async () => {
+    const storedSecrets = await loadStoredSecrets();
     const secrets = storedSecrets.map(storedSecret => {
         const {
             id,

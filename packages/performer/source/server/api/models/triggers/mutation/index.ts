@@ -1,9 +1,9 @@
-import addTrigger from './addTrigger';
+import generateTrigger from './generateTrigger';
 import obliterateTrigger from './obliterateTrigger';
 
 
 
 export default {
-    addTrigger,
+    generateTrigger,
     obliterateTrigger,
 };

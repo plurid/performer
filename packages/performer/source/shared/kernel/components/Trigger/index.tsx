@@ -13,7 +13,7 @@ import {
 /** external */
 import client from '#kernel-services/graphql/client';
 import {
-    ADD_TRIGGER,
+    GENERATE_TRIGGER,
 } from '#kernel-services/graphql/mutate';
 
 import {
@@ -69,6 +69,7 @@ const Trigger: React.FC<TriggerProperties> = (
     /** state */
     const [triggerID, setTriggerID] = useState('');
     const [triggerName, setTriggerName] = useState('');
+    const [triggerProject, setTriggerProject] = useState('');
     const [triggerRepository, setTriggerRepository] = useState('');
     const [triggerBranch, setTriggerBranch] = useState('');
     const [triggerPath, setTriggerPath] = useState('');
@@ -85,19 +86,19 @@ const Trigger: React.FC<TriggerProperties> = (
         const input = {
             id: triggerID,
             name: triggerName,
+            project: triggerProject,
             repository: triggerRepository,
             branch: triggerBranch,
             path: triggerPath,
             file: triggerFile,
         };
 
-        const mutation = await client.mutate({
-            mutation: ADD_TRIGGER,
+        await client.mutate({
+            mutation: GENERATE_TRIGGER,
             variables: {
                 input,
             },
         });
-        console.log('mutation', mutation);
     }
 
 
@@ -105,6 +106,7 @@ const Trigger: React.FC<TriggerProperties> = (
     useEffect(() => {
         if (
             triggerName
+            && triggerProject
             && triggerRepository
             && triggerBranch
             && triggerPath
@@ -116,6 +118,7 @@ const Trigger: React.FC<TriggerProperties> = (
         }
     }, [
         triggerName,
+        triggerProject,
         triggerRepository,
         triggerBranch,
         triggerPath,
@@ -167,6 +170,20 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerName}
                         placeholder="name"
                         atChange={(event) => setTriggerName(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
+                        level={2}
+                    />
+                </div>
+
+                <div>
+                    <StyledPluridTextline
+                        text={triggerProject}
+                        placeholder="project"
+                        atChange={(event) => setTriggerProject(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"

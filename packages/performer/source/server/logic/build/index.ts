@@ -27,19 +27,21 @@ import {
     buildlogsPath,
     buildqueuePath,
     buildsPath,
+
+    DOCKER_AUTH_USERNAME,
+    DOCKER_AUTH_PASSWORD,
+    DOCKER_AUTH_SERVER_ADDRESS,
 } from '#server/data/constants';
 
 import {
     copyDirectory,
 } from '#server/utilities/copy';
 
-import docker from '#server/engine';
-
 import {
-    DOCKER_AUTH_USERNAME,
-    DOCKER_AUTH_PASSWORD,
-    DOCKER_AUTH_SERVER_ADDRESS,
-} from '#server/data/constants';
+    loadStoredSecrets,
+} from '#server/logic/loader';
+
+import docker from '#server/engine';
 
 
 
@@ -65,6 +67,7 @@ export const pushToBuildQueue = async (
         0,
         buildData.date,
         [],
+        buildData.trigger.project,
     );
 }
 
@@ -76,6 +79,7 @@ export const writeBuildFile = async (
     time: number,
     date: number,
     stages: string[],
+    project: string,
 ) => {
     const build: Build = {
         id,
@@ -84,6 +88,7 @@ export const writeBuildFile = async (
         time,
         date,
         stages,
+        project,
     };
 
     const buildFile = id + '.json';
@@ -179,6 +184,7 @@ export const handlePerformer = async (
         timeout,
         nodejs,
         secrets,
+        project,
     } = performer;
 
     const performContext = {
@@ -212,6 +218,7 @@ export const handlePerformer = async (
         time,
         date,
         stagesNames,
+        project,
     );
 }
 
@@ -251,6 +258,12 @@ export const handleStage = async (
     if (!resolvedImagene) {
         return;
     }
+
+    const storedSecrets = await loadStoredSecrets();
+
+    // based on the project,
+    // and the stage environment/secret environment
+    // prepare the execution environment
 
     if (resolvedImagene === 'docker') {
         await runDockerCommand(

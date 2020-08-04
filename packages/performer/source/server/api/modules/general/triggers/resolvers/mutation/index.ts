@@ -9,12 +9,13 @@ import {
 
 
 export default {
-    addTrigger: (
+    generateTrigger: (
         _: any,
         { input }: any,
         context: Context,
-    ) => Triggers.Mutation.addTrigger(
+    ) => Triggers.Mutation.generateTrigger(
         input,
+        context,
     ),
     obliterateTrigger: (
         _: any,

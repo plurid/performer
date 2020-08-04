@@ -14,6 +14,7 @@ import {
 
 import {
     Trigger,
+    Context,
 } from '#server/data/interfaces';
 
 
@@ -37,8 +38,9 @@ const registerTrigger = async (
 }
 
 
-const addTrigger = async (
+const generateTrigger = async (
     input: any,
+    conext: Context,
 ) => {
     const {
         id,
@@ -47,6 +49,7 @@ const addTrigger = async (
         branch,
         path,
         file,
+        project,
     } = input;
 
     const generatedID = id || uuid.generate();
@@ -58,6 +61,7 @@ const addTrigger = async (
         branch,
         path,
         file,
+        project,
     };
 
     await registerTrigger(trigger);
@@ -68,4 +72,4 @@ const addTrigger = async (
 }
 
 
-export default addTrigger;
+export default generateTrigger;

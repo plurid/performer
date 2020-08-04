@@ -372,7 +372,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'generate-webhook':
+        case 'setup-webhook':
             return (
                 <Webhook
                     theme={stateInteractionTheme}

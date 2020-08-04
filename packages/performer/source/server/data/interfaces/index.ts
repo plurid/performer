@@ -33,6 +33,7 @@ export interface Build {
     time: number;
     date: number;
     stages: string[];
+    project: string;
 }
 
 
@@ -58,11 +59,13 @@ export interface Trigger {
     branch: string;
     path: string;
     file: string;
+    project: string;
 }
 
 
 export interface Performer {
     stages: PerformerStage[];
+    project: string;
     timeout: number;
     secrets?: any;
     nodejs?: any;
@@ -73,6 +76,7 @@ export interface PerformerStage {
     name: string;
     imagene: string;
     command: string | string[];
+    project: string;
     directory?: string;
     environment?: string[];
     secretsEnvironment?: any;

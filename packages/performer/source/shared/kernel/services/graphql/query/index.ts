@@ -45,6 +45,7 @@ export const GET_SETUP = gql`
                 triggers {
                     id
                     name
+                    project
                     repository
                     branch
                     path

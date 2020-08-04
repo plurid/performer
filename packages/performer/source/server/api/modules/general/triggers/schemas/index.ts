@@ -11,7 +11,7 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        addTrigger(input: InputAddTrigger!): Response!
+        generateTrigger(input: InputGenerateTrigger!): Response!
         obliterateTrigger(input: InputValueString!): Response!
     }
 `;
@@ -31,18 +31,20 @@ export const types = gql`
         branch: String!
         path: String!
         file: String!
+        project: String!
     }
 `;
 
 
 export const inputs = gql`
-    input InputAddTrigger {
+    input InputGenerateTrigger {
         id: String
         name: String!
         repository: String!
         branch: String!
         path: String!
         file: String!
+        project: String!
     }
 `;
 

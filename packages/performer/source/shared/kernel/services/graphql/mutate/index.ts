@@ -140,9 +140,9 @@ export const OBLITERATE_SECRET = gql`
 `;
 
 
-export const ADD_TRIGGER = gql`
-    mutation AddTrigger($input: InputAddTrigger!) {
-        addTrigger(input: $input) {
+export const GENERATE_TRIGGER = gql`
+    mutation GenerateTrigger($input: InputGenerateTrigger!) {
+        generateTrigger(input: $input) {
             status
             error {
                 type

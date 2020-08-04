@@ -49,6 +49,7 @@ export const types = gql`
         time: Int!
         date: Int!
         stages: [String!]
+        project: String!
     }
 
     type BuildLog {
