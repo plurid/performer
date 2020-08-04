@@ -110,8 +110,7 @@ export const handleTrigger = async (
 
         const repositoryPath = path.join(
             repositoriesPath,
-            './github',
-            '/' + repositoryName,
+            './github/' + repositoryName,
         );
         const repositoryRootPath = path.join(
             repositoryPath,

@@ -74,18 +74,23 @@ export const updateRootRepository = async (
 ) => {
     const repositoryPath = path.join(
         repositoriesPath,
-        './github',
-        '/' + repositoryName,
+        './github/' + repositoryName,
+    );
+    const repositoryRootPath = path.join(
+        repositoryPath,
+        '/root',
     );
 
     const gitCommandFetchOrigin = 'git fetch origin';
     const gitCommandPull = 'git pull';
 
     execSync(gitCommandFetchOrigin, {
-        cwd: repositoryPath,
+        cwd: repositoryRootPath,
+        stdio: 'ignore',
     });
 
     execSync(gitCommandPull, {
-        cwd: repositoryPath,
+        cwd: repositoryRootPath,
+        stdio: 'ignore',
     });
 }

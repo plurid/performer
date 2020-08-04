@@ -310,6 +310,12 @@ export const runDockerCommand = async (
         SHORT_SHA,
     );
 
+    const lineCommand = typeof command === 'string'
+        ? command
+        : command.join(' ');
+
+    const commandText = 'docker ' + lineCommand.replace('$SHORT_SHA', SHORT_SHA)
+
 
     if (commandType.startsWith('build')) {
         return new Promise (async (resolve, reject) => {
@@ -362,12 +368,8 @@ export const runDockerCommand = async (
             logStream.on('end', async () => {
                 logStream.end();
 
-                const lineCommand = typeof command === 'string'
-                    ? command
-                    : command.join(' ');
-
                 saveBuildlog(
-                    lineCommand.replace('$SHORT_SHA', SHORT_SHA),
+                    commandText,
                     id,
                     index,
                     streamData.join(''),
@@ -424,12 +426,8 @@ export const runDockerCommand = async (
                 logStream.on('end', async () => {
                     logStream.end();
 
-                    const lineCommand = typeof command === 'string'
-                        ? command
-                        : command.join(' ');
-
                     saveBuildlog(
-                        lineCommand.replace('$SHORT_SHA', SHORT_SHA),
+                        commandText,
                         id,
                         index,
                         streamData.join(''),
