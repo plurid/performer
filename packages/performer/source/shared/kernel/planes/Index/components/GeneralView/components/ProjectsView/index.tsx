@@ -209,7 +209,7 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
         });
 
         const sortedProjects = filteredProjects.sort(
-            compareValues('path'),
+            compareValues('name'),
         );
 
         setFilteredRows(
@@ -258,7 +258,7 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 30px 30px"
+            rowTemplate="auto 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no projects"

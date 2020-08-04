@@ -362,7 +362,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'add-secret':
+        case 'store-secret':
             return (
                 <Secret
                     theme={stateInteractionTheme}

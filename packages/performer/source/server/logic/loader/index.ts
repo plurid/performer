@@ -4,14 +4,16 @@ import {
 import path from 'path';
 
 import {
-    Project,
     Provider,
+    Imagene,
     Repository,
+    Project,
+    Secret,
+    SecretStored,
     Webhook,
     Trigger,
     Build,
     BuildData,
-    Imagene,
 } from '#server/data/interfaces';
 
 import {
@@ -81,7 +83,22 @@ export const loadProjects = async () => {
 }
 
 export const loadSecrets = async () => {
-    const secrets = await loadDataFromFiles<Project>(secretsPath);
+    const storedSecrets = await loadDataFromFiles<SecretStored>(secretsPath);
+    const secrets = storedSecrets.map(storedSecret => {
+        const {
+            id,
+            name,
+            project,
+        } = storedSecret;
+
+        const secret: Secret = {
+            id,
+            name,
+            project,
+        };
+
+        return secret;
+    });
 
     return secrets;
 }

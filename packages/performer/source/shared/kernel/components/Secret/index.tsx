@@ -2,6 +2,7 @@
 /** libraries */
 import React, {
     useState,
+    useEffect,
 } from 'react';
 
 import {
@@ -11,9 +12,9 @@ import {
 
 /** external */
 import client from '#kernel-services/graphql/client';
-// import {
-//     ADD_SECRET,
-// } from '#kernel-services/graphql/mutate';
+import {
+    STORE_SECRET,
+} from '#kernel-services/graphql/mutate';
 
 import {
     StyledPluridTextline,
@@ -64,28 +65,60 @@ const Secret: React.FC<SecretProperties> = (
 
     /** state */
     const [
-        secretPath,
-        setSecretPath,
+        secretName,
+        setSecretName,
     ] = useState('');
+    const [
+        secretValue,
+        setSecretValue,
+    ] = useState('');
+    const [
+        secretProject,
+        setSecretProject,
+    ] = useState('');
+    const [
+        validSecret,
+        setValidSecret,
+    ] = useState(false);
 
 
     /** handle */
-    const setSecret = async () => {
-        if (!secretPath) {
+    const storeSecret = async () => {
+        if (!validSecret) {
             return;
         }
 
         const input = {
-            path: secretPath,
+            name: secretName,
+            value: secretValue,
+            project: secretProject,
         };
 
-        // const mutation = await client.mutate({
-        //     mutation: ADD_SECRET,
-        //     variables: {
-        //         input,
-        //     },
-        // });
+        await client.mutate({
+            mutation: STORE_SECRET,
+            variables: {
+                input,
+            },
+        });
     }
+
+
+    /** effects */
+    useEffect(() => {
+        if (
+            !secretName
+            || !secretValue
+            || !secretProject
+        ) {
+            setValidSecret(false);
+        } else {
+            setValidSecret(true);
+        }
+    }, [
+        secretName,
+        secretValue,
+        secretProject,
+    ]);
 
 
     /** render */
@@ -95,14 +128,14 @@ const Secret: React.FC<SecretProperties> = (
         >
             <div>
                 <h1>
-                    add secret
+                    store secret
                 </h1>
 
                 <div>
                     <StyledPluridTextline
-                        text={secretPath}
+                        text={secretName}
                         placeholder="name"
-                        atChange={(event) => setSecretPath(event.target.value)}
+                        atChange={(event) => setSecretName(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -114,9 +147,23 @@ const Secret: React.FC<SecretProperties> = (
 
                 <div>
                     <StyledPluridTextline
-                        text={secretPath}
+                        text={secretValue}
                         placeholder="value"
-                        atChange={(event) => setSecretPath(event.target.value)}
+                        atChange={(event) => setSecretValue(event.target.value)}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        theme={theme}
+                        level={2}
+                    />
+                </div>
+
+                <div>
+                    <StyledPluridTextline
+                        text={secretProject}
+                        placeholder="value"
+                        atChange={(event) => setSecretProject(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -128,13 +175,13 @@ const Secret: React.FC<SecretProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text="Add Secret"
+                        text="Store Secret"
                         atClick={() => {
                             action();
-                            setSecret();
+                            storeSecret();
                         }}
                         level={2}
-                        disabled={!secretPath}
+                        disabled={!secretName}
                     />
                 </div>
 

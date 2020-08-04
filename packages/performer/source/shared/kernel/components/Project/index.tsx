@@ -11,9 +11,9 @@ import {
 
 /** external */
 import client from '#kernel-services/graphql/client';
-// import {
-//     SETUP_PROJECT,
-// } from '#kernel-services/graphql/mutate';
+import {
+    GENERATE_PROJECT,
+} from '#kernel-services/graphql/mutate';
 
 import {
     StyledPluridTextline,
@@ -64,27 +64,27 @@ const Project: React.FC<ProjectProperties> = (
 
     /** state */
     const [
-        projectPath,
-        setProjectPath,
+        projectName,
+        setProjectName,
     ] = useState('');
 
 
     /** handle */
     const setProject = async () => {
-        if (!projectPath) {
+        if (!projectName) {
             return;
         }
 
         const input = {
-            path: projectPath,
+            name: projectName,
         };
 
-        // const mutation = await client.mutate({
-        //     mutation: ADD_PROJECT,
-        //     variables: {
-        //         input,
-        //     },
-        // });
+        await client.mutate({
+            mutation: GENERATE_PROJECT,
+            variables: {
+                input,
+            },
+        });
     }
 
 
@@ -100,9 +100,9 @@ const Project: React.FC<ProjectProperties> = (
 
                 <div>
                     <StyledPluridTextline
-                        text={projectPath}
+                        text={projectName}
                         placeholder="name"
-                        atChange={(event) => setProjectPath(event.target.value)}
+                        atChange={(event) => setProjectName(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -120,7 +120,7 @@ const Project: React.FC<ProjectProperties> = (
                             setProject();
                         }}
                         level={2}
-                        disabled={!projectPath}
+                        disabled={!projectName}
                     />
                 </div>
 

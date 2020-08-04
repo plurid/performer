@@ -106,12 +106,16 @@ export interface Project {
 
 
 export interface Secret {
+    id: string;
     name: string;
+    project: string;
 }
 
 export interface SecretStored {
+    id: string;
     name: string;
     value: string;
+    project: string;
 }
 
 

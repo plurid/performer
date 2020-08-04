@@ -30,6 +30,33 @@ export const OBLITERATE_PROVIDER = gql`
 `;
 
 
+export const LINK_REPOSITORY = gql`
+    mutation LinkRepository($input: InputLinkRepository!) {
+        linkRepository(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+export const UNLINK_REPOSITORY = gql`
+    mutation UnlinkRepository($input: InputValueString!) {
+        unlinkRepository(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 export const SETUP_WEBHOOK = gql`
     mutation SetupWebhook($input: InputSetupWebhook!) {
         setupWebhook(input: $input) {
@@ -57,9 +84,9 @@ export const OBLITERATE_WEBHOOK = gql`
 `;
 
 
-export const ADD_TRIGGER = gql`
-    mutation AddTrigger($input: InputAddTrigger!) {
-        addTrigger(input: $input) {
+export const GENERATE_PROJECT = gql`
+    mutation GenerateProject($input: InputGenerateProject!) {
+        generateProject(input: $input) {
             status
             error {
                 type
@@ -85,6 +112,20 @@ export const OBLITERATE_PROJECT = gql`
 `;
 
 
+export const STORE_SECRET = gql`
+    mutation StoreSecret($input: InputStoreSecret!) {
+        storeSecret(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 export const OBLITERATE_SECRET = gql`
     mutation ObliterateSecret($input: InputValueString!) {
         obliterateSecret(input: $input) {
@@ -99,36 +140,23 @@ export const OBLITERATE_SECRET = gql`
 `;
 
 
+export const ADD_TRIGGER = gql`
+    mutation AddTrigger($input: InputAddTrigger!) {
+        addTrigger(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 export const OBLITERATE_TRIGGER = gql`
     mutation ObliterateTrigger($input: InputValueString!) {
         obliterateTrigger(input: $input) {
-            status
-            error {
-                type
-                path
-                message
-            }
-        }
-    }
-`;
-
-
-export const LINK_REPOSITORY = gql`
-    mutation LinkRepository($input: InputLinkRepository!) {
-        linkRepository(input: $input) {
-            status
-            error {
-                type
-                path
-                message
-            }
-        }
-    }
-`;
-
-export const UNLINK_REPOSITORY = gql`
-    mutation UnlinkRepository($input: InputValueString!) {
-        unlinkRepository(input: $input) {
             status
             error {
                 type

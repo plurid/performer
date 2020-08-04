@@ -47,19 +47,16 @@ import {
 
 
 
-
 const secretRowRenderer = (
     secret: Secret,
-    handleSecretEdit: (
-        id: string,
-    ) => void,
     handleSecretObliterate: (
         id: string,
     ) => void,
 ) => {
     const {
+        id,
         name,
-        // project,
+        project,
     } = secret;
 
     return (
@@ -68,12 +65,12 @@ const secretRowRenderer = (
                 {name}
             </div>
 
-            {/* <div>
+            <div>
                 {project}
-            </div> */}
+            </div>
 
             <PluridIconDelete
-                atClick={() => handleSecretObliterate(name)}
+                atClick={() => handleSecretObliterate(id)}
             />
         </>
     );
@@ -86,13 +83,16 @@ const createSearchTerms = (
     const searchTerms = secrets.map(
         secret => {
             const {
+                id,
                 name,
+                project,
             } = secret;
 
             const searchTerm = {
-                id: name,
+                id,
                 data: [
                     name.toLowerCase(),
+                    project.toLowerCase(),
                 ],
             };
 
@@ -155,11 +155,6 @@ const SecretsView: React.FC<SecretsViewProperties> = (
 
 
     /** handlers */
-    const handleSecretEdit = (
-        id: string,
-    ) => {
-    }
-
     const handleSecretObliterate = async (
         id: string,
     ) => {
@@ -194,7 +189,6 @@ const SecretsView: React.FC<SecretsViewProperties> = (
         stateSecrets.map(
             secret => secretRowRenderer(
                 secret,
-                handleSecretEdit,
                 handleSecretObliterate,
             ),
         ),
@@ -213,7 +207,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
         );
 
         const filteredSecrets = stateSecrets.filter(stateSecret => {
-            if (filterIDs.includes(stateSecret.name)) {
+            if (filterIDs.includes(stateSecret.id)) {
                 return true;
             }
 
@@ -221,14 +215,13 @@ const SecretsView: React.FC<SecretsViewProperties> = (
         });
 
         const sortedSecrets = filteredSecrets.sort(
-            compareValues('path'),
+            compareValues('name'),
         );
 
         setFilteredRows(
             sortedSecrets.map(
                 secret => secretRowRenderer(
                     secret,
-                    handleSecretEdit,
                     handleSecretObliterate,
                 ),
             ),
@@ -244,7 +237,6 @@ const SecretsView: React.FC<SecretsViewProperties> = (
         const filteredRows = stateSecrets.map(
             secret => secretRowRenderer(
                 secret,
-                handleSecretEdit,
                 handleSecretObliterate,
             ),
         );
@@ -260,14 +252,12 @@ const SecretsView: React.FC<SecretsViewProperties> = (
     const rowsHeader = (
         <>
             <div>
-                path
+                name
             </div>
 
             <div>
-                provider
+                project
             </div>
-
-            <div />
 
             <div />
         </>
@@ -278,14 +268,14 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 30px 30px"
+            rowTemplate="auto 120px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no secrets"
 
-            actionButtonText="Add Secret"
+            actionButtonText="Store Secret"
             actionButtonClick={() => {
-                setGeneralView('add-secret');
+                setGeneralView('store-secret');
             }}
 
             filterUpdate={filterUpdate}

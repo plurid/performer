@@ -25,12 +25,4 @@ export default {
         input,
         context,
     ),
-    generateSecretsKeychain: (
-        _: any,
-        { input }: any,
-        context: Context,
-    ) => Secrets.Mutation.generateSecretsKeychain(
-        input,
-        context,
-    ),
 };
