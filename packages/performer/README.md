@@ -14,11 +14,22 @@
 
 
 <h3 align="center">
-    Cloud-Native Continuous Integration/Continuous Delivery Build Pipeline
+    Cloud-Native Continuous Integration/Continuous Delivery Builder
 </h1>
 
 
-Performer is a build system specialized for the `NodeJS` runtime.
+Performer is a service or self-hosted system task-runner/builder based on GitOps.
+
+Specialized support for the runtimes
+
++ `NodeJS`
+
+Performer uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
+
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/plurid/performer/master/about/screenshots/ss-1.png" height="500px">
+</p>
 
 
 
@@ -63,7 +74,7 @@ and run it
 node server.js
 ```
 
-performer starts a server listening on port `56065` serving the performer UI on `/` or which can receive GraphQL API requests on `/perform`.
+performer starts a server listening on port `56065` serving the performer UI on `/`, or which can receive GraphQL API requests on `/perform`.
 
 
 
@@ -113,16 +124,3 @@ Options:
     -h, --help                      display help for command
 
 Commands:
-
-
-
-## Packages
-
-
-<a target="_blank" href="https://www.npmjs.com/package/@plurid/performer">
-    <img src="https://img.shields.io/npm/v/@plurid/performer.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
-</a>
-
-[@plurid/performer][performer] • the server application
-
-[performer]: https://github.com/plurid/datasign/tree/master/packages/performer

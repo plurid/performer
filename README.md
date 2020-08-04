@@ -14,7 +14,7 @@
 
 
 <h3 align="center">
-    Cloud-Native Continuous Integration/Continuous Delivery Build Pipeline
+    Cloud-Native Continuous Integration/Continuous Delivery Builder
 </h1>
 
 
