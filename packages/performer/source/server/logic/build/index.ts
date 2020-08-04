@@ -109,61 +109,67 @@ export const writeBuildFile = async (
 export const triggerBuild = async (
     buildData: BuildData,
 ) => {
-    const {
-        branchName,
-        repositoryRootPath,
-        repositoryWorkPath,
-        trigger,
-    } = buildData;
+    try {
+        const {
+            branchName,
+            repositoryRootPath,
+            repositoryWorkPath,
+            trigger,
+        } = buildData;
 
 
-    await fs.mkdir(repositoryWorkPath, {
-        recursive: true,
-    });
+        await fs.mkdir(repositoryWorkPath, {
+            recursive: true,
+        });
 
-    await copyDirectory(
-        repositoryRootPath,
-        repositoryWorkPath,
-    );
+        await copyDirectory(
+            repositoryRootPath,
+            repositoryWorkPath,
+        );
 
-    const gitCommandFetchOrigin = 'git fetch origin';
-    const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+        const gitCommandFetchOrigin = 'git fetch origin';
+        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
 
-    execSync(gitCommandFetchOrigin, {
-        cwd: repositoryWorkPath,
-        stdio: 'ignore',
-    });
-    execSync(gitCommandResetHardBranch, {
-        cwd: repositoryWorkPath,
-        stdio: 'ignore',
-    });
+        execSync(gitCommandFetchOrigin, {
+            cwd: repositoryWorkPath,
+            stdio: 'ignore',
+        });
+        execSync(gitCommandResetHardBranch, {
+            cwd: repositoryWorkPath,
+            stdio: 'ignore',
+        });
 
 
-    const performerFilePath = path.join(
-        repositoryWorkPath,
-        '/' + trigger.file,
-    );
-    const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-    const performerObject = yaml.safeLoad(performerFile);
+        const performerFilePath = path.join(
+            repositoryWorkPath,
+            '/' + trigger.file,
+        );
+        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+        const performerObject = yaml.safeLoad(performerFile);
+        console.log('performerObject', performerObject);
 
-    if (!performerObject || typeof performerObject === 'string') {
+        if (!performerObject || typeof performerObject === 'string') {
+            return;
+        }
+
+        const performerData: any = performerObject;
+
+        const performer: Performer = {
+            ...performerData,
+            timeout: performerData.timeout ?? 600,
+        };
+
+        handlePerformer(
+            buildData,
+            performer,
+            repositoryWorkPath,
+            performerFilePath,
+            trigger.project,
+        );
+    } catch (error) {
+        console.log('Trigger build error', error);
         return;
     }
-
-    const performerData: any = performerObject;
-
-    const performer: Performer = {
-        ...performerData,
-        timeout: performerData.timeout ?? 600,
-    };
-
-    handlePerformer(
-        buildData,
-        performer,
-        repositoryWorkPath,
-        performerFilePath,
-        trigger.project,
-    );
 }
 
 
@@ -199,6 +205,7 @@ export const handlePerformer = async (
     };
 
     for (const [index, stage] of stages.entries()) {
+        console.log('Running stage', index, stage);
         await handleStage(
             id,
             stage,
@@ -360,6 +367,8 @@ export const runDockerCommand = async (
     commit: string,
     environment: string[],
 ) => {
+    console.log('runDockerCommand', stage);
+
     const {
         command,
         directory,
@@ -389,16 +398,28 @@ export const runDockerCommand = async (
 
     if (commandType.startsWith('build')) {
         return new Promise (async (resolve, reject) => {
+            const dockerfile = resolveDockerFile(
+                command,
+            );
+
+            const dockerFileContext = path.join(
+                workDirectoryPath,
+                directory || '/',
+                dockerfile,
+            );
+            console.log('dockerFileContext', dockerFileContext);
+
             const dockerContext = path.join(
                 workDirectoryPath,
                 directory || '/',
             );
+            console.log('dockerContext', dockerContext);
 
             const srcFiles = await fs.readdir(dockerContext);
 
             const image = await docker.buildImage(
                 {
-                    context: dockerContext,
+                    context: dockerFileContext,
                     src: [
                         ...srcFiles,
                     ],
@@ -434,6 +455,10 @@ export const runDockerCommand = async (
             });
 
             image.pipe(logStream);
+
+            logStream.on('error', (error) => {
+                console.log('runDockerCommand build error', error);
+            });
 
             logStream.on('end', async () => {
                 logStream.end();
@@ -493,6 +518,10 @@ export const runDockerCommand = async (
 
                 imageStream.pipe(logStream);
 
+                logStream.on('error', (error) => {
+                    console.log('runDockerCommand push error', error);
+                });
+
                 logStream.on('end', async () => {
                     logStream.end();
 
@@ -542,6 +571,24 @@ export const resolveDockerTag = (
 }
 
 
+export const resolveDockerFile = (
+    command: string | string[],
+) => {
+    const split = typeof command === 'string'
+        ? command.split(' ')
+        : command.join(' ').split(' ');
+
+    for (const [index, value] of split.entries()) {
+        if (value === '-f' || value === '--file') {
+            const dockerfile = split[index + 1] || '';
+            return dockerfile;
+        }
+    }
+
+    return '';
+}
+
+
 export const runKubernetesCommand = async (
     id: string,
     stage: PerformerStage,
@@ -557,10 +604,12 @@ export const runInContainer = (
     id: string,
     stage: PerformerStage,
     index: number,
-    performContext: any,
+    performContext: PerformContext,
     imagene: string,
     environment: string[],
 ) => {
+    console.log('runInContainer', stage);
+
     const {
         command,
         directory,
@@ -573,7 +622,7 @@ export const runInContainer = (
     return new Promise (async (resolve, reject) => {
         const containerName = uuid.generate();
 
-        const workingDir = '/app' + directory;
+        const workingDir = '/app' + (directory || '');
 
         const Env =  [
             ...environment
@@ -619,6 +668,10 @@ export const runInContainer = (
             logStream,
             logStream,
         );
+
+        readableStream.on('error', (error) => {
+            console.log('runInContainer error', error);
+        });
 
         readableStream.on('end', async () => {
             logStream.end();
