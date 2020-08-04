@@ -24,6 +24,12 @@ export const removeEntity = (
     let webhooks = [
         ...newState.webhooks,
     ];
+    let projects = [
+        ...newState.projects,
+    ];
+    let secrets = [
+        ...newState.secrets,
+    ];
     let triggers = [
         ...newState.triggers,
     ];
@@ -44,6 +50,16 @@ export const removeEntity = (
                 webhook => webhook.id !== id
             );
             break;
+        case 'project':
+            projects = projects.filter(
+                project => project.id !== id
+            );
+            break;
+        case 'secret':
+            secrets = secrets.filter(
+                secret => secret.id !== id
+            );
+            break;
         case 'trigger':
             triggers = triggers.filter(
                 trigger => trigger.id !== id
@@ -61,6 +77,12 @@ export const removeEntity = (
         ],
         webhooks: [
             ...webhooks,
+        ],
+        projects: [
+            ...projects,
+        ],
+        secrets: [
+            ...secrets,
         ],
         triggers: [
             ...triggers,

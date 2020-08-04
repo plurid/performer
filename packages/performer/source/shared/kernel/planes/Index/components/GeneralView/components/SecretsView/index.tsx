@@ -268,7 +268,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 120px 30px"
+            rowTemplate="auto 200px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no secrets"
