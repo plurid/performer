@@ -99,9 +99,11 @@ export const StyledBuildLog = styled.div`
 
 
 export const StyledBuildLogData = styled.div`
-    white-space: pre-line;
-    font-family: 'Inconsolata', 'Courier New', Courier, monospace;
-    line-height: 1.3;
-    max-height: calc(500px - 4rem);
+    white-space: pre;
+    max-width: 75vw;
+    font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
+    line-height: 1.4;
+    max-height: calc(600px - 4rem);
+    min-height: calc(600px - 4rem);
     overflow: auto;
 `;
