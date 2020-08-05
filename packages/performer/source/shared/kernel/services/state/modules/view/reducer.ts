@@ -17,6 +17,8 @@ export const reducer = (
     switch(action.type) {
         case Types.SET_VIEW_LOADING:
             return resolvers.setViewLoading(state, action);
+        case Types.SET_VIEW_TYPE:
+            return resolvers.setViewType(state, action);
         default:
             return {
                 ...state,

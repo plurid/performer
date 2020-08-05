@@ -12,7 +12,18 @@ export const setViewLoading = (
 }
 
 
+export const setViewType = (
+    payload: Types.SetViewTypePayload,
+): Types.SetViewTypeAction => {
+    return {
+        type: Types.SET_VIEW_TYPE,
+        payload,
+    };
+}
+
+
 
 export const actions = {
     setViewLoading,
+    setViewType,
 };
