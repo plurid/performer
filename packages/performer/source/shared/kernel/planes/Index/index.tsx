@@ -57,7 +57,6 @@ const Page: React.FC<PageProperties> = (
     const [
         view,
         setView,
-    // ] = useState('initial');
     ] = useState('');
 
 
