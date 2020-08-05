@@ -32,6 +32,7 @@ export interface PageOwnProperties {
 
 export interface PageStateProperties {
     stateProviders: ClientProvider[];
+    stateViewLoading: boolean;
 }
 
 export interface PageDispatchProperties {
@@ -50,6 +51,7 @@ const Page: React.FC<PageProperties> = (
 
         /** state */
         stateProviders,
+        stateViewLoading,
     } = properties;
 
 
@@ -62,12 +64,17 @@ const Page: React.FC<PageProperties> = (
 
     /** effect */
     useEffect(() => {
+        if (stateViewLoading) {
+            return;
+        }
+
         if (stateProviders.length > 0) {
             setView('general');
         } else {
             setView('initial');
         }
     }, [
+        stateViewLoading,
         stateProviders,
     ]);
 
@@ -109,6 +116,7 @@ const mapStateToProperties = (
     state: AppState,
 ): PageStateProperties => ({
     stateProviders: selectors.data.getProviders(state),
+    stateViewLoading: selectors.view.getLoading(state),
 });
 
 

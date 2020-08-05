@@ -49,6 +49,7 @@ export interface HomeDispatchProperties {
     dispatchSetSecrets: typeof actions.data.setSecrets;
     dispatchSetTriggers: typeof actions.data.setTriggers;
     dispatchSetBuilds: typeof actions.data.setBuilds;
+    dispatchSetViewLoading: typeof actions.view.setViewLoading;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -74,6 +75,7 @@ const Home: React.FC<HomeProperties> = (
         dispatchSetSecrets,
         dispatchSetTriggers,
         dispatchSetBuilds,
+        dispatchSetViewLoading,
     } = properties;
 
 
@@ -87,6 +89,7 @@ const Home: React.FC<HomeProperties> = (
             const response = setupQuery.data.getSetup;
 
             if (!response.status) {
+                dispatchSetViewLoading(false);
                 return;
             }
 
@@ -115,6 +118,7 @@ const Home: React.FC<HomeProperties> = (
             dispatchSetSecrets(secrets);
             dispatchSetTriggers(triggers);
             dispatchSetBuilds(builds);
+            dispatchSetViewLoading(false);
         }
 
         getSetup();
@@ -185,6 +189,11 @@ const mapDispatchToProperties = (
         builds,
     ) => dispatch(
         actions.data.setBuilds(builds),
+    ),
+    dispatchSetViewLoading: (
+        loading,
+    ) => dispatch(
+        actions.view.setViewLoading(loading),
     ),
 });
 
