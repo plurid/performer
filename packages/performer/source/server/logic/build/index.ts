@@ -12,6 +12,8 @@ import {
 
 import yaml from 'js-yaml';
 
+import Dockerode from 'dockerode';
+
 import {
     uuid,
 } from '@plurid/plurid-functions';
@@ -625,8 +627,8 @@ export const runInContainer = (
 
         const workingDir = '/app' + (directory || '');
 
-        const Env =  [
-            ...environment
+        const Env = [
+            ...environment,
         ];
 
         const Cmd = typeof command === 'string'
@@ -649,7 +651,8 @@ export const runInContainer = (
             WorkingDir: workingDir,
         });
 
-        await container.start();
+        const startedContainer = await container.start();
+        console.log('startedContainer', startedContainer);
 
         const streamData: string[] = [];
 
