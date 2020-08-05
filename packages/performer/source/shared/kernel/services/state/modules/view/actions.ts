@@ -22,8 +22,19 @@ export const setViewType = (
 }
 
 
+export const setViewCompactSelectors = (
+    payload: boolean,
+): Types.SetViewCompactSelectorsAction => {
+    return {
+        type: Types.SET_VIEW_COMPACT_SELECTORS,
+        payload,
+    };
+}
+
+
 
 export const actions = {
     setViewLoading,
     setViewType,
+    setViewCompactSelectors,
 };

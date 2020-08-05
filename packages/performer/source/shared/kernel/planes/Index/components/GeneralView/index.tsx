@@ -105,10 +105,12 @@ export interface GeneralViewStateProperties {
     stateActiveProviderID: string;
     stateIndexGeneralSelector: string;
     stateIndexGeneralView: string;
+    stateViewCompactSelectors: boolean;
 }
 
 export interface GeneralViewDispatchProperties {
     dispatchSetViewType: typeof actions.view.setViewType;
+    dispatchSetViewCompactSelectors: typeof actions.view.setViewCompactSelectors;
 }
 
 export type GeneralViewProperties = GeneralViewOwnProperties
@@ -134,9 +136,11 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateActiveProviderID,
         stateIndexGeneralSelector,
         stateIndexGeneralView,
+        stateViewCompactSelectors,
 
         /** dispatch */
         dispatchSetViewType,
+        dispatchSetViewCompactSelectors,
     } = properties;
 
 
@@ -152,10 +156,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     const [
         mouseOverSelectors,
         setMouseOverSelectors,
-    ] = useState(false);
-    const [
-        compactSelectors,
-        setCompactSelectors,
     ] = useState(false);
 
 
@@ -180,6 +180,12 @@ const GeneralView: React.FC<GeneralViewProperties> = (
             type: 'indexGeneralView',
             value: view,
         });
+    }
+
+    const setCompactSelectors = (
+        value: boolean,
+    ) => {
+        dispatchSetViewCompactSelectors(value);
     }
 
 
@@ -246,18 +252,18 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'general':
             return (
                 <StyledGeneralView
-                    compactSelectors={compactSelectors}
+                    compactSelectors={stateViewCompactSelectors}
                 >
                     <StyledGeneralSelectors
                         onMouseEnter={() => setMouseOverSelectors(true)}
                         onMouseLeave={() => setMouseOverSelectors(false)}
                         theme={stateGeneralTheme}
-                        compactSelectors={compactSelectors}
+                        compactSelectors={stateViewCompactSelectors}
                     >
                         <StyledGeneralPeformer
-                            compactSelectors={compactSelectors}
+                            compactSelectors={stateViewCompactSelectors}
                         >
-                            {!compactSelectors && (
+                            {!stateViewCompactSelectors && (
                                 <>
                                     <div>
                                         <img
@@ -274,7 +280,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 </>
                             )}
 
-                            {compactSelectors
+                            {stateViewCompactSelectors
                             && mouseOverSelectors
                             && (
                                 <PluridIconArrowRight
@@ -293,11 +299,11 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                         onClick={() => setSelectedView(selector)}
                                         theme={stateGeneralTheme}
                                         selected={selector === stateIndexGeneralSelector}
-                                        compactSelectors={compactSelectors}
+                                        compactSelectors={stateViewCompactSelectors}
                                     >
                                         <Icon />
 
-                                        {!compactSelectors && (
+                                        {!stateViewCompactSelectors && (
                                             <div>
                                                 {selector}
                                             </div>
@@ -312,11 +318,11 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                 <ul>
                                     <StyledGeneralHelpItem
                                         onClick={() => openManual()}
-                                        compactSelectors={compactSelectors}
+                                        compactSelectors={stateViewCompactSelectors}
                                     >
                                         <PluridIconDocuments />
 
-                                        {!compactSelectors && (
+                                        {!stateViewCompactSelectors && (
                                             <>
                                                 <div>
                                                     manual
@@ -426,6 +432,7 @@ const mapStateToProperties = (
     stateActiveProviderID: selectors.data.getActiveProviderID(state),
     stateIndexGeneralSelector: selectors.view.getIndexGeneralSelector(state),
     stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
+    stateViewCompactSelectors: selectors.view.getViewCompactSelectors(state),
 });
 
 
@@ -436,6 +443,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewType(payload),
+    ),
+    dispatchSetViewCompactSelectors: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewCompactSelectors(payload),
     ),
 });
 

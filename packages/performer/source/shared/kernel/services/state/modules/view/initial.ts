@@ -6,4 +6,5 @@ export const initialState: Types.State = {
     loading: true,
     indexGeneralSelector: 'providers',
     indexGeneralView: 'general',
+    compactSelectors: false,
 };

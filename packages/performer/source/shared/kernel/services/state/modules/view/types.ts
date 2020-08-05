@@ -18,14 +18,23 @@ export interface SetViewTypeAction {
 }
 
 
+export const SET_VIEW_COMPACT_SELECTORS = 'SET_VIEW_COMPACT_SELECTORS';
+export interface SetViewCompactSelectorsAction {
+    type: typeof SET_VIEW_COMPACT_SELECTORS;
+    payload: boolean;
+}
+
+
 
 export interface State {
     loading: boolean;
     indexGeneralSelector: string;
     indexGeneralView: string;
+    compactSelectors: boolean;
 }
 
 
 export type Actions =
     | SetViewLoadingAction
-    | SetViewTypeAction;
+    | SetViewTypeAction
+    | SetViewCompactSelectorsAction;

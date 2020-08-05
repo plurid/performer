@@ -19,6 +19,8 @@ export const reducer = (
             return resolvers.setViewLoading(state, action);
         case Types.SET_VIEW_TYPE:
             return resolvers.setViewType(state, action);
+        case Types.SET_VIEW_COMPACT_SELECTORS:
+            return resolvers.setViewCompactSelectors(state, action);
         default:
             return {
                 ...state,
