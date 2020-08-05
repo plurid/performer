@@ -103,9 +103,12 @@ export interface GeneralViewStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
     stateActiveProviderID: string;
+    stateIndexGeneralSelector: string;
+    stateIndexGeneralView: string;
 }
 
 export interface GeneralViewDispatchProperties {
+    dispatchSetViewType: typeof actions.view.setViewType;
 }
 
 export type GeneralViewProperties = GeneralViewOwnProperties
@@ -129,20 +132,15 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateGeneralTheme,
         stateInteractionTheme,
         stateActiveProviderID,
+        stateIndexGeneralSelector,
+        stateIndexGeneralView,
 
         /** dispatch */
+        dispatchSetViewType,
     } = properties;
 
 
     /** state */
-    const [
-        selectedView,
-        setSelectedView,
-    ] = useState('providers');
-    const [
-        generalView,
-        setGeneralView,
-    ] = useState('general');
     const [
         webhookEditID,
         setWebhookEditID,
@@ -166,10 +164,28 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         window.open('https://manual.plurid.com/performer', '_blank');
     }
 
+    const setSelectedView = (
+        view: string,
+    ) => {
+        dispatchSetViewType({
+            type: 'indexGeneralSelector',
+            value: view,
+        });
+    }
+
+    const setGeneralView = (
+        view: string,
+    ) => {
+        dispatchSetViewType({
+            type: 'indexGeneralView',
+            value: view,
+        });
+    }
+
 
     /** render */
     let renderSelectedView = (<></>);
-    switch (selectedView) {
+    switch (stateIndexGeneralSelector) {
         case 'projects':
             renderSelectedView = (
                 <ProjectsView
@@ -226,7 +242,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
             break;
     }
 
-    switch (generalView) {
+    switch (stateIndexGeneralView) {
         case 'general':
             return (
                 <StyledGeneralView
@@ -276,7 +292,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                         key={selector}
                                         onClick={() => setSelectedView(selector)}
                                         theme={stateGeneralTheme}
-                                        selected={selector === selectedView}
+                                        selected={selector === stateIndexGeneralSelector}
                                         compactSelectors={compactSelectors}
                                     >
                                         <Icon />
@@ -408,12 +424,19 @@ const mapStateToProperties = (
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
     stateActiveProviderID: selectors.data.getActiveProviderID(state),
+    stateIndexGeneralSelector: selectors.view.getIndexGeneralSelector(state),
+    stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): GeneralViewDispatchProperties => ({
+    dispatchSetViewType: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewType(payload),
+    ),
 });
 
 
