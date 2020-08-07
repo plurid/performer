@@ -16,11 +16,13 @@ import {
     PluridIconToolbox,
     PluridIconRepository,
     PluridIconWebhook,
-    PluridIconNewStateline,
     PluridIconSpace,
     PluridIconTools,
     PluridIconDeauthored,
+    PluridIconNewStateline,
+    PluridIconBrainCircuits,
     PluridIconApps,
+    PluridIconBranch,
     PluridIconArrowRight,
     PluridIconDocuments,
     PluridIconExternalLink,
@@ -44,14 +46,16 @@ import actions from '#kernel-services/state/actions';
 
 
 /** internal */
-import ProjectsView from './components/ProjectsView';
 import ProvidersView from './components/ProvidersView';
-import RepositoriesView from './components/RepositoriesView';
-import TriggersView from './components/TriggersView';
-import WebhooksView from './components/WebhooksView';
-import BuildsView from './components/BuildsView';
 import ImagenesView from './components/ImagenesVIew';
+import RepositoriesView from './components/RepositoriesView';
+import WebhooksView from './components/WebhooksView';
+import ProjectsView from './components/ProjectsView';
 import SecretsView from './components/SecretsView';
+import TriggersView from './components/TriggersView';
+import DeployersView from './components/DeployersView';
+import BuildsView from './components/BuildsView';
+import DeploysView from './components/DeploysView';
 
 import {
     StyledGeneralView,
@@ -74,7 +78,9 @@ const generalSelectors = [
     'projects',
     'secrets',
     'triggers',
+    'deployers',
     'builds',
+    'deploys',
 ];
 
 const generalSelectorsIcons = {
@@ -84,8 +90,10 @@ const generalSelectorsIcons = {
     webhooks: PluridIconWebhook,
     projects: PluridIconApps,
     secrets: PluridIconDeauthored,
+    deployers: PluridIconBrainCircuits,
     triggers: PluridIconNewStateline,
     builds: PluridIconSpace,
+    deploys: PluridIconBranch,
 };
 
 /** [START] component */
@@ -192,16 +200,16 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     /** render */
     let renderSelectedView = (<></>);
     switch (stateIndexGeneralSelector) {
-        case 'projects':
+        case 'providers':
             renderSelectedView = (
-                <ProjectsView
+                <ProvidersView
                     setGeneralView={setGeneralView}
                 />
             );
             break;
-        case 'providers':
+        case 'imagenes':
             renderSelectedView = (
-                <ProvidersView
+                <ImagenesView
                     setGeneralView={setGeneralView}
                 />
             );
@@ -220,9 +228,30 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 />
             );
             break;
+        case 'projects':
+            renderSelectedView = (
+                <ProjectsView
+                    setGeneralView={setGeneralView}
+                />
+            );
+            break;
+        case 'secrets':
+            renderSelectedView = (
+                <SecretsView
+                    setGeneralView={setGeneralView}
+                />
+            );
+            break;
         case 'triggers':
             renderSelectedView = (
                 <TriggersView
+                    setGeneralView={setGeneralView}
+                />
+            );
+            break;
+        case 'deployers':
+            renderSelectedView = (
+                <DeployersView
                     setGeneralView={setGeneralView}
                 />
             );
@@ -232,16 +261,9 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 <BuildsView />
             );
             break;
-        case 'imagenes':
+        case 'deploys':
             renderSelectedView = (
-                <ImagenesView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'secrets':
-            renderSelectedView = (
-                <SecretsView
+                <DeploysView
                     setGeneralView={setGeneralView}
                 />
             );
