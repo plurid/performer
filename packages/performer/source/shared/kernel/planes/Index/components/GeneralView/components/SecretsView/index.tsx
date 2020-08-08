@@ -66,6 +66,10 @@ const secretRowRenderer = (
             </div>
 
             <div>
+                1234
+            </div>
+
+            <div>
                 {project}
             </div>
 
@@ -256,6 +260,10 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             </div>
 
             <div>
+                ends with
+            </div>
+
+            <div>
                 project
             </div>
 
@@ -268,7 +276,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="auto 200px 30px"
+            rowTemplate="auto 100px 200px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no secrets"
