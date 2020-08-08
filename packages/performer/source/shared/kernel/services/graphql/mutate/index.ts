@@ -166,3 +166,31 @@ export const OBLITERATE_TRIGGER = gql`
         }
     }
 `;
+
+
+export const GENERATE_DEPLOYER = gql`
+    mutation GenerateDeployer($input: InputGenerateDeployer!) {
+        generateDeployer(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
+export const OBLITERATE_DEPLOYER = gql`
+    mutation ObliterateDeployer($input: InputValueString!) {
+        obliterateDeployer(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;

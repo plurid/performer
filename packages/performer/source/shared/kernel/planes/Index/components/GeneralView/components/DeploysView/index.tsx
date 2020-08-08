@@ -303,7 +303,7 @@ const DeploysView: React.FC<DeploysViewProperties> = (
             </div>
 
             <div>
-                trigger
+                deployer
             </div>
 
             <div>
@@ -311,7 +311,7 @@ const DeploysView: React.FC<DeploysViewProperties> = (
             </div>
 
             <div>
-                triggered
+                deployed
             </div>
 
             <div>
@@ -335,7 +335,7 @@ const DeploysView: React.FC<DeploysViewProperties> = (
                 rowTemplate="30px 60px auto 180px 200px 200px 30px"
                 rowsHeader={rowsHeader}
                 rows={filteredRows}
-                noRows="no builds"
+                noRows="no deploys"
 
                 filterUpdate={filterUpdate}
             />

@@ -32,7 +32,7 @@ import EntityView from '#kernel-components/EntityView';
 
 import client from '#kernel-services/graphql/client';
 import {
-    OBLITERATE_TRIGGER,
+    OBLITERATE_DEPLOYER,
 } from '#kernel-services/graphql/mutate';
 
 import { AppState } from '#kernel-services/state/store';
@@ -48,8 +48,8 @@ import {
 
 
 
-const triggerRowRenderer = (
-    trigger: Deployer,
+const deployerRowRenderer = (
+    deployer: Deployer,
     handleObliterateDeployer: (
         id: string,
     ) => void,
@@ -62,7 +62,7 @@ const triggerRowRenderer = (
         path,
         file,
         project,
-    } = trigger;
+    } = deployer;
 
     return (
         <>
@@ -103,17 +103,17 @@ const triggerRowRenderer = (
 
 
 const createSearchTerms = (
-    triggers: Deployer[],
+    deployers: Deployer[],
 ) => {
-    const searchTerms = triggers.map(
-        trigger => {
+    const searchTerms = deployers.map(
+        deployer => {
             const {
                 id,
                 name,
                 repository,
                 branch,
                 path,
-            } = trigger;
+            } = deployer;
 
             const searchTerm = {
                 id,
@@ -189,7 +189,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
     ) => {
         try {
             dispatchRemoveEntity({
-                type: 'trigger',
+                type: 'deployer',
                 id,
             });
 
@@ -198,7 +198,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             };
 
             await client.mutate({
-                mutation: OBLITERATE_TRIGGER,
+                mutation: OBLITERATE_DEPLOYER,
                 variables: {
                     input,
                 },
@@ -216,8 +216,8 @@ const DeployersView: React.FC<DeployersViewProperties> = (
 
     const [filteredRows, setFilteredRows] = useState(
         stateDeployers.map(
-            trigger => triggerRowRenderer(
-                trigger,
+            deployer => deployerRowRenderer(
+                deployer,
                 handleObliterateDeployer,
             ),
         ),
@@ -246,8 +246,8 @@ const DeployersView: React.FC<DeployersViewProperties> = (
 
         setFilteredRows(
             sortedDeployers.map(
-                trigger => triggerRowRenderer(
-                    trigger,
+                deployer => deployerRowRenderer(
+                    deployer,
                     handleObliterateDeployer,
                 ),
             ),
@@ -261,8 +261,8 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             stateDeployers,
         );
         const filteredRows = stateDeployers.map(
-            trigger => triggerRowRenderer(
-                trigger,
+            deployer => deployerRowRenderer(
+                deployer,
                 handleObliterateDeployer,
             ),
         );
@@ -294,7 +294,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             </div>
 
             <div>
-                performer
+                deployer
             </div>
 
             <div>
@@ -315,11 +315,11 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             rowTemplate="2fr 1fr 0.5fr 2fr 2fr 1fr 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
-            noRows="no triggers"
+            noRows="no deployers"
 
             actionButtonText="Generate Deployer"
             actionButtonClick={() => {
-                setGeneralView('generate-trigger')
+                setGeneralView('generate-deployer')
             }}
 
             filterUpdate={filterUpdate}

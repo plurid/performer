@@ -39,6 +39,7 @@ import Project from '#kernel-components/Project';
 import Secret from '#kernel-components/Secret';
 import Webhook from '#kernel-components/Webhook';
 import Trigger from '#kernel-components/Trigger';
+import Deployer from '#kernel-components/Deployer';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -428,6 +429,17 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         case 'generate-trigger':
             return (
                 <Trigger
+                    theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'generate-deployer':
+            return (
+                <Deployer
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {
