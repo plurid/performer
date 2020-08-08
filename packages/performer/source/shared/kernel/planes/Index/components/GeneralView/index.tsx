@@ -263,9 +263,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
             break;
         case 'deploys':
             renderSelectedView = (
-                <DeploysView
-                    setGeneralView={setGeneralView}
-                />
+                <DeploysView />
             );
             break;
     }

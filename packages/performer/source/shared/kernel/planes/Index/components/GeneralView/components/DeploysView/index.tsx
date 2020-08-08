@@ -14,8 +14,20 @@ import {
 } from '@plurid/plurid-themes';
 
 import {
-    PluridIconEdit,
-    PluridIconDelete,
+    PluridApplicationConfigurator,
+    PluridPubSub,
+    TOPICS,
+} from '@plurid/plurid-react';
+
+import {
+    PluridIconQueue,
+    PluridIconRunning,
+    PluridIconWarning,
+    PluridIconStopped,
+    PluridIconTimeout,
+    PluridIconValid,
+    PluridIconCircle,
+    PluridIconEnter,
 } from '@plurid/plurid-icons-react';
 
 
@@ -25,15 +37,10 @@ import {
 } from '#server/utilities';
 
 import {
-    Trigger,
+    Deploy,
 } from '#server/data/interfaces';
 
 import EntityView from '#kernel-components/EntityView';
-
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_TRIGGER,
-} from '#kernel-services/graphql/mutate';
 
 import { AppState } from '#kernel-services/state/store';
 import selectors from '#kernel-services/state/selectors';
@@ -48,54 +55,81 @@ import {
 
 
 
-const triggerRowRenderer = (
-    trigger: Trigger,
-    handleObliterateTrigger: (
+const pluridPubSub = new PluridPubSub();
+
+const buildStatusIcons = {
+    QUEUE: PluridIconQueue,
+    RUNNING: PluridIconRunning,
+    FAILED: PluridIconWarning,
+    SUCCESS: PluridIconValid,
+    CANCELLED: PluridIconStopped,
+    TIMEOUT: PluridIconTimeout,
+};
+
+const durationTime = (
+    value: number,
+) => {
+    const minutes = Math.floor(value / 60);
+    const seconds = value - minutes * 60;
+
+    const timeString = `${minutes > 0 ? minutes + ' min' : ''} ${seconds} sec`;
+
+    return timeString;
+}
+
+const buildRowRenderer = (
+    build: Deploy,
+    openDeploy: (
         id: string,
     ) => void,
 ) => {
     const {
         id,
-        name,
-        repository,
-        branch,
-        path,
-        file,
+        status,
+        trigger,
+        time,
+        date,
         project,
-    } = trigger;
+    } = build;
+
+    const durationString = durationTime(time);
+
+    const dateString = new Date(date * 1000).toLocaleString();
+
+    const StatusIcon = buildStatusIcons[status];
 
     return (
         <>
+            <StatusIcon
+                inactive={true}
+                size={20}
+            />
+
             <div>
-                {name}
+                {id.slice(0, 6)}
             </div>
 
             <div>
-                {repository}
+                {trigger}
             </div>
 
             <div>
-                {branch}
+                {status === 'QUEUE'
+                    ? '—'
+                    : durationString
+                }
             </div>
 
             <div>
-                {path}
-            </div>
-
-            <div>
-                {file}
+                {dateString}
             </div>
 
             <div>
                 {project}
             </div>
 
-            <PluridIconEdit
-                atClick={() => {}}
-            />
-
-            <PluridIconDelete
-                atClick={() => handleObliterateTrigger(id)}
+            <PluridIconEnter
+                atClick={() => openDeploy(id)}
             />
         </>
     );
@@ -103,25 +137,29 @@ const triggerRowRenderer = (
 
 
 const createSearchTerms = (
-    triggers: Trigger[],
+    builds: Deploy[],
 ) => {
-    const searchTerms = triggers.map(
-        trigger => {
+    const searchTerms = builds.map(
+        build => {
             const {
                 id,
-                name,
-                repository,
-                branch,
-                path,
-            } = trigger;
+                status,
+                trigger,
+                time,
+                date,
+            } = build;
+
+            const durationString = durationTime(time);
+            const dateString = new Date(date * 1000).toLocaleString();
 
             const searchTerm = {
                 id,
                 data: [
-                    name.toLowerCase(),
-                    repository.toLowerCase(),
-                    branch.toLowerCase(),
-                    path.toLowerCase(),
+                    id,
+                    status.toLowerCase(),
+                    trigger.toLowerCase(),
+                    durationString.toLowerCase(),
+                    dateString.toLowerCase(),
                 ],
             };
 
@@ -134,32 +172,30 @@ const createSearchTerms = (
 
 
 /** [START] component */
-export interface TriggersViewOwnProperties {
+export interface DeploysViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
-    setGeneralView: any;
 
     /** optional */
     /** - values */
     /** - methods */
 }
 
-export interface TriggersViewStateProperties {
+export interface DeploysViewStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
-    stateTriggers: Trigger[];
+    stateDeploys: Deploy[];
 }
 
-export interface TriggersViewDispatchProperties {
-    dispatchRemoveEntity: typeof actions.data.removeEntity;
+export interface DeploysViewDispatchProperties {
 }
 
-export type TriggersViewProperties = TriggersViewOwnProperties
-    & TriggersViewStateProperties
-    & TriggersViewDispatchProperties;
+export type DeploysViewProperties = DeploysViewOwnProperties
+    & DeploysViewStateProperties
+    & DeploysViewDispatchProperties;
 
-const TriggersView: React.FC<TriggersViewProperties> = (
+const DeploysView: React.FC<DeploysViewProperties> = (
     properties,
 ) => {
     /** properties */
@@ -167,7 +203,6 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         /** required */
         /** - values */
         /** - methods */
-        setGeneralView,
 
         /** optional */
         /** - values */
@@ -176,49 +211,35 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         /** state */
         stateGeneralTheme,
         stateInteractionTheme,
-        stateTriggers,
+        stateDeploys,
 
         /** dispatch */
-        dispatchRemoveEntity,
     } = properties;
 
 
     /** handlers */
-    const handleObliterateTrigger = async (
+    const openDeploy = (
         id: string,
     ) => {
-        try {
-            dispatchRemoveEntity({
-                type: 'trigger',
-                id,
-            });
-
-            const input = {
-                value: id,
-            };
-
-            await client.mutate({
-                mutation: OBLITERATE_TRIGGER,
-                variables: {
-                    input,
-                },
-            });
-        } catch (error) {
-            return;
-        }
+        pluridPubSub.publish(
+            TOPICS.VIEW_ADD_PLANE,
+            {
+                plane: `/build/${id}`,
+            },
+        );
     }
 
 
     /** state */
     const [searchTerms, setSearchTerms] = useState(
-        createSearchTerms(stateTriggers),
+        createSearchTerms(stateDeploys),
     );
 
     const [filteredRows, setFilteredRows] = useState(
-        stateTriggers.map(
-            trigger => triggerRowRenderer(
-                trigger,
-                handleObliterateTrigger,
+        stateDeploys.map(
+            build => buildRowRenderer(
+                build,
+                openDeploy,
             ),
         ),
     );
@@ -230,25 +251,28 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     ) => {
         const value = rawValue.toLowerCase();
 
-        const filterIDs = getFilterIDs(searchTerms, value);
+        const filterIDs = getFilterIDs(
+            searchTerms,
+            value,
+        );
 
-        const filteredTriggers = stateTriggers.filter(stateTrigger => {
-            if (filterIDs.includes(stateTrigger.id)) {
+        const filteredDeploys = stateDeploys.filter(stateDeploy => {
+            if (filterIDs.includes(stateDeploy.id)) {
                 return true;
             }
 
             return false;
         });
 
-        const sortedTriggers = filteredTriggers.sort(
-            compareValues('name'),
+        const sortedDeploys = filteredDeploys.sort(
+            compareValues('date', 'desc'),
         );
 
         setFilteredRows(
-            sortedTriggers.map(
-                trigger => triggerRowRenderer(
-                    trigger,
-                    handleObliterateTrigger,
+            sortedDeploys.map(
+                build => buildRowRenderer(
+                    build,
+                    openDeploy,
                 ),
             ),
         );
@@ -257,44 +281,37 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
     /** effects */
     useEffect(() => {
-        const searchTerms = createSearchTerms(
-            stateTriggers,
-        );
-        const filteredRows = stateTriggers.map(
-            trigger => triggerRowRenderer(
-                trigger,
-                handleObliterateTrigger,
-            ),
-        );
+        const searchTerms = createSearchTerms(stateDeploys);
 
         setSearchTerms(searchTerms);
-        setFilteredRows(filteredRows);
     }, [
-        stateTriggers,
+        stateDeploys,
     ]);
 
 
     /** render */
     const rowsHeader = (
         <>
+            <PluridIconCircle
+                fill={true}
+                inactive={true}
+                size={20}
+            />
+
             <div>
-                name
+                id
             </div>
 
             <div>
-                repository
+                trigger
             </div>
 
             <div>
-                branch
+                duration
             </div>
 
             <div>
-                path
-            </div>
-
-            <div>
-                performer
+                triggered
             </div>
 
             <div>
@@ -302,49 +319,48 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             </div>
 
             <div />
-
-            <div />
         </>
     );
 
     return (
-        <EntityView
-            generalTheme={stateGeneralTheme}
-            interactionTheme={stateInteractionTheme}
+        <>
+            <PluridApplicationConfigurator
+                pubsub={pluridPubSub}
+            />
 
-            rowTemplate="2fr 1fr 0.5fr 2fr 2fr 1fr 30px 30px"
-            rowsHeader={rowsHeader}
-            rows={filteredRows}
-            noRows="no deploys"
+            <EntityView
+                generalTheme={stateGeneralTheme}
+                interactionTheme={stateInteractionTheme}
 
-            filterUpdate={filterUpdate}
-        />
+                rowTemplate="30px 60px auto 180px 200px 200px 30px"
+                rowsHeader={rowsHeader}
+                rows={filteredRows}
+                noRows="no builds"
+
+                filterUpdate={filterUpdate}
+            />
+        </>
     );
 }
 
 
 const mapStateToProperties = (
     state: AppState,
-): TriggersViewStateProperties => ({
+): DeploysViewStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
-    stateTriggers: selectors.data.getTriggers(state),
+    stateDeploys: selectors.data.getDeploys(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): TriggersViewDispatchProperties => ({
-    dispatchRemoveEntity: (
-        payload,
-    ) => dispatch (
-        actions.data.removeEntity(payload),
-    ),
+): DeploysViewDispatchProperties => ({
 });
 
 
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(TriggersView);
+)(DeploysView);
 /** [END] component */

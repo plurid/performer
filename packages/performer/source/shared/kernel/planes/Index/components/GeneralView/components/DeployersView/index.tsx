@@ -25,7 +25,7 @@ import {
 } from '#server/utilities';
 
 import {
-    Trigger,
+    Deployer,
 } from '#server/data/interfaces';
 
 import EntityView from '#kernel-components/EntityView';
@@ -49,8 +49,8 @@ import {
 
 
 const triggerRowRenderer = (
-    trigger: Trigger,
-    handleObliterateTrigger: (
+    trigger: Deployer,
+    handleObliterateDeployer: (
         id: string,
     ) => void,
 ) => {
@@ -95,7 +95,7 @@ const triggerRowRenderer = (
             />
 
             <PluridIconDelete
-                atClick={() => handleObliterateTrigger(id)}
+                atClick={() => handleObliterateDeployer(id)}
             />
         </>
     );
@@ -103,7 +103,7 @@ const triggerRowRenderer = (
 
 
 const createSearchTerms = (
-    triggers: Trigger[],
+    triggers: Deployer[],
 ) => {
     const searchTerms = triggers.map(
         trigger => {
@@ -134,7 +134,7 @@ const createSearchTerms = (
 
 
 /** [START] component */
-export interface TriggersViewOwnProperties {
+export interface DeployersViewOwnProperties {
     /** required */
     /** - values */
     /** - methods */
@@ -145,21 +145,21 @@ export interface TriggersViewOwnProperties {
     /** - methods */
 }
 
-export interface TriggersViewStateProperties {
+export interface DeployersViewStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
-    stateTriggers: Trigger[];
+    stateDeployers: Deployer[];
 }
 
-export interface TriggersViewDispatchProperties {
+export interface DeployersViewDispatchProperties {
     dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
-export type TriggersViewProperties = TriggersViewOwnProperties
-    & TriggersViewStateProperties
-    & TriggersViewDispatchProperties;
+export type DeployersViewProperties = DeployersViewOwnProperties
+    & DeployersViewStateProperties
+    & DeployersViewDispatchProperties;
 
-const TriggersView: React.FC<TriggersViewProperties> = (
+const DeployersView: React.FC<DeployersViewProperties> = (
     properties,
 ) => {
     /** properties */
@@ -176,7 +176,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         /** state */
         stateGeneralTheme,
         stateInteractionTheme,
-        stateTriggers,
+        stateDeployers,
 
         /** dispatch */
         dispatchRemoveEntity,
@@ -184,7 +184,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
 
     /** handlers */
-    const handleObliterateTrigger = async (
+    const handleObliterateDeployer = async (
         id: string,
     ) => {
         try {
@@ -211,14 +211,14 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
     /** state */
     const [searchTerms, setSearchTerms] = useState(
-        createSearchTerms(stateTriggers),
+        createSearchTerms(stateDeployers),
     );
 
     const [filteredRows, setFilteredRows] = useState(
-        stateTriggers.map(
+        stateDeployers.map(
             trigger => triggerRowRenderer(
                 trigger,
-                handleObliterateTrigger,
+                handleObliterateDeployer,
             ),
         ),
     );
@@ -232,23 +232,23 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
         const filterIDs = getFilterIDs(searchTerms, value);
 
-        const filteredTriggers = stateTriggers.filter(stateTrigger => {
-            if (filterIDs.includes(stateTrigger.id)) {
+        const filteredDeployers = stateDeployers.filter(stateDeployer => {
+            if (filterIDs.includes(stateDeployer.id)) {
                 return true;
             }
 
             return false;
         });
 
-        const sortedTriggers = filteredTriggers.sort(
+        const sortedDeployers = filteredDeployers.sort(
             compareValues('name'),
         );
 
         setFilteredRows(
-            sortedTriggers.map(
+            sortedDeployers.map(
                 trigger => triggerRowRenderer(
                     trigger,
-                    handleObliterateTrigger,
+                    handleObliterateDeployer,
                 ),
             ),
         );
@@ -258,19 +258,19 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     /** effects */
     useEffect(() => {
         const searchTerms = createSearchTerms(
-            stateTriggers,
+            stateDeployers,
         );
-        const filteredRows = stateTriggers.map(
+        const filteredRows = stateDeployers.map(
             trigger => triggerRowRenderer(
                 trigger,
-                handleObliterateTrigger,
+                handleObliterateDeployer,
             ),
         );
 
         setSearchTerms(searchTerms);
         setFilteredRows(filteredRows);
     }, [
-        stateTriggers,
+        stateDeployers,
     ]);
 
 
@@ -317,7 +317,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             rows={filteredRows}
             noRows="no triggers"
 
-            actionButtonText="Generate Trigger"
+            actionButtonText="Generate Deployer"
             actionButtonClick={() => {
                 setGeneralView('generate-trigger')
             }}
@@ -330,16 +330,16 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
 const mapStateToProperties = (
     state: AppState,
-): TriggersViewStateProperties => ({
+): DeployersViewStateProperties => ({
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
-    stateTriggers: selectors.data.getTriggers(state),
+    stateDeployers: selectors.data.getDeployers(state),
 });
 
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): TriggersViewDispatchProperties => ({
+): DeployersViewDispatchProperties => ({
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (
@@ -351,5 +351,5 @@ const mapDispatchToProperties = (
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(TriggersView);
+)(DeployersView);
 /** [END] component */
