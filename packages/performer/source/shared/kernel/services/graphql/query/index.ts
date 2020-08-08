@@ -40,6 +40,7 @@ export const GET_SETUP = gql`
                 secrets {
                     id
                     name
+                    endsWith
                     project
                 }
                 triggers {

@@ -56,6 +56,7 @@ const secretRowRenderer = (
     const {
         id,
         name,
+        endsWith,
         project,
     } = secret;
 
@@ -66,7 +67,7 @@ const secretRowRenderer = (
             </div>
 
             <div>
-                1234
+                {endsWith}
             </div>
 
             <div>
