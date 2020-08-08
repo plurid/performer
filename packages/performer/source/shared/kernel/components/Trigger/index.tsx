@@ -238,7 +238,7 @@ const Trigger: React.FC<TriggerProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={triggerFile}
-                        placeholder="performer"
+                        placeholder="file"
                         atChange={(event) => setTriggerFile(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"

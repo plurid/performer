@@ -238,7 +238,7 @@ const Deployer: React.FC<DeployerProperties> = (
                 <div>
                     <StyledPluridTextline
                         text={deployerFile}
-                        placeholder="performer"
+                        placeholder="file"
                         atChange={(event) => setDeployerFile(event.target.value)}
                         spellCheck={false}
                         autoCapitalize="false"
