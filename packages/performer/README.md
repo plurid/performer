@@ -102,9 +102,9 @@ In order to use performer, once the installation setup is finished, launch the p
 
 `Phase 8.⠀` — push to branch listened by trigger (`Phase 5`);
 
-`Phase 9.⠀` — `performer` will automatically handle the builds and deploys based on the specified triggers and deployers;
+`Phase 9.⠀` — `performer` will automatically handle the builds and deploys based on the specified repositories, webhooks, triggers, and deployers;
 
-`Phase 10.` — after `performer` finishes the build and deploy, run `git fetch origin` and `git pull` to update the local repositories.
+`Phase 10.` — once `performer` finishes the build and deploy, run `git fetch origin` and `git pull` to update the local repositories.
 
 
 ### Trigger example
