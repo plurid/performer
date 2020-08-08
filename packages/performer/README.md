@@ -37,8 +37,6 @@ Performer uses [plurid](https://github.com/plurid/plurid) to explore information
 
 + [Install](#install)
 + [Usage](#usage)
-    + [Setup](#setup)
-    + [Command-Line Interface](#command-line-interface)
 + [Packages](#packages)
 
 
@@ -80,47 +78,81 @@ performer starts a server listening on port `56065` serving the performer UI on 
 
 ## Usage
 
-1. Connect the server to one or more repositories
+In order to use performer, once the installation setup is finished, launch the performer UI and
 
-2. Create a trigger for one of the repositories, given a specific path for the build file, and a specific path to listen for changes
+`Phase 0.⠀` — add `provider(s)`;
 
-3. Write a build file with one or more stages
+`Phase 1a.` — link `repositories`;
+
+`Phase 1b.` — add `imagene(s)`;
+
+`Phase 2.⠀` — setup `webhook(s)`;
+
+`Phase 3.⠀` — generate `project(s)`;
+
+`Phase 4.⠀` — store `secret(s)`;
+
+`Phase 5.⠀` — generate `trigger(s)`;
+
+`Phase 6.⠀` — generate `deployer(s)`;
+
+——— `performer` setup finished ———
+
+`Phase 7.⠀` — code in the local repositories (linked at `Phase 1a`);
+
+`Phase 8.⠀` — push to branch listened by trigger (`Phase 5`);
+
+`Phase 9.⠀` — `performer` will automatically handle the builds and deploys based on the specified triggers and deployers;
+
+`Phase 10.` — after `performer` finishes the build and deploy, run `git fetch origin` and `git pull` to update the local repositories.
+
+
+### Trigger example
 
 ``` yaml
 stages:
 - name: 'Name of the Stage'
-  repository: 'name-of-registered-repository'
   directory: '/path/of/the/directory/to/work/in'
-  image: 'image-name-to-run-in-the-container'
+  imagene: 'image-name-to-run-in-the-container'
   command: 'run a command'
   environment:
   - 'LIST=of-environment-variables'
   secretsEnvironment:
-  - 'LIST=of-variables-to-be-inserted-from-the-secrets'
+  - 'SECRET'
+
+- name: 'Deploy'
+  imagene: 'deployer'
+  id: 'deployer-id'
 
 timeout: 720s
 
 secrets:
-- keychain: 'name-of-keychain'
-  secrets:
-    KEY: 'base64-encrypted-key'
+- 'SECRET'
 
 nodejs:
-  storeModulesActive: true # saves node_modules and .lock files for faster container creation
-  storeModulesTime: 5h
+  cacheModulesActive: true # cache node_modules and .lock files for faster container creation
+  cacheModulesTime: 5h # interger + 'h' for hours or 'forever'
 ```
 
-4. Push a change to the repository.
 
+### Deployer example
 
-### Setup
+``` yaml
+- name: 'Generate Latest Deployment'
+  directory: '/path/of/the/directory/to/work/in'
+  imagene: 'ubuntu'
+  command: [
+    '/bin/bash',
+    '-c',
+    'sed "s/COMMIT_SHA/${SHORT_SHA}/g" Deployment.template.yaml > Deployment.latest.yaml'
+  ]
 
-### Command-Line Interface
-
-Options:
-
-    -v, --version                   output the version number
-
-    -h, --help                      display help for command
-
-Commands:
+- name: 'Deploy Latest Imagene'
+  directory: '/path/of/the/directory/to/work/in'
+  imagene: 'kubectl'
+  command: [
+    'apply',
+    '-f',
+    'Deployment.latest.yaml'
+  ]
+```
