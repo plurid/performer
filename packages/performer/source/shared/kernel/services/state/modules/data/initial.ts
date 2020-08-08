@@ -11,5 +11,7 @@ export const initialState: Types.State = {
     secrets: [],
     webhooks: [],
     triggers: [],
+    deployers: [],
     builds: [],
+    deploys: [],
 };

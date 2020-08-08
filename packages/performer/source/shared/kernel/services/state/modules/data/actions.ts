@@ -8,7 +8,9 @@ import {
     Secret,
     Webhook,
     Trigger,
+    Deployer,
     Build,
+    Deploy,
 } from '#server/data/interfaces';
 
 
@@ -103,6 +105,16 @@ export const setTriggers = (
 }
 
 
+export const setDeployers = (
+    triggers: Deployer[],
+): Types.SetDeployersAction => {
+    return {
+        type: Types.SET_DEPLOYERS,
+        payload: triggers,
+    };
+}
+
+
 export const setBuilds = (
     builds: Build[],
 ): Types.SetBuildsAction => {
@@ -121,6 +133,24 @@ export const clearBuilds = (): Types.ClearBuildsAction => {
 }
 
 
+export const setDeploys = (
+    builds: Deploy[],
+): Types.SetDeploysAction => {
+    return {
+        type: Types.SET_DEPLOYS,
+        payload: builds,
+    };
+}
+
+
+export const clearDeploys = (): Types.ClearDeploysAction => {
+    return {
+        type: Types.CLEAR_DEPLOYS,
+        payload: undefined,
+    };
+}
+
+
 
 export const actions = {
     removeEntity,
@@ -132,6 +162,9 @@ export const actions = {
     setSecrets,
     setWebhooks,
     setTriggers,
+    setDeployers,
     setBuilds,
     clearBuilds,
+    setDeploys,
+    clearDeploys,
 };

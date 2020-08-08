@@ -6,7 +6,9 @@ import {
     Secret,
     Webhook,
     Trigger,
+    Deployer,
     Build,
+    Deploy,
 } from '#server/data/interfaces';
 
 
@@ -18,7 +20,8 @@ export type RemovableEntityType =
     | 'webhook'
     | 'project'
     | 'secret'
-    | 'trigger';
+    | 'trigger'
+    | 'deployer';
 
 export const REMOVE_ENTITY = 'REMOVE_ENTITY';
 export interface RemoveEntityPayload {
@@ -87,6 +90,13 @@ export interface SetTriggersAction {
 }
 
 
+export const SET_DEPLOYERS = 'SET_DEPLOYERS';
+export interface SetDeployersAction {
+    type: typeof SET_DEPLOYERS;
+    payload: Deployer[];
+}
+
+
 export const SET_BUILDS = 'SET_BUILDS';
 export interface SetBuildsAction {
     type: typeof SET_BUILDS;
@@ -96,6 +106,19 @@ export interface SetBuildsAction {
 export const CLEAR_BUILDS = 'CLEAR_BUILDS';
 export interface ClearBuildsAction {
     type: typeof CLEAR_BUILDS;
+    payload: undefined;
+}
+
+
+export const SET_DEPLOYS = 'SET_DEPLOYS';
+export interface SetDeploysAction {
+    type: typeof SET_DEPLOYS;
+    payload: Deploy[];
+}
+
+export const CLEAR_DEPLOYS = 'CLEAR_DEPLOYS';
+export interface ClearDeploysAction {
+    type: typeof CLEAR_DEPLOYS;
     payload: undefined;
 }
 
@@ -110,7 +133,9 @@ export interface State {
     projects: Project[];
     secrets: Secret[];
     triggers: Trigger[];
+    deployers: Deployer[];
     builds: Build[];
+    deploys: Deploy[];
 }
 
 
@@ -124,5 +149,8 @@ export type Actions =
     | SetProjectsAction
     | SetSecretsAction
     | SetTriggersAction
+    | SetDeployersAction
     | SetBuildsAction
-    | ClearBuildsAction;
+    | ClearBuildsAction
+    | SetDeploysAction
+    | ClearDeploysAction;

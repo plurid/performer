@@ -48,7 +48,9 @@ export interface HomeDispatchProperties {
     dispatchSetProjects: typeof actions.data.setProjects;
     dispatchSetSecrets: typeof actions.data.setSecrets;
     dispatchSetTriggers: typeof actions.data.setTriggers;
+    dispatchSetDeployers: typeof actions.data.setDeployers;
     dispatchSetBuilds: typeof actions.data.setBuilds;
+    dispatchSetDeploys: typeof actions.data.setDeploys;
     dispatchSetViewLoading: typeof actions.view.setViewLoading;
 }
 
@@ -74,8 +76,10 @@ const Home: React.FC<HomeProperties> = (
         dispatchSetProjects,
         dispatchSetSecrets,
         dispatchSetTriggers,
+        dispatchSetDeployers,
         dispatchSetBuilds,
         dispatchSetViewLoading,
+        dispatchSetDeploys,
     } = properties;
 
 
@@ -101,7 +105,9 @@ const Home: React.FC<HomeProperties> = (
                 projects,
                 secrets,
                 triggers,
+                deployers,
                 builds,
+                deploys,
             } = graphql.deleteTypenames(response.data);
 
             if (providers.length > 0) {
@@ -117,7 +123,9 @@ const Home: React.FC<HomeProperties> = (
             dispatchSetProjects(projects);
             dispatchSetSecrets(secrets);
             dispatchSetTriggers(triggers);
+            dispatchSetDeployers(deployers);
             dispatchSetBuilds(builds);
+            dispatchSetDeploys(deploys);
             dispatchSetViewLoading(false);
         }
 
@@ -185,10 +193,20 @@ const mapDispatchToProperties = (
     ) => dispatch(
         actions.data.setTriggers(triggers),
     ),
+    dispatchSetDeployers: (
+        triggers,
+    ) => dispatch(
+        actions.data.setDeployers(triggers),
+    ),
     dispatchSetBuilds: (
         builds,
     ) => dispatch(
         actions.data.setBuilds(builds),
+    ),
+    dispatchSetDeploys: (
+        builds,
+    ) => dispatch(
+        actions.data.setDeploys(builds),
     ),
     dispatchSetViewLoading: (
         loading,

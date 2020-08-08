@@ -12,7 +12,9 @@ const getWebhooks = (state: AppState) => state.data.webhooks;
 const getProjects = (state: AppState) => state.data.projects;
 const getSecrets = (state: AppState) => state.data.secrets;
 const getTriggers = (state: AppState) => state.data.triggers;
+const getDeployers = (state: AppState) => state.data.deployers;
 const getBuilds = (state: AppState) => state.data.builds;
+const getDeploys = (state: AppState) => state.data.deploys;
 
 
 const selectors = {
@@ -24,7 +26,9 @@ const selectors = {
     getProjects,
     getSecrets,
     getTriggers,
+    getDeployers,
     getBuilds,
+    getDeploys,
 };
 
 

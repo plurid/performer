@@ -51,7 +51,24 @@ export const GET_SETUP = gql`
                     path
                     file
                 }
+                deployers {
+                    id
+                    name
+                    project
+                    repository
+                    branch
+                    path
+                    file
+                }
                 builds {
+                    id
+                    status
+                    trigger
+                    time
+                    date
+                    project
+                }
+                deploys {
                     id
                     status
                     trigger

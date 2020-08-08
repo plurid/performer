@@ -33,10 +33,16 @@ export const reducer = (
             return resolvers.setSecrets(state, action);
         case Types.SET_TRIGGERS:
             return resolvers.setTriggers(state, action);
+        case Types.SET_DEPLOYERS:
+            return resolvers.setDeployers(state, action);
         case Types.SET_BUILDS:
             return resolvers.setBuilds(state, action);
         case Types.CLEAR_BUILDS:
             return resolvers.clearBuilds(state, action);
+        case Types.SET_DEPLOYS:
+            return resolvers.setDeploys(state, action);
+        case Types.CLEAR_DEPLOYS:
+            return resolvers.clearDeploys(state, action);
         default:
             return {
                 ...state,

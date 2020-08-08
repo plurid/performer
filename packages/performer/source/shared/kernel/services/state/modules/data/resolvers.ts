@@ -193,6 +193,19 @@ export const setTriggers = (
 }
 
 
+export const setDeployers = (
+    state: Types.State,
+    action: Types.SetDeployersAction,
+): Types.State => {
+    return {
+        ...state,
+        deployers: [
+            ...action.payload,
+        ],
+    };
+}
+
+
 export const setBuilds = (
     state: Types.State,
     action: Types.SetBuildsAction,
@@ -217,6 +230,30 @@ export const clearBuilds = (
 }
 
 
+export const setDeploys = (
+    state: Types.State,
+    action: Types.SetDeploysAction,
+): Types.State => {
+    return {
+        ...state,
+        deploys: [
+            ...action.payload,
+        ],
+    };
+}
+
+
+export const clearDeploys = (
+    state: Types.State,
+    action: Types.ClearDeploysAction,
+): Types.State => {
+    return {
+        ...state,
+        deploys: [],
+    };
+}
+
+
 
 export const resolvers = {
     removeEntity,
@@ -228,6 +265,9 @@ export const resolvers = {
     setProjects,
     setSecrets,
     setTriggers,
+    setDeployers,
     setBuilds,
     clearBuilds,
+    setDeploys,
+    clearDeploys,
 };
