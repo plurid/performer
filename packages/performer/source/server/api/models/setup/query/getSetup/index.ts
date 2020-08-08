@@ -15,7 +15,9 @@ const getSetup = async (
         projects,
         secrets,
         triggers,
+        deployers,
         builds,
+        deploys,
     } = context;
 
     return {
@@ -28,7 +30,9 @@ const getSetup = async (
             projects,
             secrets,
             triggers,
+            deployers,
             builds,
+            deploys,
         },
     };
 }

@@ -62,7 +62,7 @@ const loadDataFromFiles = async <T>(
 export const loadProviders = async () => {
     const providers = await loadDataFromFiles<Provider>(providersPath);
 
-    return providers;
+    return providers || [];
 }
 
 
@@ -73,35 +73,35 @@ export const loadImagenes = async () => {
         compareValues('name'),
     );
 
-    return sortedImagenes;
+    return sortedImagenes || [];
 }
 
 
 export const loadRepositories = async () => {
     const repositories = await loadDataFromFiles<Repository>(repositoriesMetadataPath);
 
-    return repositories;
+    return repositories || [];
 }
 
 
 export const loadWebhooks = async () => {
     const webhooks = await loadDataFromFiles<Webhook>(webhooksPath);
 
-    return webhooks;
+    return webhooks || [];
 }
 
 
 export const loadProjects = async () => {
     const projects = await loadDataFromFiles<Project>(projectsPath);
 
-    return projects;
+    return projects || [];
 }
 
 
 export const loadStoredSecrets = async () => {
     const storedSecrets = await loadDataFromFiles<SecretStored>(secretsPath);
 
-    return storedSecrets;
+    return storedSecrets || [];
 }
 
 
@@ -130,21 +130,21 @@ export const loadSecrets = async () => {
 export const loadTriggers = async () => {
     const triggers = await loadDataFromFiles<Trigger>(triggersPath);
 
-    return triggers;
+    return triggers || [];
 }
 
 
 export const loadDeployers = async () => {
     const deployers = await loadDataFromFiles<Deployer>(deployersPath);
 
-    return deployers;
+    return deployers || [];
 }
 
 
 export const loadBuildsQueued = async () => {
     const buildsQueued = await loadDataFromFiles<BuildData>(buildQueuePath);
 
-    return buildsQueued;
+    return buildsQueued || [];
 }
 
 
@@ -155,14 +155,18 @@ export const loadBuilds = async () => {
         compareValues('date', 'desc'),
     );
 
-    return sortedBuilds;
+    return sortedBuilds || [];
 }
 
 
 export const loadDeploys = async () => {
     const deploys = await loadDataFromFiles<Deploy>(deploysPath);
 
-    return deploys;
+    const sortedDeploys = deploys.sort(
+        compareValues('date', 'desc'),
+    );
+
+    return sortedDeploys || [];
 }
 
 
