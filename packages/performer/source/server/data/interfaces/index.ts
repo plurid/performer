@@ -130,17 +130,40 @@ export interface SecretStored {
 }
 
 
+export interface Deployer {
+    id: string;
+    name: string;
+    repository: string;
+    branch: string;
+    path: string;
+    file: string;
+    project: string;
+}
+
+export interface Deploy {
+    id: string;
+    status: string;
+    trigger: string;
+    time: number;
+    date: number;
+    stages: string[];
+    project: string;
+}
+
+
 
 export interface Context {
-    request: express.Request,
-    response: express.Response,
-    instance: express.Express,
+    request: express.Request;
+    response: express.Response;
+    instance: express.Express;
     providers: Provider[];
     imagenes: Imagene[];
-    repositories: Repository[],
-    webhooks: Webhook[],
-    projects: Project[],
-    secrets: Secret[],
-    triggers: Trigger[],
-    builds: Build[],
+    repositories: Repository[];
+    webhooks: Webhook[];
+    projects: Project[];
+    secrets: Secret[];
+    triggers: Trigger[];
+    deployers: Deployer[];
+    builds: Build[];
+    deploys: Deploy[];
 }

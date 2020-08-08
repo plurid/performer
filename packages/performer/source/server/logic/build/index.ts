@@ -27,8 +27,8 @@ import {
 } from '#server/data/interfaces';
 
 import {
-    buildlogsPath,
-    buildqueuePath,
+    buildLogsPath,
+    buildQueuePath,
     buildsPath,
 
     DOCKER_AUTH_USERNAME,
@@ -54,7 +54,7 @@ export const pushToBuildQueue = async (
     const buildlogName = buildData.id + '.json';
 
     const buildlogPath = path.join(
-        buildqueuePath,
+        buildQueuePath,
         buildlogName,
     );
 
@@ -706,7 +706,7 @@ export const saveBuildlog = (
     const buildlogName = buildID + '_' + stageIndex;
 
     const buildlogPath = path.join(
-        buildlogsPath,
+        buildLogsPath,
         buildlogName,
     );
 
@@ -730,7 +730,7 @@ export const getBuildLogs = async (
     for (const [index, stage] of stages.entries()) {
         const logname = id + '_' + index;
         const logPath = path.join(
-            buildlogsPath,
+            buildLogsPath,
             '/' + logname,
         );
         const data = await fs.readFile(logPath, 'utf-8');

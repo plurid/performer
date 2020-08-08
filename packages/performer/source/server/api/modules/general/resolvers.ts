@@ -6,7 +6,9 @@ import repositories from './repositories/resolvers';
 import projects from './projects/resolvers';
 import secrets from './secrets/resolvers';
 import triggers from './triggers/resolvers';
+import deployers from './deployers/resolvers';
 import builds from './builds/resolvers';
+import deploys from './deploys/resolvers';
 
 
 
@@ -28,7 +30,9 @@ const resolvers = generateResolvers(
     projects,
     secrets,
     triggers,
+    deployers,
     builds,
+    deploys,
 );
 
 

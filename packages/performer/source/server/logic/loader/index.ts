@@ -12,8 +12,10 @@ import {
     SecretStored,
     Webhook,
     Trigger,
+    Deployer,
     Build,
     BuildData,
+    Deploy,
 } from '#server/data/interfaces';
 
 import {
@@ -24,8 +26,10 @@ import {
     projectsPath,
     secretsPath,
     triggersPath,
+    deployersPath,
     buildsPath,
-    buildqueuePath,
+    buildQueuePath,
+    deploysPath,
 } from '#server/data/constants';
 
 import {
@@ -59,6 +63,17 @@ export const loadProviders = async () => {
     const providers = await loadDataFromFiles<Provider>(providersPath);
 
     return providers;
+}
+
+
+export const loadImagenes = async () => {
+    const imagenes = await loadDataFromFiles<Imagene>(imagenesPath);
+
+    const sortedImagenes = imagenes.sort(
+        compareValues('name'),
+    );
+
+    return sortedImagenes;
 }
 
 
@@ -119,8 +134,15 @@ export const loadTriggers = async () => {
 }
 
 
+export const loadDeployers = async () => {
+    const deployers = await loadDataFromFiles<Deployer>(deployersPath);
+
+    return deployers;
+}
+
+
 export const loadBuildsQueued = async () => {
-    const buildsQueued = await loadDataFromFiles<BuildData>(buildqueuePath);
+    const buildsQueued = await loadDataFromFiles<BuildData>(buildQueuePath);
 
     return buildsQueued;
 }
@@ -137,14 +159,10 @@ export const loadBuilds = async () => {
 }
 
 
-export const loadImagenes = async () => {
-    const imagenes = await loadDataFromFiles<Imagene>(imagenesPath);
+export const loadDeploys = async () => {
+    const deploys = await loadDataFromFiles<Deploy>(deploysPath);
 
-    const sortedImagenes = imagenes.sort(
-        compareValues('name'),
-    );
-
-    return sortedImagenes;
+    return deploys;
 }
 
 
@@ -156,7 +174,10 @@ const loadData = async () => {
     const projects = await loadProjects();
     const secrets = await loadSecrets();
     const triggers = await loadTriggers();
+    const deployers = await loadDeployers();
     const builds = await loadBuilds();
+    const deploys = await loadDeploys();
+
 
     const data = {
         providers,
@@ -166,7 +187,9 @@ const loadData = async () => {
         projects,
         secrets,
         triggers,
+        deployers,
         builds,
+        deploys,
     };
 
     return data;

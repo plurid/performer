@@ -40,6 +40,7 @@ export const types = gql`
         projects: [Project!]
         secrets: [Secret!]
         triggers: [Trigger!]
+        deployers: [Deployer!]
         builds: [Build!]
     }
 

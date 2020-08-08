@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import {
     providersPath,
     imagenesPath,
@@ -9,55 +7,38 @@ import {
     projectsPath,
     secretsPath,
     triggersPath,
+    deployersPath,
     buildsPath,
-    buildlogsPath,
-    buildqueuePath,
+    buildLogsPath,
+    buildQueuePath,
+    deploysPath,
 } from '#server/data/constants';
+
+import {
+    makeDirectorySync,
+} from '#server/utilities/directory';
 
 
 
 const makeDirectories = () => {
-    fs.mkdirSync(providersPath, {
-        recursive: true,
-    });
+    const directories = [
+        providersPath,
+        imagenesPath,
+        repositoriesPath,
+        repositoriesMetadataPath,
+        webhooksPath,
+        projectsPath,
+        secretsPath,
+        triggersPath,
+        deployersPath,
+        buildsPath,
+        buildLogsPath,
+        buildQueuePath,
+        deploysPath,
+    ];
 
-    fs.mkdirSync(repositoriesPath, {
-        recursive: true,
-    });
-    fs.mkdirSync(repositoriesMetadataPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(webhooksPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(projectsPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(secretsPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(triggersPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(buildsPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(buildlogsPath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(buildqueuePath, {
-        recursive: true,
-    });
-
-    fs.mkdirSync(imagenesPath, {
-        recursive: true,
+    directories.forEach(directory => {
+        makeDirectorySync(directory);
     });
 }
 

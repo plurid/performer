@@ -5,6 +5,8 @@ import Repositories from './repositories';
 import Secrets from './secrets';
 import Setup from './setup';
 import Triggers from './triggers';
+import Deployers from './deployers';
+import Deploys from './deploys';
 
 
 
@@ -16,4 +18,6 @@ export {
     Secrets,
     Setup,
     Triggers,
+    Deployers,
+    Deploys,
 };
