@@ -112,12 +112,14 @@ export const loadSecrets = async () => {
             id,
             name,
             project,
+            value,
         } = storedSecret;
 
         const secret: Secret = {
             id,
             name,
             project,
+            endsWith: value.substr(value.length - 4),
         };
 
         return secret;

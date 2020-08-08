@@ -119,6 +119,7 @@ export interface Project {
 export interface Secret {
     id: string;
     name: string;
+    endsWith: string;
     project: string;
 }
 
