@@ -5,7 +5,7 @@ import {
 import path from 'path';
 
 import {
-    buildqueuePath,
+    buildQueuePath,
 } from '#server/data/constants';
 
 
@@ -14,7 +14,7 @@ export const removeFromQueue = async (
     id: string,
 ) => {
     const buildQueuedPath = path.join(
-        buildqueuePath,
+        buildQueuePath,
         '/' + id + '.json',
     );
 

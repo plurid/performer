@@ -5,7 +5,7 @@ import syncFs, {
 import path from 'path';
 
 import {
-    buildqueuePath,
+    buildQueuePath,
 } from '#server/data/constants';
 
 import {
@@ -57,7 +57,7 @@ class BuildQueueWatcher {
             this.inQueue += 1;
 
             const filepath = path.join(
-                buildqueuePath,
+                buildQueuePath,
                 '/' + filename,
             );
 
@@ -78,7 +78,7 @@ class BuildQueueWatcher {
     }
 
     startWatcher() {
-        syncFs.watch(buildqueuePath, (
+        syncFs.watch(buildQueuePath, (
             _,
             filename,
         ) => {
