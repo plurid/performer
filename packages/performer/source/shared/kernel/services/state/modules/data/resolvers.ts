@@ -33,6 +33,9 @@ export const removeEntity = (
     let triggers = [
         ...newState.triggers,
     ];
+    let deployers = [
+        ...newState.deployers,
+    ];
 
     switch (type) {
         case 'provider':
@@ -65,6 +68,11 @@ export const removeEntity = (
                 trigger => trigger.id !== id
             );
             break;
+        case 'deployer':
+            deployers = deployers.filter(
+                deployer => deployer.id !== id
+            );
+            break;
     }
 
     return {
@@ -86,6 +94,9 @@ export const removeEntity = (
         ],
         triggers: [
             ...triggers,
+        ],
+        deployers: [
+            ...deployers,
         ],
     };
 }
