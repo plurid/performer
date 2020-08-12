@@ -1,5 +1,5 @@
-/** [START] imports */
-/** libraries */
+// #region imports
+// #region libraries
 import React, {
     useState,
 } from 'react';
@@ -12,12 +12,15 @@ import {
     PluridTextline,
     PluridPureButton,
 } from '@plurid/plurid-ui-react';
+// #endregion libraries
 
 
-/** external */
+// #region external
+
+// #endregion external
 
 
-/** internal */
+// #region internal
 import {
     StyledEntityView,
     StyledEntityList,
@@ -25,14 +28,15 @@ import {
     StyledActionButton,
     StyledNoRows,
 } from './styled';
-/** [END] imports */
+// #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface EntityViewProperties {
-    /** required */
-    /** - values */
+    // #region required
+    // #region values
     generalTheme: Theme;
     interactionTheme: Theme;
 
@@ -42,22 +46,29 @@ export interface EntityViewProperties {
     noRows: string;
 
     actionButtonText?: string;
-    /** - methods */
+    // #endregion values
+
+    // #region methods
     actionButtonClick?: () => void;
     filterUpdate?: any;
+    // #endregion methods
+    // #endregion required
 
-    /** optional */
-    /** - values */
-    /** - methods */
+    // #region optional
+    // #region values
+    // #endregion values
+    // #region methods
+    // #endregion methods
+    // #endregion optional
 }
 
 const EntityView: React.FC<EntityViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
+        // #region required
+        // #region values
         generalTheme,
         interactionTheme,
 
@@ -67,24 +78,33 @@ const EntityView: React.FC<EntityViewProperties> = (
         noRows,
 
         actionButtonText,
-        /** - methods */
+        // #endregion values
+
+        // #region methods
         actionButtonClick,
         filterUpdate,
+        // #endregion methods
+        // #endregion required
 
-        /** optional */
-        /** - values */
-        /** - methods */
+        // #region optional
+        // #region values
+        // #endregion values
+        // #region methods
+        // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         searchValue,
         setSearchValue,
     ] = useState('');
+    // #endregion state
 
 
-    /** render */
+    // #region render
     return (
         <StyledEntityView
             theme={generalTheme}
@@ -160,8 +180,9 @@ const EntityView: React.FC<EntityViewProperties> = (
             )}
         </StyledEntityView>
     );
+    // #endregion render
 }
 
 
 export default EntityView;
-/** [END] component */
+// #endregion module

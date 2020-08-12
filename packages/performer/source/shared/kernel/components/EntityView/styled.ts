@@ -1,11 +1,14 @@
+// #region imports
 import styled from 'styled-components';
 
 import {
     Theme,
 } from '@plurid/plurid-themes';
+// #endregion imports
 
 
 
+// #region module
 export interface IStyledEntityView {
     theme: Theme;
 }
@@ -89,3 +92,4 @@ export const StyledNoRows = styled.div`
     margin: 20px 0;
     text-align: center;
 `;
+// #endregion module
