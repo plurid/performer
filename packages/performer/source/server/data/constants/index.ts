@@ -2,6 +2,9 @@ import path from 'path';
 
 
 
+export * from './configuration';
+
+
 export const GITHUB_API = 'https://api.github.com/graphql';
 export const GITHUB_PROVIDER = 'github';
 

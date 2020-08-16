@@ -17,6 +17,8 @@ import {
 
 import {
     webhooksPath,
+    logLevel,
+    logLevels,
 } from '#server/data/constants';
 
 import {
@@ -63,6 +65,10 @@ export const handleGithubWebhook = async (
     response: express.Response,
 ) => {
     try {
+        if (logLevel <= logLevels.info) {
+            console.log('[Info : Start] :: handleGithubWebhook');
+        }
+
         const data = request.body;
 
         const {
@@ -112,7 +118,15 @@ export const handleGithubWebhook = async (
             branchName,
             repositoryName,
         );
+
+        if (logLevel <= logLevels.info) {
+            console.log('[Info : End] :: handleGithubWebhook');
+        }
     } catch (error) {
+        if (logLevel <= logLevels.error) {
+            console.log('[Error : End] :: handleGithubWebhook', error);
+        }
+
         /** Bad Request */
         response.status(400).end();
         return;
