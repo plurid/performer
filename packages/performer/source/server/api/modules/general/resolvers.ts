@@ -4,15 +4,16 @@
     // #endregion libraries
 
     // #region internal
-    import setup from './setup/resolvers';
-    import imagenes from './imagenes/resolvers';
-    import repositories from './repositories/resolvers';
-    import projects from './projects/resolvers';
-    import secrets from './secrets/resolvers';
-    import triggers from './triggers/resolvers';
-    import deployers from './deployers/resolvers';
     import builds from './builds/resolvers';
+    import deployers from './deployers/resolvers';
     import deploys from './deploys/resolvers';
+    import imagenes from './imagenes/resolvers';
+    import owner from './owner/resolvers';
+    import projects from './projects/resolvers';
+    import repositories from './repositories/resolvers';
+    import secrets from './secrets/resolvers';
+    import setup from './setup/resolvers';
+    import triggers from './triggers/resolvers';
     // #endregion internal
 // #endregion imports
 
@@ -33,15 +34,16 @@ const generateResolvers = (
 }
 
 const resolvers = generateResolvers(
-    setup,
-    imagenes,
-    repositories,
-    projects,
-    secrets,
-    triggers,
-    deployers,
     builds,
+    deployers,
     deploys,
+    imagenes,
+    owner,
+    projects,
+    repositories,
+    secrets,
+    setup,
+    triggers,
 );
 // #endregion module
 

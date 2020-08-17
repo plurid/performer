@@ -3,6 +3,7 @@
     import Projects from './projects';
     import Builds from './builds';
     import Imagenes from './imagenes';
+    import Owner from './owner';
     import Repositories from './repositories';
     import Secrets from './secrets';
     import Setup from './setup';
@@ -19,6 +20,7 @@ export {
     Projects,
     Builds,
     Imagenes,
+    Owner,
     Repositories,
     Secrets,
     Setup,
