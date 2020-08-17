@@ -22,7 +22,7 @@ import {
 /** external */
 import {
     compareValues,
-} from '#server/utilities';
+} from '#server/utilities/general';
 
 import {
     Deployer,
