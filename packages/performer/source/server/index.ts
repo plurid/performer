@@ -134,7 +134,9 @@ const performerSetup = (
  * for programmatic usage.
  */
 if (require.main === module) {
-    performerSetup();
+    performerSetup(
+        // mockLogic,
+    );
 
     performerServer.start(port);
 }

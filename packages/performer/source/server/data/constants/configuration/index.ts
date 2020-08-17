@@ -26,4 +26,13 @@ export const logLevels = {
 export const logLevel = QUIET
     ? 0
     : parseInt(LOG_LEVEL);
+
+
+
+export const PRIVATE_USAGE = process.env.PERFORMER_PRIVATE_USAGE
+    ? process.env.PERFORMER_PRIVATE_USAGE === 'true'
+    : false;
+export const PRIVATE_OWNER_IDENTONYM = process.env.PERFORMER_PRIVATE_OWNER_IDENTONYM || '';
+export const PRIVATE_OWNER_KEY = process.env.PERFORMER_PRIVATE_OWNER_KEY || '';
+export const PRIVATE_TOKEN = process.env.PERFORMER_PRIVATE_TOKEN || '';
 // #endregion module
