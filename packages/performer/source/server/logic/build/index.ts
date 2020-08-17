@@ -30,13 +30,16 @@
     } from '#server/data/interfaces';
 
     import {
-        buildLogsPath,
-        buildQueuePath,
-        buildsPath,
+        BASE_PATH_BUILDS,
+        BASE_PATH_BUILD_QUEUE,
+        BASE_PATH_BUILD_LOGS,
 
         DOCKER_AUTH_USERNAME,
         DOCKER_AUTH_PASSWORD,
         DOCKER_AUTH_SERVER_ADDRESS,
+
+        logLevel,
+        logLevels,
     } from '#server/data/constants';
 
     import {
@@ -44,6 +47,8 @@
     } from '#server/logic/loader';
 
     import docker from '#server/logic/engine';
+
+    import storage from '#server/services/storage';
 
     import {
         copyDirectory,
@@ -57,16 +62,16 @@
 export const pushToBuildQueue = async (
     buildData: BuildData,
 ) => {
-    const buildlogName = buildData.id + '.json';
+    const buildQueueName = buildData.id + '.json';
 
-    const buildlogPath = path.join(
-        buildQueuePath,
-        buildlogName,
+    const buildQueuePath = path.join(
+        BASE_PATH_BUILD_QUEUE,
+        buildQueueName,
     );
 
-    await fs.writeFile(
-        buildlogPath,
-        JSON.stringify(buildData, null, 4),
+    await storage.upload(
+        buildQueuePath,
+        Buffer.from(JSON.stringify(buildData, null, 4), 'utf-8'),
     );
 
     await writeBuildFile(
@@ -103,13 +108,13 @@ export const writeBuildFile = async (
     const buildFile = id + '.json';
 
     const buildPath = path.join(
-        buildsPath,
+        BASE_PATH_BUILDS,
         buildFile,
     );
 
-    await fs.writeFile(
+    await storage.upload(
         buildPath,
-        JSON.stringify(build, null, 4),
+        Buffer.from(JSON.stringify(build, null, 4), 'utf-8'),
     );
 }
 
@@ -154,7 +159,6 @@ export const triggerBuild = async (
         );
         const performerFile = await fs.readFile(performerFilePath, 'utf-8');
         const performerObject = yaml.safeLoad(performerFile);
-        console.log('performerObject', performerObject);
 
         if (!performerObject || typeof performerObject === 'string') {
             return;
@@ -175,7 +179,10 @@ export const triggerBuild = async (
             trigger.project,
         );
     } catch (error) {
-        console.log('Trigger build error', error);
+        if (logLevel <= logLevels.error) {
+            console.log('[Performer Error 500] :: triggerBuild', error);
+        }
+
         return;
     }
 }
@@ -703,7 +710,7 @@ export const runInContainer = (
 }
 
 
-export const saveBuildlog = (
+export const saveBuildlog = async (
     command: string,
     buildID: string,
     stageIndex: number,
@@ -712,14 +719,17 @@ export const saveBuildlog = (
     const buildlogName = buildID + '_' + stageIndex;
 
     const buildlogPath = path.join(
-        buildLogsPath,
+        BASE_PATH_BUILD_LOGS,
         buildlogName,
     );
 
     const dataLog = '> ' + command + '\n'
         + data;
 
-    fs.writeFile(buildlogPath, dataLog);
+    await storage.upload(
+        buildlogPath,
+        Buffer.from(dataLog, 'utf-8'),
+    );
 }
 
 
@@ -736,10 +746,14 @@ export const getBuildLogs = async (
     for (const [index, stage] of stages.entries()) {
         const logname = id + '_' + index;
         const logPath = path.join(
-            buildLogsPath,
+            BASE_PATH_BUILD_LOGS,
             '/' + logname,
         );
-        const data = await fs.readFile(logPath, 'utf-8');
+
+        const data = await storage.download(
+            logPath,
+        ) || '';
+
         const result = {
             name: stage,
             data,
