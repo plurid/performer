@@ -1,15 +1,20 @@
-import Projects from './projects';
-import Builds from './builds';
-import Imagenes from './imagenes';
-import Repositories from './repositories';
-import Secrets from './secrets';
-import Setup from './setup';
-import Triggers from './triggers';
-import Deployers from './deployers';
-import Deploys from './deploys';
+// #region imports
+    // #region internal
+    import Projects from './projects';
+    import Builds from './builds';
+    import Imagenes from './imagenes';
+    import Repositories from './repositories';
+    import Secrets from './secrets';
+    import Setup from './setup';
+    import Triggers from './triggers';
+    import Deployers from './deployers';
+    import Deploys from './deploys';
+    // #endregion internal
+// #endregion imports
 
 
 
+// #region exports
 export {
     Projects,
     Builds,
@@ -21,3 +26,4 @@ export {
     Deployers,
     Deploys,
 };
+// #endregion exports
