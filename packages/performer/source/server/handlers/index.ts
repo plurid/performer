@@ -6,6 +6,10 @@
 
     // #region external
     import {
+        PerformerLogic,
+    } from '#server/data/interfaces';
+
+    import {
         BuildQueueWatcher,
     } from '#server/logic/queue';
     // #endregion external
@@ -24,15 +28,21 @@
 // #region module
 const setupHandlers = (
     server: PluridServer,
-    logic: any,
+    logic?: PerformerLogic,
 ) => {
-    setupGlobal();
-
     const instance = server.instance();
 
-    setupMiddleware(instance);
-    setupGraphQL(instance);
-    setupWebhooks(instance);
+    setupGlobal();
+    setupMiddleware(
+        instance,
+        logic,
+    );
+    setupGraphQL(
+        instance,
+    );
+    setupWebhooks(
+        instance,
+    );
 
     const buildQueue = new BuildQueueWatcher();
     buildQueue.startWatcher();

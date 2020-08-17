@@ -1,7 +1,7 @@
 // #region imports
     // #region libraries
     import {
-        Express,
+        Application,
     } from 'express';
     // #endregion libraries
 
@@ -21,7 +21,7 @@
 
 // #region module
 const setupWebhooks = async (
-    instance: Express,
+    instance: Application,
 ) => {
     const webhooks = await loadWebhooks();
 

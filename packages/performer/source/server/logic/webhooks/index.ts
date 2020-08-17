@@ -144,7 +144,7 @@ export const handleGithubWebhook = async (
 export const handleWebhook = (
     provider: CodeProvider,
     hookpath: string,
-    instance: express.Express,
+    instance: express.Application,
 ) => {
     const routes = getRoutes(instance);
     if (routes.includes(hookpath)) {
@@ -166,7 +166,7 @@ export const handleWebhook = (
 
 export const handleWebhooks = (
     webhooks: Webhook[],
-    instance: express.Express,
+    instance: express.Application,
 ) => {
     for (const webhook of webhooks) {
         const {

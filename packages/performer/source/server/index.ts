@@ -24,6 +24,10 @@
 
 
     // #region internal
+    import {
+        PerformerLogic,
+    } from './data/interfaces';
+
     import preserves from './preserves';
 
     import setupHandlers from './handlers';
@@ -109,7 +113,7 @@ const performerServer = new PluridServer({
 
 
 const performerSetup = (
-    logic?: any,
+    logic?: PerformerLogic,
 ) => {
     setupHandlers(
         performerServer,

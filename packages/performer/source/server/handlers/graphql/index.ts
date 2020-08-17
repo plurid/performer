@@ -1,7 +1,7 @@
 // #region imports
     // #region libraries
     import {
-        Express,
+        Application,
     } from 'express';
 
     import {
@@ -38,7 +38,7 @@
 
 // #region module
 const setupGraphQLServer = async (
-    instance: Express,
+    instance: Application,
 ) => {
     const playground = {
         faviconUrl: GRAPHQL_FAVICON,

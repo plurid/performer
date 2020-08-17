@@ -8,7 +8,7 @@
 
 // #region module
 export const getRoutes = (
-    instance: express.Express,
+    instance: express.Application,
 ) => {
     const routes = instance._router.stack           // registered routes
                     .filter((r: any) => r.route)    // take out all the middleware

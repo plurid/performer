@@ -9,6 +9,11 @@
 
     // #region external
     import {
+        PerformerLogic,
+        PerformerRequest,
+    } from '#server/data/interfaces';
+
+    import {
         HEALTH_CHECK_ENDPOINT,
 
         Headers,
@@ -22,8 +27,19 @@
 // #region module
 const setupMiddleware = async (
     instance: Express,
+    logic?: PerformerLogic,
 ) => {
     instance.use(
+        /** Attach logic */
+        (request, _, next) => {
+            if (logic) {
+                (request as PerformerRequest).performerLogic = {
+                    ...logic,
+                };
+            }
+
+            next();
+        },
         bodyParser.json(),
     );
 
