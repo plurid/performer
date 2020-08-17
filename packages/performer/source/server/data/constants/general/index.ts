@@ -19,21 +19,21 @@ export const BITBUCKET_PROVIDER = 'bitbucket';
 
 
 export const BASE_PATH = process.cwd();
-export const BASE_PATH_PROVIDERS = './data/providers/';
-export const BASE_PATH_IMAGENES = './data/imagenes/';
-export const BASE_PATH_REPOSITORIES = './data/repositories/';
-export const BASE_PATH_REPOSITORIES_METADATA = './data/repositories/metadata/';
-export const BASE_PATH_WEBHOOKS = './data/webhooks/';
-export const BASE_PATH_PROJECTS = './data/projects/';
-export const BASE_PATH_SECRETS = './data/secrets/';
-export const BASE_PATH_TRIGGERS = './data/triggers/';
-export const BASE_PATH_DEPLOYERS = './data/deployers/';
-export const BASE_PATH_BUILDS = './data/builds/';
-export const BASE_PATH_BUILD_LOGS = './data/buildlogs/';
-export const BASE_PATH_BUILD_QUEUE = './data/buildqueue/';
-export const BASE_PATH_DEPLOYS = './data/deploys/';
-export const BASE_PATH_DEPLOY_LOGS = './data/deployslogs/';
-export const BASE_PATH_DEPLOY_QUEUE = './data/deploysqueue/';
+export const BASE_PATH_PROVIDERS = '/data/providers/';
+export const BASE_PATH_IMAGENES = '/data/imagenes/';
+export const BASE_PATH_REPOSITORIES = '/data/repositories/';
+export const BASE_PATH_REPOSITORIES_METADATA = '/data/repositories/metadata/';
+export const BASE_PATH_WEBHOOKS = '/data/webhooks/';
+export const BASE_PATH_PROJECTS = '/data/projects/';
+export const BASE_PATH_SECRETS = '/data/secrets/';
+export const BASE_PATH_TRIGGERS = '/data/triggers/';
+export const BASE_PATH_DEPLOYERS = '/data/deployers/';
+export const BASE_PATH_BUILDS = '/data/builds/';
+export const BASE_PATH_BUILD_LOGS = '/data/buildlogs/';
+export const BASE_PATH_BUILD_QUEUE = '/data/buildqueue/';
+export const BASE_PATH_DEPLOYS = '/data/deploys/';
+export const BASE_PATH_DEPLOY_LOGS = '/data/deployslogs/';
+export const BASE_PATH_DEPLOY_QUEUE = '/data/deploysqueue/';
 
 
 export const providersPath = path.join(BASE_PATH, BASE_PATH_PROVIDERS);
