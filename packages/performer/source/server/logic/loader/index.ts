@@ -16,17 +16,17 @@
     } from '#server/data/interfaces';
 
     import {
-        imagenesPath,
-        providersPath,
-        repositoriesMetadataPath,
-        webhooksPath,
-        projectsPath,
-        secretsPath,
-        triggersPath,
-        deployersPath,
-        buildsPath,
-        buildQueuePath,
-        deploysPath,
+        BASE_PATH_PROVIDERS,
+        BASE_PATH_IMAGENES,
+        BASE_PATH_REPOSITORIES_METADATA,
+        BASE_PATH_WEBHOOKS,
+        BASE_PATH_PROJECTS,
+        BASE_PATH_SECRETS,
+        BASE_PATH_TRIGGERS,
+        BASE_PATH_DEPLOYERS,
+        BASE_PATH_BUILDS,
+        BASE_PATH_BUILD_QUEUE,
+        BASE_PATH_DEPLOYS,
     } from '#server/data/constants';
 
     import {
@@ -41,14 +41,14 @@
 
 // #region module
 export const loadProviders = async () => {
-    const providers: Provider[] = await storage.downloadAll(providersPath);
+    const providers: Provider[] = await storage.downloadAll(BASE_PATH_PROVIDERS);
 
     return providers || [];
 }
 
 
 export const loadImagenes = async () => {
-    const imagenes: Imagene[] = await storage.downloadAll(imagenesPath);
+    const imagenes: Imagene[] = await storage.downloadAll(BASE_PATH_IMAGENES);
 
     const sortedImagenes = imagenes.sort(
         compareValues('name'),
@@ -59,28 +59,28 @@ export const loadImagenes = async () => {
 
 
 export const loadRepositories = async () => {
-    const repositories: Repository[] = await storage.downloadAll(repositoriesMetadataPath);
+    const repositories: Repository[] = await storage.downloadAll(BASE_PATH_REPOSITORIES_METADATA);
 
     return repositories || [];
 }
 
 
 export const loadWebhooks = async () => {
-    const webhooks: Webhook[] = await storage.downloadAll(webhooksPath);
+    const webhooks: Webhook[] = await storage.downloadAll(BASE_PATH_WEBHOOKS);
 
     return webhooks || [];
 }
 
 
 export const loadProjects = async () => {
-    const projects: Project[] = await storage.downloadAll(projectsPath);
+    const projects: Project[] = await storage.downloadAll(BASE_PATH_PROJECTS);
 
     return projects || [];
 }
 
 
 export const loadStoredSecrets = async () => {
-    const storedSecrets: SecretStored[] = await storage.downloadAll(secretsPath);
+    const storedSecrets: SecretStored[] = await storage.downloadAll(BASE_PATH_SECRETS);
 
     return storedSecrets || [];
 }
@@ -111,28 +111,28 @@ export const loadSecrets = async () => {
 
 
 export const loadTriggers = async () => {
-    const triggers: Trigger[] = await storage.downloadAll(triggersPath);
+    const triggers: Trigger[] = await storage.downloadAll(BASE_PATH_TRIGGERS);
 
     return triggers || [];
 }
 
 
 export const loadDeployers = async () => {
-    const deployers: Deployer[] = await storage.downloadAll(deployersPath);
+    const deployers: Deployer[] = await storage.downloadAll(BASE_PATH_DEPLOYERS);
 
     return deployers || [];
 }
 
 
 export const loadBuildsQueued = async () => {
-    const buildsQueued: BuildData[] = await storage.downloadAll(buildQueuePath);
+    const buildsQueued: BuildData[] = await storage.downloadAll(BASE_PATH_BUILD_QUEUE);
 
     return buildsQueued || [];
 }
 
 
 export const loadBuilds = async () => {
-    const builds: Build[] = await storage.downloadAll(buildsPath);
+    const builds: Build[] = await storage.downloadAll(BASE_PATH_BUILDS);
 
     const sortedBuilds = builds.sort(
         compareValues('date', 'desc'),
@@ -143,7 +143,7 @@ export const loadBuilds = async () => {
 
 
 export const loadDeploys = async () => {
-    const deploys: Deploy[] = await storage.downloadAll(deploysPath);
+    const deploys: Deploy[] = await storage.downloadAll(BASE_PATH_DEPLOYS);
 
     const sortedDeploys = deploys.sort(
         compareValues('date', 'desc'),
