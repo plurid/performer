@@ -48,7 +48,7 @@ const storageDownloadAll: StorageDownloadAll = async (
             console.log(`[Performer Error 500] :: Filesystem could not download ${directory}.`);
         }
 
-        return;
+        return [];
     }
 }
 

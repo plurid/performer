@@ -29,7 +29,7 @@ export type StorageDownload = (
 
 export type StorageDownloadAll = (
     directory: string,
-) => Promise<any[] | undefined>;
+) => Promise<any[]>;
 
 export type StorageUpload = (
     filename: string,

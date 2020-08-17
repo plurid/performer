@@ -40,6 +40,8 @@
     import {
         compareValues,
     } from '#server/utilities';
+
+    import storage from '#server/services/storage';
     // #endregion external
 // #endregion imports
 
@@ -68,6 +70,7 @@ const loadDataFromFiles = async <T>(
 
 
 export const loadProviders = async () => {
+    // const providers: Provider[] = await storage.downloadAll(providersPath);
     const providers = await loadDataFromFiles<Provider>(providersPath);
 
     return providers || [];
@@ -75,6 +78,7 @@ export const loadProviders = async () => {
 
 
 export const loadImagenes = async () => {
+    // const imagene: Imagene[] = await storage.downloadAll(imagenesPath);
     const imagenes = await loadDataFromFiles<Imagene>(imagenesPath);
 
     const sortedImagenes = imagenes.sort(
@@ -86,6 +90,7 @@ export const loadImagenes = async () => {
 
 
 export const loadRepositories = async () => {
+    // const repositories: Repository[] = await storage.downloadAll(repositoriesMetadataPath);
     const repositories = await loadDataFromFiles<Repository>(repositoriesMetadataPath);
 
     return repositories || [];
@@ -93,6 +98,7 @@ export const loadRepositories = async () => {
 
 
 export const loadWebhooks = async () => {
+    // const webhooks: Webhook[] = await storage.downloadAll(webhooksPath);
     const webhooks = await loadDataFromFiles<Webhook>(webhooksPath);
 
     return webhooks || [];
@@ -100,6 +106,7 @@ export const loadWebhooks = async () => {
 
 
 export const loadProjects = async () => {
+    // const projects: Project[] = await storage.downloadAll(projectsPath);
     const projects = await loadDataFromFiles<Project>(projectsPath);
 
     return projects || [];
@@ -107,6 +114,7 @@ export const loadProjects = async () => {
 
 
 export const loadStoredSecrets = async () => {
+    // const storedSecrets: SecretStored[] = await storage.downloadAll(secretsPath);
     const storedSecrets = await loadDataFromFiles<SecretStored>(secretsPath);
 
     return storedSecrets || [];
@@ -138,6 +146,7 @@ export const loadSecrets = async () => {
 
 
 export const loadTriggers = async () => {
+    // const triggers: Trigger[] = await storage.downloadAll(triggersPath);
     const triggers = await loadDataFromFiles<Trigger>(triggersPath);
 
     return triggers || [];
@@ -145,6 +154,7 @@ export const loadTriggers = async () => {
 
 
 export const loadDeployers = async () => {
+    // const deployers: Deployer[] = await storage.downloadAll(deployersPath);
     const deployers = await loadDataFromFiles<Deployer>(deployersPath);
 
     return deployers || [];
@@ -152,6 +162,7 @@ export const loadDeployers = async () => {
 
 
 export const loadBuildsQueued = async () => {
+    // const buildsQueued: BuildData[] = await storage.downloadAll(buildQueuePath);
     const buildsQueued = await loadDataFromFiles<BuildData>(buildQueuePath);
 
     return buildsQueued || [];
@@ -159,6 +170,7 @@ export const loadBuildsQueued = async () => {
 
 
 export const loadBuilds = async () => {
+    // const builds: Build[] = await storage.downloadAll(buildsPath);
     const builds = await loadDataFromFiles<Build>(buildsPath);
 
     const sortedBuilds = builds.sort(
@@ -170,6 +182,7 @@ export const loadBuilds = async () => {
 
 
 export const loadDeploys = async () => {
+    // const deploys: Deploy[] = await storage.downloadAll(deploysPath);
     const deploys = await loadDataFromFiles<Deploy>(deploysPath);
 
     const sortedDeploys = deploys.sort(
