@@ -63,6 +63,7 @@ export interface HomeDispatchProperties {
     dispatchSetBuilds: typeof actions.data.setBuilds;
     dispatchSetDeploys: typeof actions.data.setDeploys;
     dispatchSetViewLoading: typeof actions.view.setViewLoading;
+    dispatchSetViewType: typeof actions.view.setViewType;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -92,6 +93,7 @@ const Home: React.FC<HomeProperties> = (
         dispatchSetBuilds,
         dispatchSetViewLoading,
         dispatchSetDeploys,
+        dispatchSetViewType,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -124,6 +126,8 @@ const Home: React.FC<HomeProperties> = (
                 deploys,
             } = graphql.deleteTypenames(response.data);
 
+            let generalView = 'general';
+
             if (providers.length > 0) {
                 dispatchSetActiveProviderID(
                     providers[0].id,
@@ -140,6 +144,12 @@ const Home: React.FC<HomeProperties> = (
             dispatchSetDeployers(deployers);
             dispatchSetBuilds(builds);
             dispatchSetDeploys(deploys);
+
+            dispatchSetViewType({
+                type: 'indexGeneralView',
+                value: generalView,
+            });
+
             dispatchSetViewLoading(false);
         }
 
@@ -228,6 +238,11 @@ const mapDispatchToProperties = (
         loading,
     ) => dispatch(
         actions.view.setViewLoading(loading),
+    ),
+    dispatchSetViewType: (
+        payload,
+    ) => dispatch(
+        actions.view.setViewType(payload),
     ),
 });
 
