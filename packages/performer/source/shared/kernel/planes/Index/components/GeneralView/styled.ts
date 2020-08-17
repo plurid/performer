@@ -1,11 +1,16 @@
-import styled from 'styled-components';
+// #region imports
+    // #region libraries
+    import styled from 'styled-components';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export interface IStyledGeneralView {
     compactSelectors: boolean;
 }
@@ -146,3 +151,4 @@ export const StyledGeneralHelpItem = styled.li<IStyledGeneralHelpItem>`
             : '16px auto 16px'
     };
 `;
+// #endregion module

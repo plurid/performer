@@ -199,4 +199,36 @@ export const OBLITERATE_DEPLOYER = gql`
         }
     }
 `;
+
+
+
+export const LOGIN = gql`
+    mutation Login($input: InputLogin!) {
+        login(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+            data {
+                id
+            }
+        }
+    }
+`;
+
+
+export const LOGOUT = gql`
+    mutation Logout {
+        logout {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
 // #endregion module

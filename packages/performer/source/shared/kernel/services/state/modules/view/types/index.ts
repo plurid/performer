@@ -33,17 +33,35 @@ export interface SetViewCompactSelectorsAction {
 }
 
 
+export const SET_VIEW_OWNER_ID = 'SET_VIEW_OWNER_ID';
+export interface SetViewOwnerIDAction {
+    type: typeof SET_VIEW_OWNER_ID;
+    payload: string;
+}
+
+
+export const SET_VIEW_USAGE_TYPE = 'SET_VIEW_USAGE_TYPE';
+export interface SetViewUsageTypeAction {
+    type: typeof SET_VIEW_USAGE_TYPE;
+    payload: string;
+}
+
+
 
 export interface State {
     loading: boolean;
     indexGeneralSelector: string;
     indexGeneralView: string;
     compactSelectors: boolean;
+    ownerID: string;
+    usageType: string;
 }
 
 
 export type Actions =
     | SetViewLoadingAction
     | SetViewTypeAction
-    | SetViewCompactSelectorsAction;
+    | SetViewCompactSelectorsAction
+    | SetViewOwnerIDAction
+    | SetViewUsageTypeAction;
 // #endregion module

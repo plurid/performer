@@ -7,10 +7,10 @@
 
 
 // #region module
-export interface IStyledInitialView {
+export interface IStyledPrivateView {
 }
 
-export const StyledInitialView = styled.div<IStyledInitialView>`
+export const StyledPrivateView = styled.div<IStyledPrivateView>`
     padding: 3rem;
     display: grid;
     place-content: center;
@@ -25,5 +25,17 @@ export const StyledInitialView = styled.div<IStyledInitialView>`
         font-size: 1.1rem;
         margin: 1.5rem;
     }
+`;
+
+
+export const StyledLoginButtons = styled.div`
+    margin: 50px auto;
+    display: grid;
+`;
+
+
+export const StyledLoginButton = styled.div`
+    width: 200px;
+    margin: 0 auto;
 `;
 // #endregion module

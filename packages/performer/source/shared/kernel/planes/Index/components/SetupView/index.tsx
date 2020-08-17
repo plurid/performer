@@ -1,47 +1,57 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import Provider from '#kernel-components/Provider';
-import Webhook from '#kernel-components/Webhook';
-import Repositories from '#kernel-components/Repositories';
-import Trigger from '#kernel-components/Trigger';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import {
+        Theme
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledSetupView,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import Provider from '#kernel-components/Provider';
+    import Webhook from '#kernel-components/Webhook';
+    import Repositories from '#kernel-components/Repositories';
+    import Trigger from '#kernel-components/Trigger';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledSetupView,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface SetupViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setView: React.Dispatch<React.SetStateAction<string>>;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface SetupViewStateProperties {
@@ -60,40 +70,54 @@ export type SetupViewProperties = SetupViewOwnProperties
 const SetupView: React.FC<SetupViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** own */
-        /** required */
-        /** - values */
-        /** - methods */
-        setView,
+        // #region own
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+        // #endregion own
+
+        // #region state
         stateInteractionTheme,
         stateActiveProviderID,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchSetActiveProviderID,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         phase,
         setPhase,
     ] = useState('PROVIDER');
+    // #endregion state
 
 
+    // #region handlers
     const cancelPhases = () => {
-        setView('general');
+        // setView('general');
     }
+    // #endregion handlers
 
 
-    /** render */
+    // #region render
     return (
         <StyledSetupView>
             {phase === 'PROVIDER' && (
@@ -135,13 +159,14 @@ const SetupView: React.FC<SetupViewProperties> = (
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {
-                        setView('general');
+                        // setView('general');
                     }}
                     cancel={() => cancelPhases()}
                 />
             )}
         </StyledSetupView>
     );
+    // #endregion render
 }
 
 
@@ -164,8 +189,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+export const ConnectedSetupView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(SetupView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedSetupView;
+// #endregion exports

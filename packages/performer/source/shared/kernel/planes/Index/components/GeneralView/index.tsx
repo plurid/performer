@@ -1,76 +1,80 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridIconToolbox,
-    PluridIconRepository,
-    PluridIconWebhook,
-    PluridIconSpace,
-    PluridIconTools,
-    PluridIconDeauthored,
-    PluridIconNewStateline,
-    PluridIconBrainCircuits,
-    PluridIconApps,
-    PluridIconBranch,
-    PluridIconArrowRight,
-    PluridIconDocuments,
-    PluridIconExternalLink,
-} from '@plurid/plurid-icons-react';
-
-
-/** external */
-import performerLogo from '../../assets/performer-logo.png';
-
-import Provider from '#kernel-components/Provider';
-import Imagene from '#kernel-components/Imagene';
-import Repositories from '#kernel-components/Repositories';
-import Project from '#kernel-components/Project';
-import Secret from '#kernel-components/Secret';
-import Webhook from '#kernel-components/Webhook';
-import Trigger from '#kernel-components/Trigger';
-import Deployer from '#kernel-components/Deployer';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import {
+        PluridIconToolbox,
+        PluridIconRepository,
+        PluridIconWebhook,
+        PluridIconSpace,
+        PluridIconTools,
+        PluridIconDeauthored,
+        PluridIconNewStateline,
+        PluridIconBrainCircuits,
+        PluridIconApps,
+        PluridIconBranch,
+        PluridIconArrowRight,
+        PluridIconDocuments,
+        PluridIconExternalLink,
+    } from '@plurid/plurid-icons-react';
+    // #endregion libraries
 
 
-/** internal */
-import ProvidersView from './components/ProvidersView';
-import ImagenesView from './components/ImagenesVIew';
-import RepositoriesView from './components/RepositoriesView';
-import WebhooksView from './components/WebhooksView';
-import ProjectsView from './components/ProjectsView';
-import SecretsView from './components/SecretsView';
-import TriggersView from './components/TriggersView';
-import DeployersView from './components/DeployersView';
-import BuildsView from './components/BuildsView';
-import DeploysView from './components/DeploysView';
+    // #region external
+    import performerLogo from '../../assets/performer-logo.png';
 
-import {
-    StyledGeneralView,
-    StyledGeneralSelectors,
-    StyledGeneralSelectorItem,
-    StyledGeneralPeformer,
-    StyledGeneralHelp,
-    StyledGeneralHelpItem,
-    StyledGeneralSelected,
-} from './styled';
-/** [END] imports */
+    import Provider from '#kernel-components/Provider';
+    import Imagene from '#kernel-components/Imagene';
+    import Repositories from '#kernel-components/Repositories';
+    import Project from '#kernel-components/Project';
+    import Secret from '#kernel-components/Secret';
+    import Webhook from '#kernel-components/Webhook';
+    import Trigger from '#kernel-components/Trigger';
+    import Deployer from '#kernel-components/Deployer';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
+    // #endregion external
 
 
+    // #region internal
+    import ProvidersView from './components/ProvidersView';
+    import ImagenesView from './components/ImagenesVIew';
+    import RepositoriesView from './components/RepositoriesView';
+    import WebhooksView from './components/WebhooksView';
+    import ProjectsView from './components/ProjectsView';
+    import SecretsView from './components/SecretsView';
+    import TriggersView from './components/TriggersView';
+    import DeployersView from './components/DeployersView';
+    import BuildsView from './components/BuildsView';
+    import DeploysView from './components/DeploysView';
 
+    import {
+        StyledGeneralView,
+        StyledGeneralSelectors,
+        StyledGeneralSelectorItem,
+        StyledGeneralPeformer,
+        StyledGeneralHelp,
+        StyledGeneralHelpItem,
+        StyledGeneralSelected,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
 const generalSelectors = [
     'providers',
     'imagenes',
@@ -97,15 +101,7 @@ const generalSelectorsIcons = {
     deploys: PluridIconBranch,
 };
 
-/** [START] component */
 export interface GeneralViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-
-    /** optional */
-    /** - values */
-    /** - methods */
 }
 
 export interface GeneralViewStateProperties {
@@ -129,31 +125,26 @@ export type GeneralViewProperties = GeneralViewOwnProperties
 const GeneralView: React.FC<GeneralViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-
-        /** optional */
-        /** - values */
-        /** - methods */
-
-        /** state */
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateActiveProviderID,
         stateIndexGeneralSelector,
         stateIndexGeneralView,
         stateViewCompactSelectors,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchSetViewType,
         dispatchSetViewCompactSelectors,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         webhookEditID,
         setWebhookEditID,
@@ -166,9 +157,10 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         mouseOverSelectors,
         setMouseOverSelectors,
     ] = useState(false);
+    // #endregion state
 
 
-    /** handlers */
+    // #region handlers
     const openManual = () => {
         window.open('https://manual.plurid.com/performer', '_blank');
     }
@@ -196,9 +188,10 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     ) => {
         dispatchSetViewCompactSelectors(value);
     }
+    // #endregion handlers
 
 
-    /** render */
+    // #region render
     let renderSelectedView = (<></>);
     switch (stateIndexGeneralSelector) {
         case 'providers':
@@ -453,6 +446,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 <></>
             );
     }
+    // #endregion render
 }
 
 
@@ -484,8 +478,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+export const ConnectedGeneralView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(GeneralView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedGeneralView;
+// #endregion exports

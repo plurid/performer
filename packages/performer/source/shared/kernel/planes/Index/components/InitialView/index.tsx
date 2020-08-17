@@ -1,57 +1,49 @@
-/** [START] imports */
-/** libraries */
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    PluridPureButton,
-} from '@plurid/plurid-ui-react';
-
-
-/** external */
-import performerLogo from '../../assets/performer-logo.png';
+    import {
+        PluridPureButton,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledInitialView,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import performerLogo from '../../assets/performer-logo.png';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledInitialView,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface InitialViewProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setView: React.Dispatch<React.SetStateAction<string>>;
-
-    /** optional */
-    /** - values */
-    /** - methods */
 }
 
 const InitialView: React.FC<InitialViewProperties> = (
     properties,
 ) => {
-    /** properties */
-    const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setView,
-
-        /** optional */
-        /** - values */
-        /** - methods */
-    } = properties;
+    // #region properties
+    // const {
+    // } = properties;
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <StyledInitialView>
             <div>
-                <img src={performerLogo} alt="performer logo" height={250} />
+                <img
+                    src={performerLogo}
+                    alt="performer logo"
+                    height={250}
+                />
             </div>
 
             <h1>
@@ -71,15 +63,19 @@ const InitialView: React.FC<InitialViewProperties> = (
                 <PluridPureButton
                     text="Initial Setup"
                     atClick={() => {
-                        setView('setup')
+                        // setView('setup');
                     }}
                     level={2}
                 />
             </div>
         </StyledInitialView>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default InitialView;
-/** [END] component */
+// #endregion exports

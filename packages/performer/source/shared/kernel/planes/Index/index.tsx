@@ -1,9 +1,6 @@
 // #region imports
     // #region libraries
-    import React, {
-        useState,
-        useEffect,
-    } from 'react';
+    import React from 'react';
 
     import { AnyAction } from 'redux';
     import { connect } from 'react-redux';
@@ -15,10 +12,6 @@
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
-
-    import {
-        ClientProvider,
-    } from '#server/data/interfaces';
     // #endregion external
 
 
@@ -26,6 +19,7 @@
     import InitialView from './components/InitialView';
     import SetupView from './components/SetupView';
     import GeneralView from './components/GeneralView';
+    import PrivateView from './components/PrivateView';
 
     import {
         StyledIndex,
@@ -40,8 +34,7 @@ export interface IndexOwnProperties {
 }
 
 export interface IndexStateProperties {
-    stateProviders: ClientProvider[];
-    stateViewLoading: boolean;
+    stateGeneralView: string;
 }
 
 export interface IndexDispatchProperties {
@@ -57,60 +50,34 @@ const Index: React.FC<IndexProperties> = (
     // #region properties
     const {
         // #region state
-        stateProviders,
-        stateViewLoading,
+        stateGeneralView,
         // #endregion state
     } = properties;
     // #endregion properties
 
 
-    // #region state
-    const [
-        view,
-        setView,
-    ] = useState('');
-    // #endregion state
-
-
-    // #region effects
-    useEffect(() => {
-        if (stateViewLoading) {
-            return;
-        }
-
-        if (stateProviders.length > 0) {
-            setView('general');
-        } else {
-            setView('initial');
-        }
-    }, [
-        stateViewLoading,
-        stateProviders,
-    ]);
-    // #endregion effects
-
-
     // #region render
     let renderView = (<></>);
 
-    switch (view) {
+    switch (stateGeneralView) {
         case 'initial':
             renderView = (
-                <InitialView
-                    setView={setView}
-                />
+                <InitialView />
             );
             break;
         case 'setup':
             renderView = (
-                <SetupView
-                    setView={setView}
-                />
+                <SetupView />
             );
             break;
         case 'general':
             renderView = (
                 <GeneralView />
+            );
+            break;
+        case 'private':
+            renderView = (
+                <PrivateView />
             );
             break;
     }
@@ -127,8 +94,7 @@ const Index: React.FC<IndexProperties> = (
 const mapStateToProperties = (
     state: AppState,
 ): IndexStateProperties => ({
-    stateProviders: selectors.data.getProviders(state),
-    stateViewLoading: selectors.view.getLoading(state),
+    stateGeneralView: selectors.view.getIndexGeneralView(state),
 });
 
 

@@ -1,12 +1,17 @@
-import styled from 'styled-components';
+// #region imports
+    // #region libraries
+    import styled from 'styled-components';
 
-import {
-    PluridPureButton,
-    PluridTextline,
-} from '@plurid/plurid-ui-react';
+    import {
+        PluridPureButton,
+        PluridTextline,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export interface IStyledSetupView {
 }
 
@@ -39,3 +44,4 @@ export const StyledPluridPureButton = styled(PluridPureButton)`
     margin: 20px auto;
     width: 250px;
 `;
+// #endregion module
