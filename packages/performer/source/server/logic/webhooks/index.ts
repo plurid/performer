@@ -1,8 +1,5 @@
 // #region imports
     // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
     import path from 'path';
 
     import express from 'express';
@@ -17,23 +14,15 @@
     import {
         CodeProvider,
         Webhook,
-        Commit,
     } from '#server/data/interfaces';
 
     import {
         webhooksPath,
-        logLevel,
-        logLevels,
     } from '#server/data/constants';
 
-    import {
-        getActiveRepository,
-        updateRootRepository,
-    } from '#server/logic/repository';
+    import github from '#server/api/requesters/github';
 
-    import {
-        handleTriggers,
-    } from '#server/logic/triggers';
+    import storage from '#server/services/storage';
 
     import {
         getRoutes,
@@ -60,84 +49,10 @@ export const registerWebhook = async (
         id + '.json',
     );
 
-    await fs.writeFile(
+    storage.upload(
         hookFilePath,
-        JSON.stringify(hookData, null, 4),
+        Buffer.from(JSON.stringify(hookData, null, 4), 'utf-8'),
     );
-}
-
-
-export const handleGithubWebhook = async (
-    request: express.Request,
-    response: express.Response,
-) => {
-    try {
-        if (logLevel <= logLevels.info) {
-            console.log('[Info : Start] :: handleGithubWebhook');
-        }
-
-        const data = request.body;
-
-        const {
-            ref,
-            head_commit: headCommit,
-            repository,
-        } = data;
-
-        if (
-            !ref
-            || !headCommit
-            || !repository
-        ) {
-            /** No Content */
-            response.status(204).end();
-            return;
-        }
-
-        const branchName = ref.replace('refs/heads/', '');
-        const repositoryName = repository.full_name;
-
-        const activeRepository = await getActiveRepository(
-            repositoryName,
-        );
-        if (!activeRepository) {
-            /** No Content */
-            response.status(204).end();
-            return;
-        }
-
-        /** OK */
-        response.status(200).end();
-
-        await updateRootRepository(
-            repositoryName,
-        );
-
-        const commit: Commit = {
-            id: headCommit.id,
-            added: headCommit.added,
-            removed: headCommit.removed,
-            modified: headCommit.modified,
-        };
-
-        await handleTriggers(
-            commit,
-            branchName,
-            repositoryName,
-        );
-
-        if (logLevel <= logLevels.info) {
-            console.log('[Info : End] :: handleGithubWebhook');
-        }
-    } catch (error) {
-        if (logLevel <= logLevels.error) {
-            console.log('[Error : End] :: handleGithubWebhook', error);
-        }
-
-        /** Bad Request */
-        response.status(400).end();
-        return;
-    }
 }
 
 
@@ -157,7 +72,7 @@ export const handleWebhook = (
         case 'github':
             instance.post(
                 hookpath,
-                handleGithubWebhook,
+                github.handleWebhook,
             );
             break;
     }

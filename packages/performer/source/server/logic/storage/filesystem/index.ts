@@ -20,6 +20,7 @@
 
     import {
         QUIET,
+        BASE_PATH,
 
         providersPath,
         imagenesPath,
@@ -81,7 +82,27 @@ const storageUpload: StorageUpload = async (
     kind?,
 ) => {
     try {
-        return;
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        const directoryPath = path.dirname(filepath);
+        makeDirectorySync(directoryPath);
+
+        if (kind === 'append') {
+            return fs.appendFile(
+                filepath,
+                data,
+            );
+        }
+
+        await fs.writeFile(
+            filepath,
+            data,
+        );
+
+        return true;
     } catch (error) {
         if (!QUIET) {
             console.log(`[Performer Error 500] :: Filesystem could not upload ${filename}.`);
