@@ -54,6 +54,10 @@ const handleGithubWebhook = async (
             || !repository
         ) {
             /** No Content */
+            if (logLevel <= logLevels.info) {
+                console.log('[Info : End] :: handleGithubWebhook :: 204');
+            }
+
             response.status(204).end();
             return;
         }
@@ -66,6 +70,10 @@ const handleGithubWebhook = async (
         );
         if (!activeRepository) {
             /** No Content */
+            if (logLevel <= logLevels.info) {
+                console.log('[Info : End] :: handleGithubWebhook :: 204');
+            }
+
             response.status(204).end();
             return;
         }
@@ -91,7 +99,7 @@ const handleGithubWebhook = async (
         );
 
         if (logLevel <= logLevels.info) {
-            console.log('[Info : End] :: handleGithubWebhook');
+            console.log('[Info : End] :: handleGithubWebhook :: 200');
         }
     } catch (error) {
         if (logLevel <= logLevels.error) {
