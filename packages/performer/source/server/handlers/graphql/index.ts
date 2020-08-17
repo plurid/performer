@@ -12,9 +12,8 @@
 
     // #region external
     import {
-        resolvers,
-        schemas,
-    } from '#server/api';
+        Context,
+    } from '#server/data/interfaces';
 
     import {
         GRAPHQL_FAVICON,
@@ -23,8 +22,9 @@
     } from '#server/data/constants';
 
     import {
-        Context,
-    } from '#server/data/interfaces';
+        resolvers,
+        schemas,
+    } from '#server/api';
 
     import loadData from '#server/logic/loader';
 

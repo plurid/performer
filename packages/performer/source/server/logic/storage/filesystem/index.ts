@@ -10,10 +10,6 @@
 
     // #region external
     import {
-        QUIET,
-    } from '#server/data/constants';
-
-    import {
         Storage,
         StorageDownload,
         StorageDownloadAll,
@@ -21,6 +17,28 @@
         StorageObliterate,
         StorageGenerateLocations,
     } from '#server/data/interfaces';
+
+    import {
+        QUIET,
+
+        providersPath,
+        imagenesPath,
+        repositoriesPath,
+        repositoriesMetadataPath,
+        webhooksPath,
+        projectsPath,
+        secretsPath,
+        triggersPath,
+        deployersPath,
+        buildsPath,
+        buildLogsPath,
+        buildQueuePath,
+        deploysPath,
+    } from '#server/data/constants';
+
+    import {
+        makeDirectorySync,
+    } from '#server/utilities/directory';
     // #endregion external
 // #endregion imports
 
@@ -91,6 +109,26 @@ const storageObliterate: StorageObliterate = async (
 
 const storageGenerateLocations: StorageGenerateLocations = async () => {
     try {
+        const directories = [
+            providersPath,
+            imagenesPath,
+            repositoriesPath,
+            repositoriesMetadataPath,
+            webhooksPath,
+            projectsPath,
+            secretsPath,
+            triggersPath,
+            deployersPath,
+            buildsPath,
+            buildLogsPath,
+            buildQueuePath,
+            deploysPath,
+        ];
+
+        directories.forEach(directory => {
+            makeDirectorySync(directory);
+        });
+
         return true;
     } catch (error) {
         if (!QUIET) {
