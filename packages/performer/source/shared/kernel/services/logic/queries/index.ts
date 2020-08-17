@@ -72,6 +72,10 @@ const getUsageType = async (
         switch (usageType) {
             case 'PRIVATE_USAGE':
                 return 'private';
+            case 'PUBLIC':
+                return 'general';
+            case 'CUSTOM_LOGIC':
+                return 'general';
         }
     }
 
