@@ -11,20 +11,17 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
-
-    import {
-        graphql,
-    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
     // #region external
     import Head from '#kernel-components/Head';
 
-    import client from '#kernel-services/graphql/client';
     import {
-        GET_SETUP,
-    } from '#kernel-services/graphql/query';
+        getCurrentOwner,
+        getUsageType,
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -51,19 +48,11 @@ export interface HomeStateProperties {
 }
 
 export interface HomeDispatchProperties {
-    dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
-    dispatchSetProviders: typeof actions.data.setProviders;
-    dispatchSetImagenes: typeof actions.data.setImagenes;
-    dispatchSetRepositories: typeof actions.data.setRepositories;
-    dispatchSetWebhooks: typeof actions.data.setWebhooks;
-    dispatchSetProjects: typeof actions.data.setProjects;
-    dispatchSetSecrets: typeof actions.data.setSecrets;
-    dispatchSetTriggers: typeof actions.data.setTriggers;
-    dispatchSetDeployers: typeof actions.data.setDeployers;
-    dispatchSetBuilds: typeof actions.data.setBuilds;
-    dispatchSetDeploys: typeof actions.data.setDeploys;
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchSetViewLoading: typeof actions.view.setViewLoading;
     dispatchSetViewType: typeof actions.view.setViewType;
+    dispatchSetViewUsageType: typeof actions.view.setViewUsageType;
+    dispatchSetViewOwnerID: typeof actions.view.setViewOwnerID;
 }
 
 export type HomeProperties = HomeOwnProperties
@@ -81,19 +70,11 @@ const Home: React.FC<HomeProperties> = (
         // #endregion state
 
         // #region dispatch
-        dispatchSetActiveProviderID,
-        dispatchSetProviders,
-        dispatchSetImagenes,
-        dispatchSetRepositories,
-        dispatchSetWebhooks,
-        dispatchSetProjects,
-        dispatchSetSecrets,
-        dispatchSetTriggers,
-        dispatchSetDeployers,
-        dispatchSetBuilds,
+        dispatch,
         dispatchSetViewLoading,
-        dispatchSetDeploys,
         dispatchSetViewType,
+        dispatchSetViewUsageType,
+        dispatchSetViewOwnerID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -101,49 +82,23 @@ const Home: React.FC<HomeProperties> = (
 
     // #region effects
     useEffect(() => {
-        const getSetup = async () => {
-            const setupQuery = await client.query({
-                query: GET_SETUP,
-            });
+        const loadData = async () => {
+            let generalView = 'initial';
 
-            const response = setupQuery.data.getSetup;
-
-            if (!response.status) {
-                dispatchSetViewLoading(false);
-                return;
+            /** Get usage type */
+            const usageType = await getUsageType(dispatchSetViewUsageType);
+            if (usageType) {
+                generalView = usageType;
             }
 
-            const {
-                providers,
-                imagenes,
-                repositories,
-                webhooks,
-                projects,
-                secrets,
-                triggers,
-                deployers,
-                builds,
-                deploys,
-            } = graphql.deleteTypenames(response.data);
+            /** Get setup */
+            await getSetup(dispatch);
 
-            let generalView = 'general';
-
-            if (providers.length > 0) {
-                dispatchSetActiveProviderID(
-                    providers[0].id,
-                );
+            /** Get current owner */
+            const ownerSet = await getCurrentOwner(dispatchSetViewOwnerID);
+            if (ownerSet) {
+                generalView = 'general';
             }
-
-            dispatchSetProviders(providers);
-            dispatchSetImagenes(imagenes);
-            dispatchSetRepositories(repositories);
-            dispatchSetWebhooks(webhooks);
-            dispatchSetProjects(projects);
-            dispatchSetSecrets(secrets);
-            dispatchSetTriggers(triggers);
-            dispatchSetDeployers(deployers);
-            dispatchSetBuilds(builds);
-            dispatchSetDeploys(deploys);
 
             dispatchSetViewType({
                 type: 'indexGeneralView',
@@ -153,7 +108,7 @@ const Home: React.FC<HomeProperties> = (
             dispatchSetViewLoading(false);
         }
 
-        getSetup();
+        loadData();
     }, []);
     // #endregion effects
 
@@ -179,61 +134,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): HomeDispatchProperties => ({
-    dispatchSetActiveProviderID: (
-        providerID,
-    ) => dispatch(
-        actions.data.setActiveProviderID(providerID),
-    ),
-    dispatchSetProviders: (
-        providers,
-    ) => dispatch(
-        actions.data.setProviders(providers),
-    ),
-    dispatchSetImagenes: (
-        imagenes,
-    ) => dispatch(
-        actions.data.setImagenes(imagenes),
-    ),
-    dispatchSetRepositories: (
-        repositories,
-    ) => dispatch(
-        actions.data.setRepositories(repositories),
-    ),
-    dispatchSetWebhooks: (
-        webhooks,
-    ) => dispatch(
-        actions.data.setWebhooks(webhooks),
-    ),
-    dispatchSetProjects: (
-        projects,
-    ) => dispatch(
-        actions.data.setProjects(projects),
-    ),
-    dispatchSetSecrets: (
-        secrets,
-    ) => dispatch(
-        actions.data.setSecrets(secrets),
-    ),
-    dispatchSetTriggers: (
-        triggers,
-    ) => dispatch(
-        actions.data.setTriggers(triggers),
-    ),
-    dispatchSetDeployers: (
-        triggers,
-    ) => dispatch(
-        actions.data.setDeployers(triggers),
-    ),
-    dispatchSetBuilds: (
-        builds,
-    ) => dispatch(
-        actions.data.setBuilds(builds),
-    ),
-    dispatchSetDeploys: (
-        builds,
-    ) => dispatch(
-        actions.data.setDeploys(builds),
-    ),
+    dispatch,
     dispatchSetViewLoading: (
         loading,
     ) => dispatch(
@@ -243,6 +144,16 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewType(payload),
+    ),
+    dispatchSetViewUsageType: (
+        usageType,
+    ) => dispatch(
+        actions.view.setViewUsageType(usageType),
+    ),
+    dispatchSetViewOwnerID: (
+        id,
+    ) => dispatch(
+        actions.view.setViewOwnerID(id),
     ),
 });
 
