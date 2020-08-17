@@ -17,12 +17,6 @@ export const ContentTypes = {
 export const HEALTH_CHECK_ENDPOINT = '/service-check/health';
 
 
-export const GRAPHQL_FAVICON = '/favicon.ico';
-export const GRAPHQL_TITLE = 'API · performer';
-export const GRAPHQL_ENDPOINT = '/perform';
-
-
-
 export const GITHUB_API = 'https://api.github.com/graphql';
 export const GITHUB_PROVIDER = 'github';
 
