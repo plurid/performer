@@ -1,3 +1,4 @@
+// #region imports
 import React, {
     useRef,
 } from 'react';
@@ -7,10 +8,12 @@ import {
 } from './styled';
 
 import faces from './faces';
+// #endregion imports
 
 
 
-interface NotFoundProperties {
+// #region module
+export interface NotFoundProperties {
 }
 
 const NotFound: React.FC<NotFoundProperties> = () => {
@@ -30,6 +33,10 @@ const NotFound: React.FC<NotFoundProperties> = () => {
         </StyledNotFound>
     );
 }
+// #endregion module
 
 
+
+// #region exports
 export default NotFound;
+// #endregion exports

@@ -1,68 +1,78 @@
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
-
-import {
-    ClientProvider,
-} from '#server/data/interfaces';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
+    // #endregion libraries
 
 
-import InitialView from './components/InitialView';
-import SetupView from './components/SetupView';
-import GeneralView from './components/GeneralView';
+    // #region external
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-import {
-    StyledPage,
-} from './styled';
+    import {
+        ClientProvider,
+    } from '#server/data/interfaces';
+    // #endregion external
+
+
+    // #region internal
+    import InitialView from './components/InitialView';
+    import SetupView from './components/SetupView';
+    import GeneralView from './components/GeneralView';
+
+    import {
+        StyledIndex,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-export interface PageOwnProperties {
+// #region module
+export interface IndexOwnProperties {
 }
 
-export interface PageStateProperties {
+export interface IndexStateProperties {
     stateProviders: ClientProvider[];
     stateViewLoading: boolean;
 }
 
-export interface PageDispatchProperties {
+export interface IndexDispatchProperties {
 }
 
-export type PageProperties = PageOwnProperties
-    & PageStateProperties
-    & PageDispatchProperties;
+export type IndexProperties = IndexOwnProperties
+    & IndexStateProperties
+    & IndexDispatchProperties;
 
-const Page: React.FC<PageProperties> = (
+const Index: React.FC<IndexProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        // plurid,
-
-        /** state */
+        // #region state
         stateProviders,
         stateViewLoading,
+        // #endregion state
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         view,
         setView,
     ] = useState('');
+    // #endregion state
 
 
-    /** effect */
+    // #region effects
     useEffect(() => {
         if (stateViewLoading) {
             return;
@@ -77,9 +87,10 @@ const Page: React.FC<PageProperties> = (
         stateViewLoading,
         stateProviders,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     let renderView = (<></>);
 
     switch (view) {
@@ -105,16 +116,17 @@ const Page: React.FC<PageProperties> = (
     }
 
     return (
-        <StyledPage>
+        <StyledIndex>
             {renderView}
-        </StyledPage>
+        </StyledIndex>
     );
+    // #endregion render
 }
 
 
 const mapStateToProperties = (
     state: AppState,
-): PageStateProperties => ({
+): IndexStateProperties => ({
     stateProviders: selectors.data.getProviders(state),
     stateViewLoading: selectors.view.getLoading(state),
 });
@@ -122,11 +134,18 @@ const mapStateToProperties = (
 
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
-): PageDispatchProperties => ({
+): IndexDispatchProperties => ({
 });
 
 
-export default connect(
+const ConnectedIndex =connect(
     mapStateToProperties,
     mapDispatchToProperties,
-)(Page);
+)(Index);
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedIndex;
+// #endregion exports

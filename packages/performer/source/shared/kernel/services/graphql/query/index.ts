@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const GET_SETUP = gql`
     query GetSetup {
         getSetup {
@@ -117,3 +122,4 @@ export const GET_BUILD_LOGS = gql`
         }
     }
 `;
+// #endregion module

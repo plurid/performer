@@ -1,11 +1,16 @@
-import styled from 'styled-components';
+// #region imports
+    // #region libraries
+    import styled from 'styled-components';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const StyledBuild = styled.div`
     font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI',
         'Open Sans', 'Helvetica Neue', sans-serif;
@@ -107,3 +112,4 @@ export const StyledBuildLogData = styled.div`
     min-height: calc(600px - 4rem);
     overflow: auto;
 `;
+// #endregion module

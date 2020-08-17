@@ -1,56 +1,60 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
 
-import {
-    PluridComponentProperty,
-} from '@plurid/plurid-react';
-
-
-/** external */
-import {
-    Build,
-} from '#server/data/interfaces';
-
-import client from '#kernel-services/graphql/client';
-import {
-    GET_BUILD_LOGS,
-} from '#kernel-services/graphql/query';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-// import actions from '#kernel-services/state/actions';
-
-/** internal */
-import {
-    StyledBuild,
-    StyledGeneralSelectors,
-    StyledGeneralSelectorItem,
-    StyledGeneralSelectorIcon,
-    StyledBuildTitle,
-    StyledBuildLog,
-    StyledBuildLogData,
-} from './styled';
-/** [END] imports */
+    import {
+        PluridComponentProperty,
+    } from '@plurid/plurid-react';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Build,
+    } from '#server/data/interfaces';
 
-/** [START] component */
+    import client from '#kernel-services/graphql/client';
+    import {
+        GET_BUILD_LOGS,
+    } from '#kernel-services/graphql/query';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    // import actions from '#kernel-services/state/actions';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledBuild,
+        StyledGeneralSelectors,
+        StyledGeneralSelectorItem,
+        StyledGeneralSelectorIcon,
+        StyledBuildTitle,
+        StyledBuildLog,
+        StyledBuildLogData,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
 export interface BuildOwnProperties {
     plurid: PluridComponentProperty;
 }
@@ -70,22 +74,25 @@ export type BuildProperties = BuildOwnProperties
 const Build: React.FC<BuildProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** own */
+        // #region own
         plurid,
+        // #endregion own
 
-        /** state */
+        // #region state
         stateGeneralTheme,
         // stateInteractionTheme,
+        // #endregion state
     } = properties;
 
     const {
         id,
     } = plurid.route.plane.parameters;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         selectedStage,
         setSelectedStage,
@@ -102,9 +109,10 @@ const Build: React.FC<BuildProperties> = (
         build,
         setBuild,
     ] = useState<Build | null>(null);
+    // #endregion state
 
 
-    /** effect */
+    // #region effects
     useEffect(() => {
         const loadLogs = async () => {
             try {
@@ -146,9 +154,10 @@ const Build: React.FC<BuildProperties> = (
     }, [
         selectedStage,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledBuild>
             <StyledGeneralSelectors
@@ -189,6 +198,7 @@ const Build: React.FC<BuildProperties> = (
             </StyledBuildLog>
         </StyledBuild>
     );
+    // #endregion render
 }
 
 
@@ -206,8 +216,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedBuild = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(Build);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedBuild;
+// #endregion exports

@@ -1,36 +1,47 @@
-import React, {
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    graphql,
-} from '@plurid/plurid-functions';
-
-import {
-    StyledHome,
-} from './styled';
-
-import Head from '#kernel-components/Head';
-
-import client from '#kernel-services/graphql/client';
-import {
-    GET_SETUP,
-} from '#kernel-services/graphql/query';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import {
+        graphql,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import Head from '#kernel-components/Head';
 
+    import client from '#kernel-services/graphql/client';
+    import {
+        GET_SETUP,
+    } from '#kernel-services/graphql/query';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledHome,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
 export interface HomeOwnProperties {
 }
 
@@ -61,13 +72,14 @@ export type HomeProperties = HomeOwnProperties
 const Home: React.FC<HomeProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** state */
+        // #region state
         // stateGeneralTheme,
         // stateInteractionTheme,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchSetActiveProviderID,
         dispatchSetProviders,
         dispatchSetImagenes,
@@ -80,10 +92,12 @@ const Home: React.FC<HomeProperties> = (
         dispatchSetBuilds,
         dispatchSetViewLoading,
         dispatchSetDeploys,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const getSetup = async () => {
             const setupQuery = await client.query({
@@ -131,14 +145,16 @@ const Home: React.FC<HomeProperties> = (
 
         getSetup();
     }, []);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledHome>
             <Head />
         </StyledHome>
     );
+    // #endregion render
 }
 
 
@@ -216,7 +232,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedHome = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(Home);
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedHome;
+// #endregion exports

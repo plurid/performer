@@ -1,19 +1,27 @@
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    PluridRoute,
-} from '@plurid/plurid-data';
-
-import IndexPlane from '../kernel/planes/Index';
-import BuildPlane from '../kernel/planes/Build';
-import NotFoundPlane from '../kernel/planes/NotFound';
-
-import Head from '../kernel/components/Head';
-
-import Home from '#kernel-containers/Home';
+    import {
+        PluridRoute,
+    } from '@plurid/plurid-data';
+    // #endregion libraries
 
 
+    // #region external
+    import IndexPlane from '#kernel-planes/Index';
+    import BuildPlane from '#kernel-planes/Build';
+    import NotFoundPlane from '#kernel-planes/NotFound';
 
+    import Head from '#kernel-components/Head';
+
+    import Home from '#kernel-containers/Home';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const indexRoute: PluridRoute = {
     value: '/',
     exterior: {
@@ -93,6 +101,10 @@ const routes: PluridRoute[] = [
     indexRoute,
     notFoundRoute,
 ];
+// #endregion module
 
 
+
+// #region exports
 export default routes;
+// #endregion exports

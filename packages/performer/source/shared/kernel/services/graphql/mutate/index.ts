@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const SETUP_PROVIDER = gql`
     mutation SetupProvider($input: InputSetupProvider!) {
         setupProvider(input: $input) {
@@ -194,3 +199,4 @@ export const OBLITERATE_DEPLOYER = gql`
         }
     }
 `;
+// #endregion module
