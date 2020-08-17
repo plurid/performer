@@ -1,34 +1,48 @@
-import {
-    Express,
-} from 'express';
+// #region imports
+    // #region libraries
+    import {
+        Express,
+    } from 'express';
 
-import {
-    ApolloServer,
-} from 'apollo-server-express';
-
-import {
-    resolvers,
-    schemas,
-} from '#server/api';
-
-import {
-    Context,
-} from '#server/data/interfaces';
-
-import loadData from '#server/logic/loader';
-
-import {
-    handleWebhooks,
-} from '#server/logic/webhooks';
+    import {
+        ApolloServer,
+    } from 'apollo-server-express';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        resolvers,
+        schemas,
+    } from '#server/api';
 
+    import {
+        GRAPHQL_FAVICON,
+        GRAPHQL_TITLE,
+        GRAPHQL_ENDPOINT,
+    } from '#server/data/constants';
+
+    import {
+        Context,
+    } from '#server/data/interfaces';
+
+    import loadData from '#server/logic/loader';
+
+    import {
+        handleWebhooks,
+    } from '#server/logic/webhooks';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const setupGraphQLServer = async (
     instance: Express,
 ) => {
     const playground = {
-        faviconUrl: '/favicon.ico',
-        title: 'API · performer',
+        faviconUrl: GRAPHQL_FAVICON,
+        title: GRAPHQL_TITLE,
     };
 
     const graphQLServer = new ApolloServer({
@@ -79,9 +93,13 @@ const setupGraphQLServer = async (
 
     graphQLServer.applyMiddleware({
         app: instance,
-        path: '/perform',
+        path: GRAPHQL_ENDPOINT,
     });
 }
+// #endregion module
 
 
+
+// #region exports
 export default setupGraphQLServer;
+// #endregion exports

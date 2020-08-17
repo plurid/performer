@@ -1,56 +1,46 @@
-import {
-    Express,
-} from 'express';
-
-import PluridServer from '@plurid/plurid-react-server';
-
-import {
-    loadWebhooks,
-} from '#server/logic/loader';
-
-import {
-    handleWebhooks,
-} from '#server/logic/webhooks';
-
-import {
-    BuildQueueWatcher,
-} from '#server/logic/queue';
-
-import setupGraphQLServer from './graphql';
+// #region imports
+    // #region libraries
+    import PluridServer from '@plurid/plurid-react-server';
+    // #endregion libraries
 
 
-
-const setupWebhooks = async (
-    instance: Express,
-) => {
-    const webhooks = await loadWebhooks();
-
-    handleWebhooks(
-        webhooks,
-        instance,
-    );
-}
+    // #region external
+    import {
+        BuildQueueWatcher,
+    } from '#server/logic/queue';
+    // #endregion external
 
 
-export const setRouteHandlers = (
+    // #region internal
+    import setupGlobal from './global';
+    import setupMiddleware from './middleware';
+    import setupGraphQL from './graphql';
+    import setupWebhooks from './webhooks';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
+const setupHandlers = (
     server: PluridServer,
+    logic: any,
 ) => {
-    const handler = server.handle();
+    setupGlobal();
+
     const instance = server.instance();
 
-    handler.post('/service-check/health', (request, response, next) => {
-        response.setHeader('Content-Type', 'application/json');
-        response.end(
-            JSON.stringify(
-                { status: true },
-            ),
-        );
-    });
-
+    setupMiddleware(instance);
+    setupGraphQL(instance);
     setupWebhooks(instance);
-
-    setupGraphQLServer(instance);
 
     const buildQueue = new BuildQueueWatcher();
     buildQueue.startWatcher();
 }
+// #endregion module
+
+
+
+// #region exports
+export default setupHandlers;
+// #endregion exports

@@ -1,44 +1,45 @@
-import bodyParser from 'body-parser';
+// #region imports
+    // #region libraries
+    import PluridServer, {
+        PluridServerMiddleware,
+        PluridServerService,
+        PluridServerServicesData,
+        PluridServerPartialOptions,
+        PluridServerTemplateConfiguration,
+    } from '@plurid/plurid-react-server';
 
-import PluridServer, {
-    PluridServerMiddleware,
-    PluridServerService,
-    PluridServerServicesData,
-    PluridServerPartialOptions,
-    PluridServerTemplateConfiguration,
-} from '@plurid/plurid-react-server';
+    import helmet from '#kernel-services/helmet';
 
-import helmet from '#kernel-services/helmet';
-
-import reduxStore from '#kernel-services/state/store';
-import apolloClient from '#kernel-services/graphql/client';
-
-import {
-    routes,
-    shell,
-} from '../shared';
-
-import preserves from './preserves';
-
-import {
-    setRouteHandlers,
-} from './handlers';
-
-import setup from './setup';
+    import reduxStore from '#kernel-services/state/store';
+    import apolloClient from '#kernel-services/graphql/client';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        routes,
+        shell,
+    } from '../shared';
+    // #endregion external
 
+
+    // #region internal
+    import preserves from './preserves';
+
+    import setupHandlers from './handlers';
+    // #endregion internal
+// #endregion imports
+
+
+
+// #region module
+// #region constants
 /** ENVIRONMENT */
-setup();
-
 const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
 const port = process.env.PORT || 56065;
 
-
-
-/** CONSTANTS */
 const applicationRoot = 'performer-application';
 const openAtStart = watchMode
     ? false
@@ -88,12 +89,11 @@ const options: PluridServerPartialOptions = {
 const template: PluridServerTemplateConfiguration = {
     root: applicationRoot,
 };
+// #endregion constants
 
 
-
-/** SERVER */
-// generate server
-const pluridServer = new PluridServer({
+// #region server
+const performerServer = new PluridServer({
     helmet,
     routes,
     preserves,
@@ -107,16 +107,20 @@ const pluridServer = new PluridServer({
 });
 
 
-// handle non-GET or custom routes (such as API requests, or anything else)
-setRouteHandlers(pluridServer);
+const performerSetup = (
+    logic?: any,
+) => {
+    setupHandlers(
+        performerServer,
+        logic,
+    );
+}
+// #endregion server
+// #endregion module
 
 
-pluridServer.instance().use(
-    bodyParser.json(),
-);
 
-
-
+// #region run
 /**
  * If the file is called directly, as in `node build/index.js`,
  * it will run the server.
@@ -125,8 +129,18 @@ pluridServer.instance().use(
  * for programmatic usage.
  */
 if (require.main === module) {
-    pluridServer.start(port);
+    performerSetup();
+
+    performerServer.start(port);
 }
+// #endregion run
 
 
-export default pluridServer;
+
+// #region exports
+export {
+    performerSetup,
+};
+
+export default performerServer;
+// #endregion exports
