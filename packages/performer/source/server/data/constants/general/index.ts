@@ -5,15 +5,6 @@ import path from 'path';
 
 
 // #region module
-export const Headers = {
-    ContentType: 'Content-Type',
-};
-
-export const ContentTypes = {
-    json: 'application/json',
-};
-
-
 export const HEALTH_CHECK_ENDPOINT = '/service-check/health';
 
 
