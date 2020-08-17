@@ -1,1 +1,1 @@
-export const GRAPHQL_API = '/perform';
+export const P = 'p';

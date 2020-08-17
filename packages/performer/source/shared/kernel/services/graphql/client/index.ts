@@ -7,14 +7,14 @@ import {
 } from '@apollo/client';
 
 import {
-    GRAPHQL_API,
-} from '../../../data/constants';
+    GRAPHQL_ENDPOINT,
+} from '#server/data/constants'
 
 
 
 const client = new ApolloClient({
     link: createHttpLink({
-        uri: GRAPHQL_API,
+        uri: GRAPHQL_ENDPOINT,
         credentials: 'include',
         fetch,
     }),
