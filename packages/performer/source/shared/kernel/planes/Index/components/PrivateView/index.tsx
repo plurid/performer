@@ -15,7 +15,7 @@
 
 
     // #region external
-    import hypodLogo from '../../assets/hypod-logo.png';
+    import performerLogo from '../../assets/performer-logo.png';
 
     import client from '#kernel-services/graphql/client';
     import {
@@ -144,14 +144,14 @@ const PrivateView: React.FC<PrivateViewProperties> = (
         <StyledPrivateView>
             <div>
                 <img
-                    src={hypodLogo}
-                    alt="hypod logo"
+                    src={performerLogo}
+                    alt="performer logo"
                     height={250}
                 />
             </div>
 
             <h1>
-                hypod private usage
+                performer private usage
             </h1>
 
             <StyledLoginButtons>
