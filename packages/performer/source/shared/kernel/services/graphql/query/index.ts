@@ -122,4 +122,36 @@ export const GET_BUILD_LOGS = gql`
         }
     }
 `;
+
+
+export const GET_CURRENT_OWNER = gql`
+    query GetCurrentOwner {
+        getCurrentOwner {
+            status
+            error {
+                path
+                type
+                message
+            }
+            data {
+                id
+            }
+        }
+    }
+`;
+
+
+export const GET_USAGE_TYPE = gql`
+    query GetUsageType {
+        getUsageType {
+            status
+            error {
+                path
+                type
+                message
+            }
+            data
+        }
+    }
+`;
 // #endregion module
