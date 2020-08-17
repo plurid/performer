@@ -1,7 +1,10 @@
+// #region imports
 import path from 'path';
+// #endregion imports
 
 
 
+// #region module
 export const Headers = {
     ContentType: 'Content-Type',
 };
@@ -67,3 +70,4 @@ export const deployQueuePath = path.join(BASE_PATH, BASE_PATH_DEPLOY_QUEUE);
 export const DOCKER_AUTH_USERNAME = process.env.DOCKER_AUTH_USERNAME || '';
 export const DOCKER_AUTH_PASSWORD = process.env.DOCKER_AUTH_PASSWORD || '';
 export const DOCKER_AUTH_SERVER_ADDRESS = process.env.DOCKER_AUTH_SERVER_ADDRESS || 'https://index.docker.io/v2/';
+// #endregion module

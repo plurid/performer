@@ -1,7 +1,12 @@
-import express from 'express';
+// #region imports
+    // #region libraries
+    import express from 'express';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export type CodeProvider =
     | 'bitbucket'
     | 'github';
@@ -168,3 +173,4 @@ export interface Context {
     builds: Build[];
     deploys: Deploy[];
 }
+// #endregion module

@@ -1,7 +1,12 @@
-import express from 'express';
+// #region imports
+    // #region libraries
+    import express from 'express';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const getRoutes = (
     instance: express.Express,
 ) => {
@@ -11,3 +16,4 @@ export const getRoutes = (
 
     return routes;
 }
+// #endregion module

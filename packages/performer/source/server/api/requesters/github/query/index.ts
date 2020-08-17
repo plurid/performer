@@ -1,9 +1,14 @@
-import {
-    gql,
-} from 'apollo-server-express';
+// #region imports
+    // #region libraries
+    import {
+        gql,
+    } from 'apollo-server-express';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const VIEWER_LOGIN = gql`
     query {
         viewer {
@@ -61,3 +66,4 @@ export const QUERY_REPOSITORY_BY_NAME_OWNER = gql`
         }
     }
 `;
+// #endregion module

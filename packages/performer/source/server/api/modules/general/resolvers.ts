@@ -1,18 +1,27 @@
-import merge from 'lodash.merge';
+// #region imports
+    // #region libraries
+    import merge from 'lodash.merge';
+    // #endregion libraries
 
-import setup from './setup/resolvers';
-import imagenes from './imagenes/resolvers';
-import repositories from './repositories/resolvers';
-import projects from './projects/resolvers';
-import secrets from './secrets/resolvers';
-import triggers from './triggers/resolvers';
-import deployers from './deployers/resolvers';
-import builds from './builds/resolvers';
-import deploys from './deploys/resolvers';
+    // #region internal
+    import setup from './setup/resolvers';
+    import imagenes from './imagenes/resolvers';
+    import repositories from './repositories/resolvers';
+    import projects from './projects/resolvers';
+    import secrets from './secrets/resolvers';
+    import triggers from './triggers/resolvers';
+    import deployers from './deployers/resolvers';
+    import builds from './builds/resolvers';
+    import deploys from './deploys/resolvers';
+    // #endregion internal
+// #endregion imports
 
 
 
-const generateResolvers = (...imports: any[]) => {
+// #region module
+const generateResolvers = (
+    ...imports: any[]
+) => {
     const resolvers = {};
 
     merge(
@@ -34,6 +43,10 @@ const resolvers = generateResolvers(
     builds,
     deploys,
 );
+// #endregion module
 
 
+
+// #region exports
 export default resolvers;
+// #endregion exports

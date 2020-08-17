@@ -1,30 +1,38 @@
-import fs from 'fs';
-import path from 'path';
-import {
-    exec,
-} from 'child_process';
-
-import {
-    BASE_PATH_REPOSITORIES,
-} from '#server/data/constants';
-
-import {
-    Provider,
-    Repository,
-} from '#server/data/interfaces';
-
-import {
-    requester,
-} from '../requester';
-
-import {
-    VIEWER_LOGIN,
-    QUERY_REPOSITORIES,
-    QUERY_REPOSITORY_BY_NAME_OWNER,
-} from '../query';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
+    import path from 'path';
+    import {
+        exec,
+    } from 'child_process';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        BASE_PATH_REPOSITORIES,
+    } from '#server/data/constants';
 
+    import {
+        Provider,
+        Repository,
+    } from '#server/data/interfaces';
+
+    import {
+        requester,
+    } from '../requester';
+
+    import {
+        VIEWER_LOGIN,
+        QUERY_REPOSITORIES,
+        QUERY_REPOSITORY_BY_NAME_OWNER,
+    } from '../query';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const getOwner = async (
     provider: Provider,
 ) => {
@@ -185,3 +193,4 @@ export const getRepositoryDataByNameWithOwner = async (
         return;
     }
 }
+// #endregion module

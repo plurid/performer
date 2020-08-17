@@ -1,31 +1,39 @@
-import syncFs, {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import syncFs, {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
-
-import {
-    buildQueuePath,
-} from '#server/data/constants';
-
-import {
-    BuildData,
-} from '#server/data/interfaces';
-
-import {
-    triggerBuild,
-} from '#server/logic/build';
-
-import {
-    loadBuildsQueued,
-} from '#server/logic/loader';
-
-import {
-    removeFromQueue,
-} from '../general';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        buildQueuePath,
+    } from '#server/data/constants';
 
+    import {
+        BuildData,
+    } from '#server/data/interfaces';
+
+    import {
+        triggerBuild,
+    } from '#server/logic/build';
+
+    import {
+        loadBuildsQueued,
+    } from '#server/logic/loader';
+
+    import {
+        removeFromQueue,
+    } from '../general';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 class BuildQueueWatcher {
     private inQueue: number = 0;
     private queuedBuilds: BuildData[] = [];
@@ -86,6 +94,10 @@ class BuildQueueWatcher {
         });
     }
 }
+// #endregion module
 
 
+
+// #region exports
 export default BuildQueueWatcher;
+// #endregion exports

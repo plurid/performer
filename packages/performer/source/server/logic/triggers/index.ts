@@ -1,33 +1,41 @@
-import path from 'path';
+// #region libraries
+    // #region libraries
+    import path from 'path';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    Trigger,
-    Commit,
-    BuildData,
-} from '#server/data/interfaces';
-
-import {
-    repositoriesPath,
-} from '#server/data/constants';
-
-import {
-    loadTriggers,
-} from '#server/logic/loader';
-
-import {
-    pushToBuildQueue,
-} from '#server/logic/build';
-
-import {
-    removeDuplicates,
-} from '#server/utilities/general';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Trigger,
+        Commit,
+        BuildData,
+    } from '#server/data/interfaces';
 
+    import {
+        repositoriesPath,
+    } from '#server/data/constants';
+
+    import {
+        loadTriggers,
+    } from '#server/logic/loader';
+
+    import {
+        pushToBuildQueue,
+    } from '#server/logic/build';
+
+    import {
+        removeDuplicates,
+    } from '#server/utilities/general';
+    // #endregion external
+// #endregion libraries
+
+
+
+// #region module
 export const getActiveTriggers = async (
     branchName: string,
     commit: Commit,
@@ -72,7 +80,6 @@ export const getActiveTriggers = async (
         'id',
     );
 }
-
 
 
 export const handleTriggers = async (
@@ -142,3 +149,4 @@ export const handleTrigger = async (
         return;
     }
 }
+// #endregion module

@@ -1,3 +1,4 @@
+// #region imports
 import github from './github';
 
 import {
@@ -8,9 +9,11 @@ import {
     BITBUCKET_PROVIDER,
     GITHUB_PROVIDER,
 } from '#server/data/constants';
+// #endregion imports
 
 
 
+// #region module
 export const getProvider = async (
     providerID: string,
 ) => {
@@ -101,3 +104,4 @@ export const getOwner = async (
             );
     }
 }
+// #endregion module

@@ -1,32 +1,40 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
+    import path from 'path';
 
-import {
-    execSync,
-} from 'child_process';
-
-import {
-    Repository,
-} from '#server/data/interfaces';
-
-import {
-    repositoriesPath,
-    repositoriesMetadataPath,
-} from '#server/data/constants';
-
-import {
-    loadRepositories,
-} from '#server/logic/loader';
-
-import {
-    cleanFileName,
-} from '#server/utilities';
+    import {
+        execSync,
+    } from 'child_process';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Repository,
+    } from '#server/data/interfaces';
 
+    import {
+        repositoriesPath,
+        repositoriesMetadataPath,
+    } from '#server/data/constants';
+
+    import {
+        loadRepositories,
+    } from '#server/logic/loader';
+
+    import {
+        cleanFileName,
+    } from '#server/utilities';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const registerRepositoryMetadata = async (
     repository: Repository,
 ) => {
@@ -94,3 +102,4 @@ export const updateRootRepository = async (
         stdio: 'ignore',
     });
 }
+// #endregion module

@@ -83,6 +83,7 @@ const options: PluridServerPartialOptions = {
     debug,
     ignore: [
         '/perform',
+
     ],
 };
 

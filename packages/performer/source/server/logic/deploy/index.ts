@@ -1,15 +1,23 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
-
-import {
-    deployLogsPath,
-} from '#server/data/constants';
-
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        deployLogsPath,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const getDeployLogs = async (
     id: string,
     stages: string[],
@@ -36,3 +44,4 @@ export const getDeployLogs = async (
 
     return results;
 }
+// #endregion module

@@ -1,3 +1,4 @@
+// #region module
 export const cleanFileName = (
     name: string,
 ) => {
@@ -49,3 +50,4 @@ export const removeDuplicates = <T>(
         (obj, pos, arr) => arr.map(mapObj => mapObj[key]).indexOf(obj[key]) === pos
     );
 }
+// #endregion module

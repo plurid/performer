@@ -1,43 +1,51 @@
-import {
-    promises as fs,
-} from 'fs';
-import path from 'path';
-
-import {
-    Provider,
-    Imagene,
-    Repository,
-    Project,
-    Secret,
-    SecretStored,
-    Webhook,
-    Trigger,
-    Deployer,
-    Build,
-    BuildData,
-    Deploy,
-} from '#server/data/interfaces';
-
-import {
-    imagenesPath,
-    providersPath,
-    repositoriesMetadataPath,
-    webhooksPath,
-    projectsPath,
-    secretsPath,
-    triggersPath,
-    deployersPath,
-    buildsPath,
-    buildQueuePath,
-    deploysPath,
-} from '#server/data/constants';
-
-import {
-    compareValues,
-} from '#server/utilities';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Provider,
+        Imagene,
+        Repository,
+        Project,
+        Secret,
+        SecretStored,
+        Webhook,
+        Trigger,
+        Deployer,
+        Build,
+        BuildData,
+        Deploy,
+    } from '#server/data/interfaces';
 
+    import {
+        imagenesPath,
+        providersPath,
+        repositoriesMetadataPath,
+        webhooksPath,
+        projectsPath,
+        secretsPath,
+        triggersPath,
+        deployersPath,
+        buildsPath,
+        buildQueuePath,
+        deploysPath,
+    } from '#server/data/constants';
+
+    import {
+        compareValues,
+    } from '#server/utilities';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const loadDataFromFiles = async <T>(
     filespath: string,
 ): Promise<T[]> => {
@@ -200,6 +208,10 @@ const loadData = async () => {
 
     return data;
 }
+// #endregion module
 
 
+
+// #region exports
 export default loadData;
+// #endregion exports

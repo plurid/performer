@@ -1,20 +1,17 @@
 // #region imports
     // #region libraries
-    import {
-        PluridPreserve,
-    } from '@plurid/plurid-react';
+    import Docker from 'dockerode';
     // #endregion libraries
 // #endregion imports
 
 
 
 // #region module
-const preserves: PluridPreserve<any>[] = [
-];
+const docker = new Docker();
 // #endregion module
 
 
 
 // #region exports
-export default preserves;
+export default docker;
 // #endregion exports

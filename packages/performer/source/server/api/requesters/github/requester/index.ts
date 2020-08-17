@@ -1,17 +1,24 @@
-import fetch from 'cross-fetch';
+// #region imports
+    // #region libraries
+    import fetch from 'cross-fetch';
 
-import {
-    ApolloClient,
-    createHttpLink,
-    InMemoryCache,
-} from '@apollo/client';
+    import {
+        ApolloClient,
+        createHttpLink,
+        InMemoryCache,
+    } from '@apollo/client';
+    // #endregion libraries
 
-import {
-    GITHUB_API,
-} from '#server/data/constants';
+    // #region external
+    import {
+        GITHUB_API,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 export const requester = (
     token: string,
 ) => new ApolloClient({
@@ -25,3 +32,4 @@ export const requester = (
     }),
     cache: new InMemoryCache(),
 });
+// #endregion module

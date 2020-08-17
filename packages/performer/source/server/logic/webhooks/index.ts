@@ -1,41 +1,49 @@
-import {
-    promises as fs,
-} from 'fs';
-import path from 'path';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
+    import path from 'path';
 
-import express from 'express';
+    import express from 'express';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    CodeProvider,
-    Webhook,
-    Commit,
-} from '#server/data/interfaces';
-
-import {
-    webhooksPath,
-    logLevel,
-    logLevels,
-} from '#server/data/constants';
-
-import {
-    getRoutes,
-} from '#server/utilities/routes';
-
-import {
-    getActiveRepository,
-    updateRootRepository,
-} from '#server/logic/repository';
-
-import {
-    handleTriggers,
-} from '#server/logic/triggers';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        CodeProvider,
+        Webhook,
+        Commit,
+    } from '#server/data/interfaces';
 
+    import {
+        webhooksPath,
+        logLevel,
+        logLevels,
+    } from '#server/data/constants';
+
+    import {
+        getActiveRepository,
+        updateRootRepository,
+    } from '#server/logic/repository';
+
+    import {
+        handleTriggers,
+    } from '#server/logic/triggers';
+
+    import {
+        getRoutes,
+    } from '#server/utilities';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const registerWebhook = async (
     provider: CodeProvider,
     hookPath: string,
@@ -57,7 +65,6 @@ export const registerWebhook = async (
         JSON.stringify(hookData, null, 4),
     );
 }
-
 
 
 export const handleGithubWebhook = async (
@@ -174,3 +181,4 @@ export const handleWebhooks = (
         );
     }
 }
+// #endregion module

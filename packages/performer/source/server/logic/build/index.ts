@@ -1,53 +1,59 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
+    import path from 'path';
 
-import stream from 'stream';
+    import stream from 'stream';
 
-import {
-    execSync,
-} from 'child_process';
+    import {
+        execSync,
+    } from 'child_process';
 
-import yaml from 'js-yaml';
+    import yaml from 'js-yaml';
 
-import Dockerode from 'dockerode';
-
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    Build,
-    Performer,
-    PerformerStage,
-    BuildData,
-    PerformContext,
-} from '#server/data/interfaces';
-
-import {
-    buildLogsPath,
-    buildQueuePath,
-    buildsPath,
-
-    DOCKER_AUTH_USERNAME,
-    DOCKER_AUTH_PASSWORD,
-    DOCKER_AUTH_SERVER_ADDRESS,
-} from '#server/data/constants';
-
-import {
-    copyDirectory,
-} from '#server/utilities/copy';
-
-import {
-    loadStoredSecrets,
-} from '#server/logic/loader';
-
-import docker from '#server/engine';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Build,
+        Performer,
+        PerformerStage,
+        BuildData,
+        PerformContext,
+    } from '#server/data/interfaces';
 
+    import {
+        buildLogsPath,
+        buildQueuePath,
+        buildsPath,
+
+        DOCKER_AUTH_USERNAME,
+        DOCKER_AUTH_PASSWORD,
+        DOCKER_AUTH_SERVER_ADDRESS,
+    } from '#server/data/constants';
+
+    import {
+        loadStoredSecrets,
+    } from '#server/logic/loader';
+
+    import docker from '#server/logic/engine';
+
+    import {
+        copyDirectory,
+    } from '#server/utilities';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const pushToBuildQueue = async (
     buildData: BuildData,
 ) => {
@@ -743,3 +749,4 @@ export const getBuildLogs = async (
 
     return results;
 }
+// #endregion module
