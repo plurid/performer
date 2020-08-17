@@ -46,10 +46,9 @@ export const logLevel = QUIET
     : parseInt(LOG_LEVEL);
 
 
+export const CUSTOM_LOGIC = process.env.PERFORMER_CUSTOM_LOGIC === 'true';
 
-export const PRIVATE_USAGE = process.env.PERFORMER_PRIVATE_USAGE
-    ? process.env.PERFORMER_PRIVATE_USAGE === 'true'
-    : false;
+export const PRIVATE_USAGE = process.env.PERFORMER_PRIVATE_USAGE === 'true'
 export const PRIVATE_OWNER_IDENTONYM = process.env.PERFORMER_PRIVATE_OWNER_IDENTONYM || '';
 export const PRIVATE_OWNER_KEY = process.env.PERFORMER_PRIVATE_OWNER_KEY || '';
 export const PRIVATE_TOKEN = process.env.PERFORMER_PRIVATE_TOKEN || '';
