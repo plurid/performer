@@ -46,6 +46,28 @@
 
 
 // #region module
+const loadDataFromFiles = async <T>(
+    filespath: string,
+): Promise<T[]> => {
+    try {
+        const files = await fs.readdir(filespath);
+        const items: T[] = [];
+
+        for (const file of files) {
+            const filepath = path.join(filespath, file);
+            const data = await fs.readFile(filepath, 'utf-8');
+            const item = JSON.parse(data);
+            items.push(item);
+        }
+
+        return items;
+    } catch (error) {
+        return [];
+    }
+}
+
+
+
 const storageDownload: StorageDownload = async (
     filename,
 ) => {
@@ -65,7 +87,14 @@ const storageDownloadAll: StorageDownloadAll = async (
     directory,
 ) => {
     try {
-        return [];
+        const filespath = path.join(
+            BASE_PATH,
+            directory,
+        );
+
+        const items: any[] = await loadDataFromFiles(filespath);
+
+        return items;
     } catch (error) {
         if (!QUIET) {
             console.log(`[Performer Error 500] :: Filesystem could not download ${directory}.`);
