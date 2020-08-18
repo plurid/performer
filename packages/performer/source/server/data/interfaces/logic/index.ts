@@ -3,6 +3,8 @@
     import {
         PerformerOwner,
         OwnerToken,
+
+        Build,
     } from '../general';
 
     import {
@@ -16,6 +18,12 @@
 // #region module
 export interface PerformerLogicBuilds {
     clear: () => Promise<boolean>;
+    getByID: (
+        id: string,
+    ) => Promise<Build | undefined>;
+    getBuildLog: (
+        id: string,
+    ) => Promise<any | undefined>;
 }
 
 export interface PerformerLogic {

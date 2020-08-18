@@ -11,6 +11,10 @@
         PerformerLogic,
     } from '#server/data/interfaces';
 
+    import {
+        logLevel,
+    } from '#server/data/constants';
+
     import Logger from '#server/logic/logger';
     // #endregion external
 // #endregion imports
@@ -56,9 +60,19 @@ const performerLogic: PerformerLogic = {
         clear: async () => {
             return true;
         },
+        getByID: async (
+            id,
+        ) => {
+            return undefined;
+        },
+        getBuildLog: async (
+            id,
+        ) => {
+            return undefined;
+        },
     },
 
-    logger: new Logger(),
+    logger: new Logger(logLevel),
 };
 // #endregion module
 

@@ -15,9 +15,13 @@ const getBuild = async (
 ) => {
     // #region context unpack
     const {
+        request,
         builds,
+
         privateUsage,
         privateOwnerIdentonym,
+
+        customLogicUsage,
 
         logger,
         logLevels,
@@ -34,27 +38,87 @@ const getBuild = async (
 
 
     try {
+        // #region input unpack
+        const {
+            id,
+        } = input;
+        // #endregion input unpack
+
+
+        const build = builds.find(build => build.id === id);
+
+
         // #region private usage
-        if (privateUsage && !privateOwnerIdentonym) {
+        if (privateUsage) {
+            logger.log(
+                '[Performer Info : Handle] :: getBuild · privateUsage',
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    '[Performer Info : End] :: getBuild · privateUsage',
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            logger.log(
+                '[Performer Info : Success] :: getBuild · privateUsage',
+                logLevels.info,
+            );
+
             return {
-                status: false,
+                status: true,
+                data: build,
             };
         }
         // #endregion private usage
 
 
         // #region logic usage
+        const logic = request.performerLogic;
+        if (customLogicUsage && logic) {
+            logger.log(
+                '[Performer Info : Handle] :: getBuild · customLogicUsage',
+                logLevels.trace,
+            );
 
+            const build = await logic.builds.getByID(id);
+
+            if (!build) {
+                logger.log(
+                    '[Performer Info : End] :: getBuild · customLogicUsage',
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            logger.log(
+                '[Performer Info : Success] :: getBuild · customLogicUsage',
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+                data: build,
+            };
+        }
         // #endregion logic usage
 
 
-        const {
-            id,
-        } = input;
-
-        const build = builds.find(build => build.id === id);
-
         if (!build) {
+            logger.log(
+                '[Performer Info : End] :: getBuild',
+                logLevels.info,
+            );
+
             return {
                 status: false,
             };

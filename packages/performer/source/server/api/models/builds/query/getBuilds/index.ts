@@ -16,8 +16,14 @@ const getBuilds = async (
     const {
         request,
         builds,
+
         privateUsage,
         privateOwnerIdentonym,
+
+        customLogicUsage,
+
+        logger,
+        logLevels,
     } = context;
     // #endregion unpack context
 
@@ -60,9 +66,17 @@ const getBuilds = async (
         };
         // #endregion public usage
     } catch (error) {
+        // #region error handle
+        logger.log(
+            '[Performer Error : End] :: getBuilds',
+            logLevels.error,
+            error,
+        );
+
         return {
             status: false,
         };
+        // #endregion error handle
     }
 }
 // #endregion module
