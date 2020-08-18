@@ -1,69 +1,141 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-
-    import {
-        uuid,
-    } from '@plurid/plurid-functions';
-    // #endregion libraries
-
-
     // #region external
     import {
-        projectsPath,
-    } from '#server/data/constants';
+        Context,
+        InputValueString,
+    } from '#server/data/interfaces';
 
     import {
-        Project,
-    } from '#server/data/interfaces';
+        registerProject,
+    } from '#server/logic/projects';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const registerProject = async (
-    project: Project,
-) => {
-    const {
-        id,
-    } = project;
-
-    const projectPath = path.join(
-        projectsPath,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        projectPath,
-        JSON.stringify(project, null, 4),
-    );
-}
+export const generateProjectLogs = generateMethodLogs('generateProject');
 
 
 const generateProject = async (
-    input: any,
+    input: InputValueString,
+    context: Context,
 ) => {
+    // #region context unpack
     const {
-        name,
-    } = input;
+        request,
 
-    const id = uuid.generate();
+        privateUsage,
+        privateOwnerIdentonym,
 
-    const project: Project = {
-        id,
-        name,
-    };
+        customLogicUsage,
 
-    await registerProject(project);
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
 
-    return {
-        status: true,
-    };
+
+    // #region log start
+    logger.log(
+        generateProjectLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region input unpack
+        const {
+            value: name,
+        } = input;
+        // #endregion input unpack
+
+
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                generateProjectLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    generateProjectLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await registerProject(name);
+
+            logger.log(
+                generateProjectLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                generateProjectLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            await registerProject(name);
+
+            logger.log(
+                generateProjectLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await registerProject(name);
+
+        logger.log(
+            generateProjectLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            generateProjectLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 

@@ -22,6 +22,7 @@ export default {
         context: Context,
     ) => Projects.Mutation.generateProject(
         input,
+        context,
     ),
     obliterateProject: (
         _: any,
