@@ -2,6 +2,8 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputAddProvider,
     } from '#server/data/interfaces';
 
     import {
@@ -16,7 +18,7 @@
 export default {
     addProvider: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputAddProvider>,
         context: Context,
     ) => Providers.Mutation.addProvider(
         input,

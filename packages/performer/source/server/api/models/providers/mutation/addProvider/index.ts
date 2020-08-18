@@ -1,86 +1,152 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-
-    import {
-        uuid,
-    } from '@plurid/plurid-functions';
-    // #endregion libraries
-
-
     // #region external
     import {
         Context,
-        Provider,
-        CodeProvider,
+        InputAddProvider,
     } from '#server/data/interfaces';
 
     import {
-        providersPath,
-    } from '#server/data/constants';
+        registerProvider,
+    } from '#server/logic/provider';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const registerProvider = async (
-    type: CodeProvider,
-    token: string,
-    name: string,
-) => {
-    const id = uuid.generate();
-
-    const provider: Provider = {
-        id,
-        type,
-        token,
-        name,
-    };
-
-    const providerPath = path.join(
-        providersPath,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        providerPath,
-        JSON.stringify(provider, null, 4),
-    );
-
-    return provider;
-}
-
-
-const setupProvider = async (
-    input: any,
+const addProvider = async (
+    input: InputAddProvider,
     context: Context,
 ) => {
+    // #region context unpack
     const {
-        type,
-        token,
-        name
-    } = input;
+        request,
 
-    const provider = await registerProvider(
-        type,
-        token,
-        name,
+        privateUsage,
+        privateOwnerIdentonym,
+
+        customLogicUsage,
+
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
+
+
+    // #region log start
+    logger.log(
+        '[Performer Info : Start] :: addProvider',
+        logLevels.info,
     );
+    // #endregion log start
 
-    return {
-        status: true,
-        data: provider.id,
-    };
+
+    try {
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                '[Performer Info : Handle] :: addProvider · privateUsage',
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    '[Performer Info : End] :: addProvider · privateUsage',
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            const provider = await registerProvider(
+                input,
+            );
+
+            logger.log(
+                '[Performer Info : Success] :: addProvider · privateUsage',
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+                data: provider.id,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                '[Performer Info : Handle] :: addProvider · customLogicUsage',
+                logLevels.trace,
+            );
+
+            const provider = await logic.provider.register(
+                input,
+            );
+
+            if (!provider) {
+                logger.log(
+                    '[Performer Info : End] :: addProvider · customLogicUsage',
+                    logLevels.trace,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            logger.log(
+                '[Performer Info : End] :: addProvider · customLogicUsage',
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+                data: provider.id,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        const provider = await registerProvider(
+            input,
+        );
+
+        logger.log(
+            '[Performer Info : Success] :: addProvider',
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+            data: provider.id,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            '[Performer Error : End] :: addProvider',
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 
 
 
 // #region exports
-export default setupProvider;
+export default addProvider;
 // #endregion exports

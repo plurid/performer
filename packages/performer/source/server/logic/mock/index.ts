@@ -56,6 +56,16 @@ const performerLogic: PerformerLogic = {
         };
     },
 
+    provider: {
+        register: async (
+            id,
+            string,
+            token,
+        ) => {
+            return undefined;
+        },
+    },
+
     builds: {
         clear: async () => {
             return true;

@@ -1,4 +1,9 @@
 // #region module
+export interface InputOf<T> {
+    input: T;
+}
+
+
 export type CodeProvider =
     | 'bitbucket'
     | 'github';

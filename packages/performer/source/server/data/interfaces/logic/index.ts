@@ -4,18 +4,29 @@
         PerformerOwner,
         OwnerToken,
 
+        Provider,
         Build,
     } from '../general';
 
     import {
         Logger,
     } from '../logger';
+
+    import {
+        InputAddProvider,
+    } from '../inputs';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export interface PerformerLogicProvider {
+    register: (
+        input: InputAddProvider,
+    ) => Promise<Provider | undefined>;
+}
+
 export interface PerformerLogicBuilds {
     clear: () => Promise<boolean>;
     getByID: (
@@ -35,7 +46,9 @@ export interface PerformerLogic {
         identonym: string,
         key: string,
     ) => Promise<OwnerToken>;
-    builds: PerformerLogicBuilds;
     logger: Logger;
+
+    provider: PerformerLogicProvider;
+    builds: PerformerLogicBuilds;
 }
 // #endregion module

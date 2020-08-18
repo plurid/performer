@@ -1,4 +1,9 @@
 // #region imports
+    // #region libraries
+    import path from 'path';
+    // #endregion libraries
+
+
     // #region external
     import {
         Database,
@@ -8,6 +13,10 @@
         DatabaseUpdate,
         DatabaseObliterate,
     } from '#server/data/interfaces';
+
+    import {
+        providersPath,
+    } from '#server/data/constants';
 
     import filesystemStorage from '#server/logic/storage/filesystem';
     // #endregion external
@@ -38,6 +47,26 @@ const store: DatabaseStore = async (
     id,
     data,
 ) => {
+    const stringData = JSON.stringify(data, null, 4);
+
+    let dataPath = '';
+
+    switch (entity) {
+        case 'provider':
+            dataPath = providersPath;
+            break;
+    }
+
+    const entityPath = path.join(
+        dataPath,
+        id + '.json',
+    );
+
+    filesystemStorage.upload(
+        entityPath,
+        Buffer.from(stringData, 'utf-8'),
+    );
+
     return;
 }
 
