@@ -39,6 +39,7 @@ const setupHandlers = (
     );
     setupGraphQL(
         instance,
+        logic,
     );
     setupWebhooks(
         instance,

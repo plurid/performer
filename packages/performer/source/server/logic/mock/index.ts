@@ -10,6 +10,8 @@
     import {
         PerformerLogic,
     } from '#server/data/interfaces';
+
+    import Logger from '#server/logic/logger';
     // #endregion external
 // #endregion imports
 
@@ -49,6 +51,14 @@ const performerLogic: PerformerLogic = {
             token: 'owner-token',
         };
     },
+
+    builds: {
+        clear: async () => {
+            return true;
+        },
+    },
+
+    logger: new Logger(),
 };
 // #endregion module
 

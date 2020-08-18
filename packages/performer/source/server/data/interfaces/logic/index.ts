@@ -4,12 +4,20 @@
         PerformerOwner,
         OwnerToken,
     } from '../general';
+
+    import {
+        Logger,
+    } from '../logger';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export interface PerformerLogicBuilds {
+    clear: () => Promise<boolean>;
+}
+
 export interface PerformerLogic {
     getCurrentOwner: () => Promise<PerformerOwner>;
     checkOwnerToken: (
@@ -19,5 +27,7 @@ export interface PerformerLogic {
         identonym: string,
         key: string,
     ) => Promise<OwnerToken>;
+    builds: PerformerLogicBuilds;
+    logger: Logger;
 }
 // #endregion module

@@ -25,6 +25,11 @@
     import {
         PerformerLogic,
     } from '../logic';
+
+    import {
+        Logger,
+        LogLevels,
+    } from '../logger';
     // #endregion external
 // #endregion imports
 
@@ -34,7 +39,9 @@
 export interface Context {
     request: PerformerRequest;
     response: Response;
+
     instance: Application;
+
     providers: Provider[];
     imagenes: Imagene[];
     repositories: Repository[];
@@ -45,8 +52,15 @@ export interface Context {
     deployers: Deployer[];
     builds: Build[];
     deploys: Deploy[];
+
+    customLogicUsage: boolean;
+
     privateUsage: boolean;
     privateOwnerIdentonym: string | undefined;
+
+    logger: Logger;
+    logLevel: number;
+    logLevels: LogLevels;
 }
 
 

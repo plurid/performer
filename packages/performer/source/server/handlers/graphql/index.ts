@@ -13,6 +13,7 @@
     // #region external
     import {
         Context,
+        PerformerLogic,
     } from '#server/data/interfaces';
 
     import {
@@ -20,7 +21,11 @@
         GRAPHQL_TITLE,
         GRAPHQL_ENDPOINT,
 
+        CUSTOM_LOGIC_USAGE,
         PRIVATE_USAGE,
+
+        logLevel,
+        logLevels,
     } from '#server/data/constants';
 
     import {
@@ -29,6 +34,8 @@
     } from '#server/api';
 
     import loadData from '#server/logic/loader';
+
+    import defaultLogger from '#server/services/logger';
 
     import {
         getPrivateOwner,
@@ -45,11 +52,19 @@
 // #region module
 const setupGraphQLServer = async (
     instance: Application,
+    logic?: PerformerLogic,
 ) => {
     const playground = {
         faviconUrl: GRAPHQL_FAVICON,
         title: GRAPHQL_TITLE,
     };
+
+    const customLogicUsage = CUSTOM_LOGIC_USAGE;
+    const privateUsage = PRIVATE_USAGE;
+
+    const logger = customLogicUsage && logic
+        ? logic.logger
+        : defaultLogger;
 
     const graphQLServer = new ApolloServer({
         typeDefs: schemas,
@@ -77,14 +92,16 @@ const setupGraphQLServer = async (
                 instance,
             );
 
-            const privateOwnerIdentonym = PRIVATE_USAGE
+            const privateOwnerIdentonym = privateUsage
                 ? getPrivateOwner(req)
                 : '';
 
             const context: Context = {
                 request: req,
                 response: res,
+
                 instance,
+
                 providers,
                 imagenes,
                 repositories,
@@ -95,8 +112,15 @@ const setupGraphQLServer = async (
                 deployers,
                 builds,
                 deploys,
-                privateUsage: PRIVATE_USAGE,
+
+                customLogicUsage,
+
+                privateUsage,
                 privateOwnerIdentonym,
+
+                logger,
+                logLevel,
+                logLevels,
             };
 
             return context;
