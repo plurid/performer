@@ -1,16 +1,7 @@
-// #region imports
-    // #region libraries
-    import express from 'express';
-    // #endregion libraries
-// #endregion imports
-
-
-
 // #region module
 export type CodeProvider =
     | 'bitbucket'
     | 'github';
-
 
 
 export interface Provider {
@@ -121,19 +112,16 @@ export interface Project {
 }
 
 
-export interface Secret {
-    id: string;
-    name: string;
-    endsWith: string;
-    project: string;
-}
-
 export interface SecretStored {
     id: string;
     name: string;
     value: string;
     project: string;
 }
+
+export type Secret = Omit<SecretStored, 'value'> & {
+    startsWith: string;
+};
 
 
 export interface Deployer {

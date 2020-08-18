@@ -56,8 +56,8 @@ const secretRowRenderer = (
     const {
         id,
         name,
-        endsWith,
         project,
+        startsWith,
     } = secret;
 
     return (
@@ -67,7 +67,7 @@ const secretRowRenderer = (
             </div>
 
             <div>
-                {endsWith}
+                {startsWith}
             </div>
 
             <div>
@@ -261,7 +261,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             </div>
 
             <div>
-                ends with
+                starts with
             </div>
 
             <div>

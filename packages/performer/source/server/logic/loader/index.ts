@@ -100,7 +100,7 @@ export const loadSecrets = async () => {
             id,
             name,
             project,
-            endsWith: value.substr(value.length - 4),
+            startsWith: value.slice(0, 5),
         };
 
         return secret;

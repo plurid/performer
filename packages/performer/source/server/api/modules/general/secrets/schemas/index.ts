@@ -13,8 +13,8 @@ export default gql`
     type Secret {
         id: String!
         name: String!
-        endsWith: String!
         project: String!
+        startsWith: String!
     }
 
 
