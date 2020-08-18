@@ -3,14 +3,6 @@
     import {
         Context,
     } from '#server/data/interfaces';
-
-    import {
-        PRIVATE_USAGE,
-    } from '#server/data/constants';
-
-    import {
-        getPrivateOwner,
-    } from '#server/logic/privateUsage';
     // #endregion external
 // #endregion imports
 
@@ -23,6 +15,7 @@ const getCurrentOwner = async (
     try {
         const {
             request,
+            privateOwnerIdentonym,
         } = context;
 
         const logic = request.performerLogic;
@@ -36,15 +29,7 @@ const getCurrentOwner = async (
             };
         }
 
-        if (PRIVATE_USAGE) {
-            const privateOwnerIdentonym = getPrivateOwner(request);
-
-            if (!privateOwnerIdentonym) {
-                return {
-                    status: false,
-                };
-            }
-
+        if (privateOwnerIdentonym) {
             return {
                 status: true,
                 data: {

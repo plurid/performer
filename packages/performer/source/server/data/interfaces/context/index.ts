@@ -45,6 +45,7 @@ export interface Context {
     deployers: Deployer[];
     builds: Build[];
     deploys: Deploy[];
+    privateOwnerIdentonym: string | undefined;
 }
 
 

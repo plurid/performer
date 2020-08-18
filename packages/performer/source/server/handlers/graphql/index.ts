@@ -19,6 +19,8 @@
         GRAPHQL_FAVICON,
         GRAPHQL_TITLE,
         GRAPHQL_ENDPOINT,
+
+        PRIVATE_USAGE,
     } from '#server/data/constants';
 
     import {
@@ -27,6 +29,10 @@
     } from '#server/api';
 
     import loadData from '#server/logic/loader';
+
+    import {
+        getPrivateOwner,
+    } from '#server/logic/privateUsage';
 
     import {
         handleWebhooks,
@@ -71,6 +77,10 @@ const setupGraphQLServer = async (
                 instance,
             );
 
+            const privateOwnerIdentonym = PRIVATE_USAGE
+                ? getPrivateOwner(req)
+                : '';
+
             const context: Context = {
                 request: req,
                 response: res,
@@ -85,6 +95,7 @@ const setupGraphQLServer = async (
                 deployers,
                 builds,
                 deploys,
+                privateOwnerIdentonym,
             };
 
             return context;

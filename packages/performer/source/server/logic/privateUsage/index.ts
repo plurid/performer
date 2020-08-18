@@ -22,17 +22,25 @@
 const getPrivateOwner = (
     request: Request,
 ) => {
-    const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
+    try {
+        if (Object.keys(request.cookies).length === 0) {
+            return;
+        }
 
-    const token = Buffer
-        .from(cookiePrivateToken, 'base64')
-        .toString('utf-8');
+        const cookiePrivateToken = request.cookies[COOKIE_PRIVATE_TOKEN];
 
-    if (token !== PRIVATE_TOKEN) {
+        const token = Buffer
+            .from(cookiePrivateToken, 'base64')
+            .toString('utf-8');
+
+        if (token !== PRIVATE_TOKEN) {
+            return;
+        }
+
+        return PRIVATE_OWNER_IDENTONYM;
+    } catch (error) {
         return;
     }
-
-    return PRIVATE_OWNER_IDENTONYM;
 }
 // #endregion module
 
