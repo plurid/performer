@@ -2,6 +2,8 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,14 +18,14 @@
 export default {
     generateProject: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Projects.Mutation.generateProject(
         input,
     ),
     obliterateProject: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Projects.Mutation.obliterateProject(
         input,
