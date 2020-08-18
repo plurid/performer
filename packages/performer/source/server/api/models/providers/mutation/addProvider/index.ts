@@ -10,7 +10,7 @@
     } from '#server/logic/provider';
 
     import {
-        generateLog,
+        generateMethodLogs,
     } from '#server/utilities';
     // #endregion external
 // #endregion imports
@@ -18,20 +18,7 @@
 
 
 // #region module
-export const addProviderLogs = {
-    infoStart: generateLog('Info', 'Start', 'addProvider'),
-    infoSuccess: generateLog('Info', 'Success', 'addProvider'),
-    infoEnd: generateLog('Info', 'End', 'addProvider'),
-
-    infoHandlePrivateUsage: generateLog('Info', 'Handle', 'addProvider', 'privateUsage'),
-    infoEndPrivateUsage: generateLog('Info', 'End', 'addProvider', 'privateUsage'),
-    infoSuccessPrivateUsage: generateLog('Info', 'Success', 'addProvider', 'privateUsage'),
-
-    infoHandleCustomLogicUsage: generateLog('Info', 'Handle', 'addProvider', 'customLogicUsage'),
-    infoEndCustomLogicUsage: generateLog('Info', 'End', 'addProvider', 'customLogicUsage'),
-    infoSuccessCustomLogicUsage: generateLog('Info', 'Success', 'addProvider', 'customLogicUsage'),
-};
-
+export const addProviderLogs = generateMethodLogs('obliterateProvider');
 
 const addProvider = async (
     input: InputAddProvider,
@@ -151,7 +138,7 @@ const addProvider = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            addProviderLogs.infoEnd,
+            addProviderLogs.errorEnd,
             logLevels.error,
             error,
         );

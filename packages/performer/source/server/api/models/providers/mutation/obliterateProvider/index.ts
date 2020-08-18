@@ -8,12 +8,18 @@
     import {
         deregisterProvider,
     } from '#server/logic/provider';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const obliterateProviderLogs = generateMethodLogs('obliterateProvider');
+
 const obliterateProvider = async (
     input: InputValueString,
     context: Context,
@@ -35,7 +41,7 @@ const obliterateProvider = async (
 
     // #region log start
     logger.log(
-        '[Performer Info : Start] :: obliterateProvider',
+        obliterateProviderLogs.infoStart,
         logLevels.info,
     );
     // #endregion log start
@@ -52,13 +58,13 @@ const obliterateProvider = async (
         // #region private usage
         if (privateUsage) {
             logger.log(
-                '[Performer Info : Handle] :: obliterateProvider · privateUsage',
+                obliterateProviderLogs.infoHandlePrivateUsage,
                 logLevels.trace,
             );
 
             if (!privateOwnerIdentonym) {
                 logger.log(
-                    '[Performer Info : End] :: obliterateProvider · privateUsage',
+                    obliterateProviderLogs.infoEndPrivateUsage,
                     logLevels.info,
                 );
 
@@ -70,7 +76,7 @@ const obliterateProvider = async (
             await deregisterProvider(id);
 
             logger.log(
-                '[Performer Info : Success] :: obliterateProvider · privateUsage',
+                obliterateProviderLogs.infoSuccessPrivateUsage,
                 logLevels.info,
             );
 
@@ -86,7 +92,7 @@ const obliterateProvider = async (
 
         if (customLogicUsage && logic) {
             logger.log(
-                '[Performer Info : Handle] :: obliterateProvider · customLogicUsage',
+                obliterateProviderLogs.infoHandleCustomLogicUsage,
                 logLevels.trace,
             );
 
@@ -95,7 +101,7 @@ const obliterateProvider = async (
             );
 
             logger.log(
-                '[Performer Info : End] :: obliterateProvider · customLogicUsage',
+                obliterateProviderLogs.infoEndCustomLogicUsage,
                 logLevels.info,
             );
 
@@ -112,7 +118,7 @@ const obliterateProvider = async (
         );
 
         logger.log(
-            '[Performer Info : Success] :: obliterateProvider',
+            obliterateProviderLogs.infoSuccessCustomLogicUsage,
             logLevels.info,
         );
 
@@ -123,7 +129,7 @@ const obliterateProvider = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            '[Performer Error : End] :: obliterateProvider',
+            obliterateProviderLogs.errorEnd,
             logLevels.error,
             error,
         );
