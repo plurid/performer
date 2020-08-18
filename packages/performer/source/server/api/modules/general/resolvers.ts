@@ -10,10 +10,12 @@
     import imagenes from './imagenes/resolvers';
     import owner from './owner/resolvers';
     import projects from './projects/resolvers';
+    import providers from './providers/resolvers';
     import repositories from './repositories/resolvers';
     import secrets from './secrets/resolvers';
     import setup from './setup/resolvers';
     import triggers from './triggers/resolvers';
+    import webhooks from './webhooks/resolvers';
     // #endregion internal
 // #endregion imports
 
@@ -40,10 +42,12 @@ const resolvers = generateResolvers(
     imagenes,
     owner,
     projects,
+    providers,
     repositories,
     secrets,
     setup,
     triggers,
+    webhooks,
 );
 // #endregion module
 

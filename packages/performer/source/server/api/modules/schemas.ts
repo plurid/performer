@@ -28,7 +28,10 @@ const baseSchema = gql`
         _: Boolean
     }
 
+
     # extras
+
+    # types
     type Response {
         status: Boolean!
         error: Error
@@ -40,6 +43,14 @@ const baseSchema = gql`
         message: String!
     }
 
+
+    # inputs
+    input InputValueString {
+        value: String!
+    }
+
+
+    # scalars
     scalar Date
 `;
 
