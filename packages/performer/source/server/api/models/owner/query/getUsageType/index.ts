@@ -3,10 +3,6 @@
     import {
         Context,
     } from '#server/data/interfaces';
-
-    import {
-        PRIVATE_USAGE,
-    } from '#server/data/constants';
     // #endregion external
 // #endregion imports
 
@@ -19,6 +15,7 @@ const getUsageType = async (
     try {
         const {
             request,
+            privateUsage,
         } = context;
 
         if (request.performerLogic) {
@@ -28,7 +25,7 @@ const getUsageType = async (
             };
         }
 
-        if (PRIVATE_USAGE) {
+        if (privateUsage) {
             return {
                 status: true,
                 data: 'PRIVATE_USAGE'

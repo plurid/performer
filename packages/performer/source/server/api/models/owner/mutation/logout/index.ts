@@ -5,8 +5,6 @@
     } from '#server/data/interfaces';
 
     import {
-        PRIVATE_USAGE,
-
         COOKIE_PRIVATE_TOKEN,
     } from '#server/data/constants';
     // #endregion external
@@ -21,9 +19,10 @@ const logout = async (
     try {
         const {
             response,
+            privateUsage,
         } = context;
 
-        if (PRIVATE_USAGE) {
+        if (privateUsage) {
             response.cookie(
                 COOKIE_PRIVATE_TOKEN,
                 '',

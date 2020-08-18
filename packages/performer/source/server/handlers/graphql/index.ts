@@ -95,6 +95,7 @@ const setupGraphQLServer = async (
                 deployers,
                 builds,
                 deploys,
+                privateUsage: PRIVATE_USAGE,
                 privateOwnerIdentonym,
             };
 

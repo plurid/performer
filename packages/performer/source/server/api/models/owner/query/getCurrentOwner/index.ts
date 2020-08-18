@@ -15,6 +15,7 @@ const getCurrentOwner = async (
     try {
         const {
             request,
+            privateUsage,
             privateOwnerIdentonym,
         } = context;
 
@@ -29,7 +30,13 @@ const getCurrentOwner = async (
             };
         }
 
-        if (privateOwnerIdentonym) {
+        if (privateUsage) {
+            if (!privateOwnerIdentonym) {
+                return {
+                    status: false,
+                };
+            }
+
             return {
                 status: true,
                 data: {

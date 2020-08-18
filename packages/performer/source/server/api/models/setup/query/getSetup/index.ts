@@ -18,7 +18,35 @@ const getSetup = async (
         deployers,
         builds,
         deploys,
+        privateUsage,
+        privateOwnerIdentonym,
     } = context;
+
+
+    if (privateUsage) {
+        if (!privateOwnerIdentonym) {
+            return {
+                status: false,
+            };
+        }
+
+        return {
+            status: true,
+            data: {
+                providers,
+                imagenes,
+                webhooks,
+                repositories,
+                projects,
+                secrets,
+                triggers,
+                deployers,
+                builds,
+                deploys,
+            },
+        };
+    }
+
 
     return {
         status: true,

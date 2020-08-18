@@ -5,7 +5,6 @@
     } from '#server/data/interfaces';
 
     import {
-        PRIVATE_USAGE,
         PRIVATE_OWNER_IDENTONYM,
         PRIVATE_OWNER_KEY,
         PRIVATE_TOKEN,
@@ -25,6 +24,7 @@ const login = async (
     try {
         const {
             response,
+            privateUsage,
         } = context;
 
         const {
@@ -32,7 +32,7 @@ const login = async (
             key,
         } = input;
 
-        if (PRIVATE_USAGE) {
+        if (privateUsage) {
             if (
                 identonym === PRIVATE_OWNER_IDENTONYM
                 && key === PRIVATE_OWNER_KEY
