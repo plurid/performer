@@ -20,6 +20,16 @@ const performerLogic: PerformerLogic = {
     getCurrentOwner: async () => {
         return {
             id: uuid.generate(),
+            providers: [],
+            imagenes: [],
+            repositories: [],
+            webhooks: [],
+            projects: [],
+            secrets: [],
+            triggers: [],
+            deployers: [],
+            builds: [],
+            deploys: [],
         };
     },
     checkOwnerToken: async (

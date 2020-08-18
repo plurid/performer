@@ -9,6 +9,11 @@
 
 
 // #region module
+/**
+ * Given a directory path, makes the directory and all the subdirectories required.
+ *
+ * @param directory
+ */
 export const makeDirectorySync = (
     directory: string,
 ) => {
@@ -18,6 +23,12 @@ export const makeDirectorySync = (
 }
 
 
+/**
+ * Copy a directory and all its contents from `source` to `destination`.
+ *
+ * @param source
+ * @param destination
+ */
 export const copyDirectory = async (
     source: string,
     destination: string,

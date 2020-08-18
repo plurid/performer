@@ -31,6 +31,8 @@
     import preserves from './preserves';
 
     import setupHandlers from './handlers';
+
+    import mockLogic from './logic/mock';
     // #endregion internal
 // #endregion imports
 

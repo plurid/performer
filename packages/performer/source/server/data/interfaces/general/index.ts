@@ -160,6 +160,16 @@ export interface Deploy {
 
 export interface PerformerOwner {
     id: string;
+    providers: Provider[];
+    imagenes: Imagene[];
+    repositories: Repository[];
+    webhooks: Webhook[];
+    projects: Project[];
+    secrets: Secret[];
+    triggers: Trigger[];
+    deployers: Deployer[];
+    builds: Build[];
+    deploys: Deploy[];
 }
 
 
