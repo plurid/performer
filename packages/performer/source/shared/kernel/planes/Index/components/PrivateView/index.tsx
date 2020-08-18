@@ -26,6 +26,10 @@
         StyledPluridTextline,
     } from '#kernel-services/styled';
 
+    import {
+        getSetup,
+    } from '#kernel-services/logic/queries';
+
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
@@ -51,6 +55,7 @@ export interface PrivateViewStateProperties {
 }
 
 export interface PrivateViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>;
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchViewOwnerID: typeof actions.view.setViewOwnerID;
 }
@@ -65,6 +70,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
     // #region properties
     const {
         // #region dispatch
+        dispatch,
         dispatchSetViewType,
         dispatchViewOwnerID,
         // #endregion dispatch
@@ -116,6 +122,8 @@ const PrivateView: React.FC<PrivateViewProperties> = (
                 setError('something is wrong. try again.');
                 return;
             }
+
+            await getSetup(dispatch);
 
             const owner = response.data;
 
@@ -203,6 +211,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): PrivateViewDispatchProperties => ({
+    dispatch,
     dispatchSetViewType: (
         payload,
     ) => dispatch(

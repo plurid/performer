@@ -151,6 +151,7 @@ const getSetup = async (
 
     const setupQuery = await client.query({
         query: GET_SETUP,
+        fetchPolicy: 'no-cache',
     });
 
     const response = setupQuery.data.getSetup;
