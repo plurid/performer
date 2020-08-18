@@ -3,6 +3,10 @@
     import {
         logLevels,
     } from '#server/data/constants';
+
+    import {
+        stringifyError,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
@@ -21,9 +25,16 @@ class Logger {
     public log(
         data: string,
         level = logLevels.info,
+        error?: any,
     ) {
         if (this.level <= level) {
             console.log(data);
+
+            if (error) {
+                console.log(
+                    stringifyError(error),
+                );
+            }
         }
     }
 }

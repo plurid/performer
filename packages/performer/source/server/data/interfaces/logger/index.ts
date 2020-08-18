@@ -3,6 +3,7 @@ export interface Logger {
     log: (
         data: string,
         level?: number,
+        error?: any,
     ) => void;
 }
 

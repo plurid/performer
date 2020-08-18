@@ -26,7 +26,7 @@ const clearBuilds = async (
 
     // #region log start
     logger.log(
-        '[Performer Start] :: clearBuilds',
+        '[Performer Info : Start] :: clearBuilds',
         logLevels.info,
     );
     // #endregion log start
@@ -47,14 +47,14 @@ const clearBuilds = async (
 
         if (customLogicUsage && logic) {
             logger.log(
-                '[Performer Handle] :: clearBuilds · customLogicUsage',
+                '[Performer Info : Handle] :: clearBuilds · customLogicUsage',
                 logLevels.trace,
             );
 
             await logic.builds.clear();
 
             logger.log(
-                '[Performer End] :: clearBuilds · customLogicUsage',
+                '[Performer Info : End] :: clearBuilds · customLogicUsage',
                 logLevels.info,
             );
 
@@ -65,12 +65,12 @@ const clearBuilds = async (
         // #endregion logic usage
 
 
-        // #region log end
+        // #region log success
         logger.log(
-            '[Performer End] :: clearBuilds',
+            '[Performer Info : Success] :: clearBuilds',
             logLevels.info,
         );
-        // #endregion log end
+        // #endregion log success
 
 
         // #region public usage
@@ -81,8 +81,9 @@ const clearBuilds = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            '[Performer Error] :: clearBuilds',
+            '[Performer Error : End] :: clearBuilds',
             logLevels.error,
+            error,
         );
 
         return {
