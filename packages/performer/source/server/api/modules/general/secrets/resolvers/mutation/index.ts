@@ -2,6 +2,9 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputStoreSecret,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,7 +19,7 @@
 export default {
     storeSecret: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputStoreSecret>,
         context: Context,
     ) => Secrets.Mutation.storeSecret(
         input,
@@ -24,7 +27,7 @@ export default {
     ),
     obliterateSecret: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Secrets.Mutation.obliterateSecret(
         input,

@@ -37,4 +37,11 @@ export interface InputSetupWebhook {
     providerID: string;
     path: string;
 }
+
+
+export interface InputStoreSecret {
+    name: string,
+    value: string,
+    project: string,
+}
 // #endregion module

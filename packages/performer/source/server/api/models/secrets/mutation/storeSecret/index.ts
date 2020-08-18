@@ -1,73 +1,134 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-
-    import {
-        uuid,
-    } from '@plurid/plurid-functions';
-    // #endregion libraries
-
-
     // #region external
     import {
-        secretsPath,
-    } from '#server/data/constants';
+        Context,
+        InputStoreSecret,
+    } from '#server/data/interfaces';
 
     import {
-        SecretStored,
-        Context,
-    } from '#server/data/interfaces';
+        registerSecret,
+    } from '#server/logic/secrets';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const registerSecret = async (
-    secret: SecretStored,
-) => {
-    const {
-        id,
-    } = secret;
-
-    const secretPath = path.join(
-        secretsPath,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        secretPath,
-        JSON.stringify(secret, null, 4),
-    );
-}
+export const storeSecretLogs = generateMethodLogs('storeSecret');
 
 
 const storeSecret = async (
-    input: any,
+    input: InputStoreSecret,
     context: Context,
 ) => {
+    // #region context unpack
     const {
-        name,
-        value,
-        project,
-    } = input;
+        request,
 
-    const id = uuid.generate();
-    const secretStored: SecretStored = {
-        id,
-        name,
-        value,
-        project,
-    };
-    registerSecret(secretStored);
+        privateUsage,
+        privateOwnerIdentonym,
 
-    return {
-        status: true,
-    };
+        customLogicUsage,
+
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
+
+
+    // #region log start
+    logger.log(
+        storeSecretLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                storeSecretLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    storeSecretLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await registerSecret(input);
+
+            logger.log(
+                storeSecretLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                storeSecretLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            await registerSecret(input);
+
+            logger.log(
+                storeSecretLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await registerSecret(input);
+
+        logger.log(
+            storeSecretLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            storeSecretLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 
