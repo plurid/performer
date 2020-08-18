@@ -69,6 +69,19 @@ const performerLogic: PerformerLogic = {
         },
     },
 
+    imagene: {
+        register: async (
+            input,
+        ) => {
+            return undefined;
+        },
+        deregister: async (
+            id,
+        ) => {
+            return true;
+        },
+    },
+
     builds: {
         clear: async () => {
             return true;

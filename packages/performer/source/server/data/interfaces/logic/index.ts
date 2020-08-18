@@ -5,6 +5,7 @@
         OwnerToken,
 
         Provider,
+        Imagene,
         Build,
     } from '../general';
 
@@ -14,6 +15,7 @@
 
     import {
         InputAddProvider,
+        InputAddImagene,
     } from '../inputs';
     // #endregion external
 // #endregion imports
@@ -30,6 +32,17 @@ export interface PerformerLogicProvider {
     ) => Promise<boolean>;
 }
 
+
+export interface PerformerLogicImagene {
+    register: (
+        input: InputAddImagene,
+    ) => Promise<Imagene | undefined>;
+    deregister: (
+        id: string,
+    ) => Promise<boolean>;
+}
+
+
 export interface PerformerLogicBuilds {
     clear: () => Promise<boolean>;
     getByID: (
@@ -39,6 +52,7 @@ export interface PerformerLogicBuilds {
         id: string,
     ) => Promise<any | undefined>;
 }
+
 
 export interface PerformerLogic {
     getCurrentOwner: () => Promise<PerformerOwner>;
@@ -52,6 +66,7 @@ export interface PerformerLogic {
     logger: Logger;
 
     provider: PerformerLogicProvider;
+    imagene: PerformerLogicImagene;
     builds: PerformerLogicBuilds;
 }
 // #endregion module
