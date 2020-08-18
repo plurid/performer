@@ -16,6 +16,11 @@ export interface IStyledEntityView {
 export const StyledEntityView = styled.div<IStyledEntityView>`
     position: relative;
     height: 100%;
+
+    button {
+        font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+            'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 `;
 
 
