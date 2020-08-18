@@ -26,9 +26,8 @@
 export const linkRepositoryLogs = generateMethodLogs('linkRepository');
 
 
-const linkRepository = async (
+export const handleLinkRepository = async (
     input: InputLinkRepository,
-    context: Context,
 ) => {
     const {
         providerID,
@@ -68,6 +67,122 @@ const linkRepository = async (
     return {
         status: true,
     };
+}
+
+const linkRepository = async (
+    input: InputLinkRepository,
+    context: Context,
+) => {
+    // #region context unpack
+    const {
+        request,
+
+        privateUsage,
+        privateOwnerIdentonym,
+
+        customLogicUsage,
+
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
+
+
+    // #region log start
+    logger.log(
+        linkRepositoryLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                linkRepositoryLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    linkRepositoryLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await handleLinkRepository(
+                input,
+            );
+
+            logger.log(
+                linkRepositoryLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                linkRepositoryLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            // await handleLinkRepository(
+            //     input,
+            // );
+
+            logger.log(
+                linkRepositoryLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await handleLinkRepository(
+            input,
+        );
+
+        logger.log(
+            linkRepositoryLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            linkRepositoryLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 
