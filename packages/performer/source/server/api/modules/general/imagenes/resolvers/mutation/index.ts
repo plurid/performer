@@ -2,6 +2,9 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputAddImagene,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,14 +19,15 @@
 export default {
     addImagene: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputAddImagene>,
         context: Context,
     ) => Imagenes.Mutation.addImagene(
         input,
+        context,
     ),
     obliterateImagene: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Imagenes.Mutation.obliterateImagene(
         input,

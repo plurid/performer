@@ -1,47 +1,27 @@
 // #region imports
-    // #region libraries
-    import fs from 'fs';
-
-    import path from 'path';
-    // #endregion libraries
-
-
     // #region external
     import {
-        imagenesPath,
-    } from '#server/data/constants';
+        Context,
+        InputValueString,
+    } from '#server/data/interfaces';
 
     import {
-        Context,
-    } from '#server/data/interfaces';
+        deregisterImagene,
+    } from '#server/logic/imagene';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const deregisterImagene = async (
-    id: string,
-) => {
-    try {
-        const imagenePath = path.join(
-            imagenesPath,
-            id + '.json',
-        );
-
-        if (!fs.existsSync(imagenePath)) {
-            return;
-        }
-
-        fs.promises.unlink(imagenePath);
-    } catch (error) {
-        return;
-    }
-}
-
+export const obliterateImageneLogs = generateMethodLogs('obliterateImagene');
 
 const obliterateImagene = async (
-    input: any,
+    input: InputValueString,
     context: Context,
 ) => {
     const {

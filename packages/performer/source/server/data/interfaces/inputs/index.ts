@@ -19,4 +19,9 @@ export interface InputAddProvider {
     token: string;
     name: string;
 }
+
+export interface InputAddImagene {
+    name: string;
+    version: string;
+}
 // #endregion module
