@@ -1,17 +1,25 @@
-import fs from 'fs';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
-
-import {
-    Context,
-} from '#server/data/interfaces';
-
-import {
-    providersPath,
-} from '#server/data/constants';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
+    import {
+        providersPath,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const deregisterProvider = async (
     id: string,
 ) => {
@@ -46,6 +54,10 @@ const obliterateProvider = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default obliterateProvider;
+// #endregion exports

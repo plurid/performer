@@ -1,25 +1,33 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
+    import path from 'path';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    Context,
-    Provider,
-    CodeProvider,
-} from '#server/data/interfaces';
-
-import {
-    providersPath,
-} from '#server/data/constants';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Context,
+        Provider,
+        CodeProvider,
+    } from '#server/data/interfaces';
 
+    import {
+        providersPath,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const registerProvider = async (
     type: CodeProvider,
     token: string,
@@ -69,6 +77,10 @@ const setupProvider = async (
         data: provider.id,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default setupProvider;
+// #endregion exports

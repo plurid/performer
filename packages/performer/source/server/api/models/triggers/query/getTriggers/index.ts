@@ -1,9 +1,14 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const getTriggers = async (
     context: Context,
 ) => {
@@ -18,6 +23,10 @@ const getTriggers = async (
         ],
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default getTriggers;
+// #endregion exports

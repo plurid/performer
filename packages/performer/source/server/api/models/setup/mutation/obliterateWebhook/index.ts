@@ -1,17 +1,25 @@
-import fs from 'fs';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
-
-import {
-    Context,
-} from '#server/data/interfaces';
-
-import {
-    webhooksPath,
-} from '#server/data/constants';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
+    import {
+        webhooksPath,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 export const deregisterWebhook = async (
     id: string,
 ) => {
@@ -46,6 +54,10 @@ const obliterateWebhook = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default obliterateWebhook;
+// #endregion exports

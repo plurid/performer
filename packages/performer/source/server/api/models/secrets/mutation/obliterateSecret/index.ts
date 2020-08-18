@@ -1,17 +1,25 @@
-import fs from 'fs';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
-
-import {
-    secretsPath,
-} from '#server/data/constants';
-
-import {
-    Context,
-} from '#server/data/interfaces';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        secretsPath,
+    } from '#server/data/constants';
 
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const deregisterSecret = async (
     id: string,
 ) => {
@@ -46,6 +54,10 @@ const obliterateSecret = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default obliterateSecret;
+// #endregion exports

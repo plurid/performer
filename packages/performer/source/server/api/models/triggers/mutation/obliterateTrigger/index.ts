@@ -1,17 +1,25 @@
-import fs from 'fs';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
-
-import {
-    triggersPath,
-} from '#server/data/constants';
-
-import {
-    Context,
-} from '#server/data/interfaces';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        triggersPath,
+    } from '#server/data/constants';
 
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const deregisterTrigger = async (
     id: string,
 ) => {
@@ -46,6 +54,10 @@ const obliterateTrigger = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default obliterateTrigger;
+// #endregion exports

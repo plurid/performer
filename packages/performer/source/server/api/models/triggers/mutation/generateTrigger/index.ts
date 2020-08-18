@@ -1,24 +1,32 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
+    import path from 'path';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    triggersPath,
-} from '#server/data/constants';
-
-import {
-    Trigger,
-    Context,
-} from '#server/data/interfaces';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        triggersPath,
+    } from '#server/data/constants';
 
+    import {
+        Trigger,
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const registerTrigger = async (
     trigger: Trigger,
 ) => {
@@ -70,6 +78,10 @@ const generateTrigger = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default generateTrigger;
+// #endregion exports

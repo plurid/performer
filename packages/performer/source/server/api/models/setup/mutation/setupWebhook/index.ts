@@ -1,18 +1,23 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
-import {
-    registerWebhook,
-    handleWebhook,
-} from '#server/logic/webhooks';
+    import {
+        registerWebhook,
+        handleWebhook,
+    } from '#server/logic/webhooks';
 
-import {
-    getProvider,
-} from '#server/api/requesters';
+    import {
+        getProvider,
+    } from '#server/api/requesters';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const setupWebhook = async (
     input: any,
     context: Context,
@@ -46,6 +51,10 @@ const setupWebhook = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default setupWebhook;
+// #endregion exports

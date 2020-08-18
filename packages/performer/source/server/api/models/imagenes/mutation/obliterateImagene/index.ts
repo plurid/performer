@@ -1,17 +1,25 @@
-import fs from 'fs';
+// #region imports
+    // #region libraries
+    import fs from 'fs';
 
-import path from 'path';
-
-import {
-    imagenesPath,
-} from '#server/data/constants';
-
-import {
-    Context,
-} from '#server/data/interfaces';
+    import path from 'path';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        imagenesPath,
+    } from '#server/data/constants';
 
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const deregisterImagene = async (
     id: string,
 ) => {
@@ -46,6 +54,10 @@ const obliterateImagene = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default obliterateImagene;
+// #endregion exports

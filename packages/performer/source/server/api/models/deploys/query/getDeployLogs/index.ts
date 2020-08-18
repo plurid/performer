@@ -1,13 +1,18 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
-import {
-    getDeployLogs as getDeployLogsLogic,
-} from '#server/logic/deploy';
+    import {
+        getDeployLogs as getDeployLogsLogic,
+    } from '#server/logic/deploy';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const getDeployLogs = async (
     input: any,
     context: Context,
@@ -45,6 +50,10 @@ const getDeployLogs = async (
         },
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default getDeployLogs;
+// #endregion exports

@@ -1,3 +1,4 @@
+// #region imports
 import {
     Context,
 } from '#server/data/interfaces';
@@ -10,9 +11,11 @@ import {
 import {
     registerRepositoryMetadata,
 } from '#server/logic/repository';
+// #endregion imports
 
 
 
+// #region module
 const linkRepository = async (
     input: any,
     context: Context,
@@ -56,6 +59,10 @@ const linkRepository = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default linkRepository;
+// #endregion exports

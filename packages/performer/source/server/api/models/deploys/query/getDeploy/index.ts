@@ -1,9 +1,14 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const getDeploy = async (
     input: any,
     context: Context,
@@ -29,6 +34,10 @@ const getDeploy = async (
         data: deploy,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default getDeploy;
+// #endregion exports

@@ -1,24 +1,32 @@
-import {
-    promises as fs,
-} from 'fs';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
 
-import path from 'path';
+    import path from 'path';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    deployersPath,
-} from '#server/data/constants';
-
-import {
-    Deployer,
-    Context,
-} from '#server/data/interfaces';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        Deployer,
+        Context,
+    } from '#server/data/interfaces';
 
+    import {
+        deployersPath,
+    } from '#server/data/constants';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const registerDeployer = async (
     deployer: Deployer,
 ) => {
@@ -70,6 +78,10 @@ const generateDeployer = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default generateDeployer;
+// #endregion exports

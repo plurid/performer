@@ -1,22 +1,30 @@
-import {
-    promises as fs,
-} from 'fs';
-import path from 'path';
+// #region imports
+    // #region libraries
+    import {
+        promises as fs,
+    } from 'fs';
+    import path from 'path';
 
-import {
-    uuid,
-} from '@plurid/plurid-functions';
-
-import {
-    imagenesPath,
-} from '#server/data/constants';
-
-import {
-    Imagene,
-} from '#server/data/interfaces';
+    import {
+        uuid,
+    } from '@plurid/plurid-functions';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        imagenesPath,
+    } from '#server/data/constants';
 
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
+
+
+
+// #region module
 const registerImagene = async (
     imagene: Imagene,
 ) => {
@@ -59,6 +67,10 @@ const addImagene = async (
         status: true,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default addImagene;
+// #endregion exports
