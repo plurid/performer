@@ -95,6 +95,7 @@ const getBuildLogs = async (
 
         // #region logic usage
         const logic = request.performerLogic;
+
         if (customLogicUsage && logic) {
             logger.log(
                 '[Performer Info : Handle] :: getBuildLogs · customLogicUsage',

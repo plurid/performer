@@ -34,9 +34,35 @@ const clearBuilds = async (
 
     try {
         // #region private usage
-        if (privateUsage && !privateOwnerIdentonym) {
+        if (privateUsage) {
+            logger.log(
+                '[Performer Info : Handle] :: clearBuilds · privateUsage',
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    '[Performer Info : End] :: clearBuilds · privateUsage',
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+
+            // TODO
+            // clear build
+
+
+            logger.log(
+                '[Performer Info : Success] :: clearBuilds · privateUsage',
+                logLevels.info,
+            );
+
             return {
-                status: false,
+                status: true,
             };
         }
         // #endregion private usage
