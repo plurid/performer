@@ -45,6 +45,16 @@ const registerProvider = async (
 
     return provider;
 }
+
+
+const deregisterProvider = async (
+    id: string,
+) => {
+    await database.obliterate(
+        'provider',
+        id,
+    );
+}
 // #endregion module
 
 
@@ -52,5 +62,6 @@ const registerProvider = async (
 // #region exports
 export {
     registerProvider,
+    deregisterProvider,
 };
 // #endregion exports

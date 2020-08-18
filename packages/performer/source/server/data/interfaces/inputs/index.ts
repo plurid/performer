@@ -9,6 +9,11 @@
 
 
 // #region module
+export interface InputValueString {
+    value: string;
+}
+
+
 export interface InputAddProvider {
     type: CodeProvider;
     token: string;

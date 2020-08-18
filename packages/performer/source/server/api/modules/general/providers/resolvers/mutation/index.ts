@@ -4,6 +4,7 @@
         Context,
         InputOf,
         InputAddProvider,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -26,7 +27,7 @@ export default {
     ),
     obliterateProvider: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Providers.Mutation.obliterateProvider(
         input,

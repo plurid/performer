@@ -8,12 +8,31 @@
     import {
         registerProvider,
     } from '#server/logic/provider';
+
+    import {
+        generateLog,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const addProviderLogs = {
+    infoStart: generateLog('Info', 'Start', 'addProvider'),
+    infoSuccess: generateLog('Info', 'Success', 'addProvider'),
+    infoEnd: generateLog('Info', 'End', 'addProvider'),
+
+    infoHandlePrivateUsage: generateLog('Info', 'Handle', 'addProvider', 'privateUsage'),
+    infoEndPrivateUsage: generateLog('Info', 'End', 'addProvider', 'privateUsage'),
+    infoSuccessPrivateUsage: generateLog('Info', 'Success', 'addProvider', 'privateUsage'),
+
+    infoHandleCustomLogicUsage: generateLog('Info', 'Handle', 'addProvider', 'customLogicUsage'),
+    infoEndCustomLogicUsage: generateLog('Info', 'End', 'addProvider', 'customLogicUsage'),
+    infoSuccessCustomLogicUsage: generateLog('Info', 'Success', 'addProvider', 'customLogicUsage'),
+};
+
+
 const addProvider = async (
     input: InputAddProvider,
     context: Context,
@@ -35,7 +54,7 @@ const addProvider = async (
 
     // #region log start
     logger.log(
-        '[Performer Info : Start] :: addProvider',
+        addProviderLogs.infoStart,
         logLevels.info,
     );
     // #endregion log start
@@ -45,13 +64,13 @@ const addProvider = async (
         // #region private usage
         if (privateUsage) {
             logger.log(
-                '[Performer Info : Handle] :: addProvider · privateUsage',
+                addProviderLogs.infoHandlePrivateUsage,
                 logLevels.trace,
             );
 
             if (!privateOwnerIdentonym) {
                 logger.log(
-                    '[Performer Info : End] :: addProvider · privateUsage',
+                    addProviderLogs.infoEndPrivateUsage,
                     logLevels.info,
                 );
 
@@ -65,7 +84,7 @@ const addProvider = async (
             );
 
             logger.log(
-                '[Performer Info : Success] :: addProvider · privateUsage',
+                addProviderLogs.infoSuccessPrivateUsage,
                 logLevels.info,
             );
 
@@ -82,7 +101,7 @@ const addProvider = async (
 
         if (customLogicUsage && logic) {
             logger.log(
-                '[Performer Info : Handle] :: addProvider · customLogicUsage',
+                addProviderLogs.infoHandleCustomLogicUsage,
                 logLevels.trace,
             );
 
@@ -92,7 +111,7 @@ const addProvider = async (
 
             if (!provider) {
                 logger.log(
-                    '[Performer Info : End] :: addProvider · customLogicUsage',
+                    addProviderLogs.infoEndCustomLogicUsage,
                     logLevels.trace,
                 );
 
@@ -102,7 +121,7 @@ const addProvider = async (
             }
 
             logger.log(
-                '[Performer Info : End] :: addProvider · customLogicUsage',
+                addProviderLogs.infoEndCustomLogicUsage,
                 logLevels.info,
             );
 
@@ -120,7 +139,7 @@ const addProvider = async (
         );
 
         logger.log(
-            '[Performer Info : Success] :: addProvider',
+            addProviderLogs.infoSuccess,
             logLevels.info,
         );
 
@@ -132,7 +151,7 @@ const addProvider = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            '[Performer Error : End] :: addProvider',
+            addProviderLogs.infoEnd,
             logLevels.error,
             error,
         );

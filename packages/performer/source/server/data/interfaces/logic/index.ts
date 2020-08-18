@@ -25,6 +25,9 @@ export interface PerformerLogicProvider {
     register: (
         input: InputAddProvider,
     ) => Promise<Provider | undefined>;
+    deregister: (
+        id: string,
+    ) => Promise<boolean>;
 }
 
 export interface PerformerLogicBuilds {

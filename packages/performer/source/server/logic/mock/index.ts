@@ -62,6 +62,11 @@ const performerLogic: PerformerLogic = {
         ) => {
             return undefined;
         },
+        deregister: async (
+            id,
+        ) => {
+            return true;
+        },
     },
 
     builds: {
