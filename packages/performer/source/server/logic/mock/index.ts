@@ -58,9 +58,7 @@ const performerLogic: PerformerLogic = {
 
     provider: {
         register: async (
-            id,
-            string,
-            token,
+            input,
         ) => {
             return undefined;
         },
