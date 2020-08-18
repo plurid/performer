@@ -48,9 +48,9 @@ export const LINK_REPOSITORY = gql`
     }
 `;
 
-export const UNLINK_REPOSITORY = gql`
-    mutation UnlinkRepository($input: InputValueString!) {
-        unlinkRepository(input: $input) {
+export const DELINK_REPOSITORY = gql`
+    mutation DelinkRepository($input: InputValueString!) {
+        delinkRepository(input: $input) {
             status
             error {
                 type

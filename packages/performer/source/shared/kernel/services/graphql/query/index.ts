@@ -89,7 +89,7 @@ export const GET_SETUP = gql`
 
 
 export const GET_PROVIDER_REPOSITORIES = gql`
-    query GetProviderRepositories($input: InputGetProviderRepositories!) {
+    query GetProviderRepositories($input: InputValueString!) {
         getProviderRepositories(input: $input) {
             status
             data {

@@ -35,7 +35,7 @@ import EntityView from '#kernel-components/EntityView';
 
 import client from '#kernel-services/graphql/client';
 import {
-    UNLINK_REPOSITORY,
+    DELINK_REPOSITORY,
 } from '#kernel-services/graphql/mutate';
 
 import { AppState } from '#kernel-services/state/store';
@@ -172,7 +172,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             };
 
             await client.mutate({
-                mutation: UNLINK_REPOSITORY,
+                mutation: DELINK_REPOSITORY,
                 variables: {
                     input,
                 },

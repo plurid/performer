@@ -1,65 +1,84 @@
-/** [START] imports */
-/** libraries */
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridIconValid,
-    PluridIconLocked,
-} from '@plurid/plurid-icons-react';
-
-
-/** external */
-import {
-    Repository as IRepository,
-} from '#server/data/interfaces';
+    import {
+        PluridIconValid,
+        PluridIconLocked,
+    } from '@plurid/plurid-icons-react';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledRepositoryItem,
-    StyledRepositoryIcon,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import {
+        Repository as IRepository,
+    } from '#server/data/interfaces';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledRepositoryItem,
+        StyledRepositoryIcon,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface RepositoryItemProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    data: IRepository;
-    selected: boolean;
-    /** - methods */
-    select: (
-        id: string,
-    ) => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        data: IRepository;
+        selected: boolean;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        select: (
+            id: string,
+        ) => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 const RepositoryItem: React.FC<RepositoryItemProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        data,
-        selected,
-        /** - methods */
-        select,
+        // #region required
+            // #region values
+            theme,
+            data,
+            selected,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            select,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
     } = properties;
 
     const {
@@ -67,9 +86,10 @@ const RepositoryItem: React.FC<RepositoryItemProperties> = (
         name,
         isPrivate,
     } = data;
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <StyledRepositoryItem
             theme={theme}
@@ -92,8 +112,12 @@ const RepositoryItem: React.FC<RepositoryItemProperties> = (
             </StyledRepositoryIcon>
         </StyledRepositoryItem>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default RepositoryItem;
-/** [END] component */
+// #endregion exports

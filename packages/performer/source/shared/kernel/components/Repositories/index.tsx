@@ -1,84 +1,104 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridSpinner,
-} from '@plurid/plurid-ui-react';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    GET_PROVIDER_REPOSITORIES,
-} from '#kernel-services/graphql/query';
-import {
-    LINK_REPOSITORY,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
-
-import {
-    Repository as IRepository,
-} from '#server/data/interfaces';
+    import {
+        PluridSpinner,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
 
 
-/** internal */
-import RepositoryItem from './components/RepositoryItem';
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        GET_PROVIDER_REPOSITORIES,
+    } from '#kernel-services/graphql/query';
+    import {
+        LINK_REPOSITORY,
+    } from '#kernel-services/graphql/mutate';
 
-import {
-    StyledRepository,
-    StyledNoRepositories,
-} from './styled';
-/** [END] imports */
+    import {
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+
+    import {
+        Repository as IRepository,
+    } from '#server/data/interfaces';
+    // #endregion external
+
+
+    // #region internal
+    import RepositoryItem from './components/RepositoryItem';
+
+    import {
+        StyledRepository,
+        StyledNoRepositories,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface RepositoryProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    providerID: string;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        providerID: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Repository: React.FC<RepositoryProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        providerID,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            providerID,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         loading,
         setLoading,
@@ -91,9 +111,10 @@ const Repository: React.FC<RepositoryProperties> = (
         selectedRepositories,
         setSelectedRepositories,
     ] = useState<string[]>([]);
+    // #endregion state
 
 
-    /** handlers */
+    // #region handlers
     const linkRepositories = async () => {
         if (
             selectedRepositories.length === 0
@@ -126,7 +147,6 @@ const Repository: React.FC<RepositoryProperties> = (
                     input,
                 },
             });
-            console.log('mutation', mutation);
         }
     }
 
@@ -146,9 +166,10 @@ const Repository: React.FC<RepositoryProperties> = (
         setSelectedRepositories(updated);
         return;
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const getProviderRepositories = async () => {
             try {
@@ -157,7 +178,7 @@ const Repository: React.FC<RepositoryProperties> = (
                 }
 
                 const input = {
-                    providerID,
+                    value: providerID,
                 };
 
                 const query = await client.query({
@@ -185,9 +206,10 @@ const Repository: React.FC<RepositoryProperties> = (
     }, [
         providerID,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledRepository
             theme={theme}
@@ -263,8 +285,12 @@ const Repository: React.FC<RepositoryProperties> = (
             </div>
         </StyledRepository>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Repository;
-/** [END] component */
+// #endregion exports
