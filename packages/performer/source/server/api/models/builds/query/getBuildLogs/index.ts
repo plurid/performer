@@ -1,24 +1,38 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
-import {
-    getBuildLogs as getBuildLogsLogic,
-} from '#server/logic/build';
+    import {
+        getBuildLogs as getBuildLogsLogic,
+    } from '#server/logic/build';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const getBuildLogs = async (
     input: any,
     context: Context,
 ) => {
     const {
-        value,
-    } = input;
+        builds,
+        privateUsage,
+        privateOwnerIdentonym,
+    } = context;
+
+    if (privateUsage && !privateOwnerIdentonym) {
+        return {
+            status: false,
+        };
+    }
+
 
     const {
-        builds,
-    } = context;
+        value,
+    } = input;
 
     const build = builds.find(build => build.id === value);
 
@@ -45,6 +59,10 @@ const getBuildLogs = async (
         },
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default getBuildLogs;
+// #endregion exports

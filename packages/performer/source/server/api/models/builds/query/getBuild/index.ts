@@ -1,16 +1,30 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region module
 const getBuild = async (
     input: any,
     context: Context,
 ) => {
     const {
         builds,
+        privateUsage,
+        privateOwnerIdentonym,
     } = context;
+
+    if (privateUsage && !privateOwnerIdentonym) {
+        return {
+            status: false,
+        };
+    }
+
 
     const {
         id,
@@ -29,6 +43,10 @@ const getBuild = async (
         data: build,
     };
 }
+// #endregion module
 
 
+
+// #region exports
 export default getBuild;
+// #endregion exports
