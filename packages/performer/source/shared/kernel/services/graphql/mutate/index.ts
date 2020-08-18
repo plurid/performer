@@ -90,7 +90,7 @@ export const OBLITERATE_WEBHOOK = gql`
 
 
 export const GENERATE_PROJECT = gql`
-    mutation GenerateProject($input: InputGenerateProject!) {
+    mutation GenerateProject($input: InputValueString!) {
         generateProject(input: $input) {
             status
             error {

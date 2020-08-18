@@ -76,7 +76,7 @@ const Project: React.FC<ProjectProperties> = (
         }
 
         const input = {
-            name: projectName,
+            value: projectName,
         };
 
         await client.mutate({
