@@ -1,23 +1,26 @@
 // #region imports
-import {
-    Context,
-} from '#server/data/interfaces';
+    // #region external
+    import {
+        Context,
+        InputLinkRepository,
+    } from '#server/data/interfaces';
 
-import {
-    getRepository,
-    getRepositoryDataByNameWithOwner,
-} from '#server/api/requesters';
+    import {
+        getRepository,
+        getRepositoryDataByNameWithOwner,
+    } from '#server/api/requesters';
 
-import {
-    registerRepositoryMetadata,
-} from '#server/logic/repository';
+    import {
+        registerRepositoryMetadata,
+    } from '#server/logic/repository';
+    // #endregion external
 // #endregion imports
 
 
 
 // #region module
 const linkRepository = async (
-    input: any,
+    input: InputLinkRepository,
     context: Context,
 ) => {
     const {

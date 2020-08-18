@@ -2,6 +2,9 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputLinkRepository,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,7 +19,7 @@
 export default {
     linkRepository: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputLinkRepository>,
         context: Context,
     ) => Repositories.Mutation.linkRepository(
         input,
@@ -24,7 +27,7 @@ export default {
     ),
     delinkRepository: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Repositories.Mutation.delinkRepository(
         input,

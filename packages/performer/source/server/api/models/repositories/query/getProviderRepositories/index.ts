@@ -2,6 +2,7 @@
     // #region external
     import {
         Context,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -18,11 +19,11 @@
 
 // #region module
 const getProviderRepositories = async (
-    input: any,
+    input: InputValueString,
     context: Context,
 ) => {
     const {
-        providerID,
+        value: providerID,
     } = input;
 
     const repositories = await getRepositoriesData(

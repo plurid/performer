@@ -2,6 +2,7 @@
     // #region external
     import {
         Context,
+        InputValueString,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -25,7 +26,7 @@ const deregisterRepository = async (
 
 
 const delinkRepository = async (
-    input: any,
+    input: InputValueString,
     context: Context,
 ) => {
     const {

@@ -10,7 +10,7 @@
 export const queries = gql`
     extend type Query {
         getRepositories: ResponseRepositories!
-        getProviderRepositories(input: InputGetProviderRepositories!): ResponseRepositories!
+        getProviderRepositories(input: InputValueString!): ResponseRepositories!
     }
 `;
 
@@ -39,10 +39,6 @@ export const types = gql`
 
 
 export const inputs = gql`
-    input InputGetProviderRepositories {
-        providerID: String!
-    }
-
     input InputLinkRepository {
         providerID: String!
         nameWithOwner: String!

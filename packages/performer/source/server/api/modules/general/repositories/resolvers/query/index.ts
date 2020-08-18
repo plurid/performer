@@ -2,6 +2,8 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -23,7 +25,7 @@ export default {
     ),
     getProviderRepositories: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Repositories.Query.getProviderRepositories(
         input,
