@@ -14,11 +14,16 @@
     import {
         CodeProvider,
         Webhook,
+        InputSetupWebhook,
     } from '#server/data/interfaces';
 
     import {
         webhooksPath,
     } from '#server/data/constants';
+
+    import {
+        getProvider,
+    } from '#server/api/requesters';
 
     import github from '#server/api/requesters/github';
 
@@ -94,6 +99,53 @@ export const handleWebhooks = (
             hookpath,
             instance,
         );
+    }
+}
+
+
+export const handleRegisterWebhook = async (
+    input: InputSetupWebhook,
+    instance: any,
+) => {
+    const {
+        path,
+        providerID,
+    } = input;
+
+    const provider = await getProvider(providerID);
+    if (!provider) {
+        return;
+    }
+
+    registerWebhook(
+        provider.type,
+        path,
+    );
+
+    handleWebhook(
+        provider.type,
+        path,
+        instance,
+    );
+}
+
+
+export const deregisterWebhook = async (
+    id: string,
+) => {
+    try {
+        // const webhookPath = path.join(
+        //     webhooksPath,
+        //     id + '.json',
+        // );
+
+        // if (!fs.existsSync(webhookPath)) {
+        //     return;
+        // }
+
+        // fs.promises.unlink(webhookPath);
+    } catch (error) {
+        return;
     }
 }
 // #endregion module

@@ -20,13 +20,21 @@ export interface InputAddProvider {
     name: string;
 }
 
+
 export interface InputAddImagene {
     name: string;
     version: string;
 }
 
+
 export interface InputLinkRepository {
     providerID: string;
     nameWithOwner: string;
+}
+
+
+export interface InputSetupWebhook {
+    providerID: string;
+    path: string;
 }
 // #endregion module

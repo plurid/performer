@@ -18,7 +18,7 @@
 
 
 // #region module
-export const addProviderLogs = generateMethodLogs('obliterateProvider');
+export const addProviderLogs = generateMethodLogs('addProvider');
 
 const addProvider = async (
     input: InputAddProvider,

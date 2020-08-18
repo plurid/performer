@@ -2,6 +2,9 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputSetupWebhook,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,7 +19,7 @@
 export default {
     setupWebhook: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputSetupWebhook>,
         context: Context,
     ) => Webhooks.Mutation.setupWebhook(
         input,
@@ -24,7 +27,7 @@ export default {
     ),
     obliterateWebhook: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Webhooks.Mutation.obliterateWebhook(
         input,
