@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const queries = gql`
     extend type Query {
         getSetup: ResponseSetup!
@@ -29,10 +34,13 @@ export const types = gql`
         deploys: [Deploy!]
     }
 `;
+// #endregion module
 
 
 
+// #region exports
 export default gql`
     ${queries}
     ${types}
 `;
+// #endregion exports

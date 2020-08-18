@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const queries = gql`
     extend type Query {
         getImagenes: ResponseImagenes!
@@ -39,11 +44,15 @@ export const inputs = gql`
         version: String!
     }
 `;
+// #endregion module
 
 
+
+// #region exports
 export default gql`
     ${queries}
     ${mutations}
     ${types}
     ${inputs}
 `;
+// #endregion exports

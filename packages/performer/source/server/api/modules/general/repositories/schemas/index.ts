@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const queries = gql`
     extend type Query {
         getRepositories: ResponseRepositories!
@@ -43,11 +48,15 @@ export const inputs = gql`
         nameWithOwner: String!
     }
 `;
+// #endregion module
 
 
+
+// #region exports
 export default gql`
     ${queries}
     ${mutations}
     ${types}
     ${inputs}
 `;
+// #endregion exports

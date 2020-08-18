@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const mutations = gql`
     extend type Mutation {
         setupProvider(input: InputSetupProvider!): ResponseProvider!
@@ -32,11 +37,14 @@ export const inputs = gql`
         name: String!
     }
 `;
+// #endregion module
 
 
 
+// #region exports
 export default gql`
     ${mutations}
     ${types}
     ${inputs}
 `;
+// #endregion exports

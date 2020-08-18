@@ -1,7 +1,12 @@
-import gql from 'graphql-tag';
+// #region imports
+    // #region libraries
+    import gql from 'graphql-tag';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export const mutations = gql`
     extend type Mutation {
         setupWebhook(input: InputSetupWebhook!): Response!
@@ -25,11 +30,14 @@ export const inputs = gql`
         path: String!
     }
 `;
+// #endregion module
 
 
 
+// #region exports
 export default gql`
     ${mutations}
     ${types}
     ${inputs}
 `;
+// #endregion exports

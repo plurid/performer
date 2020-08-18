@@ -1,13 +1,18 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
-import {
-    Webhooks,
-} from '#server/api/models';
+    import {
+        Webhooks,
+    } from '#server/api/models';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region exports
 export default {
     setupWebhook: (
         _: any,
@@ -26,3 +31,4 @@ export default {
         context,
     ),
 };
+// #endregion exports

@@ -1,13 +1,18 @@
-import {
-    Context,
-} from '#server/data/interfaces';
+// #region imports
+    // #region external
+    import {
+        Context,
+    } from '#server/data/interfaces';
 
-import {
-    Imagenes,
-} from '#server/api/models';
+    import {
+        Imagenes,
+    } from '#server/api/models';
+    // #endregion external
+// #endregion imports
 
 
 
+// #region exports
 export default {
     getImagenes: (
         _: any,
@@ -17,3 +22,4 @@ export default {
         context,
     ),
 };
+// #endregion exports
