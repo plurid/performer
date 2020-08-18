@@ -13,12 +13,19 @@
     import {
         registerRepositoryMetadata,
     } from '#server/logic/repository';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const linkRepositoryLogs = generateMethodLogs('linkRepository');
+
+
 const linkRepository = async (
     input: InputLinkRepository,
     context: Context,

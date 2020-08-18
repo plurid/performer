@@ -4,25 +4,21 @@
         Context,
         InputValueString,
     } from '#server/data/interfaces';
+
+    import {
+        deregisterRepository,
+    } from '#server/logic/repository';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const deregisterRepository = async (
-    id: string,
-) => {
-    try {
-
-        // if (!fs.existsSync(repositoryPath)) {
-        //     return;
-        // }
-
-    } catch (error) {
-        return;
-    }
-}
+export const delinkRepositoryLogs = generateMethodLogs('delinkRepository');
 
 
 const delinkRepository = async (
@@ -30,10 +26,10 @@ const delinkRepository = async (
     context: Context,
 ) => {
     const {
-        value,
+        value: id,
     } = input;
 
-    await deregisterRepository(value);
+    await deregisterRepository(id);
 
     return {
         status: true,

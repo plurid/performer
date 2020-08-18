@@ -102,4 +102,19 @@ export const updateRootRepository = async (
         stdio: 'ignore',
     });
 }
+
+
+export const deregisterRepository = async (
+    id: string,
+) => {
+    try {
+
+        // if (!fs.existsSync(repositoryPath)) {
+        //     return;
+        // }
+
+    } catch (error) {
+        return;
+    }
+}
 // #endregion module
