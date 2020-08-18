@@ -7,9 +7,9 @@
 
 
 // #region module
-export const SETUP_PROVIDER = gql`
-    mutation SetupProvider($input: InputSetupProvider!) {
-        setupProvider(input: $input) {
+export const ADD_PROVIDER = gql`
+    mutation AddProvider($input: InputAddProvider!) {
+        addProvider(input: $input) {
             status
             error {
                 type

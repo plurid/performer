@@ -13,7 +13,7 @@ import {
 /** external */
 import client from '#kernel-services/graphql/client';
 import {
-    SETUP_PROVIDER,
+    ADD_PROVIDER,
 } from '#kernel-services/graphql/mutate';
 
 import {
@@ -99,13 +99,13 @@ const Provider: React.FC<ProviderProperties> = (
         };
 
         const mutation = await client.mutate({
-            mutation: SETUP_PROVIDER,
+            mutation: ADD_PROVIDER,
             variables: {
                 input,
             },
         });
 
-        const reponse = mutation.data.setupProvider;
+        const reponse = mutation.data.addProvider;
 
         if (!reponse.status) {
             return;
