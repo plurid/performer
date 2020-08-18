@@ -5,6 +5,7 @@
     } from 'express';
 
     import bodyParser from 'body-parser';
+    import cookieParser from 'cookie-parser';
     // #endregion libraries
 
 
@@ -31,6 +32,7 @@ const setupMiddleware = async (
     logic?: PerformerLogic,
 ) => {
     instance.use(
+        cookieParser(),
         /** Attach logic */
         (request, _, next) => {
             if (logic) {
