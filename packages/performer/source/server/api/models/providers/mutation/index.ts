@@ -1,6 +1,6 @@
 // #region imports
     // #region imports
-    import setupProvider from './setupProvider';
+    import addProvider from './addProvider';
     import obliterateProvider from './obliterateProvider';
     // #endregion imports
 // #endregion imports
@@ -9,7 +9,7 @@
 
 // #region exports
 export default {
-    setupProvider,
+    addProvider,
     obliterateProvider,
 };
 // #endregion exports

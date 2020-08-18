@@ -9,7 +9,7 @@
 // #region module
 export const mutations = gql`
     extend type Mutation {
-        setupProvider(input: InputSetupProvider!): ResponseProvider!
+        addProvider(input: InputAddProvider!): ResponseProvider!
         obliterateProvider(input: InputValueString!): Response!
     }
 `;
@@ -31,7 +31,7 @@ export const types = gql`
 
 
 export const inputs = gql`
-    input InputSetupProvider {
+    input InputAddProvider {
         type: String!
         token: String!
         name: String!

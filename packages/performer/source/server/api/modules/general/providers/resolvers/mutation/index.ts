@@ -14,11 +14,11 @@
 
 // #region exports
 export default {
-    setupProvider: (
+    addProvider: (
         _: any,
         { input }: any,
         context: Context,
-    ) => Providers.Mutation.setupProvider(
+    ) => Providers.Mutation.addProvider(
         input,
         context,
     ),
