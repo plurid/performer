@@ -11,38 +11,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
-
-    import {
-        PluridIconToolbox,
-        PluridIconRepository,
-        PluridIconWebhook,
-        PluridIconSpace,
-        PluridIconTools,
-        PluridIconDeauthored,
-        PluridIconNewStateline,
-        PluridIconBrainCircuits,
-        PluridIconApps,
-        PluridIconBranch,
-        PluridIconArrowRight,
-        PluridIconDocuments,
-        PluridIconExternalLink,
-        PluridIconEnter,
-    } from '@plurid/plurid-icons-react';
     // #endregion libraries
 
 
     // #region external
-    import performerLogo from '../../assets/performer-logo.png';
-
-    import Provider from '#kernel-components/Provider';
-    import Imagene from '#kernel-components/Imagene';
-    import Repositories from '#kernel-components/Repositories';
-    import Project from '#kernel-components/Project';
-    import Secret from '#kernel-components/Secret';
-    import Webhook from '#kernel-components/Webhook';
-    import Trigger from '#kernel-components/Trigger';
-    import Deployer from '#kernel-components/Deployer';
-
     import client from '#kernel-services/graphql/client';
     import {
         LOGOUT
@@ -55,58 +27,16 @@
 
 
     // #region internal
-    import ProvidersView from './components/ProvidersView';
-    import ImagenesView from './components/ImagenesVIew';
-    import RepositoriesView from './components/RepositoriesView';
-    import WebhooksView from './components/WebhooksView';
-    import ProjectsView from './components/ProjectsView';
-    import SecretsView from './components/SecretsView';
-    import TriggersView from './components/TriggersView';
-    import DeployersView from './components/DeployersView';
-    import BuildsView from './components/BuildsView';
-    import DeploysView from './components/DeploysView';
-
     import {
-        StyledGeneralView,
-        StyledGeneralSelectors,
-        StyledGeneralSelectorItem,
-        StyledGeneralPeformer,
-        StyledGeneralHelp,
-        StyledGeneralHelpItem,
-        StyledGeneralSelected,
-    } from './styled';
+        renderSelectedView,
+        renderGeneralView,
+    } from './logic';
     // #endregion internal
 // #endregion imports
 
 
 
 // #region module
-const generalSelectors = [
-    'providers',
-    'imagenes',
-    'repositories',
-    'webhooks',
-    'projects',
-    'secrets',
-    'triggers',
-    'deployers',
-    'builds',
-    'deploys',
-];
-
-const generalSelectorsIcons = {
-    providers: PluridIconToolbox,
-    imagenes: PluridIconTools,
-    repositories: PluridIconRepository,
-    webhooks: PluridIconWebhook,
-    projects: PluridIconApps,
-    secrets: PluridIconDeauthored,
-    deployers: PluridIconBrainCircuits,
-    triggers: PluridIconNewStateline,
-    builds: PluridIconSpace,
-    deploys: PluridIconBranch,
-};
-
 export interface GeneralViewOwnProperties {
 }
 
@@ -155,14 +85,6 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
 
     // #region state
-    const [
-        webhookEditID,
-        setWebhookEditID,
-    ] = useState('');
-    const [
-        triggerEditID,
-        setTriggerEditID,
-    ] = useState('');
     const [
         mouseOverSelectors,
         setMouseOverSelectors,
@@ -219,280 +141,29 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
 
     // #region render
-    let renderSelectedView = (<></>);
-    switch (stateIndexGeneralSelector) {
-        case 'providers':
-            renderSelectedView = (
-                <ProvidersView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'imagenes':
-            renderSelectedView = (
-                <ImagenesView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'repositories':
-            renderSelectedView = (
-                <RepositoriesView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'webhooks':
-            renderSelectedView = (
-                <WebhooksView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'projects':
-            renderSelectedView = (
-                <ProjectsView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'secrets':
-            renderSelectedView = (
-                <SecretsView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'triggers':
-            renderSelectedView = (
-                <TriggersView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'deployers':
-            renderSelectedView = (
-                <DeployersView
-                    setGeneralView={setGeneralView}
-                />
-            );
-            break;
-        case 'builds':
-            renderSelectedView = (
-                <BuildsView />
-            );
-            break;
-        case 'deploys':
-            renderSelectedView = (
-                <DeploysView />
-            );
-            break;
-    }
+    const selectedView = renderSelectedView(
+        stateIndexGeneralSelector,
+        setGeneralView,
+    );
 
-    switch (stateIndexGeneralView) {
-        case 'general':
-            return (
-                <StyledGeneralView
-                    compactSelectors={stateViewCompactSelectors}
-                >
-                    <StyledGeneralSelectors
-                        onMouseEnter={() => setMouseOverSelectors(true)}
-                        onMouseLeave={() => setMouseOverSelectors(false)}
-                        theme={stateGeneralTheme}
-                        compactSelectors={stateViewCompactSelectors}
-                        viewUsageType={stateViewUsageType}
-                    >
-                        <StyledGeneralPeformer
-                            compactSelectors={stateViewCompactSelectors}
-                        >
-                            {!stateViewCompactSelectors && (
-                                <>
-                                    <div>
-                                        <img
-                                            src={performerLogo}
-                                            alt="performer"
-                                            height={30}
-                                            onClick={() => setCompactSelectors(true)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        performer
-                                    </div>
-                                </>
-                            )}
-
-                            {stateViewCompactSelectors
-                            && mouseOverSelectors
-                            && (
-                                <PluridIconArrowRight
-                                    atClick={() => setCompactSelectors(false)}
-                                />
-                            )}
-                        </StyledGeneralPeformer>
-
-                        <ul>
-                            {generalSelectors.map(selector => {
-                                const Icon = generalSelectorsIcons[selector];
-
-                                return (
-                                    <StyledGeneralSelectorItem
-                                        key={selector}
-                                        onClick={() => setSelectedView(selector)}
-                                        theme={stateGeneralTheme}
-                                        selected={selector === stateIndexGeneralSelector}
-                                        compactSelectors={stateViewCompactSelectors}
-                                    >
-                                        <Icon />
-
-                                        {!stateViewCompactSelectors && (
-                                            <div>
-                                                {selector}
-                                            </div>
-                                        )}
-                                    </StyledGeneralSelectorItem>
-                                );
-                            })}
-                        </ul>
-
-                        <StyledGeneralHelp>
-                            {mouseOverSelectors && (
-                                <ul>
-                                    <StyledGeneralHelpItem
-                                        onClick={() => openManual()}
-                                        compactSelectors={stateViewCompactSelectors}
-                                    >
-                                        <PluridIconDocuments />
-
-                                        {!stateViewCompactSelectors && (
-                                            <>
-                                                <div>
-                                                    manual
-                                                </div>
-
-                                                <PluridIconExternalLink/>
-                                            </>
-                                        )}
-                                    </StyledGeneralHelpItem>
-
-                                    {stateViewUsageType === 'PRIVATE_USAGE' && (
-                                        <StyledGeneralHelpItem
-                                            onClick={() => logout()}
-                                            compactSelectors={stateViewCompactSelectors}
-                                        >
-                                            <PluridIconEnter />
-
-                                            {!stateViewCompactSelectors && (
-                                                <>
-                                                    <div>
-                                                        logout ({stateViewOwnerID})
-                                                    </div>
-
-                                                    <div />
-                                                </>
-                                            )}
-                                        </StyledGeneralHelpItem>
-                                    )}
-                                </ul>
-                            )}
-                        </StyledGeneralHelp>
-                    </StyledGeneralSelectors>
-
-                    <StyledGeneralSelected>
-                        {renderSelectedView}
-                    </StyledGeneralSelected>
-                </StyledGeneralView>
-            );
-        case 'add-provider':
-            return (
-                <Provider
-                    theme={stateInteractionTheme}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'add-imagene':
-            return (
-                <Imagene
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'link-repositories':
-            return (
-                <Repositories
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'generate-project':
-            return (
-                <Project
-                    theme={stateInteractionTheme}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'store-secret':
-            return (
-                <Secret
-                    theme={stateInteractionTheme}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'setup-webhook':
-            return (
-                <Webhook
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'generate-trigger':
-            return (
-                <Trigger
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        case 'generate-deployer':
-            return (
-                <Deployer
-                    theme={stateInteractionTheme}
-                    providerID={stateActiveProviderID}
-                    action={() => {
-                        setGeneralView('general');
-                    }}
-                    cancel={() => setGeneralView('general')}
-                />
-            );
-        default:
-            return (
-                <></>
-            );
-    }
+    return renderGeneralView(
+        stateIndexGeneralView,
+        stateViewCompactSelectors,
+        setMouseOverSelectors,
+        stateGeneralTheme,
+        stateViewUsageType,
+        setCompactSelectors,
+        mouseOverSelectors,
+        setSelectedView,
+        stateIndexGeneralSelector,
+        openManual,
+        logout,
+        stateViewOwnerID,
+        selectedView,
+        stateInteractionTheme,
+        setGeneralView,
+        stateActiveProviderID,
+    );
     // #endregion render
 }
 
