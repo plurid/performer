@@ -1,11 +1,16 @@
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    Helmet,
-} from 'react-helmet-async';
+    import {
+        Helmet,
+    } from 'react-helmet-async';
+    // #endregion libraries
+// #endregion imports
 
 
 
+// #region module
 export interface HeadProperties {
     title?: string;
     description?: string;
@@ -19,7 +24,7 @@ export interface HeadProperties {
 const Head: React.FC<HeadProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
         title,
         description,
@@ -36,9 +41,10 @@ const Head: React.FC<HeadProperties> = (
     const ogDescriptionValue = ogDescription || description || 'continuous integration/continuous deployment build pipeline';
     const ogImageValue = ogImage || '/icon-192x192.png';
     const ogURLValue = ogURL || '/';
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <Helmet>
             <meta charSet="utf-8" />
@@ -85,7 +91,12 @@ const Head: React.FC<HeadProperties> = (
             <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#272A30" />
         </Helmet>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Head;
+// #endregion exports

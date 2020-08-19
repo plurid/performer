@@ -223,13 +223,16 @@ const mapDispatchToProperties = (
         actions.view.setViewOwnerID(payload),
     ),
 });
+
+
+const ConnectedPrivateView = connect(
+    mapStateToProperties,
+    mapDispatchToProperties,
+)(PrivateView);
 // #endregion module
 
 
 
 // #region exports
-export default connect(
-    mapStateToProperties,
-    mapDispatchToProperties,
-)(PrivateView);
+export default ConnectedPrivateView;
 // #endregion exports

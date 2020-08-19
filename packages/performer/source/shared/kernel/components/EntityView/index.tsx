@@ -1,34 +1,28 @@
 // #region imports
-// #region libraries
-import React, {
-    useState,
-} from 'react';
+    // #region libraries
+    import React, {
+        useState,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridTextline,
-    PluridPureButton,
-} from '@plurid/plurid-ui-react';
-// #endregion libraries
+    import {
+        PluridTextline,
+        PluridPureButton,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
 
-
-// #region external
-
-// #endregion external
-
-
-// #region internal
-import {
-    StyledEntityView,
-    StyledEntityList,
-    StyledEntityListItem,
-    StyledActionButton,
-    StyledNoRows,
-} from './styled';
-// #endregion internal
+    // #region internal
+    import {
+        StyledEntityView,
+        StyledEntityList,
+        StyledEntityListItem,
+        StyledActionButton,
+        StyledNoRows,
+    } from './styled';
+    // #endregion internal
 // #endregion imports
 
 
@@ -36,30 +30,23 @@ import {
 // #region module
 export interface EntityViewProperties {
     // #region required
-    // #region values
-    generalTheme: Theme;
-    interactionTheme: Theme;
+        // #region values
+        generalTheme: Theme;
+        interactionTheme: Theme;
 
-    rowsHeader: JSX.Element;
-    rowTemplate: string;
-    rows: JSX.Element[];
-    noRows: string;
+        rowsHeader: JSX.Element;
+        rowTemplate: string;
+        rows: JSX.Element[];
+        noRows: string;
 
-    actionButtonText?: string;
-    // #endregion values
+        actionButtonText?: string;
+        // #endregion values
 
-    // #region methods
-    actionButtonClick?: () => void;
-    filterUpdate?: any;
-    // #endregion methods
+        // #region methods
+        actionButtonClick?: () => void;
+        filterUpdate?: any;
+        // #endregion methods
     // #endregion required
-
-    // #region optional
-    // #region values
-    // #endregion values
-    // #region methods
-    // #endregion methods
-    // #endregion optional
 }
 
 const EntityView: React.FC<EntityViewProperties> = (
@@ -68,30 +55,23 @@ const EntityView: React.FC<EntityViewProperties> = (
     // #region properties
     const {
         // #region required
-        // #region values
-        generalTheme,
-        interactionTheme,
+            // #region values
+            generalTheme,
+            interactionTheme,
 
-        rowsHeader,
-        rowTemplate,
-        rows,
-        noRows,
+            rowsHeader,
+            rowTemplate,
+            rows,
+            noRows,
 
-        actionButtonText,
-        // #endregion values
+            actionButtonText,
+            // #endregion values
 
-        // #region methods
-        actionButtonClick,
-        filterUpdate,
-        // #endregion methods
+            // #region methods
+            actionButtonClick,
+            filterUpdate,
+            // #endregion methods
         // #endregion required
-
-        // #region optional
-        // #region values
-        // #endregion values
-        // #region methods
-        // #endregion methods
-        // #endregion optional
     } = properties;
     // #endregion properties
 
@@ -182,7 +162,10 @@ const EntityView: React.FC<EntityViewProperties> = (
     );
     // #endregion render
 }
-
-
-export default EntityView;
 // #endregion module
+
+
+
+// #region exports
+export default EntityView;
+// #endregion exports

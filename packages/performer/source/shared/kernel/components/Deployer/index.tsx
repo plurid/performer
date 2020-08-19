@@ -1,72 +1,93 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    GENERATE_DEPLOYER,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledDeployer,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        GENERATE_DEPLOYER,
+    } from '#kernel-services/graphql/mutate';
+
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledDeployer,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface DeployerProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    providerID: string;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        providerID: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    editID?: string;
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        editID?: string;
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Deployer: React.FC<DeployerProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            providerID,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        editID,
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            editID,
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [deployerID, setDeployerID] = useState('');
     const [deployerName, setDeployerName] = useState('');
     const [deployerProject, setDeployerProject] = useState('');
@@ -75,9 +96,10 @@ const Deployer: React.FC<DeployerProperties> = (
     const [deployerPath, setDeployerPath] = useState('');
     const [deployerFile, setDeployerFile] = useState('');
     const [validDeployer, setValidDeployer] = useState(false);
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const addDeployer = async () => {
         if (!validDeployer) {
             return;
@@ -100,9 +122,10 @@ const Deployer: React.FC<DeployerProperties> = (
             },
         });
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         if (
             deployerName
@@ -139,9 +162,10 @@ const Deployer: React.FC<DeployerProperties> = (
     }, [
         editID,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledDeployer
             theme={theme}
@@ -274,8 +298,12 @@ const Deployer: React.FC<DeployerProperties> = (
             </div>
         </StyledDeployer>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Deployer;
-/** [END] component */
+// #endregion exports

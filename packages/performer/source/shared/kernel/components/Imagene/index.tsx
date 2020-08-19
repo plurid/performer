@@ -1,76 +1,93 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-// import client from '#kernel-services/graphql/client';
-// import {
-// } from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledImagene,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledImagene,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface ImageneProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    providerID: string;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        providerID: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Imagene: React.FC<ImageneProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        providerID,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            providerID,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         imageneName,
         setImageneName,
     ] = useState('');
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const addImagene = async () => {
         if (!imageneName) {
             return;
@@ -88,9 +105,10 @@ const Imagene: React.FC<ImageneProperties> = (
         // });
         // console.log('mutation', mutation);
     }
+    // #endregion handlers
 
 
-    /** render */
+    // #region render
     return (
         <StyledImagene
             theme={theme}
@@ -139,8 +157,12 @@ const Imagene: React.FC<ImageneProperties> = (
             </div>
         </StyledImagene>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Imagene;
-/** [END] component */
+// #endregion exports

@@ -37,21 +37,6 @@
 
 // #region module
 export interface SetupViewOwnProperties {
-    // #region required
-        // #region values
-        // #endregion values
-
-        // #region methods
-        // #endregion methods
-    // #endregion required
-
-    // #region optional
-        // #region values
-        // #endregion values
-
-        // #region methods
-        // #endregion methods
-    // #endregion optional
 }
 
 export interface SetupViewStateProperties {
@@ -72,24 +57,6 @@ const SetupView: React.FC<SetupViewProperties> = (
 ) => {
     // #region properties
     const {
-        // #region own
-        // #region required
-            // #region values
-            // #endregion values
-
-            // #region methods
-            // #endregion methods
-        // #endregion required
-
-        // #region optional
-            // #region values
-            // #endregion values
-
-            // #region methods
-            // #endregion methods
-        // #endregion optional
-        // #endregion own
-
         // #region state
         stateInteractionTheme,
         stateActiveProviderID,
