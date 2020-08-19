@@ -56,6 +56,7 @@ export interface GeneralViewStateProperties {
 }
 
 export interface GeneralViewDispatchProperties {
+    dispatchClearData: typeof actions.data.clearData;
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchSetViewCompactSelectors: typeof actions.view.setViewCompactSelectors;
 }
@@ -81,6 +82,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatchClearData,
         dispatchSetViewType,
         dispatchSetViewCompactSelectors,
         // #endregion dispatch
@@ -107,6 +109,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                 type: 'indexView',
                 value: 'private',
             });
+
+            dispatchClearData();
 
             await client.mutate({
                 mutation: LOGOUT,
@@ -189,6 +193,9 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): GeneralViewDispatchProperties => ({
+    dispatchClearData: () => dispatch(
+        actions.data.clearData(),
+    ),
     dispatchSetViewType: (
         payload,
     ) => dispatch(
