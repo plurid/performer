@@ -114,7 +114,31 @@ export interface BuildData {
 export interface Project {
     id: string;
     name: string;
+
+    // generatedBy: string;
+    // generatedAt: number;
+    // sharedWith: ProjectSharer[];
 }
+
+export type ProjectEntityAccess =
+    | 'CAN_READ'
+    | 'CAN_WRITE';
+
+export interface ProjectSharer {
+    id: string;
+    access: {
+        providers: ProjectEntityAccess[];
+        imagenes: ProjectEntityAccess[];
+        repositories: ProjectEntityAccess[];
+        webhooks: ProjectEntityAccess[];
+        secrets: ProjectEntityAccess[];
+        triggers: ProjectEntityAccess[];
+        deployers: ProjectEntityAccess[];
+        builds: ProjectEntityAccess[];
+        deploys: ProjectEntityAccess[];
+    };
+}
+
 
 
 export interface SecretStored {
