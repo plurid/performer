@@ -1,82 +1,134 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-
-    import {
-        uuid,
-    } from '@plurid/plurid-functions';
-    // #endregion libraries
-
-
     // #region external
     import {
-        Deployer,
         Context,
+        InputGenerateDeployer,
     } from '#server/data/interfaces';
 
     import {
-        deployersPath,
-    } from '#server/data/constants';
+        registerDeployer,
+    } from '#server/logic/deployers';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const registerDeployer = async (
-    deployer: Deployer,
-) => {
-    const {
-        id,
-    } = deployer;
-
-    const deployerPath = path.join(
-        deployersPath,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        deployerPath,
-        JSON.stringify(deployer, null, 4),
-    );
-}
+export const generateDeployerLogs = generateMethodLogs('generateDeployer');
 
 
 const generateDeployer = async (
-    input: any,
-    conext: Context,
+    input: InputGenerateDeployer,
+    context: Context,
 ) => {
+    // #region context unpack
     const {
-        id,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    } = input;
+        request,
 
-    const generatedID = id || uuid.generate();
+        privateUsage,
+        privateOwnerIdentonym,
 
-    const deployer: Deployer = {
-        id: generatedID,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    };
+        customLogicUsage,
 
-    await registerDeployer(deployer);
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
 
-    return {
-        status: true,
-    };
+
+    // #region log start
+    logger.log(
+        generateDeployerLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                generateDeployerLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    generateDeployerLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await registerDeployer(input);
+
+            logger.log(
+                generateDeployerLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                generateDeployerLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            await registerDeployer(input);
+
+            logger.log(
+                generateDeployerLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await registerDeployer(input);
+
+        logger.log(
+            generateDeployerLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            generateDeployerLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 

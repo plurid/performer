@@ -55,4 +55,15 @@ export interface InputGenerateTrigger {
     file: string,
     project: string,
 }
+
+
+export interface InputGenerateDeployer {
+    id?: string,
+    name: string,
+    repository: string,
+    branch: string,
+    path: string,
+    file: string,
+    project: string,
+}
 // #endregion module

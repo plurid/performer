@@ -50,7 +50,7 @@ const obliterateTrigger = async (
     try {
         // #region input unpack
         const {
-            value:id,
+            value: id,
         } = input;
         // #endregion input unpack
 
