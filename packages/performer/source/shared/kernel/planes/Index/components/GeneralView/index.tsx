@@ -15,6 +15,10 @@
 
 
     // #region external
+    import {
+        PERFORMER_MANUAL_LINK,
+    } from '#kernel-data/constants';
+
     import client from '#kernel-services/graphql/client';
     import {
         LOGOUT
@@ -94,7 +98,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
 
     // #region handlers
     const openManual = () => {
-        window.open('https://manual.plurid.com/performer', '_blank');
+        window.open(PERFORMER_MANUAL_LINK, '_blank');
     }
 
     const logout = async () => {
