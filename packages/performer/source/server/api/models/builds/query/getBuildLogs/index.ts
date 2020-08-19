@@ -7,12 +7,18 @@
     import {
         getBuildLogs as getBuildLogsLogic,
     } from '#server/logic/build';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const getBuildLogsLogs = generateMethodLogs('getBuildLogs');
+
 const getBuildLogs = async (
     input: any,
     context: Context,

@@ -3,12 +3,19 @@
     import {
         Context,
     } from '#server/data/interfaces';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const clearBuildsLogs = generateMethodLogs('clearBuilds');
+
+
 const clearBuilds = async (
     context: Context,
 ) => {

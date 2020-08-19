@@ -7,12 +7,19 @@
     import {
         getDeployLogs as getDeployLogsLogic,
     } from '#server/logic/deploy';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const getDeployLogsLogs = generateMethodLogs('getDeployLogs');
+
+
 const getDeployLogs = async (
     input: any,
     context: Context,
