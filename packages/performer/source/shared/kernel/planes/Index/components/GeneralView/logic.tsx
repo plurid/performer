@@ -176,22 +176,22 @@ export const renderSelectedView = (
 
 
 export const renderGeneralView = (
-    stateIndexGeneralView: any,
-    stateViewCompactSelectors: any,
-    setMouseOverSelectors: any,
     stateGeneralTheme: any,
-    stateViewUsageType: any,
-    setCompactSelectors: any,
-    mouseOverSelectors: any,
-    setSelectedView: any,
+    stateInteractionTheme: any,
+    stateIndexGeneralView: any,
     stateIndexGeneralSelector: any,
+    stateViewCompactSelectors: any,
+    stateViewUsageType: any,
+    stateViewOwnerID: any,
+    stateActiveProviderID: any,
     openManual: any,
     logout: any,
-    stateViewOwnerID: any,
+    mouseOverSelectors: any,
+    setMouseOverSelectors: any,
+    setCompactSelectors: any,
     selectedView: any,
-    stateInteractionTheme: any,
+    setSelectedView: any,
     setGeneralView: any,
-    stateActiveProviderID: any,
 ) => {
     switch (stateIndexGeneralView) {
         case 'general':

@@ -147,22 +147,22 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     );
 
     return renderGeneralView(
-        stateIndexGeneralView,
-        stateViewCompactSelectors,
-        setMouseOverSelectors,
         stateGeneralTheme,
-        stateViewUsageType,
-        setCompactSelectors,
-        mouseOverSelectors,
-        setSelectedView,
+        stateInteractionTheme,
+        stateIndexGeneralView,
         stateIndexGeneralSelector,
+        stateViewCompactSelectors,
+        stateViewUsageType,
+        stateViewOwnerID,
+        stateActiveProviderID,
         openManual,
         logout,
-        stateViewOwnerID,
+        mouseOverSelectors,
+        setMouseOverSelectors,
+        setCompactSelectors,
         selectedView,
-        stateInteractionTheme,
+        setSelectedView,
         setGeneralView,
-        stateActiveProviderID,
     );
     // #endregion render
 }
