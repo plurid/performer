@@ -1,72 +1,92 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    GENERATE_TRIGGER,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledTrigger,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        GENERATE_TRIGGER,
+    } from '#kernel-services/graphql/mutate';
+
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledTrigger,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface TriggerProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    providerID: string;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        providerID: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    editID?: string;
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        editID?: string;
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Trigger: React.FC<TriggerProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        editID,
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            editID,
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [triggerID, setTriggerID] = useState('');
     const [triggerName, setTriggerName] = useState('');
     const [triggerProject, setTriggerProject] = useState('');
@@ -75,9 +95,10 @@ const Trigger: React.FC<TriggerProperties> = (
     const [triggerPath, setTriggerPath] = useState('');
     const [triggerFile, setTriggerFile] = useState('');
     const [validTrigger, setValidTrigger] = useState(false);
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const addTrigger = async () => {
         if (!validTrigger) {
             return;
@@ -100,9 +121,10 @@ const Trigger: React.FC<TriggerProperties> = (
             },
         });
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         if (
             triggerName
@@ -139,9 +161,10 @@ const Trigger: React.FC<TriggerProperties> = (
     }, [
         editID,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledTrigger
             theme={theme}
@@ -274,8 +297,12 @@ const Trigger: React.FC<TriggerProperties> = (
             </div>
         </StyledTrigger>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Trigger;
-/** [END] component */
+// #endregion exports

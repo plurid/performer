@@ -1,59 +1,78 @@
-/** [START] imports */
-/** libraries */
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-/** external */
-/** internal */
-import {
-    StyledProviderIcon,
-} from './styled';
-/** [END] imports */
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
+    // #region internal
+    import {
+        StyledProviderIcon,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
-/** [START] component */
+
+
+// #region module
 export interface ProviderIconProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    type: string;
-    image: string;
-    name: string;
-    selectedProvider: string;
-    /** - methods */
-    setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
+    // #region required
+        // #region values
+        theme: Theme;
+        type: string;
+        image: string;
+        name: string;
+        selectedProvider: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 const ProviderIcon: React.FC<ProviderIconProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        type,
-        image,
-        name,
-        selectedProvider,
-        /** - methods */
-        setSelectedProvider,
+        // #region required
+            // #region values
+            theme,
+            type,
+            image,
+            name,
+            selectedProvider,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setSelectedProvider,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <StyledProviderIcon
             theme={theme}
@@ -86,8 +105,12 @@ const ProviderIcon: React.FC<ProviderIconProperties> = (
             </div>
         </StyledProviderIcon>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default ProviderIcon;
-/** [END] component */
+// #endregion exports

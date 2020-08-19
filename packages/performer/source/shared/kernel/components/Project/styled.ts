@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledProject {
     theme: Theme;
 }
@@ -20,3 +21,4 @@ export const StyledProject = styled.div<IStyledProject>`
     text-align: center;
     min-height: 700px;
 `;
+// #endregion module

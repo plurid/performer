@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledWebhook {
     theme: Theme;
 }
@@ -20,3 +21,4 @@ export const StyledWebhook = styled.div<IStyledWebhook>`
     text-align: center;
     min-height: 700px;
 `;
+// #endregion module

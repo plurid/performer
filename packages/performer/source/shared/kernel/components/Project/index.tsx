@@ -1,75 +1,96 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    GENERATE_PROJECT,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledProject,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        GENERATE_PROJECT,
+    } from '#kernel-services/graphql/mutate';
+
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledProject,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface ProjectProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Project: React.FC<ProjectProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         projectName,
         setProjectName,
     ] = useState('');
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const setProject = async () => {
         if (!projectName) {
             return;
@@ -86,9 +107,10 @@ const Project: React.FC<ProjectProperties> = (
             },
         });
     }
+    // #endregion handlers
 
 
-    /** render */
+    // #region render
     return (
         <StyledProject
             theme={theme}
@@ -137,8 +159,12 @@ const Project: React.FC<ProjectProperties> = (
             </div>
         </StyledProject>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Project;
-/** [END] component */
+// #endregion exports

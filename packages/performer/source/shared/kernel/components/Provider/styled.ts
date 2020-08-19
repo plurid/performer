@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledProvider {
     theme: Theme;
 }
@@ -20,3 +21,4 @@ export const StyledProvider = styled.div<IStyledProvider>`
     text-align: center;
     min-height: 700px;
 `;
+// #endregion module

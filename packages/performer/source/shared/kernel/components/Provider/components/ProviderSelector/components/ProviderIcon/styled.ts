@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledProviderIcon {
     theme: Theme;
     selected: boolean;
@@ -48,3 +49,4 @@ export const StyledProviderIcon = styled.div<IStyledProviderIcon>`
         }
     };
 `;
+// #endregion module

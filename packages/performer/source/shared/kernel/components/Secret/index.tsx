@@ -1,69 +1,89 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    STORE_SECRET,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledSecret,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        STORE_SECRET,
+    } from '#kernel-services/graphql/mutate';
+
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledSecret,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface SecretProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Secret: React.FC<SecretProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         secretName,
         setSecretName,
@@ -80,9 +100,10 @@ const Secret: React.FC<SecretProperties> = (
         validSecret,
         setValidSecret,
     ] = useState(false);
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const storeSecret = async () => {
         if (!validSecret) {
             return;
@@ -101,9 +122,10 @@ const Secret: React.FC<SecretProperties> = (
             },
         });
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         if (
             !secretName
@@ -119,9 +141,10 @@ const Secret: React.FC<SecretProperties> = (
         secretValue,
         secretProject,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledSecret
             theme={theme}
@@ -198,8 +221,12 @@ const Secret: React.FC<SecretProperties> = (
             </div>
         </StyledSecret>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Secret;
-/** [END] component */
+// #endregion exports

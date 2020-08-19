@@ -1,61 +1,77 @@
-/** [START] imports */
-/** libraries */
-import React from 'react';
+// #region imports
+    // #region libraries
+    import React from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import githubLogo from './assets/github-logo.png';
-import bitbucketLogo from './assets/bitbucket-logo.png';
+    // #region internal
+    import githubLogo from './assets/github-logo.png';
+    // import bitbucketLogo from './assets/bitbucket-logo.png';
 
-import ProviderIcon from './components/ProviderIcon';
+    import ProviderIcon from './components/ProviderIcon';
 
-import {
-    StyledProviderSelector,
-} from './styled';
-/** [END] imports */
+    import {
+        StyledProviderSelector,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface ProviderSelectorProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    selectedProvider: string;
-    /** - methods */
-    setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
+    // #region required
+        // #region values
+        theme: Theme;
+        selectedProvider: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setSelectedProvider: React.Dispatch<React.SetStateAction<string>>;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 const ProviderSelector: React.FC<ProviderSelectorProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        selectedProvider,
-        /** - methods */
-        setSelectedProvider,
+        // #region required
+            // #region values
+            theme,
+            selectedProvider,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setSelectedProvider,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** render */
+    // #region render
     return (
         <StyledProviderSelector
             theme={theme}
@@ -79,8 +95,12 @@ const ProviderSelector: React.FC<ProviderSelectorProperties> = (
             /> */}
         </StyledProviderSelector>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default ProviderSelector;
-/** [END] component */
+// #endregion exports

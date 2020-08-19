@@ -1,73 +1,93 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    ADD_PROVIDER,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import ProviderSelector from './components/ProviderSelector';
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        ADD_PROVIDER,
+    } from '#kernel-services/graphql/mutate';
 
-import {
-    StyledProvider,
-} from './styled';
-/** [END] imports */
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import ProviderSelector from './components/ProviderSelector';
+
+    import {
+        StyledProvider,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface ProviderProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    /** - methods */
-    action: (
-        providerID: string,
-    ) => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: (
+            providerID: string,
+        ) => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Provider: React.FC<ProviderProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         providerType,
         setProviderType,
@@ -84,9 +104,10 @@ const Provider: React.FC<ProviderProperties> = (
         validProvider,
         setValidProvider,
     ] = useState(false);
+    // #endregion state
 
 
-    /** handlers */
+    // #region handlers
     const setProvider = async () => {
         if (!validProvider) {
             return;
@@ -117,9 +138,10 @@ const Provider: React.FC<ProviderProperties> = (
 
         return data;
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         if (
             providerType
@@ -135,9 +157,10 @@ const Provider: React.FC<ProviderProperties> = (
         providerToken,
         providerName,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledProvider
             theme={theme}
@@ -207,8 +230,12 @@ const Provider: React.FC<ProviderProperties> = (
             </div>
         </StyledProvider>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Provider;
-/** [END] component */
+// #endregion exports

@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledTrigger {
     theme: Theme;
 }
@@ -20,3 +21,4 @@ export const StyledTrigger = styled.div<IStyledTrigger>`
     text-align: center;
     min-height: 700px;
 `;
+// #endregion module

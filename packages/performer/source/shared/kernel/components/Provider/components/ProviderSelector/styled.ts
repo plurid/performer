@@ -10,6 +10,7 @@
 
 
 
+// #region module
 export interface IStyledProviderSelector {
     theme: Theme;
 }
@@ -19,3 +20,4 @@ export const StyledProviderSelector = styled.div<IStyledProviderSelector>`
     grid-template-columns: 1fr;
     grid-gap: 1rem;
 `;
+// #endregion module

@@ -1,82 +1,102 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-
-/** external */
-import client from '#kernel-services/graphql/client';
-import {
-    SETUP_WEBHOOK,
-} from '#kernel-services/graphql/mutate';
-
-import {
-    StyledPluridTextline,
-    StyledPluridPureButton,
-    StyledPluridLinkButton,
-} from '#kernel-services/styled';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** internal */
-import {
-    StyledWebhook,
-} from './styled';
-/** [END] imports */
+    // #region external
+    import client from '#kernel-services/graphql/client';
+    import {
+        SETUP_WEBHOOK,
+    } from '#kernel-services/graphql/mutate';
+
+    import {
+        StyledPluridTextline,
+        StyledPluridPureButton,
+        StyledPluridLinkButton,
+    } from '#kernel-services/styled';
+    // #endregion external
+
+
+    // #region internal
+    import {
+        StyledWebhook,
+    } from './styled';
+    // #endregion internal
+// #endregion imports
 
 
 
-/** [START] component */
+// #region module
 export interface WebhookProperties {
-    /** required */
-    /** - values */
-    theme: Theme;
-    providerID: string;
-    /** - methods */
-    action: () => void;
+    // #region required
+        // #region values
+        theme: Theme;
+        providerID: string;
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    editID?: string;
-    /** - methods */
-    cancel?: () => void;
+        // #region methods
+        action: () => void;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        editID?: string;
+        // #endregion values
+
+        // #region methods
+        cancel?: () => void;
+        // #endregion methods
+    // #endregion optional
 }
 
 const Webhook: React.FC<WebhookProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        theme,
-        providerID,
-        /** - methods */
-        action,
+        // #region required
+            // #region values
+            theme,
+            providerID,
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        editID,
-        /** - methods */
-        cancel,
+            // #region methods
+            action,
+            // #endregion methods
+        // #endregion required
+
+        // #region optional
+            // #region values
+            editID,
+            // #endregion values
+
+            // #region methods
+            cancel,
+            // #endregion methods
+        // #endregion optional
     } = properties;
+    // #endregion properties
 
 
-    /** state */
+    // #region state
     const [
         webhookPath,
         setWebhookPath,
     ] = useState('');
+    // #endregion state
 
 
-    /** handle */
+    // #region handlers
     const updateWebhook = async () => {
-
     }
 
     const setWebhook = async () => {
@@ -94,17 +114,17 @@ const Webhook: React.FC<WebhookProperties> = (
             path: webhookPath,
         };
 
-        const mutation = await client.mutate({
+        await client.mutate({
             mutation: SETUP_WEBHOOK,
             variables: {
                 input,
             },
         });
-        console.log('mutation', mutation);
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         if (editID) {
             // get webhook data
@@ -113,9 +133,10 @@ const Webhook: React.FC<WebhookProperties> = (
     }, [
         editID,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     return (
         <StyledWebhook
             theme={theme}
@@ -164,8 +185,12 @@ const Webhook: React.FC<WebhookProperties> = (
             </div>
         </StyledWebhook>
     );
+    // #endregion render
 }
+// #endregion module
 
 
+
+// #region exports
 export default Webhook;
-/** [END] component */
+// #endregion exports
