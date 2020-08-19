@@ -17,7 +17,7 @@ export const StyledBuild = styled.div`
 
     display: grid;
     grid-template-columns: 1fr 4fr;
-    min-height: 600px;
+    min-height: 700px;
 `;
 
 
@@ -108,8 +108,8 @@ export const StyledBuildLogData = styled.div`
     max-width: 75vw;
     font-family: 'Source Code Pro', 'Courier New', Courier, monospace;
     line-height: 1.4;
-    max-height: calc(600px - 4rem);
-    min-height: calc(600px - 4rem);
+    max-height: calc(700px - 4rem);
+    min-height: calc(700px - 4rem);
     overflow: auto;
 `;
 // #endregion module
