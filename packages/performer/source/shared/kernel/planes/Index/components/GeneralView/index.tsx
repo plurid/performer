@@ -26,6 +26,7 @@
         PluridIconArrowRight,
         PluridIconDocuments,
         PluridIconExternalLink,
+        PluridIconEnter,
     } from '@plurid/plurid-icons-react';
     // #endregion libraries
 
@@ -41,6 +42,11 @@
     import Webhook from '#kernel-components/Webhook';
     import Trigger from '#kernel-components/Trigger';
     import Deployer from '#kernel-components/Deployer';
+
+    import client from '#kernel-services/graphql/client';
+    import {
+        LOGOUT
+    } from '#kernel-services/graphql/mutate';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -111,6 +117,8 @@ export interface GeneralViewStateProperties {
     stateIndexGeneralSelector: string;
     stateIndexGeneralView: string;
     stateViewCompactSelectors: boolean;
+    stateViewOwnerID: string;
+    stateViewUsageType: string;
 }
 
 export interface GeneralViewDispatchProperties {
@@ -134,6 +142,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateIndexGeneralSelector,
         stateIndexGeneralView,
         stateViewCompactSelectors,
+        stateViewOwnerID,
+        stateViewUsageType,
         // #endregion state
 
         // #region dispatch
@@ -163,6 +173,23 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     // #region handlers
     const openManual = () => {
         window.open('https://manual.plurid.com/performer', '_blank');
+    }
+
+    const logout = async () => {
+        try {
+            dispatchSetViewType({
+                type: 'indexGeneralView',
+                value: 'private',
+            });
+
+            await client.mutate({
+                mutation: LOGOUT,
+            });
+
+            return;
+        } catch (error) {
+            return;
+        }
     }
 
     const setSelectedView = (
@@ -273,6 +300,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                         onMouseLeave={() => setMouseOverSelectors(false)}
                         theme={stateGeneralTheme}
                         compactSelectors={stateViewCompactSelectors}
+                        viewUsageType={stateViewUsageType}
                     >
                         <StyledGeneralPeformer
                             compactSelectors={stateViewCompactSelectors}
@@ -346,6 +374,25 @@ const GeneralView: React.FC<GeneralViewProperties> = (
                                             </>
                                         )}
                                     </StyledGeneralHelpItem>
+
+                                    {stateViewUsageType === 'PRIVATE_USAGE' && (
+                                        <StyledGeneralHelpItem
+                                            onClick={() => logout()}
+                                            compactSelectors={stateViewCompactSelectors}
+                                        >
+                                            <PluridIconEnter />
+
+                                            {!stateViewCompactSelectors && (
+                                                <>
+                                                    <div>
+                                                        logout ({stateViewOwnerID})
+                                                    </div>
+
+                                                    <div />
+                                                </>
+                                            )}
+                                        </StyledGeneralHelpItem>
+                                    )}
                                 </ul>
                             )}
                         </StyledGeneralHelp>
@@ -459,6 +506,8 @@ const mapStateToProperties = (
     stateIndexGeneralSelector: selectors.view.getIndexGeneralSelector(state),
     stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
     stateViewCompactSelectors: selectors.view.getViewCompactSelectors(state),
+    stateViewOwnerID: selectors.view.getViewOwnerID(state),
+    stateViewUsageType: selectors.view.getViewUsageType(state),
 });
 
 
