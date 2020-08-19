@@ -2,6 +2,9 @@
     // #region external
     import {
         Context,
+        InputOf,
+        InputGenerateTrigger,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -16,7 +19,7 @@
 export default {
     generateTrigger: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputGenerateTrigger>,
         context: Context,
     ) => Triggers.Mutation.generateTrigger(
         input,
@@ -24,7 +27,7 @@ export default {
     ),
     obliterateTrigger: (
         _: any,
-        { input }: any,
+        { input }: InputOf<InputValueString>,
         context: Context,
     ) => Triggers.Mutation.obliterateTrigger(
         input,

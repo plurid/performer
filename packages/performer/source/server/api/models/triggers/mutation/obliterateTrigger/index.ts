@@ -1,58 +1,140 @@
 // #region imports
-    // #region libraries
-    import fs from 'fs';
-
-    import path from 'path';
-    // #endregion libraries
-
-
     // #region external
-    import {
-        triggersPath,
-    } from '#server/data/constants';
-
     import {
         Context,
     } from '#server/data/interfaces';
+
+    import {
+        deregisterTrigger,
+    } from '#server/logic/triggers';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const deregisterTrigger = async (
-    id: string,
-) => {
-    try {
-        const triggerPath = path.join(
-            triggersPath,
-            id + '.json',
-        );
-
-        if (!fs.existsSync(triggerPath)) {
-            return;
-        }
-
-        fs.promises.unlink(triggerPath);
-    } catch (error) {
-        return;
-    }
-}
+export const obliterateTriggerLogs = generateMethodLogs('obliterateTrigger');
 
 
 const obliterateTrigger = async (
     input: any,
     context: Context,
 ) => {
+    // #region context unpack
     const {
-        value
-    } = input;
+        request,
 
-    await deregisterTrigger(value);
+        privateUsage,
+        privateOwnerIdentonym,
 
-    return {
-        status: true,
-    };
+        customLogicUsage,
+
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
+
+
+    // #region log start
+    logger.log(
+        obliterateTriggerLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region input unpack
+        const {
+            value:id,
+        } = input;
+        // #endregion input unpack
+
+
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                obliterateTriggerLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    obliterateTriggerLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await deregisterTrigger(id);
+
+            logger.log(
+                obliterateTriggerLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                obliterateTriggerLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            await deregisterTrigger(id);
+
+            logger.log(
+                obliterateTriggerLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await deregisterTrigger(id);
+
+        logger.log(
+            obliterateTriggerLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            obliterateTriggerLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 

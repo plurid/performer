@@ -1,82 +1,134 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-
-    import {
-        uuid,
-    } from '@plurid/plurid-functions';
-    // #endregion libraries
-
-
     // #region external
     import {
-        triggersPath,
-    } from '#server/data/constants';
+        Context,
+        InputGenerateTrigger,
+    } from '#server/data/interfaces';
 
     import {
-        Trigger,
-        Context,
-    } from '#server/data/interfaces';
+        registerTrigger,
+    } from '#server/logic/triggers';
+
+    import {
+        generateMethodLogs,
+    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-const registerTrigger = async (
-    trigger: Trigger,
-) => {
-    const {
-        id,
-    } = trigger;
-
-    const triggerPath = path.join(
-        triggersPath,
-        id + '.json',
-    );
-
-    await fs.writeFile(
-        triggerPath,
-        JSON.stringify(trigger, null, 4),
-    );
-}
+export const generateTriggerLogs = generateMethodLogs('generateTrigger');
 
 
 const generateTrigger = async (
-    input: any,
-    conext: Context,
+    input: InputGenerateTrigger,
+    context: Context,
 ) => {
+    // #region context unpack
     const {
-        id,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    } = input;
+        request,
 
-    const generatedID = id || uuid.generate();
+        privateUsage,
+        privateOwnerIdentonym,
 
-    const trigger: Trigger = {
-        id: generatedID,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    };
+        customLogicUsage,
 
-    await registerTrigger(trigger);
+        logger,
+        logLevels,
+    } = context;
+    // #endregion context unpack
 
-    return {
-        status: true,
-    };
+
+    // #region log start
+    logger.log(
+        generateTriggerLogs.infoStart,
+        logLevels.info,
+    );
+    // #endregion log start
+
+
+    try {
+        // #region private usage
+        if (privateUsage) {
+            logger.log(
+                generateTriggerLogs.infoHandlePrivateUsage,
+                logLevels.trace,
+            );
+
+            if (!privateOwnerIdentonym) {
+                logger.log(
+                    generateTriggerLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
+
+            await registerTrigger(input);
+
+            logger.log(
+                generateTriggerLogs.infoSuccessPrivateUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion private usage
+
+
+        // #region logic usage
+        const logic = request.performerLogic;
+
+        if (customLogicUsage && logic) {
+            logger.log(
+                generateTriggerLogs.infoHandleCustomLogicUsage,
+                logLevels.trace,
+            );
+
+            await registerTrigger(input);
+
+            logger.log(
+                generateTriggerLogs.infoEndCustomLogicUsage,
+                logLevels.info,
+            );
+
+            return {
+                status: true,
+            };
+        }
+        // #endregion logic usage
+
+
+        // #region public usage
+        await registerTrigger(input);
+
+        logger.log(
+            generateTriggerLogs.infoSuccess,
+            logLevels.info,
+        );
+
+        return {
+            status: true,
+        };
+        // #endregion public usage
+    } catch (error) {
+        // #region error handle
+        logger.log(
+            generateTriggerLogs.errorEnd,
+            logLevels.error,
+            error,
+        );
+
+        return {
+            status: false,
+        };
+        // #endregion error handle
+    }
 }
 // #endregion module
 

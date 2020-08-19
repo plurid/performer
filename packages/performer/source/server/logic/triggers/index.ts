@@ -13,6 +13,7 @@
         Trigger,
         Commit,
         BuildData,
+        InputGenerateTrigger,
     } from '#server/data/interfaces';
 
     import {
@@ -145,6 +146,63 @@ export const handleTrigger = async (
         };
 
         pushToBuildQueue(buildData);
+    } catch (error) {
+        return;
+    }
+}
+
+
+export const registerTrigger = async (
+    input: InputGenerateTrigger,
+) => {
+    const {
+        id,
+        name,
+        repository,
+        branch,
+        path,
+        file,
+        project,
+    } = input;
+
+    const generatedID = id || uuid.generate();
+
+    const trigger: Trigger = {
+        id: generatedID,
+        name,
+        repository,
+        branch,
+        path,
+        file,
+        project,
+    };
+
+    // const triggerPath = path.join(
+    //     triggersPath,
+    //     generatedID + '.json',
+    // );
+
+    // await fs.writeFile(
+    //     triggerPath,
+    //     JSON.stringify(trigger, null, 4),
+    // );
+}
+
+
+export const deregisterTrigger = async (
+    id: string,
+) => {
+    try {
+        // const triggerPath = path.join(
+        //     triggersPath,
+        //     id + '.json',
+        // );
+
+        // if (!fs.existsSync(triggerPath)) {
+        //     return;
+        // }
+
+        // fs.promises.unlink(triggerPath);
     } catch (error) {
         return;
     }

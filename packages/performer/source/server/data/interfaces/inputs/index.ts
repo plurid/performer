@@ -44,4 +44,15 @@ export interface InputStoreSecret {
     value: string,
     project: string,
 }
+
+
+export interface InputGenerateTrigger {
+    id?: string,
+    name: string,
+    repository: string,
+    branch: string,
+    path: string,
+    file: string,
+    project: string,
+}
 // #endregion module
