@@ -15,8 +15,13 @@ export interface SetViewLoadingAction {
 
 export const SET_VIEW_TYPE = 'SET_VIEW_TYPE';
 
+export type ViewType =
+    | 'indexView'
+    | 'indexGeneralView'
+    | 'indexGeneralSelector';
+
 export interface SetViewTypePayload {
-    type: 'indexGeneralSelector' | 'indexGeneralView';
+    type: ViewType;
     value: string;
 }
 
@@ -50,6 +55,7 @@ export interface SetViewUsageTypeAction {
 
 export interface State {
     loading: boolean;
+    indexView: string;
     indexGeneralSelector: string;
     indexGeneralView: string;
     compactSelectors: boolean;

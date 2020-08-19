@@ -9,8 +9,9 @@
 // #region module
 const initialState: Types.State = {
     loading: true,
+    indexView: '',
+    indexGeneralView: 'general',
     indexGeneralSelector: 'providers',
-    indexGeneralView: '',
     compactSelectors: false,
     ownerID: '',
     usageType: '',
