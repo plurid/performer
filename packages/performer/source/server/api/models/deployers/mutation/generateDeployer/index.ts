@@ -6,6 +6,10 @@
     } from '#server/data/interfaces';
 
     import {
+        inputCall,
+    } from '#server/api/metas';
+
+    import {
         registerDeployer,
     } from '#server/logic/deployers';
 
@@ -25,6 +29,14 @@ const generateDeployer = async (
     input: InputGenerateDeployer,
     context: Context,
 ) => {
+    // return inputCall(
+    //     input,
+    //     context,
+    //     registerDeployer,
+    //     generateDeployerLogs,
+    // );
+
+
     // #region context unpack
     const {
         request,

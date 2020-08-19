@@ -17,4 +17,21 @@ export interface LogLevels {
     trace: number;
     all: number;
 };
+
+
+export interface MethodLogs {
+    infoStart: string;
+    infoSuccess: string;
+    infoEnd: string;
+
+    errorEnd: string;
+
+    infoHandlePrivateUsage: string;
+    infoEndPrivateUsage: string;
+    infoSuccessPrivateUsage: string;
+
+    infoHandleCustomLogicUsage: string;
+    infoEndCustomLogicUsage: string;
+    infoSuccessCustomLogicUsage: string;
+}
 // #endregion module

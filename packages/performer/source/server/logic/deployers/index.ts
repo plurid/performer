@@ -10,6 +10,7 @@
     import {
         Deployer,
         InputGenerateDeployer,
+        InputValueString,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -55,7 +56,7 @@ const registerDeployer = async (
 
 
 const deregisterDeployer = async (
-    id: string,
+    input: InputValueString,
 ) => {
     try {
         // const deployerPath = path.join(

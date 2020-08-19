@@ -2,42 +2,20 @@
     // #region external
     import {
         Context,
-        InputValueString,
+        MethodLogs,
     } from '#server/data/interfaces';
-
-    import {
-        inputCall,
-    } from '#server/api/metas';
-
-    import {
-        deregisterDeployer,
-    } from '#server/logic/deployers';
-
-    import {
-        generateMethodLogs,
-    } from '#server/utilities';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
-export const obliterateDeployerLogs = generateMethodLogs('obliterateDeployer');
-
-
-const obliterateDeployer = async (
-    input: InputValueString,
+const inputCall = async <T>(
+    input: T,
     context: Context,
+    call: (input: T) => Promise<void>,
+    logs: MethodLogs,
 ) => {
-    // return inputCall(
-    //     input,
-    //     context,
-    //     deregisterDeployer,
-    //     obliterateDeployerLogs,
-    // );
-
-
-
     // #region context unpack
     const {
         request,
@@ -55,7 +33,7 @@ const obliterateDeployer = async (
 
     // #region log start
     logger.log(
-        obliterateDeployerLogs.infoStart,
+        logs.infoStart,
         logLevels.info,
     );
     // #endregion log start
@@ -65,13 +43,13 @@ const obliterateDeployer = async (
         // #region private usage
         if (privateUsage) {
             logger.log(
-                obliterateDeployerLogs.infoHandlePrivateUsage,
+                logs.infoHandlePrivateUsage,
                 logLevels.trace,
             );
 
             if (!privateOwnerIdentonym) {
                 logger.log(
-                    obliterateDeployerLogs.infoEndPrivateUsage,
+                    logs.infoEndPrivateUsage,
                     logLevels.info,
                 );
 
@@ -80,10 +58,10 @@ const obliterateDeployer = async (
                 };
             }
 
-            await deregisterDeployer(input);
+            await call(input);
 
             logger.log(
-                obliterateDeployerLogs.infoSuccessPrivateUsage,
+                logs.infoSuccessPrivateUsage,
                 logLevels.info,
             );
 
@@ -99,14 +77,14 @@ const obliterateDeployer = async (
 
         if (customLogicUsage && logic) {
             logger.log(
-                obliterateDeployerLogs.infoHandleCustomLogicUsage,
+                logs.infoHandleCustomLogicUsage,
                 logLevels.trace,
             );
 
-            await deregisterDeployer(input);
+            await call(input);
 
             logger.log(
-                obliterateDeployerLogs.infoEndCustomLogicUsage,
+                logs.infoEndCustomLogicUsage,
                 logLevels.info,
             );
 
@@ -118,10 +96,10 @@ const obliterateDeployer = async (
 
 
         // #region public usage
-        await deregisterDeployer(input);
+        await call(input);
 
         logger.log(
-            obliterateDeployerLogs.infoSuccess,
+            logs.infoSuccess,
             logLevels.info,
         );
 
@@ -132,7 +110,7 @@ const obliterateDeployer = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            obliterateDeployerLogs.errorEnd,
+            logs.errorEnd,
             logLevels.error,
             error,
         );
@@ -148,5 +126,5 @@ const obliterateDeployer = async (
 
 
 // #region exports
-export default obliterateDeployer;
+export default inputCall;
 // #endregion exports
