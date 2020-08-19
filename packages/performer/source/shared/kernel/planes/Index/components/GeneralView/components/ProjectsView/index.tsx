@@ -1,113 +1,74 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-import {
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import {
-    Project,
-} from '#server/data/interfaces';
+    import {
+        Project,
+    } from '#server/data/interfaces';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_PROJECT,
-} from '#kernel-services/graphql/mutate';
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_PROJECT,
+    } from '#kernel-services/graphql/mutate';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
+    // #region internal
+    import {
+        projectRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-const projectRowRenderer = (
-    project: Project,
-    handleProjectObliterate: (
-        id: string,
-    ) => void,
-) => {
-    const {
-        id,
-        name
-    } = project;
 
-    return (
-        <>
-            <div>
-                {name}
-            </div>
-
-            <PluridIconDelete
-                atClick={() => handleProjectObliterate(id)}
-            />
-        </>
-    );
-}
-
-
-const createSearchTerms = (
-    projects: Project[],
-) => {
-    const searchTerms = projects.map(
-        project => {
-            const {
-                id,
-                name
-            } = project;
-
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface ProjectsViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface ProjectsViewStateProperties {
@@ -127,28 +88,39 @@ export type ProjectsViewProperties = ProjectsViewOwnProperties
 const ProjectsView: React.FC<ProjectsViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateProjects,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const handleProjectObliterate = async (
         id: string,
     ) => {
@@ -172,9 +144,10 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateProjects),
     );
@@ -187,9 +160,10 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -221,9 +195,10 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateProjects,
@@ -240,9 +215,10 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
     }, [
         stateProjects,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -271,6 +247,7 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -294,8 +271,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedProjectsView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(ProjectsView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedProjectsView;
+// #endregion exports

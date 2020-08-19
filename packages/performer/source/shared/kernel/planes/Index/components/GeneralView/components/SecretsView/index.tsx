@@ -1,124 +1,74 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-import {
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        Secret,
+    } from '#server/data/interfaces';
 
-import {
-    Secret,
-} from '#server/data/interfaces';
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_SECRET,
-} from '#kernel-services/graphql/mutate';
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_SECRET,
+    } from '#kernel-services/graphql/mutate';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-
-const secretRowRenderer = (
-    secret: Secret,
-    handleSecretObliterate: (
-        id: string,
-    ) => void,
-) => {
-    const {
-        id,
-        name,
-        project,
-        startsWith,
-    } = secret;
-
-    return (
-        <>
-            <div>
-                {name}
-            </div>
-
-            <div>
-                {startsWith}
-            </div>
-
-            <div>
-                {project}
-            </div>
-
-            <PluridIconDelete
-                atClick={() => handleSecretObliterate(id)}
-            />
-        </>
-    );
-}
+    // #region internal
+    import {
+        secretRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-const createSearchTerms = (
-    secrets: Secret[],
-) => {
-    const searchTerms = secrets.map(
-        secret => {
-            const {
-                id,
-                name,
-                project,
-            } = secret;
 
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                    project.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface SecretsViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface SecretsViewStateProperties {
@@ -138,28 +88,39 @@ export type SecretsViewProperties = SecretsViewOwnProperties
 const SecretsView: React.FC<SecretsViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateSecrets,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const handleSecretObliterate = async (
         id: string,
     ) => {
@@ -183,9 +144,10 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateSecrets),
     );
@@ -198,9 +160,10 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -232,9 +195,10 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateSecrets,
@@ -251,9 +215,10 @@ const SecretsView: React.FC<SecretsViewProperties> = (
     }, [
         stateSecrets,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -290,6 +255,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -313,8 +279,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedSecretsView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(SecretsView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedSecretsView;
+// #endregion exports

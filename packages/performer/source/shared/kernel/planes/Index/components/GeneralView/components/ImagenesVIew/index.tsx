@@ -1,120 +1,69 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-import {
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import {
-    Imagene,
-} from '#server/data/interfaces';
+    import {
+        Imagene,
+    } from '#server/data/interfaces';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    // import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-
-const imageneRowRenderer = (
-    imagene: Imagene,
-    handleImageneObliterate: any,
-) => {
-    const {
-        id,
-        name,
-        version,
-        size,
-    } = imagene;
-
-    return (
-        <>
-            <div>
-                {name}
-            </div>
-
-            <div>
-                {version}
-            </div>
-
-            <div>
-                {size}
-            </div>
-
-            <PluridIconDelete
-                atClick={() => handleImageneObliterate(id)}
-            />
-        </>
-    );
-}
+    // #region internal
+    import {
+        imageneRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-const createSearchTerms = (
-    imagenes: Imagene[],
-) => {
-    const searchTerms = imagenes.map(
-        imagene => {
-            const {
-                id,
-                name,
-                version,
-                size,
-            } = imagene;
 
-
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                    version.toLowerCase(),
-                    size,
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface ImagenesViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface ImagenesViewStateProperties {
@@ -133,34 +82,43 @@ export type ImagenesViewProperties = ImagenesViewOwnProperties
 const ImagenesView: React.FC<ImagenesViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateImagenes,
-
-        /** dispatch */
+        // #endregion state
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region state
     const handleImageneObliterate = (
         id: string,
     ) => {
     }
+    // #endregion state
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateImagenes),
     );
@@ -173,9 +131,10 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -207,9 +166,10 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateImagenes,
@@ -226,9 +186,10 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
     }, [
         stateImagenes,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -265,6 +226,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -283,8 +245,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedImagenesView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(ImagenesView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedImagenesView;
+// #endregion exports

@@ -1,152 +1,84 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridIconValid,
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        PluridIconValid,
+        PluridIconDelete,
+    } from '@plurid/plurid-icons-react';
 
-import {
-    PluridLinkButton,
-} from '@plurid/plurid-ui-react';
-
-
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
-
-import {
-    ClientProvider,
-} from '#server/data/interfaces';
-
-import EntityView from '#kernel-components/EntityView';
-
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_PROVIDER,
-} from '#kernel-services/graphql/mutate';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
-
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        PluridLinkButton,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-const providerRowRenderer = (
-    provider: ClientProvider,
-    dispatchSetActiveProviderID: any,
-    stateActiveProviderID: string,
-    handleObliterateProvider: any,
-) => {
-    const {
-        id,
-        name,
-        type,
-    } = provider;
+    import {
+        ClientProvider,
+    } from '#server/data/interfaces';
 
-    return (
-        <>
-            <div
-                style={{
-                    display: 'flex',
-                    height: '20px',
-                    alignItems: 'center',
-                }}
-            >
-                <PluridLinkButton
-                    text={name}
-                    atClick={() => {
-                        dispatchSetActiveProviderID(id);
-                    }}
-                    inline={true}
-                    style={{
-                        border: 'none',
-                        fontWeight: 'normal',
-                    }}
-                />
+    import EntityView from '#kernel-components/EntityView';
 
-                {stateActiveProviderID === id
-                ? (
-                    <PluridIconValid
-                        inactive={true}
-                        style={{
-                            marginLeft: '0.7rem',
-                        }}
-                    />
-                ) : (
-                    <div />
-                )}
-            </div>
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_PROVIDER,
+    } from '#kernel-services/graphql/mutate';
 
-            <div>
-                {type}
-            </div>
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-            <PluridIconDelete
-                atClick={() => handleObliterateProvider(id)}
-            />
-        </>
-    );
-}
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-const createSearchTerms = (
-    providers: ClientProvider[],
-) => {
-    const searchTerms = providers.map(
-        provider => {
-            const {
-                id,
-                name,
-                type,
-            } = provider;
-
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                    type.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
+    // #region internal
+    import {
+        providerRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-/** [START] component */
+
+
+// #region module
 export interface ProvidersViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface ProvidersViewStateProperties {
@@ -168,30 +100,41 @@ export type ProvidersViewProperties = ProvidersViewOwnProperties
 const ProvidersView: React.FC<ProvidersViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateActiveProviderID,
         stateProviders,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
         dispatchSetActiveProviderID,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const handleObliterateProvider = async (
         id: string,
     ) => {
@@ -215,9 +158,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateProviders),
     );
@@ -232,9 +176,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -268,9 +213,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateProviders,
@@ -290,9 +236,10 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         stateProviders,
         stateActiveProviderID,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -325,6 +272,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -354,8 +302,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedProvidersView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(ProvidersView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedProvidersView;
+// #endregion exports

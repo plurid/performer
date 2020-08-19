@@ -1,185 +1,67 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridApplicationConfigurator,
-    PluridPubSub,
-    TOPICS,
-} from '@plurid/plurid-react';
+    import {
+        PluridIconCircle,
+    } from '@plurid/plurid-icons-react';
 
-import {
-    PluridIconQueue,
-    PluridIconRunning,
-    PluridIconWarning,
-    PluridIconStopped,
-    PluridIconTimeout,
-    PluridIconValid,
-    PluridIconCircle,
-    PluridIconEnter,
-} from '@plurid/plurid-icons-react';
+    import {
+        PluridLinkButton,
+    } from '@plurid/plurid-ui-react';
+
+    import {
+        PluridApplicationConfigurator,
+        TOPICS,
+    } from '@plurid/plurid-react';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import {
-    Deploy,
-} from '#server/data/interfaces';
+    import {
+        Deploy,
+    } from '#server/data/interfaces';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    // import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-
-const pluridPubSub = new PluridPubSub();
-
-const buildStatusIcons = {
-    QUEUE: PluridIconQueue,
-    RUNNING: PluridIconRunning,
-    FAILED: PluridIconWarning,
-    SUCCESS: PluridIconValid,
-    CANCELLED: PluridIconStopped,
-    TIMEOUT: PluridIconTimeout,
-};
-
-const durationTime = (
-    value: number,
-) => {
-    const minutes = Math.floor(value / 60);
-    const seconds = value - minutes * 60;
-
-    const timeString = `${minutes > 0 ? minutes + ' min' : ''} ${seconds} sec`;
-
-    return timeString;
-}
-
-const buildRowRenderer = (
-    build: Deploy,
-    openDeploy: (
-        id: string,
-    ) => void,
-) => {
-    const {
-        id,
-        status,
-        trigger,
-        time,
-        date,
-        project,
-    } = build;
-
-    const durationString = durationTime(time);
-
-    const dateString = new Date(date * 1000).toLocaleString();
-
-    const StatusIcon = buildStatusIcons[status];
-
-    return (
-        <>
-            <StatusIcon
-                inactive={true}
-                size={20}
-            />
-
-            <div>
-                {id.slice(0, 6)}
-            </div>
-
-            <div>
-                {trigger}
-            </div>
-
-            <div>
-                {status === 'QUEUE'
-                    ? '—'
-                    : durationString
-                }
-            </div>
-
-            <div>
-                {dateString}
-            </div>
-
-            <div>
-                {project}
-            </div>
-
-            <PluridIconEnter
-                atClick={() => openDeploy(id)}
-            />
-        </>
-    );
-}
+    // #region imports
+    import {
+        pluridPubSub,
+        buildRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion imports
+// #endregion imports
 
 
-const createSearchTerms = (
-    builds: Deploy[],
-) => {
-    const searchTerms = builds.map(
-        build => {
-            const {
-                id,
-                status,
-                trigger,
-                time,
-                date,
-            } = build;
 
-            const durationString = durationTime(time);
-            const dateString = new Date(date * 1000).toLocaleString();
-
-            const searchTerm = {
-                id,
-                data: [
-                    id,
-                    status.toLowerCase(),
-                    trigger.toLowerCase(),
-                    durationString.toLowerCase(),
-                    dateString.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface DeploysViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-
-    /** optional */
-    /** - values */
-    /** - methods */
 }
 
 export interface DeploysViewStateProperties {
@@ -198,26 +80,18 @@ export type DeploysViewProperties = DeploysViewOwnProperties
 const DeploysView: React.FC<DeploysViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-
-        /** optional */
-        /** - values */
-        /** - methods */
-
-        /** state */
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateDeploys,
-
-        /** dispatch */
+        // #endregion state
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const openDeploy = (
         id: string,
     ) => {
@@ -228,9 +102,10 @@ const DeploysView: React.FC<DeploysViewProperties> = (
             },
         );
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateDeploys),
     );
@@ -243,9 +118,10 @@ const DeploysView: React.FC<DeploysViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -277,9 +153,10 @@ const DeploysView: React.FC<DeploysViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(stateDeploys);
 
@@ -287,9 +164,10 @@ const DeploysView: React.FC<DeploysViewProperties> = (
     }, [
         stateDeploys,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <PluridIconCircle
@@ -339,8 +217,19 @@ const DeploysView: React.FC<DeploysViewProperties> = (
 
                 filterUpdate={filterUpdate}
             />
+
+            {stateDeploys.length > 0 && (
+                <div>
+                    <PluridLinkButton
+                        text="clear"
+                        atClick={() => {}}
+                        inline={true}
+                    />
+                </div>
+            )}
         </>
     );
+    // #endregion render
 }
 
 
@@ -359,8 +248,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedDeploysView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(DeploysView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedDeploysView;
+// #endregion exports

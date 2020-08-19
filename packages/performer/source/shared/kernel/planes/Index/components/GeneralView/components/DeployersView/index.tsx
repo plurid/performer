@@ -1,148 +1,74 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-import {
-    PluridIconEdit,
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import {
-    Deployer,
-} from '#server/data/interfaces';
+    import {
+        Deployer,
+    } from '#server/data/interfaces';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_DEPLOYER,
-} from '#kernel-services/graphql/mutate';
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_DEPLOYER,
+    } from '#kernel-services/graphql/mutate';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-
-const deployerRowRenderer = (
-    deployer: Deployer,
-    handleObliterateDeployer: (
-        id: string,
-    ) => void,
-) => {
-    const {
-        id,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    } = deployer;
-
-    return (
-        <>
-            <div>
-                {name}
-            </div>
-
-            <div>
-                {repository}
-            </div>
-
-            <div>
-                {branch}
-            </div>
-
-            <div>
-                {path}
-            </div>
-
-            <div>
-                {file}
-            </div>
-
-            <div>
-                {project}
-            </div>
-
-            <PluridIconEdit
-                atClick={() => {}}
-            />
-
-            <PluridIconDelete
-                atClick={() => handleObliterateDeployer(id)}
-            />
-        </>
-    );
-}
+    // #region internal
+    import {
+        deployerRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-const createSearchTerms = (
-    deployers: Deployer[],
-) => {
-    const searchTerms = deployers.map(
-        deployer => {
-            const {
-                id,
-                name,
-                repository,
-                branch,
-                path,
-            } = deployer;
 
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                    repository.toLowerCase(),
-                    branch.toLowerCase(),
-                    path.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface DeployersViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any,
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface DeployersViewStateProperties {
@@ -162,28 +88,39 @@ export type DeployersViewProperties = DeployersViewOwnProperties
 const DeployersView: React.FC<DeployersViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateDeployers,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const handleObliterateDeployer = async (
         id: string,
     ) => {
@@ -207,9 +144,10 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateDeployers),
     );
@@ -222,9 +160,10 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -253,9 +192,10 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateDeployers,
@@ -272,9 +212,10 @@ const DeployersView: React.FC<DeployersViewProperties> = (
     }, [
         stateDeployers,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -325,6 +266,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -346,10 +288,13 @@ const mapDispatchToProperties = (
         actions.data.removeEntity(payload),
     ),
 });
+// #endregion module
 
 
+
+// #region exports
 export default connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(DeployersView);
-/** [END] component */
+// #endregion exports

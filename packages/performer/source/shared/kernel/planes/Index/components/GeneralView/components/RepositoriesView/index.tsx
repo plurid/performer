@@ -1,122 +1,82 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
 
-import {
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        PluridIconDelete,
+    } from '@plurid/plurid-icons-react';
 
-import {
-    PluridLinkButton,
-} from '@plurid/plurid-ui-react';
-
-
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
-
-import {
-    Repository,
-} from '#server/data/interfaces';
-
-import EntityView from '#kernel-components/EntityView';
-
-import client from '#kernel-services/graphql/client';
-import {
-    DELINK_REPOSITORY,
-} from '#kernel-services/graphql/mutate';
-
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
-
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        PluridLinkButton,
+    } from '@plurid/plurid-ui-react';
+    // #endregion libraries
 
 
+    // #region external
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-const repositoryRowRenderer = (
-    repository: Repository,
-    unlinkRepository: any,
-) => {
-    const {
-        id,
-        name,
-    } = repository;
+    import {
+        Repository,
+    } from '#server/data/interfaces';
 
-    return (
-        <>
-            <div>
-                <PluridLinkButton
-                    text={name}
-                    atClick={() => {}}
-                    inline={true}
-                    style={{
-                        border: 'none',
-                        fontWeight: 'normal',
-                    }}
-                />
-            </div>
+    import EntityView from '#kernel-components/EntityView';
 
-            <PluridIconDelete
-                atClick={() => unlinkRepository(id)}
-            />
-        </>
-    );
-}
+    import client from '#kernel-services/graphql/client';
+    import {
+        DELINK_REPOSITORY,
+    } from '#kernel-services/graphql/mutate';
+
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
+
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-const createSearchTerms = (
-    repositories: Repository[],
-) => {
-    const searchTerms = repositories.map(
-        repository => {
-            const {
-                id,
-                name,
-            } = repository;
-
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
+    // #region imports
+    import {
+        repositoryRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion imports
+// #endregion imports
 
 
-/** [START] component */
+
+// #region module
 export interface RepositoriesViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any;
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface RepositoriesViewStateProperties {
@@ -136,28 +96,39 @@ export type RepositoriesViewProperties = RepositoriesViewOwnProperties
 const RepositoriesView: React.FC<RepositoriesViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateRepositories,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const unlinkRepository = async (
         id: string,
     ) => {
@@ -181,9 +152,10 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateRepositories),
     );
@@ -196,9 +168,10 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -230,9 +203,10 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateRepositories,
@@ -249,9 +223,10 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
     }, [
         stateRepositories,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -280,6 +255,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -303,8 +279,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedRepositoriesView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(RepositoriesView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedRepositoriesView;
+// #endregion exports

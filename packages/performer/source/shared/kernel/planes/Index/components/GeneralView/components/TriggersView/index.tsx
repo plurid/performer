@@ -1,148 +1,74 @@
-/** [START] imports */
-/** libraries */
-import React, {
-    useState,
-    useEffect,
-} from 'react';
+// #region imports
+    // #region libraries
+    import React, {
+        useState,
+        useEffect,
+    } from 'react';
 
-import { AnyAction } from 'redux';
-import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
+    import { AnyAction } from 'redux';
+    import { connect } from 'react-redux';
+    import { ThunkDispatch } from 'redux-thunk';
 
-import {
-    Theme,
-} from '@plurid/plurid-themes';
-
-import {
-    PluridIconEdit,
-    PluridIconDelete,
-} from '@plurid/plurid-icons-react';
+    import {
+        Theme,
+    } from '@plurid/plurid-themes';
+    // #endregion libraries
 
 
-/** external */
-import {
-    compareValues,
-} from '#server/utilities/general';
+    // #region external
+    import {
+        Trigger,
+    } from '#server/data/interfaces';
 
-import {
-    Trigger,
-} from '#server/data/interfaces';
+    import {
+        compareValues,
+    } from '#server/utilities/general';
 
-import EntityView from '#kernel-components/EntityView';
+    import EntityView from '#kernel-components/EntityView';
 
-import client from '#kernel-services/graphql/client';
-import {
-    OBLITERATE_TRIGGER,
-} from '#kernel-services/graphql/mutate';
+    import client from '#kernel-services/graphql/client';
+    import {
+        OBLITERATE_TRIGGER,
+    } from '#kernel-services/graphql/mutate';
 
-import { AppState } from '#kernel-services/state/store';
-import selectors from '#kernel-services/state/selectors';
-import actions from '#kernel-services/state/actions';
+    import { AppState } from '#kernel-services/state/store';
+    import selectors from '#kernel-services/state/selectors';
+    import actions from '#kernel-services/state/actions';
 
-import {
-    getFilterIDs,
-} from '#kernel-services/utilities';
-
-/** internal */
-/** [END] imports */
+    import {
+        getFilterIDs,
+    } from '#kernel-services/utilities';
+    // #endregion external
 
 
-
-const triggerRowRenderer = (
-    trigger: Trigger,
-    handleObliterateTrigger: (
-        id: string,
-    ) => void,
-) => {
-    const {
-        id,
-        name,
-        repository,
-        branch,
-        path,
-        file,
-        project,
-    } = trigger;
-
-    return (
-        <>
-            <div>
-                {name}
-            </div>
-
-            <div>
-                {repository}
-            </div>
-
-            <div>
-                {branch}
-            </div>
-
-            <div>
-                {path}
-            </div>
-
-            <div>
-                {file}
-            </div>
-
-            <div>
-                {project}
-            </div>
-
-            <PluridIconEdit
-                atClick={() => {}}
-            />
-
-            <PluridIconDelete
-                atClick={() => handleObliterateTrigger(id)}
-            />
-        </>
-    );
-}
+    // #region internal
+    import {
+        triggerRowRenderer,
+        createSearchTerms,
+    } from './logic';
+    // #endregion internal
+// #endregion imports
 
 
-const createSearchTerms = (
-    triggers: Trigger[],
-) => {
-    const searchTerms = triggers.map(
-        trigger => {
-            const {
-                id,
-                name,
-                repository,
-                branch,
-                path,
-            } = trigger;
 
-            const searchTerm = {
-                id,
-                data: [
-                    name.toLowerCase(),
-                    repository.toLowerCase(),
-                    branch.toLowerCase(),
-                    path.toLowerCase(),
-                ],
-            };
-
-            return searchTerm;
-        },
-    );
-
-    return searchTerms;
-}
-
-
-/** [START] component */
+// #region module
 export interface TriggersViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-    setGeneralView: any;
+    // #region required
+        // #region values
+        // #endregion values
 
-    /** optional */
-    /** - values */
-    /** - methods */
+        // #region methods
+        setGeneralView: any,
+        // #endregion methods
+    // #endregion required
+
+    // #region optional
+        // #region values
+        // #endregion values
+
+        // #region methods
+        // #endregion methods
+    // #endregion optional
 }
 
 export interface TriggersViewStateProperties {
@@ -162,28 +88,39 @@ export type TriggersViewProperties = TriggersViewOwnProperties
 const TriggersView: React.FC<TriggersViewProperties> = (
     properties,
 ) => {
-    /** properties */
+    // #region properties
     const {
-        /** required */
-        /** - values */
-        /** - methods */
-        setGeneralView,
+        // #region required
+            // #region values
+            // #endregion values
 
-        /** optional */
-        /** - values */
-        /** - methods */
+            // #region methods
+            setGeneralView,
+            // #endregion methods
+        // #endregion required
 
-        /** state */
+        // #region optional
+            // #region values
+            // #endregion values
+
+            // #region methods
+            // #endregion methods
+        // #endregion optional
+
+        // #region state
         stateGeneralTheme,
         stateInteractionTheme,
         stateTriggers,
+        // #endregion state
 
-        /** dispatch */
+        // #region dispatch
         dispatchRemoveEntity,
+        // #endregion dispatch
     } = properties;
+    // #endregion properties
 
 
-    /** handlers */
+    // #region handlers
     const handleObliterateTrigger = async (
         id: string,
     ) => {
@@ -207,9 +144,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             return;
         }
     }
+    // #endregion handlers
 
 
-    /** state */
+    // #region state
     const [searchTerms, setSearchTerms] = useState(
         createSearchTerms(stateTriggers),
     );
@@ -222,9 +160,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             ),
         ),
     );
+    // #endregion state
 
 
-    /** functions */
+    // #region handlers
     const filterUpdate = (
         rawValue: string,
     ) => {
@@ -253,9 +192,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             ),
         );
     }
+    // #endregion handlers
 
 
-    /** effects */
+    // #region effects
     useEffect(() => {
         const searchTerms = createSearchTerms(
             stateTriggers,
@@ -272,9 +212,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
     }, [
         stateTriggers,
     ]);
+    // #endregion effects
 
 
-    /** render */
+    // #region render
     const rowsHeader = (
         <>
             <div>
@@ -325,6 +266,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             filterUpdate={filterUpdate}
         />
     );
+    // #endregion render
 }
 
 
@@ -348,8 +290,14 @@ const mapDispatchToProperties = (
 });
 
 
-export default connect(
+const ConnectedTriggersView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
 )(TriggersView);
-/** [END] component */
+// #endregion module
+
+
+
+// #region exports
+export default ConnectedTriggersView;
+// #endregion exports
