@@ -1,6 +1,8 @@
 // #region imports
     // #region internal
     import * as Types from '../types';
+
+    import initialState from '../initial';
     // #endregion internal
 // #endregion imports
 
@@ -270,6 +272,16 @@ export const clearDeploys = (
 }
 
 
+export const clearData = (
+    state: Types.State,
+    action: Types.ClearDataAction,
+): Types.State => {
+    return {
+        ...initialState,
+    };
+}
+
+
 
 const resolvers = {
     removeEntity,
@@ -286,6 +298,7 @@ const resolvers = {
     clearBuilds,
     setDeploys,
     clearDeploys,
+    clearData,
 };
 // #endregion module
 

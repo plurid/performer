@@ -44,6 +44,8 @@ const reducer = (
             return resolvers.setDeploys(state, action);
         case Types.CLEAR_DEPLOYS:
             return resolvers.clearDeploys(state, action);
+        case Types.CLEAR_DATA:
+            return resolvers.clearData(state, action);
         default:
             return {
                 ...state,

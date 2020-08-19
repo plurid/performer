@@ -128,6 +128,13 @@ export interface ClearDeploysAction {
 }
 
 
+export const CLEAR_DATA = 'CLEAR_DATA';
+export interface ClearDataAction {
+    type: typeof CLEAR_DATA;
+    payload: undefined;
+}
+
+
 
 export interface State {
     activeProviderID: string;
@@ -158,5 +165,6 @@ export type Actions =
     | SetBuildsAction
     | ClearBuildsAction
     | SetDeploysAction
-    | ClearDeploysAction;
+    | ClearDeploysAction
+    | ClearDataAction;
 // #endregion module

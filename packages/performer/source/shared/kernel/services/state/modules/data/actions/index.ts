@@ -156,6 +156,14 @@ export const clearDeploys = (): Types.ClearDeploysAction => {
 }
 
 
+export const clearData = (): Types.ClearDataAction => {
+    return {
+        type: Types.CLEAR_DATA,
+        payload: undefined,
+    };
+}
+
+
 
 const actions = {
     removeEntity,
@@ -172,6 +180,7 @@ const actions = {
     clearBuilds,
     setDeploys,
     clearDeploys,
+    clearData,
 };
 // #endregion module
 
