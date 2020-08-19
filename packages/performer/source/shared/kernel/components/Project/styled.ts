@@ -14,5 +14,5 @@ export const StyledProject = styled.div<IStyledProject>`
     display: grid;
     place-content: center;
     text-align: center;
-    min-height: 500px;
+    min-height: 700px;
 `;
