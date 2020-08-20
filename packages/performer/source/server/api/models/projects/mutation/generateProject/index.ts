@@ -74,7 +74,7 @@ const generateProject = async (
                 };
             }
 
-            await registerProject(name);
+            const project = await registerProject(name);
 
             logger.log(
                 generateProjectLogs.infoSuccessPrivateUsage,
@@ -83,6 +83,7 @@ const generateProject = async (
 
             return {
                 status: true,
+                data: project,
             };
         }
         // #endregion private usage
@@ -97,7 +98,7 @@ const generateProject = async (
                 logLevels.trace,
             );
 
-            await registerProject(name);
+            const project = await registerProject(name);
 
             logger.log(
                 generateProjectLogs.infoEndCustomLogicUsage,
@@ -106,13 +107,14 @@ const generateProject = async (
 
             return {
                 status: true,
+                data: project,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await registerProject(name);
+        const project = await registerProject(name);
 
         logger.log(
             generateProjectLogs.infoSuccess,
@@ -121,6 +123,7 @@ const generateProject = async (
 
         return {
             status: true,
+            data: project,
         };
         // #endregion public usage
     } catch (error) {

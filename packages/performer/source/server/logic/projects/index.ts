@@ -33,6 +33,8 @@ const registerProject = async (
         id,
         project,
     );
+
+    return project;
 }
 
 

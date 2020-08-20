@@ -16,13 +16,19 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        generateProject(input: InputValueString!): Response!
+        generateProject(input: InputValueString!): ResponseProject!
         obliterateProject(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseProject {
+        status: Boolean!
+        error: Error
+        data: Project
+    }
+
     type ResponseProjects {
         status: Boolean!
         error: Error
