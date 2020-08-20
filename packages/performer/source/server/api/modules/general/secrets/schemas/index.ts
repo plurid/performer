@@ -9,13 +9,19 @@
 // #region module
 export const mutations = gql`
     extend type Mutation {
-        storeSecret(input: InputStoreSecret!): Response!
+        storeSecret(input: InputStoreSecret!): ResponseSecret!
         obliterateSecret(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseSecret {
+        status: Boolean
+        error: Error
+        data: Secret
+    }
+
     type Secret {
         id: String!
         name: String!

@@ -9,6 +9,7 @@
     // #region external
     import {
         SecretStored,
+        Secret,
         InputStoreSecret,
     } from '#server/data/interfaces';
 
@@ -41,6 +42,15 @@ const registerSecret = async (
         id,
         secretStored,
     );
+
+    const secret: Secret = {
+        id,
+        name,
+        project,
+        startsWith: value.slice(0, 5),
+    };
+
+    return secret;
 }
 
 

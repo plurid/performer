@@ -67,7 +67,7 @@ const storeSecret = async (
                 };
             }
 
-            await registerSecret(input);
+            const secret = await registerSecret(input);
 
             logger.log(
                 storeSecretLogs.infoSuccessPrivateUsage,
@@ -76,6 +76,7 @@ const storeSecret = async (
 
             return {
                 status: true,
+                data: secret,
             };
         }
         // #endregion private usage
@@ -90,7 +91,7 @@ const storeSecret = async (
                 logLevels.trace,
             );
 
-            await registerSecret(input);
+            const secret = await registerSecret(input);
 
             logger.log(
                 storeSecretLogs.infoEndCustomLogicUsage,
@@ -99,13 +100,14 @@ const storeSecret = async (
 
             return {
                 status: true,
+                data: secret,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await registerSecret(input);
+        const secret = await registerSecret(input);
 
         logger.log(
             storeSecretLogs.infoSuccess,
@@ -114,6 +116,7 @@ const storeSecret = async (
 
         return {
             status: true,
+            data: secret,
         };
         // #endregion public usage
     } catch (error) {
