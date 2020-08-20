@@ -12,10 +12,17 @@
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
+    import {
+        Secret as ISecret,
+    } from '#server/data/interfaces';
+
     import {
         STORE_SECRET,
     } from '#kernel-services/graphql/mutate';
+
+    import {
+        addEntityMutation,
+    } from '#kernel-services/logic/mutations';
 
     import {
         StyledPluridTextline,
@@ -42,7 +49,9 @@ export interface SecretProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            secret: ISecret,
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -109,18 +118,27 @@ const Secret: React.FC<SecretProperties> = (
             return;
         }
 
-        const input = {
-            name: secretName,
-            value: secretValue,
-            project: secretProject,
-        };
-
-        await client.mutate({
-            mutation: STORE_SECRET,
-            variables: {
-                input,
+        const secret: ISecret | undefined = await addEntityMutation(
+            {
+                name: secretName,
+                value: secretValue,
+                project: secretProject,
             },
-        });
+            STORE_SECRET,
+            'storeSecret',
+        );
+
+        if (secret) {
+            action(secret);
+        }
+    }
+
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            storeSecret();
+        }
     }
     // #endregion handlers
 
@@ -159,6 +177,7 @@ const Secret: React.FC<SecretProperties> = (
                         text={secretName}
                         placeholder="name"
                         atChange={(event) => setSecretName(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -173,6 +192,7 @@ const Secret: React.FC<SecretProperties> = (
                         text={secretValue}
                         placeholder="value"
                         atChange={(event) => setSecretValue(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -187,6 +207,7 @@ const Secret: React.FC<SecretProperties> = (
                         text={secretProject}
                         placeholder="project"
                         atChange={(event) => setSecretProject(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -199,10 +220,7 @@ const Secret: React.FC<SecretProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Store Secret"
-                        atClick={() => {
-                            action();
-                            storeSecret();
-                        }}
+                        atClick={() => storeSecret()}
                         level={2}
                         disabled={!secretName}
                     />

@@ -12,10 +12,17 @@
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
+    import {
+        Trigger as ITrigger,
+    } from '#server/data/interfaces';
+
     import {
         GENERATE_TRIGGER,
     } from '#kernel-services/graphql/mutate';
+
+    import {
+        addEntityMutation,
+    } from '#kernel-services/logic/mutations';
 
     import {
         StyledPluridTextline,
@@ -43,7 +50,9 @@ export interface TriggerProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            trigger: ITrigger,
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -99,27 +108,36 @@ const Trigger: React.FC<TriggerProperties> = (
 
 
     // #region handlers
-    const addTrigger = async () => {
+    const generateTrigger = async () => {
         if (!validTrigger) {
             return;
         }
 
-        const input = {
-            id: triggerID,
-            name: triggerName,
-            project: triggerProject,
-            repository: triggerRepository,
-            branch: triggerBranch,
-            path: triggerPath,
-            file: triggerFile,
-        };
-
-        await client.mutate({
-            mutation: GENERATE_TRIGGER,
-            variables: {
-                input,
+        const trigger: ITrigger | undefined = await addEntityMutation(
+            {
+                id: triggerID,
+                name: triggerName,
+                project: triggerProject,
+                repository: triggerRepository,
+                branch: triggerBranch,
+                path: triggerPath,
+                file: triggerFile,
             },
-        });
+            GENERATE_TRIGGER,
+            'generateTrigger',
+        );
+
+        if (trigger) {
+            action(trigger);
+        }
+    }
+
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            generateTrigger();
+        }
     }
     // #endregion handlers
 
@@ -179,6 +197,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerID}
                         placeholder="id"
                         atChange={(event) => setTriggerID(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -193,6 +212,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerName}
                         placeholder="name"
                         atChange={(event) => setTriggerName(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -207,6 +227,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerProject}
                         placeholder="project"
                         atChange={(event) => setTriggerProject(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -221,6 +242,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerRepository}
                         placeholder="repository"
                         atChange={(event) => setTriggerRepository(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -235,6 +257,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerBranch}
                         placeholder="branch"
                         atChange={(event) => setTriggerBranch(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -249,6 +272,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerPath}
                         placeholder="path"
                         atChange={(event) => setTriggerPath(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -263,6 +287,7 @@ const Trigger: React.FC<TriggerProperties> = (
                         text={triggerFile}
                         placeholder="file"
                         atChange={(event) => setTriggerFile(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -275,10 +300,7 @@ const Trigger: React.FC<TriggerProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text={editID ? 'Update Trigger' : 'Generate Trigger'}
-                        atClick={() => {
-                            action();
-                            addTrigger();
-                        }}
+                        atClick={() => generateTrigger()}
                         level={2}
                         disabled={!validTrigger}
                     />

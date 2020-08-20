@@ -12,10 +12,17 @@
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
+    import {
+        Deployer as IDeployer,
+    } from '#server/data/interfaces';
+
     import {
         GENERATE_DEPLOYER,
     } from '#kernel-services/graphql/mutate';
+
+    import {
+        addEntityMutation,
+    } from '#kernel-services/logic/mutations';
 
     import {
         StyledPluridTextline,
@@ -43,7 +50,9 @@ export interface DeployerProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            deployer: IDeployer,
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -100,27 +109,36 @@ const Deployer: React.FC<DeployerProperties> = (
 
 
     // #region handlers
-    const addDeployer = async () => {
+    const generateDeployer = async () => {
         if (!validDeployer) {
             return;
         }
 
-        const input = {
-            id: deployerID,
-            name: deployerName,
-            project: deployerProject,
-            repository: deployerRepository,
-            branch: deployerBranch,
-            path: deployerPath,
-            file: deployerFile,
-        };
-
-        await client.mutate({
-            mutation: GENERATE_DEPLOYER,
-            variables: {
-                input,
+        const deployer: IDeployer | undefined = await addEntityMutation(
+            {
+                id: deployerID,
+                name: deployerName,
+                project: deployerProject,
+                repository: deployerRepository,
+                branch: deployerBranch,
+                path: deployerPath,
+                file: deployerFile,
             },
-        });
+            GENERATE_DEPLOYER,
+            'generateDeployer',
+        );
+
+        if (deployer) {
+            action(deployer);
+        }
+    }
+
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            generateDeployer();
+        }
     }
     // #endregion handlers
 
@@ -180,6 +198,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerID}
                         placeholder="id"
                         atChange={(event) => setDeployerID(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -194,6 +213,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerName}
                         placeholder="name"
                         atChange={(event) => setDeployerName(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -208,6 +228,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerProject}
                         placeholder="project"
                         atChange={(event) => setDeployerProject(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -222,6 +243,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerRepository}
                         placeholder="repository"
                         atChange={(event) => setDeployerRepository(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -236,6 +258,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerBranch}
                         placeholder="branch"
                         atChange={(event) => setDeployerBranch(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -250,6 +273,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerPath}
                         placeholder="path"
                         atChange={(event) => setDeployerPath(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -264,6 +288,7 @@ const Deployer: React.FC<DeployerProperties> = (
                         text={deployerFile}
                         placeholder="file"
                         atChange={(event) => setDeployerFile(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -276,10 +301,7 @@ const Deployer: React.FC<DeployerProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text={editID ? 'Update Deployer' : 'Generate Deployer'}
-                        atClick={() => {
-                            action();
-                            addDeployer();
-                        }}
+                        atClick={() => generateDeployer()}
                         level={2}
                         disabled={!validDeployer}
                     />

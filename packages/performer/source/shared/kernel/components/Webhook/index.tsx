@@ -8,10 +8,6 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
-
-    import {
-        graphql,
-    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
@@ -20,10 +16,13 @@
         Webhook as IWebhook,
     } from '#server/data/interfaces';
 
-    import client from '#kernel-services/graphql/client';
     import {
         SETUP_WEBHOOK,
     } from '#kernel-services/graphql/mutate';
+
+    import {
+        addEntityMutation,
+    } from '#kernel-services/logic/mutations';
 
     import {
         StyledPluridTextline,
@@ -109,7 +108,7 @@ const Webhook: React.FC<WebhookProperties> = (
     const updateWebhook = async () => {
     }
 
-    const setWebhook = async () => {
+    const setupWebhook = async () => {
         if (!webhookPath || !providerID) {
             return;
         }
@@ -119,32 +118,25 @@ const Webhook: React.FC<WebhookProperties> = (
             return;
         }
 
-        try {
-            const input = {
+        const webhook: IWebhook | undefined = await addEntityMutation(
+            {
                 providerID,
                 path: webhookPath,
-            };
+            },
+            SETUP_WEBHOOK,
+            'setupWebhook',
+        );
 
-            const mutation = await client.mutate({
-                mutation: SETUP_WEBHOOK,
-                variables: {
-                    input,
-                },
-            });
+        if (webhook) {
+            action(webhook);
+        }
+    }
 
-            const reponse = mutation.data.setupWebhook;
-
-            if (!reponse.status) {
-                return;
-            }
-
-            const {
-                data,
-            } = reponse;
-
-            return graphql.deleteTypenames(data);
-        } catch (error) {
-            return;
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            setupWebhook();
         }
     }
     // #endregion handlers
@@ -177,6 +169,7 @@ const Webhook: React.FC<WebhookProperties> = (
                         text={webhookPath}
                         placeholder="/path/to/webhook"
                         atChange={(event) => setWebhookPath(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
                         autoComplete="false"
@@ -189,12 +182,7 @@ const Webhook: React.FC<WebhookProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text={editID ? 'Update Webhook' : 'Setup Webhook'}
-                        atClick={async () => {
-                            const webhook = await setWebhook();
-                            if (webhook) {
-                                action(webhook);
-                            }
-                        }}
+                        atClick={() => setupWebhook()}
                         level={2}
                         disabled={!webhookPath}
                     />

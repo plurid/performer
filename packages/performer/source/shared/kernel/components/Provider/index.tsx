@@ -8,10 +8,6 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
-
-    import {
-        graphql,
-    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
@@ -20,10 +16,13 @@
         Provider as IProvider,
     } from '#server/data/interfaces';
 
-    import client from '#kernel-services/graphql/client';
     import {
         ADD_PROVIDER,
     } from '#kernel-services/graphql/mutate';
+
+    import {
+        addEntityMutation,
+    } from '#kernel-services/logic/mutations';
 
     import {
         StyledPluridTextline,
@@ -116,38 +115,31 @@ const Provider: React.FC<ProviderProperties> = (
 
 
     // #region handlers
-    const setProvider = async () => {
+    const addProvider = async () => {
         if (!validProvider) {
             return;
         }
 
-        try {
-            const input = {
+        const provider: IProvider | undefined = await addEntityMutation(
+            {
                 type: providerType,
                 token: providerToken,
                 name: providerName,
-            };
+            },
+            ADD_PROVIDER,
+            'addProvider',
+        );
 
-            const mutation = await client.mutate({
-                mutation: ADD_PROVIDER,
-                variables: {
-                    input,
-                },
-            });
+        if (provider) {
+            action(provider);
+        }
+    }
 
-            const reponse = mutation.data.addProvider;
-
-            if (!reponse.status) {
-                return;
-            }
-
-            const {
-                data,
-            } = reponse;
-
-            return graphql.deleteTypenames(data);
-        } catch (error) {
-            return;
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            addProvider();
         }
     }
     // #endregion handlers
@@ -192,6 +184,7 @@ const Provider: React.FC<ProviderProperties> = (
                     <StyledPluridTextline
                         text={providerName}
                         atChange={(event) => setProviderName(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         placeholder="name"
                         spellCheck={false}
                         autoCapitalize="false"
@@ -206,6 +199,7 @@ const Provider: React.FC<ProviderProperties> = (
                     <StyledPluridTextline
                         text={providerToken}
                         atChange={(event) => setProviderToken(event.target.value)}
+                        atKeyDown={(event) => handleEnter(event)}
                         placeholder="token"
                         spellCheck={false}
                         autoCapitalize="false"
@@ -219,13 +213,7 @@ const Provider: React.FC<ProviderProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Add Provider"
-                        atClick={async () => {
-                            const provider = await setProvider();
-
-                            if (provider) {
-                                action(provider);
-                            }
-                        }}
+                        atClick={() => addProvider()}
                         disabled={!validProvider}
                         theme={theme}
                         level={2}
