@@ -185,6 +185,8 @@ export const registerTrigger = async (
         generatedID,
         trigger,
     );
+
+    return trigger;
 }
 
 
