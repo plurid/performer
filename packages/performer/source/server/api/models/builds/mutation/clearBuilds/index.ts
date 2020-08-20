@@ -5,6 +5,10 @@
     } from '#server/data/interfaces';
 
     import {
+        clearBuilds as clearBuildsLogic,
+    } from '#server/logic/build';
+
+    import {
         generateMethodLogs,
     } from '#server/utilities';
     // #endregion external
@@ -33,7 +37,7 @@ const clearBuilds = async (
 
     // #region log start
     logger.log(
-        '[Performer Info : Start] :: clearBuilds',
+        clearBuildsLogs.infoStart,
         logLevels.info,
     );
     // #endregion log start
@@ -43,13 +47,13 @@ const clearBuilds = async (
         // #region private usage
         if (privateUsage) {
             logger.log(
-                '[Performer Info : Handle] :: clearBuilds · privateUsage',
+                clearBuildsLogs.infoHandlePrivateUsage,
                 logLevels.trace,
             );
 
             if (!privateOwnerIdentonym) {
                 logger.log(
-                    '[Performer Info : End] :: clearBuilds · privateUsage',
+                    clearBuildsLogs.infoEndPrivateUsage,
                     logLevels.info,
                 );
 
@@ -58,13 +62,10 @@ const clearBuilds = async (
                 };
             }
 
-
-            // TODO
-            // clear build
-
+            clearBuildsLogic();
 
             logger.log(
-                '[Performer Info : Success] :: clearBuilds · privateUsage',
+                clearBuildsLogs.infoSuccessPrivateUsage,
                 logLevels.info,
             );
 
@@ -80,14 +81,14 @@ const clearBuilds = async (
 
         if (customLogicUsage && logic) {
             logger.log(
-                '[Performer Info : Handle] :: clearBuilds · customLogicUsage',
+                clearBuildsLogs.infoHandleCustomLogicUsage,
                 logLevels.trace,
             );
 
             await logic.builds.clear();
 
             logger.log(
-                '[Performer Info : End] :: clearBuilds · customLogicUsage',
+                clearBuildsLogs.infoEndCustomLogicUsage,
                 logLevels.info,
             );
 
@@ -99,8 +100,10 @@ const clearBuilds = async (
 
 
         // #region log success
+        await clearBuildsLogic();
+
         logger.log(
-            '[Performer Info : Success] :: clearBuilds',
+            clearBuildsLogs.infoSuccess,
             logLevels.info,
         );
         // #endregion log success
@@ -114,7 +117,7 @@ const clearBuilds = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            '[Performer Error : End] :: clearBuilds',
+            clearBuildsLogs.errorEnd,
             logLevels.error,
             error,
         );

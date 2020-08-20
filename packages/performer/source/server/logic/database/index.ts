@@ -177,6 +177,25 @@ class Database {
                 );
         }
     }
+
+    public obliterateAll(
+        entity: string,
+    ) {
+        switch (this.type) {
+            case databaseType.filesystem:
+                return filesystemDatabase.obliterateAll(
+                    entity,
+                );
+            case databaseType.amazon:
+                return amazonDatabase.obliterateAll(
+                    entity,
+                );
+            case databaseType.google:
+                return googleDatabase.obliterateAll(
+                    entity,
+                );
+        }
+    }
 }
 // #endregion module
 

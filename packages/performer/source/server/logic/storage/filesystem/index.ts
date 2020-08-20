@@ -1,6 +1,6 @@
 // #region imports
     // #region libraries
-    import {
+    import syncFs, {
         promises as fs,
     } from 'fs';
 
@@ -15,6 +15,7 @@
         StorageDownloadAll,
         StorageUpload,
         StorageObliterate,
+        StorageObliterateAll,
         StorageGenerateLocations,
     } from '#server/data/interfaces';
 
@@ -166,6 +167,28 @@ const storageObliterate: StorageObliterate = async (
 }
 
 
+const storageObliterateAll: StorageObliterateAll = async (
+    pathway,
+) => {
+    try {
+        const filespath = path.join(
+            BASE_PATH,
+            pathway,
+        );
+
+        fs.rmdir(filespath, {recursive: true});
+
+        return true;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Performer Error 500] :: Filesystem could not obliterate all ${pathway}.`);
+        }
+
+        return;
+    }
+}
+
+
 const storageGenerateLocations: StorageGenerateLocations = async () => {
     try {
         const directories = [
@@ -205,6 +228,7 @@ const filesystemStorage: Storage = {
     downloadAll: storageDownloadAll,
     upload: storageUpload,
     obliterate: storageObliterate,
+    obliterateAll: storageObliterateAll,
     generateLocations: storageGenerateLocations,
 };
 // #endregion module

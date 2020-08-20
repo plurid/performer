@@ -20,6 +20,7 @@ export interface Storage {
     downloadAll: StorageDownloadAll;
     upload: StorageUpload;
     obliterate: StorageObliterate;
+    obliterateAll: StorageObliterateAll;
     generateLocations: StorageGenerateLocations;
 }
 
@@ -39,6 +40,10 @@ export type StorageUpload = (
 
 export type StorageObliterate = (
     filename: string,
+) => Promise<true | undefined>;
+
+export type StorageObliterateAll = (
+    path: string,
 ) => Promise<true | undefined>;
 
 export type StorageGenerateLocations = () => Promise<true | undefined>;

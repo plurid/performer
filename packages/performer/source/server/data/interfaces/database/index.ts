@@ -22,6 +22,7 @@ export interface Database {
     store: DatabaseStore;
     update: DatabaseUpdate;
     obliterate: DatabaseObliterate;
+    obliterateAll: DatabaseObliterateAll;
 }
 
 export type DatabaseGet = (
@@ -60,5 +61,10 @@ export type DatabaseUpdate = (
 export type DatabaseObliterate = (
     entity: string,
     id: string,
+) => Promise<any>;
+
+
+export type DatabaseObliterateAll = (
+    entity: string,
 ) => Promise<any>;
 // #endregion module

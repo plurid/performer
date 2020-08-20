@@ -8,6 +8,7 @@
         DatabaseStore,
         DatabaseUpdate,
         DatabaseObliterate,
+        DatabaseObliterateAll,
     } from '#server/data/interfaces';
     // #endregion external
 // #endregion imports
@@ -66,6 +67,14 @@ const obliterate: DatabaseObliterate = async (
 }
 
 
+const obliterateAll: DatabaseObliterateAll = async (
+    entity,
+) => {
+    return;
+}
+
+
+
 const googleDatabase: Database = {
     get,
     getAll,
@@ -73,6 +82,7 @@ const googleDatabase: Database = {
     store,
     update,
     obliterate,
+    obliterateAll,
 };
 // #endregion module
 

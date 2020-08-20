@@ -15,6 +15,7 @@
         StorageDownloadAll,
         StorageUpload,
         StorageObliterate,
+        StorageObliterateAll,
         StorageGenerateLocations,
     } from '#server/data/interfaces';
     // #endregion external
@@ -99,6 +100,21 @@ const storageObliterate: StorageObliterate = async (
 }
 
 
+const storageObliterateAll: StorageObliterateAll = async (
+    pathway,
+) => {
+    try {
+        return true;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Performer Error 500] :: Amazon could not obliterate all ${pathway}.`);
+        }
+
+        return;
+    }
+}
+
+
 const storageGenerateLocations: StorageGenerateLocations = async () => {
     try {
         return true;
@@ -118,6 +134,7 @@ const amazonStorage: Storage = {
     downloadAll: storageDownloadAll,
     upload: storageUpload,
     obliterate: storageObliterate,
+    obliterateAll: storageObliterateAll,
     generateLocations: storageGenerateLocations,
 };
 // #endregion module

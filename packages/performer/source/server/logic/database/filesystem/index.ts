@@ -13,6 +13,7 @@
         DatabaseStore,
         DatabaseUpdate,
         DatabaseObliterate,
+        DatabaseObliterateAll,
     } from '#server/data/interfaces';
 
     import {
@@ -29,6 +30,7 @@
         BASE_PATH_TRIGGERS,
         BASE_PATH_DEPLOYERS,
         BASE_PATH_BUILDS,
+        BASE_PATH_BUILD_LOGS,
         BASE_PATH_BUILD_QUEUE,
         BASE_PATH_DEPLOYS,
     } from '#server/data/constants';
@@ -136,6 +138,24 @@ const obliterate: DatabaseObliterate = async (
 }
 
 
+const obliterateAll: DatabaseObliterateAll = async (
+    entity,
+) => {
+    switch (entity) {
+        case 'builds': {
+            await filesystemStorage.obliterateAll(BASE_PATH_BUILDS);
+            await filesystemStorage.obliterateAll(BASE_PATH_BUILD_QUEUE);
+            await filesystemStorage.obliterateAll(BASE_PATH_BUILD_LOGS);
+
+            return;
+        }
+        default:
+            return;
+    }
+}
+
+
+
 const filesystemDatabase: Database = {
     get,
     getAll,
@@ -143,6 +163,7 @@ const filesystemDatabase: Database = {
     store,
     update,
     obliterate,
+    obliterateAll,
 };
 // #endregion module
 

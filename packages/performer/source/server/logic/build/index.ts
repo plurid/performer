@@ -48,6 +48,7 @@
 
     import docker from '#server/logic/engine';
 
+    import database from '#server/services/database';
     import storage from '#server/services/storage';
 
     import {
@@ -762,5 +763,10 @@ export const getBuildLogs = async (
     }
 
     return results;
+}
+
+
+export const clearBuilds = async () => {
+    database.obliterateAll('builds');
 }
 // #endregion module

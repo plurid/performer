@@ -15,6 +15,7 @@
         StorageDownloadAll,
         StorageUpload,
         StorageObliterate,
+        StorageObliterateAll,
         StorageGenerateLocations,
     } from '#server/data/interfaces';
     // #endregion external
@@ -30,7 +31,7 @@ const storageDownload: StorageDownload = async (
         return '';
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Performer Error 500] :: Amazon could not download ${filename}.`);
+            console.log(`[Performer Error 500] :: Google could not download ${filename}.`);
         }
 
         return;
@@ -62,7 +63,7 @@ const storageUpload: StorageUpload = async (
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Performer Error 500] :: Amazon could not upload ${filename}.`);
+            console.log(`[Performer Error 500] :: Google could not upload ${filename}.`);
         }
 
         return;
@@ -77,7 +78,22 @@ const storageObliterate: StorageObliterate = async (
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log(`[Performer Error 500] :: Amazon could not obliterate ${filename}.`);
+            console.log(`[Performer Error 500] :: Google could not obliterate ${filename}.`);
+        }
+
+        return;
+    }
+}
+
+
+const storageObliterateAll: StorageObliterateAll = async (
+    pathway,
+) => {
+    try {
+        return true;
+    } catch (error) {
+        if (!QUIET) {
+            console.log(`[Performer Error 500] :: Google could not obliterate all ${pathway}.`);
         }
 
         return;
@@ -90,7 +106,7 @@ const storageGenerateLocations: StorageGenerateLocations = async () => {
         return true;
     } catch (error) {
         if (!QUIET) {
-            console.log('[Performer Error 500] :: Amazon could not generate locations.');
+            console.log('[Performer Error 500] :: Google could not generate locations.');
         }
 
         return;
@@ -104,6 +120,7 @@ const googleStorage: Storage = {
     downloadAll: storageDownloadAll,
     upload: storageUpload,
     obliterate: storageObliterate,
+    obliterateAll: storageObliterateAll,
     generateLocations: storageGenerateLocations,
 };
 // #endregion module

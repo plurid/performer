@@ -113,6 +113,25 @@ class Storage {
         }
     }
 
+    public async obliterateAll(
+        path: string,
+    ) {
+        switch (this.type) {
+            case storageType.filesystem:
+                return filesystemStorage.obliterateAll(
+                    path,
+                );
+            case storageType.amazon:
+                return amazonStorage.obliterateAll(
+                    path,
+                );
+            case storageType.google:
+                return googleStorage.obliterateAll(
+                    path,
+                );
+        }
+    }
+
     public async generateLocations() {
         switch (this.type) {
             case storageType.filesystem:
