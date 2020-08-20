@@ -206,7 +206,7 @@ const Provider: React.FC<ProviderProperties> = (
 
                 <div>
                     <StyledPluridPureButton
-                        text="Set Provider"
+                        text="Add Provider"
                         atClick={async () => {
                             const providerID = await setProvider();
                             action(providerID);
