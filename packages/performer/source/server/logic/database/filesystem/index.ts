@@ -17,16 +17,6 @@
     } from '#server/data/interfaces';
 
     import {
-        providersPath,
-        projectsPath,
-        secretsPath,
-        webhooksPath,
-        triggersPath,
-        deployersPath,
-        repositoriesMetadataPath,
-    } from '#server/data/constants';
-
-    import {
         BASE_PATH_PROVIDERS,
         BASE_PATH_IMAGENES,
         BASE_PATH_REPOSITORIES_METADATA,
@@ -53,19 +43,19 @@ const resolveDataPath = (
 ) => {
     switch (entity) {
         case 'provider':
-            return providersPath;
+            return BASE_PATH_PROVIDERS;
         case 'webhook':
-            return webhooksPath;
+            return BASE_PATH_WEBHOOKS;
         case 'secret':
-            return secretsPath;
+            return BASE_PATH_SECRETS;
         case 'trigger':
-            return triggersPath;
+            return BASE_PATH_TRIGGERS;
         case 'deployer':
-            return deployersPath;
+            return BASE_PATH_DEPLOYERS;
         case 'project':
-            return projectsPath;
+            return BASE_PATH_PROJECTS;
         case 'repository':
-            return repositoriesMetadataPath;
+            return BASE_PATH_REPOSITORIES_METADATA;
         default:
             return '';
     }

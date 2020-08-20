@@ -156,6 +156,13 @@ const storageObliterate: StorageObliterate = async (
     filename,
 ) => {
     try {
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        await fs.unlink(filepath);
+
         return true;
     } catch (error) {
         if (!QUIET) {
@@ -176,7 +183,7 @@ const storageObliterateAll: StorageObliterateAll = async (
             pathway,
         );
 
-        fs.rmdir(filespath, {recursive: true});
+        await fs.rmdir(filespath, {recursive: true});
 
         return true;
     } catch (error) {
