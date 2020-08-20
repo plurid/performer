@@ -9,6 +9,127 @@
 
 
 // #region module
+export const addEntity = (
+    state: Types.State,
+    action: Types.AddEntityAction,
+): Types.State => {
+    const {
+        type,
+        data,
+    } = action.payload;
+
+    const newState = {
+        ...state,
+    };
+
+    let providers = [
+        ...newState.providers,
+    ];
+    let repositories = [
+        ...newState.repositories,
+    ];
+    let webhooks = [
+        ...newState.webhooks,
+    ];
+    let projects = [
+        ...newState.projects,
+    ];
+    let secrets = [
+        ...newState.secrets,
+    ];
+    let triggers = [
+        ...newState.triggers,
+    ];
+    let deployers = [
+        ...newState.deployers,
+    ];
+
+    switch (type) {
+        case 'provider':
+            providers = [
+                ...providers,
+                {
+                    ...data,
+                },
+            ];
+            break;
+        case 'repository':
+            repositories = [
+                repositories,
+                {
+                    ...data,
+                },
+            ]
+            break;
+        case 'webhook':
+            webhooks = [
+                webhooks,
+                {
+                    ...data,
+                },
+            ]
+            break;
+        case 'project':
+            projects = [
+                projects,
+                {
+                    ...data,
+                },
+            ]
+            break;
+        case 'secret':
+            secrets = [
+                secrets,
+                {
+                    ...data,
+                },
+            ];
+            break;
+        case 'trigger':
+            triggers = [
+                triggers,
+                {
+                    ...data,
+                },
+            ];
+            break;
+        case 'deployer':
+            deployers = [
+                deployers,
+                {
+                    ...data,
+                },
+            ];
+            break;
+    }
+
+    return {
+        ...newState,
+        providers: [
+            ...providers,
+        ],
+        repositories: [
+            ...repositories,
+        ],
+        webhooks: [
+            ...webhooks,
+        ],
+        projects: [
+            ...projects,
+        ],
+        secrets: [
+            ...secrets,
+        ],
+        triggers: [
+            ...triggers,
+        ],
+        deployers: [
+            ...deployers,
+        ],
+    };
+}
+
+
 export const removeEntity = (
     state: Types.State,
     action: Types.RemoveEntityAction,
@@ -284,6 +405,7 @@ export const clearData = (
 
 
 const resolvers = {
+    addEntity,
     removeEntity,
     setActiveProviderID,
     setProviders,

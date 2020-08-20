@@ -56,6 +56,7 @@ export interface GeneralViewStateProperties {
 }
 
 export interface GeneralViewDispatchProperties {
+    dispatchAddEntity: typeof actions.data.addEntity;
     dispatchClearData: typeof actions.data.clearData;
     dispatchSetViewType: typeof actions.view.setViewType;
     dispatchSetViewCompactSelectors: typeof actions.view.setViewCompactSelectors;
@@ -82,6 +83,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatchAddEntity,
         dispatchClearData,
         dispatchSetViewType,
         dispatchSetViewCompactSelectors,
@@ -171,6 +173,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         selectedView,
         setSelectedView,
         setGeneralView,
+        dispatchAddEntity,
     );
     // #endregion render
 }
@@ -193,6 +196,11 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): GeneralViewDispatchProperties => ({
+    dispatchAddEntity: (
+        payload,
+    ) => dispatch(
+        actions.data.addEntity(payload),
+    ),
     dispatchClearData: () => dispatch(
         actions.data.clearData(),
     ),

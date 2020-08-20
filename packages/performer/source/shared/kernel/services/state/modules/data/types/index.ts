@@ -18,6 +18,27 @@
 
 
 // #region module
+export type AddableEntityType =
+    | 'provider'
+    | 'imagene'
+    | 'repository'
+    | 'webhook'
+    | 'project'
+    | 'secret'
+    | 'trigger'
+    | 'deployer';
+
+export const ADD_ENTITY = 'ADD_ENTITY';
+export interface AddEntityPayload {
+    type: AddableEntityType;
+    data: any;
+}
+export interface AddEntityAction {
+    type: typeof ADD_ENTITY;
+    payload: AddEntityPayload;
+}
+
+
 export type RemovableEntityType =
     | 'provider'
     | 'imagene'
@@ -152,6 +173,7 @@ export interface State {
 
 
 export type Actions =
+    | AddEntityAction
     | RemoveEntityAction
     | SetActiveProviderIDAction
     | SetProvidersAction

@@ -19,7 +19,7 @@ export const types = gql`
     type ResponseProvider {
         status: Boolean!
         error: Error
-        data: String
+        data: Provider
     }
 
     type Provider {

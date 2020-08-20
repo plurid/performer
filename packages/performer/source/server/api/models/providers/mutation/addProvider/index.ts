@@ -77,7 +77,7 @@ const addProvider = async (
 
             return {
                 status: true,
-                data: provider.id,
+                data: provider,
             };
         }
         // #endregion private usage
@@ -114,7 +114,7 @@ const addProvider = async (
 
             return {
                 status: true,
-                data: provider.id,
+                data: provider,
             };
         }
         // #endregion logic usage
@@ -132,7 +132,7 @@ const addProvider = async (
 
         return {
             status: true,
-            data: provider.id,
+            data: provider,
         };
         // #endregion public usage
     } catch (error) {

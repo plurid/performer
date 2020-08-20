@@ -16,7 +16,11 @@ export const ADD_PROVIDER = gql`
                 path
                 message
             }
-            data
+            data {
+                id
+                name
+                type
+            }
         }
     }
 `;

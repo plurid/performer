@@ -16,6 +16,8 @@ const reducer = (
     action: Types.Actions,
 ): Types.State => {
     switch(action.type) {
+        case Types.ADD_ENTITY:
+            return resolvers.addEntity(state, action);
         case Types.REMOVE_ENTITY:
             return resolvers.removeEntity(state, action);
         case Types.SET_ACTIVE_PROVIDER_ID:

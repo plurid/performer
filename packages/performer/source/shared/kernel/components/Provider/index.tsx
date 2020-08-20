@@ -12,6 +12,10 @@
 
 
     // #region external
+    import {
+        Provider as IProvider,
+    } from '#server/data/interfaces';
+
     import client from '#kernel-services/graphql/client';
     import {
         ADD_PROVIDER,
@@ -45,7 +49,7 @@ export interface ProviderProperties {
 
         // #region methods
         action: (
-            providerID: string,
+            provider: IProvider,
         ) => void;
         // #endregion methods
     // #endregion required
@@ -208,8 +212,8 @@ const Provider: React.FC<ProviderProperties> = (
                     <StyledPluridPureButton
                         text="Add Provider"
                         atClick={async () => {
-                            const providerID = await setProvider();
-                            action(providerID);
+                            const provider = await setProvider();
+                            action(provider);
                         }}
                         disabled={!validProvider}
                         theme={theme}

@@ -20,6 +20,16 @@
 
 
 // #region module
+export const addEntity = (
+    payload: Types.AddEntityPayload,
+): Types.AddEntityAction => {
+    return {
+        type: Types.ADD_ENTITY,
+        payload,
+    };
+}
+
+
 export const removeEntity = (
     payload: Types.RemoveEntityPayload,
 ): Types.RemoveEntityAction => {
@@ -166,6 +176,7 @@ export const clearData = (): Types.ClearDataAction => {
 
 
 const actions = {
+    addEntity,
     removeEntity,
     setActiveProviderID,
     setProviders,

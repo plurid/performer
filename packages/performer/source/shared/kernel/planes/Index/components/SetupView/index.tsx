@@ -91,9 +91,9 @@ const SetupView: React.FC<SetupViewProperties> = (
                 <Provider
                     theme={stateInteractionTheme}
                     action={(
-                        providerID: string,
+                        provider,
                     ) => {
-                        dispatchSetActiveProviderID(providerID);
+                        dispatchSetActiveProviderID(provider.id);
                         setPhase('REPOSITORY');
                     }}
                 />
