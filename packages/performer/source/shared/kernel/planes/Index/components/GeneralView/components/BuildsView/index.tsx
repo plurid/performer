@@ -113,8 +113,20 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         );
     }
 
+    const clearBuildPlanes = () => {
+        pluridPubSub.publish(
+            TOPICS.VIEW_SET_PLANES,
+            {
+                view: [
+                    '/dashboard',
+                ],
+            },
+        );
+    }
+
     const clearBuilds = async () => {
         try {
+            clearBuildPlanes();
             dispatchClearBuilds();
 
             await client.mutate({
