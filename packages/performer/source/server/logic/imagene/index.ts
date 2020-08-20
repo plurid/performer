@@ -10,6 +10,7 @@
     import {
         Imagene,
         InputAddImagene,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import database from '#server/services/database';
@@ -47,11 +48,11 @@ const registerImagene = async (
 
 
 const deregisterImagene = async (
-    id: string,
+    input: InputValueString,
 ) => {
     await database.obliterate(
         'imagene',
-        id,
+        input.value,
     );
 }
 // #endregion module

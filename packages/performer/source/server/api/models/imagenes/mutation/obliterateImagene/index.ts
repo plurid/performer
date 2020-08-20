@@ -48,13 +48,6 @@ const obliterateImagene = async (
 
 
     try {
-        // #region input unpack
-        const {
-            value: id,
-        } = input;
-        // #endregion input unpack
-
-
         // #region private usage
         if (privateUsage) {
             logger.log(
@@ -73,7 +66,7 @@ const obliterateImagene = async (
                 };
             }
 
-            await deregisterImagene(id);
+            await deregisterImagene(input);
 
             logger.log(
                 obliterateImageneLogs.infoSuccessPrivateUsage,
@@ -96,9 +89,9 @@ const obliterateImagene = async (
                 logLevels.trace,
             );
 
-            await logic.provider.deregister(
-                id,
-            );
+            // await logic.provider.deregister(
+            //     input,
+            // );
 
             logger.log(
                 obliterateImageneLogs.infoEndCustomLogicUsage,
@@ -114,7 +107,7 @@ const obliterateImagene = async (
 
         // #region public usage
         await deregisterImagene(
-            id,
+            input,
         );
 
         logger.log(
