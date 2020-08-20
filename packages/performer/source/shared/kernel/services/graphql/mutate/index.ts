@@ -139,6 +139,12 @@ export const STORE_SECRET = gql`
                 path
                 message
             }
+            data {
+                id
+                name
+                project
+                startsWith
+            }
         }
     }
 `;
