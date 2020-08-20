@@ -79,7 +79,7 @@ const generateDeployer = async (
                 };
             }
 
-            await registerDeployer(input);
+            const deployer = await registerDeployer(input);
 
             logger.log(
                 generateDeployerLogs.infoSuccessPrivateUsage,
@@ -88,6 +88,7 @@ const generateDeployer = async (
 
             return {
                 status: true,
+                data: deployer,
             };
         }
         // #endregion private usage
@@ -102,7 +103,7 @@ const generateDeployer = async (
                 logLevels.trace,
             );
 
-            await registerDeployer(input);
+            const deployer = await registerDeployer(input);
 
             logger.log(
                 generateDeployerLogs.infoEndCustomLogicUsage,
@@ -111,13 +112,14 @@ const generateDeployer = async (
 
             return {
                 status: true,
+                data: deployer,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await registerDeployer(input);
+        const deployer = await registerDeployer(input);
 
         logger.log(
             generateDeployerLogs.infoSuccess,
@@ -126,6 +128,7 @@ const generateDeployer = async (
 
         return {
             status: true,
+            data: deployer,
         };
         // #endregion public usage
     } catch (error) {

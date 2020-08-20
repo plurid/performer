@@ -16,13 +16,19 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        generateDeployer(input: InputGenerateDeployer!): Response!
+        generateDeployer(input: InputGenerateDeployer!): ResponseDeployer!
         obliterateDeployer(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseDeployer {
+        status: Boolean!
+        error: Error
+        data: Deployer
+    }
+
     type ResponseDeployers {
         status: Boolean!
         error: Error

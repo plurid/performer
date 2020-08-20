@@ -50,6 +50,8 @@ const registerDeployer = async (
         generatedID,
         deployer,
     );
+
+    return deployer;
 }
 
 

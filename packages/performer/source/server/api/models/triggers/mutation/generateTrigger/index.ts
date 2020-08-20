@@ -67,7 +67,7 @@ const generateTrigger = async (
                 };
             }
 
-            await registerTrigger(input);
+            const trigger = await registerTrigger(input);
 
             logger.log(
                 generateTriggerLogs.infoSuccessPrivateUsage,
@@ -76,6 +76,7 @@ const generateTrigger = async (
 
             return {
                 status: true,
+                data: trigger,
             };
         }
         // #endregion private usage
@@ -90,7 +91,7 @@ const generateTrigger = async (
                 logLevels.trace,
             );
 
-            await registerTrigger(input);
+            const trigger = await registerTrigger(input);
 
             logger.log(
                 generateTriggerLogs.infoEndCustomLogicUsage,
@@ -99,13 +100,14 @@ const generateTrigger = async (
 
             return {
                 status: true,
+                data: trigger,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await registerTrigger(input);
+        const trigger = await registerTrigger(input);
 
         logger.log(
             generateTriggerLogs.infoSuccess,
@@ -114,6 +116,7 @@ const generateTrigger = async (
 
         return {
             status: true,
+            data: trigger,
         };
         // #endregion public usage
     } catch (error) {

@@ -16,13 +16,19 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        generateTrigger(input: InputGenerateTrigger!): Response!
+        generateTrigger(input: InputGenerateTrigger!): ResponseTrigger!
         obliterateTrigger(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseTrigger {
+        status: Boolean!
+        error: Error
+        data: Trigger
+    }
+
     type ResponseTriggers {
         status: Boolean!
         error: Error
