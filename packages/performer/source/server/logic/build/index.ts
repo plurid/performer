@@ -747,7 +747,7 @@ export const getBuildLogs = async (
         const logname = id + '_' + index;
         const logPath = path.join(
             BASE_PATH_BUILD_LOGS,
-            '/' + logname,
+            logname,
         );
 
         const data = await storage.download(

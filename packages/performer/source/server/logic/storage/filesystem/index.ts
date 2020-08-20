@@ -72,7 +72,16 @@ const storageDownload: StorageDownload = async (
     filename,
 ) => {
     try {
-        return '';
+        const filepath = path.join(
+            BASE_PATH,
+            filename,
+        );
+
+        const data = await fs.readFile(
+            filepath,
+        );
+
+        return data.toString('utf-8');
     } catch (error) {
         if (!QUIET) {
             console.log(`[Performer Error 500] :: Filesystem could not download ${filename}.`);
