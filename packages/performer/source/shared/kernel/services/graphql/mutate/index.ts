@@ -75,6 +75,11 @@ export const SETUP_WEBHOOK = gql`
                 path
                 message
             }
+            data {
+                id
+                path
+                provider
+            }
         }
     }
 `;

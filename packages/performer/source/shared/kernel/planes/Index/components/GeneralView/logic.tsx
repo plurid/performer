@@ -351,7 +351,12 @@ export const renderGeneralView = (
                 <Webhook
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
-                    action={() => {
+                    action={(webhook) => {
+                        dispatchAddEntity({
+                            type: 'webhook',
+                            data: webhook,
+                        });
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}

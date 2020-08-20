@@ -117,30 +117,34 @@ const Provider: React.FC<ProviderProperties> = (
             return;
         }
 
-        const input = {
-            type: providerType,
-            token: providerToken,
-            name: providerName,
-        };
+        try {
+            const input = {
+                type: providerType,
+                token: providerToken,
+                name: providerName,
+            };
 
-        const mutation = await client.mutate({
-            mutation: ADD_PROVIDER,
-            variables: {
-                input,
-            },
-        });
+            const mutation = await client.mutate({
+                mutation: ADD_PROVIDER,
+                variables: {
+                    input,
+                },
+            });
 
-        const reponse = mutation.data.addProvider;
+            const reponse = mutation.data.addProvider;
 
-        if (!reponse.status) {
+            if (!reponse.status) {
+                return;
+            }
+
+            const {
+                data,
+            } = reponse;
+
+            return data;
+        } catch (error) {
             return;
         }
-
-        const {
-            data,
-        } = reponse;
-
-        return data;
     }
     // #endregion handlers
 
@@ -213,7 +217,10 @@ const Provider: React.FC<ProviderProperties> = (
                         text="Add Provider"
                         atClick={async () => {
                             const provider = await setProvider();
-                            action(provider);
+
+                            if (provider) {
+                                action(provider);
+                            }
                         }}
                         disabled={!validProvider}
                         theme={theme}

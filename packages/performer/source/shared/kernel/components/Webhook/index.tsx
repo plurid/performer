@@ -12,6 +12,10 @@
 
 
     // #region external
+    import {
+        Webhook as IWebhook,
+    } from '#server/data/interfaces';
+
     import client from '#kernel-services/graphql/client';
     import {
         SETUP_WEBHOOK,
@@ -43,7 +47,9 @@ export interface WebhookProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            webhook: IWebhook,
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -109,17 +115,33 @@ const Webhook: React.FC<WebhookProperties> = (
             return;
         }
 
-        const input = {
-            providerID,
-            path: webhookPath,
-        };
+        try {
+            const input = {
+                providerID,
+                path: webhookPath,
+            };
 
-        await client.mutate({
-            mutation: SETUP_WEBHOOK,
-            variables: {
-                input,
-            },
-        });
+            const mutation = await client.mutate({
+                mutation: SETUP_WEBHOOK,
+                variables: {
+                    input,
+                },
+            });
+
+            const reponse = mutation.data.setupWebhook;
+
+            if (!reponse.status) {
+                return;
+            }
+
+            const {
+                data,
+            } = reponse;
+
+            return data;
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
@@ -163,9 +185,11 @@ const Webhook: React.FC<WebhookProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text={editID ? 'Update Webhook' : 'Setup Webhook'}
-                        atClick={() => {
-                            action();
-                            setWebhook();
+                        atClick={async () => {
+                            const webhook = await setWebhook();
+                            if (webhook) {
+                                action(webhook);
+                            }
                         }}
                         level={2}
                         disabled={!webhookPath}
