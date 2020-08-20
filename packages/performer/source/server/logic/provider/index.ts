@@ -10,6 +10,7 @@
     import {
         Provider,
         InputAddProvider,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import database from '#server/services/database';
@@ -48,11 +49,11 @@ const registerProvider = async (
 
 
 const deregisterProvider = async (
-    id: string,
+    input: InputValueString,
 ) => {
     await database.obliterate(
         'provider',
-        id,
+        input.value,
     );
 }
 // #endregion module

@@ -48,13 +48,6 @@ const obliterateProvider = async (
 
 
     try {
-        // #region input unpack
-        const {
-            value: id,
-        } = input;
-        // #endregion input unpack
-
-
         // #region private usage
         if (privateUsage) {
             logger.log(
@@ -73,7 +66,7 @@ const obliterateProvider = async (
                 };
             }
 
-            await deregisterProvider(id);
+            await deregisterProvider(input);
 
             logger.log(
                 obliterateProviderLogs.infoSuccessPrivateUsage,
@@ -97,7 +90,7 @@ const obliterateProvider = async (
             );
 
             await logic.provider.deregister(
-                id,
+                input,
             );
 
             logger.log(
@@ -114,7 +107,7 @@ const obliterateProvider = async (
 
         // #region public usage
         await deregisterProvider(
-            id,
+            input,
         );
 
         logger.log(

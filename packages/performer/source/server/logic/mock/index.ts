@@ -63,7 +63,7 @@ const performerLogic: PerformerLogic = {
             return undefined;
         },
         deregister: async (
-            id,
+            input,
         ) => {
             return true;
         },

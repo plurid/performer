@@ -14,6 +14,8 @@
     } from '../logger';
 
     import {
+        InputValueString,
+
         InputAddProvider,
         InputAddImagene,
     } from '../inputs';
@@ -28,7 +30,7 @@ export interface PerformerLogicProvider {
         input: InputAddProvider,
     ) => Promise<Provider | undefined>;
     deregister: (
-        id: string,
+        input: InputValueString,
     ) => Promise<boolean>;
 }
 
