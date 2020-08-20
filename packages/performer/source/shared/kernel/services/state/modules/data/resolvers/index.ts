@@ -55,7 +55,7 @@ export const addEntity = (
             break;
         case 'repository':
             repositories = [
-                repositories,
+                ...repositories,
                 {
                     ...data,
                 },
@@ -63,7 +63,7 @@ export const addEntity = (
             break;
         case 'webhook':
             webhooks = [
-                webhooks,
+                ...webhooks,
                 {
                     ...data,
                 },
@@ -71,7 +71,7 @@ export const addEntity = (
             break;
         case 'project':
             projects = [
-                projects,
+                ...projects,
                 {
                     ...data,
                 },
@@ -79,7 +79,7 @@ export const addEntity = (
             break;
         case 'secret':
             secrets = [
-                secrets,
+                ...secrets,
                 {
                     ...data,
                 },
@@ -87,7 +87,7 @@ export const addEntity = (
             break;
         case 'trigger':
             triggers = [
-                triggers,
+                ...triggers,
                 {
                     ...data,
                 },
@@ -95,7 +95,7 @@ export const addEntity = (
             break;
         case 'deployer':
             deployers = [
-                deployers,
+                ...deployers,
                 {
                     ...data,
                 },

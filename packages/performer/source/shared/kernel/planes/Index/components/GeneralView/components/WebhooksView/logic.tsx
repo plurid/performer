@@ -31,7 +31,7 @@ export const webhookRowRenderer = (
     const {
         id,
         path,
-        provider
+        provider,
     } = webhook;
 
     return (
@@ -64,7 +64,7 @@ export const createSearchTerms = (
             const {
                 id,
                 path,
-                provider
+                provider,
             } = webhook;
 
             const searchTerm = {

@@ -8,6 +8,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        graphql,
+    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
@@ -138,7 +142,7 @@ const Webhook: React.FC<WebhookProperties> = (
                 data,
             } = reponse;
 
-            return data;
+            return graphql.deleteTypenames(data);
         } catch (error) {
             return;
         }
