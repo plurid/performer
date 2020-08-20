@@ -9,13 +9,19 @@
 // #region module
 export const mutations = gql`
     extend type Mutation {
-        setupWebhook(input: InputSetupWebhook!): Response!
+        setupWebhook(input: InputSetupWebhook!): ResponseWebhook!
         obliterateWebhook(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseWebhook {
+        status: Boolean!
+        error: Error
+        data: Webhook
+    }
+
     type Webhook {
         id: String!
         path: String!

@@ -67,10 +67,21 @@ const setupWebhook = async (
                 };
             }
 
-            await handleRegisterWebhook(
+            const webhook = await handleRegisterWebhook(
                 input,
                 instance,
             );
+
+            if (!webhook) {
+                logger.log(
+                    setupWebhookLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
 
             logger.log(
                 setupWebhookLogs.infoSuccessPrivateUsage,
@@ -79,6 +90,7 @@ const setupWebhook = async (
 
             return {
                 status: true,
+                data: webhook,
             };
         }
         // #endregion private usage
@@ -93,10 +105,21 @@ const setupWebhook = async (
                 logLevels.trace,
             );
 
-            await handleRegisterWebhook(
+            const webhook = await handleRegisterWebhook(
                 input,
                 instance,
             );
+
+            if (!webhook) {
+                logger.log(
+                    setupWebhookLogs.infoEndCustomLogicUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
 
             logger.log(
                 setupWebhookLogs.infoEndCustomLogicUsage,
@@ -105,16 +128,28 @@ const setupWebhook = async (
 
             return {
                 status: true,
+                data: webhook,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await handleRegisterWebhook(
+        const webhook = await handleRegisterWebhook(
             input,
             instance,
         );
+
+        if (!webhook) {
+            logger.log(
+                setupWebhookLogs.infoEnd,
+                logLevels.info,
+            );
+
+            return {
+                status: false,
+            };
+        }
 
         logger.log(
             setupWebhookLogs.infoSuccess,
@@ -123,6 +158,7 @@ const setupWebhook = async (
 
         return {
             status: true,
+            data: webhook,
         };
         // #endregion public usage
     } catch (error) {

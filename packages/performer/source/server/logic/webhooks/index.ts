@@ -49,6 +49,8 @@ export const registerWebhook = async (
         id,
         webhook,
     );
+
+    return webhook;
 }
 
 
@@ -108,7 +110,7 @@ export const handleRegisterWebhook = async (
         return;
     }
 
-    registerWebhook(
+    const webhook = await registerWebhook(
         provider.type,
         path,
     );
@@ -118,6 +120,8 @@ export const handleRegisterWebhook = async (
         path,
         instance,
     );
+
+    return webhook;
 }
 
 
