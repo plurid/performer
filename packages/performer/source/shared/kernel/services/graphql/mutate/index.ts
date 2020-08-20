@@ -167,6 +167,15 @@ export const GENERATE_TRIGGER = gql`
                 path
                 message
             }
+            data {
+                id
+                name
+                project
+                repository
+                branch
+                path
+                file
+            }
         }
     }
 `;
@@ -194,6 +203,15 @@ export const GENERATE_DEPLOYER = gql`
                 type
                 path
                 message
+            }
+            data {
+                id
+                name
+                project
+                repository
+                branch
+                path
+                file
             }
         }
     }
