@@ -1,7 +1,5 @@
 // #region imports
     // #region libraries
-    import path from 'path';
-
     import express from 'express';
 
     import {
@@ -15,11 +13,8 @@
         CodeProvider,
         Webhook,
         InputSetupWebhook,
+        InputValueString,
     } from '#server/data/interfaces';
-
-    import {
-        webhooksPath,
-    } from '#server/data/constants';
 
     import {
         getProvider,
@@ -27,7 +22,7 @@
 
     import github from '#server/api/requesters/github';
 
-    import storage from '#server/services/storage';
+    import database from '#server/services/database';
 
     import {
         getRoutes,
@@ -43,20 +38,16 @@ export const registerWebhook = async (
     hookPath: string,
 ) => {
     const id = uuid.generate();
-    const hookData: Webhook = {
+    const webhook: Webhook = {
         id,
         path: hookPath,
         provider,
     };
 
-    const hookFilePath = path.join(
-        webhooksPath,
-        id + '.json',
-    );
-
-    storage.upload(
-        hookFilePath,
-        Buffer.from(JSON.stringify(hookData, null, 4), 'utf-8'),
+    await database.store(
+        'webhook',
+        id,
+        webhook,
     );
 }
 
@@ -131,21 +122,11 @@ export const handleRegisterWebhook = async (
 
 
 export const deregisterWebhook = async (
-    id: string,
+    input: InputValueString,
 ) => {
-    try {
-        // const webhookPath = path.join(
-        //     webhooksPath,
-        //     id + '.json',
-        // );
-
-        // if (!fs.existsSync(webhookPath)) {
-        //     return;
-        // }
-
-        // fs.promises.unlink(webhookPath);
-    } catch (error) {
-        return;
-    }
+    await database.obliterate(
+        'webhook',
+        input.value,
+    );
 }
 // #endregion module

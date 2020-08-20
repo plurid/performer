@@ -1,9 +1,5 @@
 // #region imports
     // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
     import path from 'path';
 
     import {
@@ -19,16 +15,13 @@
 
     import {
         repositoriesPath,
-        repositoriesMetadataPath,
     } from '#server/data/constants';
 
     import {
         loadRepositories,
     } from '#server/logic/loader';
 
-    import {
-        cleanFileName,
-    } from '#server/utilities';
+    import database from '#server/services/database';
     // #endregion external
 // #endregion imports
 
@@ -40,21 +33,12 @@ export const registerRepositoryMetadata = async (
 ) => {
     const {
         id,
-        name,
     } = repository;
 
-    const filename = cleanFileName(
-        id + '_' + name,
-    );
-
-    const repositoryFilePath = path.join(
-        repositoriesMetadataPath,
-        filename + '.json',
-    );
-
-    await fs.writeFile(
-        repositoryFilePath,
-        JSON.stringify(repository, null, 4),
+    await database.store(
+        'repository',
+        id,
+        repository,
     );
 }
 
@@ -108,11 +92,10 @@ export const deregisterRepository = async (
     id: string,
 ) => {
     try {
-
-        // if (!fs.existsSync(repositoryPath)) {
-        //     return;
-        // }
-
+        await database.obliterate(
+            'repository',
+            id,
+        );
     } catch (error) {
         return;
     }

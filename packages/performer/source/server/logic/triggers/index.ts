@@ -14,6 +14,7 @@
         Commit,
         BuildData,
         InputGenerateTrigger,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -27,6 +28,8 @@
     import {
         pushToBuildQueue,
     } from '#server/logic/build';
+
+    import database from '#server/services/database';
 
     import {
         removeDuplicates,
@@ -177,34 +180,20 @@ export const registerTrigger = async (
         project,
     };
 
-    // const triggerPath = path.join(
-    //     triggersPath,
-    //     generatedID + '.json',
-    // );
-
-    // await fs.writeFile(
-    //     triggerPath,
-    //     JSON.stringify(trigger, null, 4),
-    // );
+    await database.store(
+        'trigger',
+        generatedID,
+        trigger,
+    );
 }
 
 
 export const deregisterTrigger = async (
-    id: string,
+    input: InputValueString,
 ) => {
-    try {
-        // const triggerPath = path.join(
-        //     triggersPath,
-        //     id + '.json',
-        // );
-
-        // if (!fs.existsSync(triggerPath)) {
-        //     return;
-        // }
-
-        // fs.promises.unlink(triggerPath);
-    } catch (error) {
-        return;
-    }
+    await database.obliterate(
+        'trigger',
+        input.value,
+    );
 }
 // #endregion module

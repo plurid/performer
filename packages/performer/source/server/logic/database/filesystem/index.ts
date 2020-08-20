@@ -18,6 +18,11 @@
 
     import {
         providersPath,
+        projectsPath,
+        webhooksPath,
+        triggersPath,
+        deployersPath,
+        repositoriesMetadataPath,
     } from '#server/data/constants';
 
     import {
@@ -42,6 +47,28 @@
 
 
 // #region module
+const resolveDataPath = (
+    entity: string,
+) => {
+    switch (entity) {
+        case 'provider':
+            return providersPath;
+        case 'webhook':
+            return webhooksPath;
+        case 'trigger':
+            return triggersPath;
+        case 'deployer':
+            return deployersPath;
+        case 'project':
+            return projectsPath;
+        case 'repository':
+            return repositoriesMetadataPath;
+        default:
+            return '';
+    }
+}
+
+
 const get: DatabaseGet = async (
     entity,
     id,
@@ -98,13 +125,7 @@ const store: DatabaseStore = async (
 ) => {
     const stringData = JSON.stringify(data, null, 4);
 
-    let dataPath = '';
-
-    switch (entity) {
-        case 'provider':
-            dataPath = providersPath;
-            break;
-    }
+    const dataPath = resolveDataPath(entity);
 
     const entityPath = path.join(
         dataPath,
@@ -134,6 +155,17 @@ const obliterate: DatabaseObliterate = async (
     entity,
     id,
 ) => {
+    const dataPath = resolveDataPath(entity);
+
+    const entityPath = path.join(
+        dataPath,
+        id + '.json',
+    );
+
+    await filesystemStorage.obliterate(
+        entityPath,
+    );
+
     return;
 }
 

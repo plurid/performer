@@ -48,13 +48,6 @@ const obliterateWebhook = async (
 
 
     try {
-        // #region input unpack
-        const {
-            value: id,
-        } = input;
-        // #endregion input unpack
-
-
         // #region private usage
         if (privateUsage) {
             logger.log(
@@ -73,7 +66,7 @@ const obliterateWebhook = async (
                 };
             }
 
-            await deregisterWebhook(id);
+            await deregisterWebhook(input);
 
             logger.log(
                 obliterateWebhookLogs.infoSuccessPrivateUsage,
@@ -96,7 +89,7 @@ const obliterateWebhook = async (
                 logLevels.trace,
             );
 
-            await deregisterWebhook(id);
+            await deregisterWebhook(input);
 
             logger.log(
                 obliterateWebhookLogs.infoEndCustomLogicUsage,
@@ -111,7 +104,7 @@ const obliterateWebhook = async (
 
 
         // #region public usage
-        await deregisterWebhook(id);
+        await deregisterWebhook(input);
 
         logger.log(
             obliterateWebhookLogs.infoSuccess,

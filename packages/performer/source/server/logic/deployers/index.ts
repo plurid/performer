@@ -12,6 +12,8 @@
         InputGenerateDeployer,
         InputValueString,
     } from '#server/data/interfaces';
+
+    import database from '#server/services/database';
     // #endregion external
 // #endregion imports
 
@@ -43,35 +45,21 @@ const registerDeployer = async (
         project,
     };
 
-    // const deployerPath = path.join(
-    //     deployersPath,
-    //     id + '.json',
-    // );
-
-    // await fs.writeFile(
-    //     deployerPath,
-    //     JSON.stringify(deployer, null, 4),
-    // );
+    await database.store(
+        'deployer',
+        generatedID,
+        deployer,
+    );
 }
 
 
 const deregisterDeployer = async (
     input: InputValueString,
 ) => {
-    try {
-        // const deployerPath = path.join(
-        //     deployersPath,
-        //     id + '.json',
-        // );
-
-        // if (!fs.existsSync(deployerPath)) {
-        //     return;
-        // }
-
-        // fs.promises.unlink(deployerPath);
-    } catch (error) {
-        return;
-    }
+    await database.obliterate(
+        'deployer',
+        input.value,
+    );
 }
 // #endregion module
 

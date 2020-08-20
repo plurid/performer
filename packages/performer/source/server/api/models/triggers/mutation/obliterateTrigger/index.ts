@@ -2,6 +2,7 @@
     // #region external
     import {
         Context,
+        InputValueString,
     } from '#server/data/interfaces';
 
     import {
@@ -21,7 +22,7 @@ export const obliterateTriggerLogs = generateMethodLogs('obliterateTrigger');
 
 
 const obliterateTrigger = async (
-    input: any,
+    input: InputValueString,
     context: Context,
 ) => {
     // #region context unpack
@@ -48,13 +49,6 @@ const obliterateTrigger = async (
 
 
     try {
-        // #region input unpack
-        const {
-            value: id,
-        } = input;
-        // #endregion input unpack
-
-
         // #region private usage
         if (privateUsage) {
             logger.log(
@@ -73,7 +67,7 @@ const obliterateTrigger = async (
                 };
             }
 
-            await deregisterTrigger(id);
+            await deregisterTrigger(input);
 
             logger.log(
                 obliterateTriggerLogs.infoSuccessPrivateUsage,
@@ -96,7 +90,7 @@ const obliterateTrigger = async (
                 logLevels.trace,
             );
 
-            await deregisterTrigger(id);
+            await deregisterTrigger(input);
 
             logger.log(
                 obliterateTriggerLogs.infoEndCustomLogicUsage,
@@ -111,7 +105,7 @@ const obliterateTrigger = async (
 
 
         // #region public usage
-        await deregisterTrigger(id);
+        await deregisterTrigger(input);
 
         logger.log(
             obliterateTriggerLogs.infoSuccess,
