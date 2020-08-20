@@ -345,7 +345,12 @@ export const renderGeneralView = (
             return (
                 <Secret
                     theme={stateInteractionTheme}
-                    action={() => {
+                    action={(secret) => {
+                        dispatchAddEntity({
+                            type: 'secret',
+                            data: secret,
+                        });
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}
@@ -372,7 +377,12 @@ export const renderGeneralView = (
                 <Trigger
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
-                    action={() => {
+                    action={(trigger) => {
+                        dispatchAddEntity({
+                            type: 'trigger',
+                            data: trigger,
+                        });
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}
@@ -383,7 +393,12 @@ export const renderGeneralView = (
                 <Deployer
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
-                    action={() => {
+                    action={(deployer) => {
+                        dispatchAddEntity({
+                            type: 'deployer',
+                            data: deployer,
+                        });
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}
