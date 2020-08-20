@@ -201,6 +201,20 @@ export const OBLITERATE_DEPLOYER = gql`
 `;
 
 
+export const CLEAR_BUILDS = gql`
+    mutation ClearBuilds {
+        clearBuilds {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 
 export const LOGIN = gql`
     mutation Login($input: InputLogin!) {

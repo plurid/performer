@@ -39,9 +39,14 @@
 
     import EntityView from '#kernel-components/EntityView';
 
+    import client from '#kernel-services/graphql/client';
+    import {
+        CLEAR_BUILDS,
+    } from '#kernel-services/graphql/mutate';
+
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
-    // import actions from '#kernel-services/state/actions';
+    import actions from '#kernel-services/state/actions';
 
     import {
         getFilterIDs,
@@ -62,13 +67,6 @@
 
 // #region module
 export interface BuildsViewOwnProperties {
-    /** required */
-    /** - values */
-    /** - methods */
-
-    /** optional */
-    /** - values */
-    /** - methods */
 }
 
 export interface BuildsViewStateProperties {
@@ -78,6 +76,7 @@ export interface BuildsViewStateProperties {
 }
 
 export interface BuildsViewDispatchProperties {
+    dispatchClearBuilds: typeof actions.data.clearBuilds;
 }
 
 export type BuildsViewProperties = BuildsViewOwnProperties
@@ -94,6 +93,10 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         stateInteractionTheme,
         stateBuilds,
         // #endregion state
+
+        // #region dispatch
+        dispatchClearBuilds,
+        // #endregion dispatch
     } = properties;
     // #endregion properties
 
@@ -108,6 +111,18 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 plane: `/build/${id}`,
             },
         );
+    }
+
+    const clearBuilds = async () => {
+        try {
+            dispatchClearBuilds();
+
+            await client.mutate({
+                mutation: CLEAR_BUILDS,
+            });
+        } catch (error) {
+            return;
+        }
     }
     // #endregion handlers
 
@@ -168,6 +183,16 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         const searchTerms = createSearchTerms(stateBuilds);
 
         setSearchTerms(searchTerms);
+
+
+        const filteredRows = stateBuilds.map(
+            build => buildRowRenderer(
+                build,
+                openBuild,
+            ),
+        );
+
+        setFilteredRows(filteredRows);
     }, [
         stateBuilds,
     ]);
@@ -229,7 +254,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 <div>
                     <PluridLinkButton
                         text="clear"
-                        atClick={() => {}}
+                        atClick={() => clearBuilds()}
                         inline={true}
                     />
                 </div>
@@ -252,6 +277,9 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): BuildsViewDispatchProperties => ({
+    dispatchClearBuilds: () => dispatch(
+        actions.data.clearBuilds(),
+    ),
 });
 
 
