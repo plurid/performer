@@ -19,6 +19,7 @@
     import {
         providersPath,
         projectsPath,
+        secretsPath,
         webhooksPath,
         triggersPath,
         deployersPath,
@@ -55,6 +56,8 @@ const resolveDataPath = (
             return providersPath;
         case 'webhook':
             return webhooksPath;
+        case 'secret':
+            return secretsPath;
         case 'trigger':
             return triggersPath;
         case 'deployer':

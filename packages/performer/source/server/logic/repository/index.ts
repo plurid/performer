@@ -43,6 +43,16 @@ export const registerRepositoryMetadata = async (
 }
 
 
+export const deregisterRepository = async (
+    id: string,
+) => {
+    await database.obliterate(
+        'repository',
+        id,
+    );
+}
+
+
 export const getActiveRepository = async (
     repositoryName: string,
 ) => {
@@ -85,19 +95,5 @@ export const updateRootRepository = async (
         cwd: repositoryRootPath,
         stdio: 'ignore',
     });
-}
-
-
-export const deregisterRepository = async (
-    id: string,
-) => {
-    try {
-        await database.obliterate(
-            'repository',
-            id,
-        );
-    } catch (error) {
-        return;
-    }
 }
 // #endregion module
