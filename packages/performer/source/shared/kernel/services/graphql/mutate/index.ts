@@ -107,6 +107,10 @@ export const GENERATE_PROJECT = gql`
                 path
                 message
             }
+            data {
+                id
+                name
+            }
         }
     }
 `;

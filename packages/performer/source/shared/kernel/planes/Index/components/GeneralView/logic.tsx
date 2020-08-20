@@ -330,7 +330,12 @@ export const renderGeneralView = (
             return (
                 <Project
                     theme={stateInteractionTheme}
-                    action={() => {
+                    action={(project) => {
+                        dispatchAddEntity({
+                            type: 'project',
+                            data: project,
+                        });
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}

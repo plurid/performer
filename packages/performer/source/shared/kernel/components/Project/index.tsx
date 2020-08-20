@@ -7,10 +7,18 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        graphql,
+    } from '@plurid/plurid-functions';
     // #endregion libraries
 
 
     // #region external
+    import {
+        Project as IProject,
+    } from '#server/data/interfaces';
+
     import client from '#kernel-services/graphql/client';
     import {
         GENERATE_PROJECT,
@@ -41,7 +49,9 @@ export interface ProjectProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            project: IProject,
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -100,12 +110,24 @@ const Project: React.FC<ProjectProperties> = (
             value: projectName,
         };
 
-        await client.mutate({
+        const mutation = await client.mutate({
             mutation: GENERATE_PROJECT,
             variables: {
                 input,
             },
         });
+
+        const reponse = mutation.data.generateProject;
+
+        if (!reponse.status) {
+            return;
+        }
+
+        const {
+            data,
+        } = reponse;
+
+        return graphql.deleteTypenames(data);
     }
     // #endregion handlers
 
@@ -137,9 +159,12 @@ const Project: React.FC<ProjectProperties> = (
                 <div>
                     <StyledPluridPureButton
                         text="Add Project"
-                        atClick={() => {
-                            action();
-                            setProject();
+                        atClick={async () => {
+                            const project = await setProject();
+
+                            if (project) {
+                                action(project);
+                            }
                         }}
                         level={2}
                         disabled={!projectName}
