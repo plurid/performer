@@ -77,7 +77,7 @@ const get: DatabaseGet = async (
         entityPath,
     );
 
-    return data;
+    return data ? JSON.parse(data) : undefined;
 }
 
 

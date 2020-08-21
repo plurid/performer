@@ -7,6 +7,7 @@
 
     import {
         handleRegisterWebhook,
+        checkValidWebhookPath,
     } from '#server/logic/webhooks';
 
     import {
@@ -49,6 +50,24 @@ const setupWebhook = async (
 
 
     try {
+        // #region input unpack
+        const {
+            path,
+        } = input;
+        // #endregion input unpack
+
+
+        // #region checks
+        const validWebhookPath = checkValidWebhookPath(path);
+
+        if (!validWebhookPath) {
+            return {
+                status: false,
+            };
+        }
+        // #endregion checks
+
+
         // #region private usage
         if (privateUsage) {
             logger.log(

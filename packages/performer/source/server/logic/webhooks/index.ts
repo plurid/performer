@@ -196,4 +196,24 @@ export const deregisterWebhook = async (
         input.value,
     );
 }
+
+
+export const checkValidWebhookPath = (
+    path: string,
+) => {
+    if (!path.startsWith('/')) {
+        return;
+    }
+
+    const invalidPaths = [
+        '',
+        '/',
+    ];
+
+    if (invalidPaths.includes(path)) {
+        return;
+    }
+
+    return true;
+}
 // #endregion module
