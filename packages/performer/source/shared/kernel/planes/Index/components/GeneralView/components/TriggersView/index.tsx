@@ -275,6 +275,10 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
             actionButtonText="Generate Trigger"
             actionButtonClick={() => {
+                dispatchViewSetEditID({
+                    type: 'trigger',
+                    value: '',
+                });
                 setGeneralView('generate-trigger')
             }}
 

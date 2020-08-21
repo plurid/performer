@@ -262,6 +262,10 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
             actionButtonText="Setup Webhook"
             actionButtonClick={() => {
+                dispatchViewSetEditID({
+                    type: 'webhook',
+                    value: '',
+                });
                 setGeneralView('setup-webhook');
             }}
 
