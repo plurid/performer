@@ -5,6 +5,9 @@ module.exports = {
     },
     testEnvironment: 'node',
     testRegex: '(/__specs__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
+    testPathIgnorePatterns: [
+        'data',
+    ],
     moduleFileExtensions: [
         'ts',
         'tsx',

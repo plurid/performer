@@ -46,7 +46,7 @@ export const getActiveTriggers = async (
 ) => {
     const triggers = await loadTriggers();
 
-    let activeTriggers: Trigger[] = [];
+    const activeTriggers: Trigger[] = [];
 
     for (const watchedTrigger of triggers) {
         if (watchedTrigger.branch === branchName) {
