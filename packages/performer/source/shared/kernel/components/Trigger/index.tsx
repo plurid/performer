@@ -215,6 +215,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
             setTriggerID(editID);
             setTriggerName(trigger.name);
+            setTriggerProject(trigger.project);
             setTriggerRepository(trigger.repository);
             setTriggerBranch(trigger.branch);
             setTriggerPath(trigger.path);
