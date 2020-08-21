@@ -261,7 +261,7 @@ const Webhook: React.FC<WebhookProperties> = (
                         text={editID ? 'Update Webhook' : 'Setup Webhook'}
                         atClick={() => setupWebhook()}
                         level={2}
-                        disabled={!webhookPath}
+                        disabled={!validWebhookPath}
                     />
                 </div>
 
