@@ -63,9 +63,8 @@ export const updateWebhook = async (
     hookPath: string,
     instance: Application,
 ) => {
-    const previousWebhook: Webhook | undefined = await database.query(
+    const previousWebhook: Webhook | undefined = await database.get(
         'webhook',
-        'id',
         id,
     );
 

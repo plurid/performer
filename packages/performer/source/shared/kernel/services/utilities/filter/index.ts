@@ -19,4 +19,15 @@ export const getFilterIDs = (
 
     return filterIDs;
 }
+
+
+export const removeDuplicates = (
+    arr: any[],
+    prop: string,
+) => {
+    return arr.filter((obj, pos, arr) => {
+        return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+    });
+}
+
 // #endregion module

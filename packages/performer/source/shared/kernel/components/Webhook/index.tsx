@@ -133,7 +133,7 @@ const Webhook: React.FC<WebhookProperties> = (
         await addEntityMutation(
             {
                 id: updatedWebhook.id,
-                providerID: updatedWebhook.provider,
+                providerID,
                 path: updatedWebhook.path,
             },
             UPDATE_WEBHOOK,

@@ -63,7 +63,7 @@ export const addEntity = (
             break;
         case 'webhook':
             webhooks = [
-                ...webhooks,
+                ...webhooks.filter(webhook => webhook.id !== data.id),
                 {
                     ...data,
                 },
@@ -87,7 +87,7 @@ export const addEntity = (
             break;
         case 'trigger':
             triggers = [
-                ...triggers,
+                ...triggers.filter(trigger => trigger.id !== data.id),,
                 {
                     ...data,
                 },
