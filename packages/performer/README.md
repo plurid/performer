@@ -156,3 +156,32 @@ nodejs:
     'Deployment.latest.yaml'
   ]
 ```
+
+
+
+## Building
+
+``` bash
+docker build --file ./configurations/production.dockerfile \
+    --tag hypod \
+    --build-arg PERFORMER_PORT= \
+    --build-arg PERFORMER_QUIET= \
+    --build-arg DOCKER_AUTH_USERNAME= \
+    --build-arg DOCKER_AUTH_PASSWORD= \
+    --build-arg DOCKER_AUTH_SERVER_ADDRESS= \
+    --build-arg PERFORMER_DATABASE_TYPE= \
+    --build-arg PERFORMER_STORAGE_TYPE= \
+    --build-arg PERFORMER_STORAGE_BUCKET= \
+    --build-arg PERFORMER_STORAGE_ROOT_PATH= \
+    --build-arg PERFORMER_AWS_API_VERSION= \
+    --build-arg PERFORMER_AWS_REGION= \
+    --build-arg PERFORMER_AWS_ACCESS_KEY_ID= \
+    --build-arg PERFORMER_AWS_SECRET_ACCESS_KEY= \
+    --build-arg GOOGLE_APPLICATION_CREDENTIALS= \
+    --build-arg PERFORMER_CUSTOM_LOGIC= \
+    --build-arg PERFORMER_PRIVATE_USAGE= \
+    --build-arg PERFORMER_PRIVATE_OWNER_IDENTONYM= \
+    --build-arg PERFORMER_PRIVATE_OWNER_KEY= \
+    --build-arg PERFORMER_PRIVATE_TOKEN= \
+    .
+```
