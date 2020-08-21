@@ -10,6 +10,7 @@
 export const mutations = gql`
     extend type Mutation {
         setupWebhook(input: InputSetupWebhook!): ResponseWebhook!
+        updateWebhook(input: InputSetupWebhook!): ResponseWebhook!
         obliterateWebhook(input: InputValueString!): Response!
     }
 `;

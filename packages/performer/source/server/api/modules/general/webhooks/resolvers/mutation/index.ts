@@ -25,6 +25,14 @@ export default {
         input,
         context,
     ),
+    updateWebhook: (
+        _: any,
+        { input }: InputOf<InputSetupWebhook>,
+        context: Context,
+    ) => Webhooks.Mutation.updateWebhook(
+        input,
+        context,
+    ),
     obliterateWebhook: (
         _: any,
         { input }: InputOf<InputValueString>,

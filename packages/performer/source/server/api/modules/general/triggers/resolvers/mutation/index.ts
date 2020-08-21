@@ -25,6 +25,14 @@ export default {
         input,
         context,
     ),
+    updateTrigger: (
+        _: any,
+        { input }: InputOf<InputGenerateTrigger>,
+        context: Context,
+    ) => Triggers.Mutation.updateTrigger(
+        input,
+        context,
+    ),
     obliterateTrigger: (
         _: any,
         { input }: InputOf<InputValueString>,
