@@ -107,6 +107,10 @@ const Webhook: React.FC<WebhookProperties> = (
         webhookPath,
         setWebhookPath,
     ] = useState('');
+    const [
+        validWebhookPath,
+        setValidWebhookPath,
+    ] = useState(false);
     // #endregion state
 
 
@@ -144,7 +148,7 @@ const Webhook: React.FC<WebhookProperties> = (
     }
 
     const setupWebhook = async () => {
-        if (!webhookPath || !providerID) {
+        if (!validWebhookPath || !providerID) {
             return;
         }
 
@@ -178,6 +182,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
 
     // #region effects
+    /** Handle edit mode */
     useEffect(() => {
         const getWebhook = async (
             editID: string,
@@ -204,6 +209,25 @@ const Webhook: React.FC<WebhookProperties> = (
     }, [
         editID,
     ]);
+
+    /** Check webhook path validity */
+    useEffect(() => {
+        if (!webhookPath) {
+            return;
+        }
+
+        if (!webhookPath.startsWith('/')) {
+            return;
+        }
+
+        if (webhookPath === '/') {
+            return;
+        }
+
+        setValidWebhookPath(true);
+    }, [
+        webhookPath,
+    ])
     // #endregion effects
 
 
