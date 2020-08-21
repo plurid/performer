@@ -10,7 +10,7 @@
 export const mutations = gql`
     extend type Mutation {
         setupWebhook(input: InputSetupWebhook!): ResponseWebhook!
-        updateWebhook(input: InputSetupWebhook!): ResponseWebhook!
+        updateWebhook(input: InputUpdateWebhook!): ResponseWebhook!
         obliterateWebhook(input: InputValueString!): Response!
     }
 `;
@@ -33,6 +33,12 @@ export const types = gql`
 
 export const inputs = gql`
     input InputSetupWebhook {
+        providerID: String!
+        path: String!
+    }
+
+    input InputUpdateWebhook {
+        id: ID!
         providerID: String!
         path: String!
     }

@@ -4,6 +4,7 @@
         Context,
         InputOf,
         InputSetupWebhook,
+        InputUpdateWebhook,
         InputValueString,
     } from '#server/data/interfaces';
 
@@ -27,7 +28,7 @@ export default {
     ),
     updateWebhook: (
         _: any,
-        { input }: InputOf<InputSetupWebhook>,
+        { input }: InputOf<InputUpdateWebhook>,
         context: Context,
     ) => Webhooks.Mutation.updateWebhook(
         input,

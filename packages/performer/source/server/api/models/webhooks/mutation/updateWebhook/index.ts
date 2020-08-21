@@ -2,7 +2,7 @@
     // #region external
     import {
         Context,
-        InputSetupWebhook,
+        InputUpdateWebhook,
     } from '#server/data/interfaces';
 
     import {
@@ -20,8 +20,9 @@
 // #region module
 export const updateWebhookLogs = generateMethodLogs('updateWebhook');
 
+
 const updateWebhook = async (
-    input: InputSetupWebhook,
+    input: InputUpdateWebhook,
     context: Context,
 ) => {
     // #region context unpack

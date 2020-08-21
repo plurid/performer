@@ -43,6 +43,12 @@ export interface InputSetupWebhook {
     path: string;
 }
 
+export interface InputUpdateWebhook {
+    id: string;
+    providerID: string;
+    path: string;
+}
+
 
 export interface InputStoreSecret {
     name: string,

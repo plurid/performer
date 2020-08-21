@@ -112,18 +112,35 @@ const Webhook: React.FC<WebhookProperties> = (
 
     // #region handlers
     const updateWebhook = async () => {
-        const webhook: IWebhook | undefined = await addEntityMutation(
+        if (!findEntityByID || !editID) {
+            return;
+        }
+
+        const webhook: IWebhook | undefined = await findEntityByID(
+            'webhook',
+            editID,
+        );
+
+        if (!webhook) {
+            return;
+        }
+
+        const updatedWebhook: IWebhook = {
+            ...webhook,
+            path: webhookPath,
+        };
+
+        await addEntityMutation(
             {
-                providerID,
-                path: webhookPath,
+                id: updatedWebhook.id,
+                providerID: updatedWebhook.provider,
+                path: updatedWebhook.path,
             },
             UPDATE_WEBHOOK,
             'updateWebhook',
         );
 
-        if (webhook) {
-            action(webhook);
-        }
+        action(updatedWebhook);
     }
 
     const setupWebhook = async () => {

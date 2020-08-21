@@ -85,7 +85,7 @@ export const SETUP_WEBHOOK = gql`
 `;
 
 export const UPDATE_WEBHOOK = gql`
-    mutation UpdateWebhook($input: InputSetupWebhook!) {
+    mutation UpdateWebhook($input: InputUpdateWebhook!) {
         updateWebhook(input: $input) {
             status
             error {

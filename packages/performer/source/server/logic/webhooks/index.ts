@@ -1,6 +1,8 @@
 // #region imports
     // #region libraries
-    import express from 'express';
+    import {
+        Application,
+    } from 'express';
 
     import {
         uuid,
@@ -13,6 +15,7 @@
         CodeProvider,
         Webhook,
         InputSetupWebhook,
+        InputUpdateWebhook,
         InputValueString,
     } from '#server/data/interfaces';
 
@@ -54,10 +57,49 @@ export const registerWebhook = async (
 }
 
 
+export const updateWebhook = async (
+    id: string,
+    provider: CodeProvider,
+    hookPath: string,
+    instance: Application,
+) => {
+    const previousWebhook: Webhook | undefined = await database.query(
+        'webhook',
+        'id',
+        id,
+    );
+
+    if (!previousWebhook) {
+        return;
+    }
+
+    dehandleWebhook(
+        provider,
+        hookPath,
+        instance,
+    );
+
+    const webhook: Webhook = {
+        id,
+        path: hookPath,
+        provider,
+    };
+
+    await database.update(
+        'webhook',
+        id,
+        'path',
+        hookPath,
+    );
+
+    return webhook;
+}
+
+
 export const handleWebhook = (
     provider: CodeProvider,
     hookpath: string,
-    instance: express.Application,
+    instance: Application,
 ) => {
     const routes = getRoutes(instance);
     if (routes.includes(hookpath)) {
@@ -77,9 +119,28 @@ export const handleWebhook = (
 }
 
 
+export const dehandleWebhook = (
+    provider: CodeProvider,
+    hookpath: string,
+    instance: Application,
+) => {
+    const routes = getRoutes(instance);
+    if (routes.includes(hookpath)) {
+        return;
+    }
+
+    switch (provider) {
+        case 'bitbucket':
+            break;
+        case 'github':
+            break;
+    }
+}
+
+
 export const handleWebhooks = (
     webhooks: Webhook[],
-    instance: express.Application,
+    instance: Application,
 ) => {
     for (const webhook of webhooks) {
         const {
@@ -97,7 +158,7 @@ export const handleWebhooks = (
 
 
 export const handleRegisterWebhook = async (
-    input: InputSetupWebhook,
+    input: InputSetupWebhook | InputUpdateWebhook,
     instance: any,
 ) => {
     const {
@@ -110,10 +171,21 @@ export const handleRegisterWebhook = async (
         return;
     }
 
-    const webhook = await registerWebhook(
-        provider.type,
-        path,
-    );
+    let webhook;
+
+    if ((input as InputUpdateWebhook).id) {
+        webhook = await updateWebhook(
+            (input as InputUpdateWebhook).id,
+            provider.type,
+            path,
+            instance,
+        );
+    } else {
+        webhook = await registerWebhook(
+            provider.type,
+            path,
+        );
+    }
 
     handleWebhook(
         provider.type,
