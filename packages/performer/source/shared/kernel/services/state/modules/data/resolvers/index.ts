@@ -87,7 +87,7 @@ export const addEntity = (
             break;
         case 'trigger':
             triggers = [
-                ...triggers.filter(trigger => trigger.id !== data.id),,
+                ...triggers.filter(trigger => trigger.id !== data.id),
                 {
                     ...data,
                 },
