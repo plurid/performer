@@ -213,14 +213,17 @@ const Webhook: React.FC<WebhookProperties> = (
     /** Check webhook path validity */
     useEffect(() => {
         if (!webhookPath) {
+            setValidWebhookPath(false);
             return;
         }
 
         if (!webhookPath.startsWith('/')) {
+            setValidWebhookPath(false);
             return;
         }
 
         if (webhookPath === '/') {
+            setValidWebhookPath(false);
             return;
         }
 
