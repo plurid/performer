@@ -66,7 +66,18 @@ const get: DatabaseGet = async (
     entity,
     id,
 ) => {
-    return;
+    const dataPath = resolveDataPath(entity);
+
+    const entityPath = path.join(
+        dataPath,
+        id + '.json',
+    );
+
+    const data = await filesystemStorage.download(
+        entityPath,
+    );
+
+    return data;
 }
 
 
@@ -140,7 +151,31 @@ const update: DatabaseUpdate = async (
     field,
     value,
 ) => {
-    return;
+    const dataPath = resolveDataPath(entity);
+
+    const entityPath = path.join(
+        dataPath,
+        id + '.json',
+    );
+
+    const data = await filesystemStorage.download(
+        entityPath,
+    );
+
+    if (!data) {
+        return;
+    }
+
+    const parsed = JSON.parse(data);
+
+    parsed[field] = value;
+
+    await filesystemStorage.upload(
+        entityPath,
+        Buffer.from(JSON.stringify(parsed, null, 4)),
+    );
+
+    return parsed;
 }
 
 
