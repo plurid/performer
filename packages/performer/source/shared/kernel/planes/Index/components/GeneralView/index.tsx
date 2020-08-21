@@ -16,6 +16,11 @@
 
     // #region external
     import {
+        Trigger,
+        Webhook,
+    } from '#server/data/interfaces';
+
+    import {
         PERFORMER_MANUAL_LINK,
     } from '#kernel-data/constants';
 
@@ -48,6 +53,8 @@ export interface GeneralViewStateProperties {
     stateGeneralTheme: Theme;
     stateInteractionTheme: Theme;
     stateActiveProviderID: string;
+    stateDataTriggers: Trigger[],
+    stateDataWebhooks: Webhook[],
     stateIndexGeneralSelector: string;
     stateIndexGeneralView: string;
     stateViewCompactSelectors: boolean;
@@ -78,6 +85,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateGeneralTheme,
         stateInteractionTheme,
         stateActiveProviderID,
+        stateDataTriggers,
+        stateDataWebhooks,
         stateIndexGeneralSelector,
         stateIndexGeneralView,
         stateViewCompactSelectors,
@@ -153,6 +162,24 @@ const GeneralView: React.FC<GeneralViewProperties> = (
     ) => {
         dispatchSetViewCompactSelectors(value);
     }
+
+    const findEntityByID = async (
+        entity: string,
+        id: string,
+    ) => {
+        switch (entity) {
+            case 'trigger': {
+                const trigger = stateDataTriggers.find(trigger => trigger.id === id);
+                return trigger;
+            }
+            case 'webhook': {
+                const webhook = stateDataWebhooks.find(webhook => webhook.id === id);
+                return webhook;
+            }
+            default:
+                return;
+        }
+    }
     // #endregion handlers
 
 
@@ -175,6 +202,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateViewIndexEditWebhookID,
         openManual,
         logout,
+        findEntityByID,
         mouseOverSelectors,
         setMouseOverSelectors,
         setCompactSelectors,
@@ -194,6 +222,8 @@ const mapStateToProperties = (
     stateGeneralTheme: selectors.themes.getGeneralTheme(state),
     stateInteractionTheme: selectors.themes.getInteractionTheme(state),
     stateActiveProviderID: selectors.data.getActiveProviderID(state),
+    stateDataTriggers: selectors.data.getTriggers(state),
+    stateDataWebhooks: selectors.data.getWebhooks(state),
     stateIndexGeneralSelector: selectors.view.getIndexGeneralSelector(state),
     stateIndexGeneralView: selectors.view.getIndexGeneralView(state),
     stateViewCompactSelectors: selectors.view.getViewCompactSelectors(state),

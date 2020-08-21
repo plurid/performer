@@ -63,6 +63,10 @@ export interface TriggerProperties {
 
         // #region methods
         cancel?: () => void;
+        findEntityByID?: (
+            entity: string,
+            id: string,
+        ) => any;
         // #endregion methods
     // #endregion optional
 }
@@ -89,6 +93,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
             // #region methods
             cancel,
+            findEntityByID,
             // #endregion methods
         // #endregion optional
     } = properties;
@@ -108,8 +113,17 @@ const Trigger: React.FC<TriggerProperties> = (
 
 
     // #region handlers
+    const updateTrigger = async () => {
+
+    }
+
     const generateTrigger = async () => {
         if (!validTrigger) {
+            return;
+        }
+
+        if (editID) {
+            await updateTrigger();
             return;
         }
 
@@ -166,15 +180,32 @@ const Trigger: React.FC<TriggerProperties> = (
     ]);
 
     useEffect(() => {
-        if (editID) {
-            // get trigger data
-            // and set values
+        const getTrigger = async (
+            editID: string,
+        ) => {
+            if (!findEntityByID) {
+                return;
+            }
+
+            const trigger: ITrigger | undefined = await findEntityByID(
+                'trigger',
+                editID,
+            );
+
+            if (!trigger) {
+                return;
+            }
+
             setTriggerID(editID);
-            setTriggerName('');
-            setTriggerRepository('');
-            setTriggerBranch('');
-            setTriggerPath('');
-            setTriggerFile('');
+            setTriggerName(trigger.name);
+            setTriggerRepository(trigger.repository);
+            setTriggerBranch(trigger.branch);
+            setTriggerPath(trigger.path);
+            setTriggerFile(trigger.file);
+        }
+
+        if (editID) {
+            getTrigger(editID);
         }
     }, [
         editID,

@@ -169,6 +169,7 @@ export const renderGeneralView = (
     stateViewIndexEditWebhookID: string,
     openManual: any,
     logout: any,
+    findEntityByID: any,
     mouseOverSelectors: any,
     setMouseOverSelectors: any,
     setCompactSelectors: any,
@@ -378,7 +379,15 @@ export const renderGeneralView = (
 
                         setGeneralView('general');
                     }}
-                    cancel={() => setGeneralView('general')}
+                    findEntityByID={findEntityByID}
+                    cancel={() => {
+                        dispatchViewSetEditID({
+                            type: 'webhook',
+                            value: '',
+                        });
+
+                        setGeneralView('general');
+                    }}
                 />
             );
         case 'generate-trigger':
@@ -400,7 +409,15 @@ export const renderGeneralView = (
 
                         setGeneralView('general');
                     }}
-                    cancel={() => setGeneralView('general')}
+                    findEntityByID={findEntityByID}
+                    cancel={() => {
+                        dispatchViewSetEditID({
+                            type: 'trigger',
+                            value: '',
+                        });
+
+                        setGeneralView('general');
+                    }}
                 />
             );
         case 'generate-deployer':

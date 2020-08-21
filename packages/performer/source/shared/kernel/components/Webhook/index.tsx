@@ -63,6 +63,10 @@ export interface WebhookProperties {
 
         // #region methods
         cancel?: () => void;
+        findEntityByID?: (
+            entity: string,
+            id: string,
+        ) => any;
         // #endregion methods
     // #endregion optional
 }
@@ -90,6 +94,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
             // #region methods
             cancel,
+            findEntityByID,
             // #endregion methods
         // #endregion optional
     } = properties;
@@ -106,6 +111,7 @@ const Webhook: React.FC<WebhookProperties> = (
 
     // #region handlers
     const updateWebhook = async () => {
+
     }
 
     const setupWebhook = async () => {
@@ -144,9 +150,27 @@ const Webhook: React.FC<WebhookProperties> = (
 
     // #region effects
     useEffect(() => {
+        const getWebhook = async (
+            editID: string,
+        ) => {
+            if (!findEntityByID) {
+                return;
+            }
+
+            const webhook: IWebhook | undefined = await findEntityByID(
+                'webhook',
+                editID,
+            );
+
+            if (!webhook) {
+                return;
+            }
+
+            setWebhookPath(webhook.path);
+        }
+
         if (editID) {
-            // get webhook data
-            // and setWebhookPath
+            getWebhook(editID);
         }
     }, [
         editID,
