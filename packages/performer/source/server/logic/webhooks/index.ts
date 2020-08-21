@@ -29,6 +29,7 @@
 
     import {
         getRoutes,
+        delistenRoute,
     } from '#server/utilities';
     // #endregion external
 // #endregion imports
@@ -73,8 +74,7 @@ export const updateWebhook = async (
     }
 
     dehandleWebhook(
-        provider,
-        hookPath,
+        previousWebhook.path,
         instance,
     );
 
@@ -119,21 +119,13 @@ export const handleWebhook = (
 
 
 export const dehandleWebhook = (
-    provider: CodeProvider,
     hookpath: string,
     instance: Application,
 ) => {
-    const routes = getRoutes(instance);
-    if (routes.includes(hookpath)) {
-        return;
-    }
-
-    switch (provider) {
-        case 'bitbucket':
-            break;
-        case 'github':
-            break;
-    }
+    delistenRoute(
+        hookpath,
+        instance,
+    );
 }
 
 
