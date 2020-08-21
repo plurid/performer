@@ -17,6 +17,7 @@
     } from '#server/data/interfaces';
 
     import {
+        UPDATE_WEBHOOK,
         SETUP_WEBHOOK,
     } from '#kernel-services/graphql/mutate';
 
@@ -111,7 +112,18 @@ const Webhook: React.FC<WebhookProperties> = (
 
     // #region handlers
     const updateWebhook = async () => {
+        const webhook: IWebhook | undefined = await addEntityMutation(
+            {
+                providerID,
+                path: webhookPath,
+            },
+            UPDATE_WEBHOOK,
+            'updateWebhook',
+        );
 
+        if (webhook) {
+            action(webhook);
+        }
     }
 
     const setupWebhook = async () => {

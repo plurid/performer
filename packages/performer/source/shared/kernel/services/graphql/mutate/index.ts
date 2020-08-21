@@ -84,6 +84,24 @@ export const SETUP_WEBHOOK = gql`
     }
 `;
 
+export const UPDATE_WEBHOOK = gql`
+    mutation UpdateWebhook($input: InputSetupWebhook!) {
+        updateWebhook(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+            data {
+                id
+                path
+                provider
+            }
+        }
+    }
+`;
+
 export const OBLITERATE_WEBHOOK = gql`
     mutation ObliterateWebhook($input: InputValueString!) {
         obliterateWebhook(input: $input) {
@@ -167,6 +185,29 @@ export const OBLITERATE_SECRET = gql`
 export const GENERATE_TRIGGER = gql`
     mutation GenerateTrigger($input: InputGenerateTrigger!) {
         generateTrigger(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+            data {
+                id
+                name
+                project
+                repository
+                branch
+                path
+                file
+            }
+        }
+    }
+`;
+
+
+export const UPDATE_TRIGGER = gql`
+    mutation UpdateTrigger($input: InputGenerateTrigger!) {
+        updateTrigger(input: $input) {
             status
             error {
                 type

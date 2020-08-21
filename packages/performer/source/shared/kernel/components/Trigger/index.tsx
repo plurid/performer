@@ -17,6 +17,7 @@
     } from '#server/data/interfaces';
 
     import {
+        UPDATE_TRIGGER,
         GENERATE_TRIGGER,
     } from '#kernel-services/graphql/mutate';
 
@@ -114,7 +115,23 @@ const Trigger: React.FC<TriggerProperties> = (
 
     // #region handlers
     const updateTrigger = async () => {
+        const trigger: ITrigger | undefined = await addEntityMutation(
+            {
+                id: triggerID,
+                name: triggerName,
+                project: triggerProject,
+                repository: triggerRepository,
+                branch: triggerBranch,
+                path: triggerPath,
+                file: triggerFile,
+            },
+            UPDATE_TRIGGER,
+            'updateTrigger',
+        );
 
+        if (trigger) {
+            action(trigger);
+        }
     }
 
     const generateTrigger = async () => {
@@ -227,7 +244,13 @@ const Trigger: React.FC<TriggerProperties> = (
                     <StyledPluridTextline
                         text={triggerID}
                         placeholder="id"
-                        atChange={(event) => setTriggerID(event.target.value)}
+                        atChange={(event) => {
+                            if (editID) {
+                                return;
+                            }
+
+                            setTriggerID(event.target.value);
+                        }}
                         atKeyDown={(event) => handleEnter(event)}
                         spellCheck={false}
                         autoCapitalize="false"
