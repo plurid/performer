@@ -163,7 +163,7 @@ nodejs:
 
 ``` bash
 docker build --file ./configurations/production.dockerfile \
-    --tag hypod \
+    --tag performer \
     --build-arg PERFORMER_PORT= \
     --build-arg PERFORMER_QUIET= \
     --build-arg DOCKER_AUTH_USERNAME= \
