@@ -11,7 +11,7 @@ ENV ENV_MODE production
 ENV NODE_ENV production
 
 
-RUN yarn install --production false
+RUN yarn install --production false --network-timeout 1000000
 
 
 RUN yarn build.production
