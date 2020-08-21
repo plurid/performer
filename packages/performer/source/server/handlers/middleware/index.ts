@@ -43,7 +43,9 @@ const setupMiddleware = async (
 
             next();
         },
-        bodyParser.json(),
+        bodyParser.json({
+            limit: '100mb',
+        }),
     );
 
     instance.post(
