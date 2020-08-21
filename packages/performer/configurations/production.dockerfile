@@ -77,7 +77,7 @@ COPY --from=builder /app/build ./build
 COPY --from=builder /app/scripts ./scripts
 
 
-RUN yarn install --production
+RUN yarn install --production --network-timeout 1000000
 
 
 CMD ["yarn", "start"]
