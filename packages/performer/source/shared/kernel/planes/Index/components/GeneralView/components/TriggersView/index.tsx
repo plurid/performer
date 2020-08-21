@@ -79,6 +79,7 @@ export interface TriggersViewStateProperties {
 
 export interface TriggersViewDispatchProperties {
     dispatchRemoveEntity: typeof actions.data.removeEntity;
+    dispatchViewSetEditID: typeof actions.view.setEditID;
 }
 
 export type TriggersViewProperties = TriggersViewOwnProperties
@@ -115,13 +116,24 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
         // #region dispatch
         dispatchRemoveEntity,
+        dispatchViewSetEditID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
 
 
     // #region handlers
-    const handleObliterateTrigger = async (
+    const handleTriggerEdit = async (
+        id: string,
+    ) => {
+        dispatchViewSetEditID({
+            type: 'trigger',
+            value: id,
+        });
+        setGeneralView('generate-trigger');
+    }
+
+    const handleTriggerObliterate = async (
         id: string,
     ) => {
         try {
@@ -156,7 +168,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         stateTriggers.map(
             trigger => triggerRowRenderer(
                 trigger,
-                handleObliterateTrigger,
+                handleTriggerEdit,
+                handleTriggerObliterate,
             ),
         ),
     );
@@ -187,7 +200,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             sortedTriggers.map(
                 trigger => triggerRowRenderer(
                     trigger,
-                    handleObliterateTrigger,
+                    handleTriggerEdit,
+                    handleTriggerObliterate,
                 ),
             ),
         );
@@ -203,7 +217,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         const filteredRows = stateTriggers.map(
             trigger => triggerRowRenderer(
                 trigger,
-                handleObliterateTrigger,
+                handleTriggerEdit,
+                handleTriggerObliterate,
             ),
         );
 
@@ -286,6 +301,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch (
         actions.data.removeEntity(payload),
+    ),
+    dispatchViewSetEditID: (
+        payload,
+    ) => dispatch (
+        actions.view.setEditID(payload),
     ),
 });
 

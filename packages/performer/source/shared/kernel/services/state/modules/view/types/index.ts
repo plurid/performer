@@ -31,6 +31,23 @@ export interface SetViewTypeAction {
 }
 
 
+export const SET_EDIT_ID = 'SET_EDIT_ID';
+
+export type EditIDType =
+    | 'webhook'
+    | 'trigger';
+
+export interface SetEditIDPayload {
+    type: EditIDType;
+    value: string;
+}
+
+export interface SetEditIDAction {
+    type: typeof SET_EDIT_ID;
+    payload: SetEditIDPayload;
+}
+
+
 export const SET_VIEW_COMPACT_SELECTORS = 'SET_VIEW_COMPACT_SELECTORS';
 export interface SetViewCompactSelectorsAction {
     type: typeof SET_VIEW_COMPACT_SELECTORS;
@@ -58,6 +75,8 @@ export interface State {
     indexView: string;
     indexGeneralSelector: string;
     indexGeneralView: string;
+    indexEditWebhookID: string;
+    indexEditTriggerID: string;
     compactSelectors: boolean;
     ownerID: string;
     usageType: string;
@@ -67,6 +86,7 @@ export interface State {
 export type Actions =
     | SetViewLoadingAction
     | SetViewTypeAction
+    | SetEditIDAction
     | SetViewCompactSelectorsAction
     | SetViewOwnerIDAction
     | SetViewUsageTypeAction;

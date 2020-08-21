@@ -21,7 +21,10 @@
 // #region module
 export const triggerRowRenderer = (
     trigger: Trigger,
-    handleObliterateTrigger: (
+    handleTriggerEdit: (
+        id: string,
+    ) => void,
+    handleTriggerObliterate: (
         id: string,
     ) => void,
 ) => {
@@ -62,11 +65,11 @@ export const triggerRowRenderer = (
             </div>
 
             <PluridIconEdit
-                atClick={() => {}}
+                atClick={() => handleTriggerEdit(id)}
             />
 
             <PluridIconDelete
-                atClick={() => handleObliterateTrigger(id)}
+                atClick={() => handleTriggerObliterate(id)}
             />
         </>
     );

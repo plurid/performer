@@ -12,6 +12,8 @@ const initialState: Types.State = {
     indexView: '',
     indexGeneralView: 'general',
     indexGeneralSelector: 'providers',
+    indexEditWebhookID: '',
+    indexEditTriggerID: '',
     compactSelectors: false,
     ownerID: '',
     usageType: '',

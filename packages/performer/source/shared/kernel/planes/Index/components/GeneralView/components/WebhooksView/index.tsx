@@ -79,6 +79,7 @@ export interface WebhooksViewStateProperties {
 
 export interface WebhooksViewDispatchProperties {
     dispatchRemoveEntity: typeof actions.data.removeEntity;
+    dispatchViewSetEditID: typeof actions.view.setEditID;
 }
 
 export type WebhooksViewProperties = WebhooksViewOwnProperties
@@ -115,6 +116,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
 
         // #region dispatch
         dispatchRemoveEntity,
+        dispatchViewSetEditID,
         // #endregion dispatch
     } = properties;
     // #endregion properties
@@ -124,6 +126,11 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
     const handleWebhookEdit = (
         id: string,
     ) => {
+        dispatchViewSetEditID({
+            type: 'webhook',
+            value: id,
+        });
+        setGeneralView('setup-webhook');
     }
 
     const handleWebhookObliterate = async (
@@ -281,6 +288,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch (
         actions.data.removeEntity(payload),
+    ),
+    dispatchViewSetEditID: (
+        payload,
+    ) => dispatch (
+        actions.view.setEditID(payload),
     ),
 });
 

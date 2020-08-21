@@ -27,6 +27,16 @@ export const setViewType = (
 }
 
 
+export const setEditID = (
+    payload: Types.SetEditIDPayload,
+): Types.SetEditIDAction => {
+    return {
+        type: Types.SET_EDIT_ID,
+        payload,
+    };
+}
+
+
 export const setViewCompactSelectors = (
     payload: boolean,
 ): Types.SetViewCompactSelectorsAction => {
@@ -61,6 +71,7 @@ export const setViewUsageType = (
 const actions = {
     setViewLoading,
     setViewType,
+    setEditID,
     setViewCompactSelectors,
     setViewOwnerID,
     setViewUsageType,

@@ -165,6 +165,8 @@ export const renderGeneralView = (
     stateViewUsageType: any,
     stateViewOwnerID: any,
     stateActiveProviderID: any,
+    stateViewIndexEditTriggerID: string,
+    stateViewIndexEditWebhookID: string,
     openManual: any,
     logout: any,
     mouseOverSelectors: any,
@@ -174,6 +176,7 @@ export const renderGeneralView = (
     setSelectedView: any,
     setGeneralView: any,
     dispatchAddEntity: any,
+    dispatchViewSetEditID: any,
 ) => {
     switch (stateIndexGeneralView) {
         case 'general':
@@ -361,10 +364,16 @@ export const renderGeneralView = (
                 <Webhook
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
+                    editID={stateViewIndexEditWebhookID}
                     action={(webhook) => {
                         dispatchAddEntity({
                             type: 'webhook',
                             data: webhook,
+                        });
+
+                        dispatchViewSetEditID({
+                            type: 'webhook',
+                            value: '',
                         });
 
                         setGeneralView('general');
@@ -377,10 +386,16 @@ export const renderGeneralView = (
                 <Trigger
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
+                    editID={stateViewIndexEditTriggerID}
                     action={(trigger) => {
                         dispatchAddEntity({
                             type: 'trigger',
                             data: trigger,
+                        });
+
+                        dispatchViewSetEditID({
+                            type: 'trigger',
+                            value: '',
                         });
 
                         setGeneralView('general');

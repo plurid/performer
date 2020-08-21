@@ -20,6 +20,8 @@ const reducer = (
             return resolvers.setViewLoading(state, action);
         case Types.SET_VIEW_TYPE:
             return resolvers.setViewType(state, action);
+        case Types.SET_EDIT_ID:
+            return resolvers.setEditID(state, action);
         case Types.SET_VIEW_COMPACT_SELECTORS:
             return resolvers.setViewCompactSelectors(state, action);
         case Types.SET_VIEW_OWNER_ID:

@@ -53,12 +53,15 @@ export interface GeneralViewStateProperties {
     stateViewCompactSelectors: boolean;
     stateViewOwnerID: string;
     stateViewUsageType: string;
+    stateViewIndexEditTriggerID: string;
+    stateViewIndexEditWebhookID: string;
 }
 
 export interface GeneralViewDispatchProperties {
     dispatchAddEntity: typeof actions.data.addEntity;
     dispatchClearData: typeof actions.data.clearData;
     dispatchSetViewType: typeof actions.view.setViewType;
+    dispatchViewSetEditID: typeof actions.view.setEditID;
     dispatchSetViewCompactSelectors: typeof actions.view.setViewCompactSelectors;
 }
 
@@ -80,12 +83,15 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateViewCompactSelectors,
         stateViewOwnerID,
         stateViewUsageType,
+        stateViewIndexEditTriggerID,
+        stateViewIndexEditWebhookID,
         // #endregion state
 
         // #region dispatch
         dispatchAddEntity,
         dispatchClearData,
         dispatchSetViewType,
+        dispatchViewSetEditID,
         dispatchSetViewCompactSelectors,
         // #endregion dispatch
     } = properties;
@@ -165,6 +171,8 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         stateViewUsageType,
         stateViewOwnerID,
         stateActiveProviderID,
+        stateViewIndexEditTriggerID,
+        stateViewIndexEditWebhookID,
         openManual,
         logout,
         mouseOverSelectors,
@@ -174,6 +182,7 @@ const GeneralView: React.FC<GeneralViewProperties> = (
         setSelectedView,
         setGeneralView,
         dispatchAddEntity,
+        dispatchViewSetEditID,
     );
     // #endregion render
 }
@@ -190,6 +199,8 @@ const mapStateToProperties = (
     stateViewCompactSelectors: selectors.view.getViewCompactSelectors(state),
     stateViewOwnerID: selectors.view.getViewOwnerID(state),
     stateViewUsageType: selectors.view.getViewUsageType(state),
+    stateViewIndexEditTriggerID: selectors.view.getIndexEditTriggerID(state),
+    stateViewIndexEditWebhookID: selectors.view.getIndexEditWebhookID(state),
 });
 
 
@@ -208,6 +219,11 @@ const mapDispatchToProperties = (
         payload,
     ) => dispatch(
         actions.view.setViewType(payload),
+    ),
+    dispatchViewSetEditID: (
+        payload,
+    ) => dispatch (
+        actions.view.setEditID(payload),
     ),
     dispatchSetViewCompactSelectors: (
         payload,

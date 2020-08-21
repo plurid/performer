@@ -51,6 +51,34 @@ export const setViewType = (
 }
 
 
+export const setEditID = (
+    state: Types.State,
+    action: Types.SetEditIDAction,
+): Types.State => {
+    const {
+        type,
+        value,
+    } = action.payload;
+
+    switch (type) {
+        case 'trigger':
+            return {
+                ...state,
+                indexEditTriggerID: value,
+            };
+        case 'webhook':
+            return {
+                ...state,
+                indexEditWebhookID: value,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
+}
+
+
 export const setViewCompactSelectors = (
     state: Types.State,
     action: Types.SetViewCompactSelectorsAction,
@@ -88,6 +116,7 @@ export const setViewUsageType = (
 const resolvers = {
     setViewLoading,
     setViewType,
+    setEditID,
     setViewCompactSelectors,
     setViewOwnerID,
     setViewUsageType,
