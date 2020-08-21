@@ -35,8 +35,6 @@ const handleGithubWebhook = async (
     request: Request,
     response: Response,
 ) => {
-    console.log('handleGithubWebhook', request.originalUrl);
-
     try {
         if (logLevel <= logLevels.info) {
             console.log('[Info : Start] :: handleGithubWebhook');
