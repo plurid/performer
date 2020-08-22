@@ -166,6 +166,7 @@ docker build --file ./configurations/production.dockerfile \
     --tag performer \
     --build-arg PERFORMER_PORT= \
     --build-arg PERFORMER_QUIET= \
+    --build-arg PERFORMER_LOG_LEVEL= \
     --build-arg DOCKER_AUTH_USERNAME= \
     --build-arg DOCKER_AUTH_PASSWORD= \
     --build-arg DOCKER_AUTH_SERVER_ADDRESS= \
