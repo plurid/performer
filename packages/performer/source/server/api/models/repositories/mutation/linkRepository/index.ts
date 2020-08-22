@@ -6,12 +6,7 @@
     } from '#server/data/interfaces';
 
     import {
-        getRepository,
-        getRepositoryDataByNameWithOwner,
-    } from '#server/api/requesters';
-
-    import {
-        registerRepositoryMetadata,
+        handleLinkRepository,
     } from '#server/logic/repository';
 
     import {
@@ -25,50 +20,6 @@
 // #region module
 export const linkRepositoryLogs = generateMethodLogs('linkRepository');
 
-
-export const handleLinkRepository = async (
-    input: InputLinkRepository,
-) => {
-    const {
-        providerID,
-        nameWithOwner,
-    } = input;
-
-    const repositoryData = await getRepositoryDataByNameWithOwner(
-        providerID,
-        nameWithOwner,
-    );
-    console.log('repositoryData', repositoryData);
-
-    if (!repositoryData) {
-        return {
-            status: false,
-        };
-    }
-
-    const {
-        name,
-    } = repositoryData;
-
-    if (!name) {
-        return {
-            status: false,
-        };
-    }
-
-    await getRepository(
-        providerID,
-        name,
-    );
-
-    await registerRepositoryMetadata(
-        repositoryData,
-    );
-
-    return {
-        status: true,
-    };
-}
 
 const linkRepository = async (
     input: InputLinkRepository,
@@ -141,9 +92,9 @@ const linkRepository = async (
                 logLevels.trace,
             );
 
-            // await handleLinkRepository(
-            //     input,
-            // );
+            await handleLinkRepository(
+                input,
+            );
 
             logger.log(
                 linkRepositoryLogs.infoEndCustomLogicUsage,

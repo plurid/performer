@@ -11,11 +11,17 @@
     // #region external
     import {
         Repository,
+        InputLinkRepository,
     } from '#server/data/interfaces';
 
     import {
         repositoriesPath,
     } from '#server/data/constants';
+
+    import {
+        getRepository,
+        getRepositoryDataByNameWithOwner,
+    } from '#server/api/requesters';
 
     import {
         loadRepositories,
@@ -95,5 +101,50 @@ export const updateRootRepository = async (
         cwd: repositoryRootPath,
         stdio: 'ignore',
     });
+}
+
+
+
+export const handleLinkRepository = async (
+    input: InputLinkRepository,
+) => {
+    const {
+        providerID,
+        nameWithOwner,
+    } = input;
+
+    const repositoryData = await getRepositoryDataByNameWithOwner(
+        providerID,
+        nameWithOwner,
+    );
+
+    if (!repositoryData) {
+        return {
+            status: false,
+        };
+    }
+
+    const {
+        name,
+    } = repositoryData;
+
+    if (!name) {
+        return {
+            status: false,
+        };
+    }
+
+    await getRepository(
+        providerID,
+        name,
+    );
+
+    await registerRepositoryMetadata(
+        repositoryData,
+    );
+
+    return {
+        status: true,
+    };
 }
 // #endregion module
