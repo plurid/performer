@@ -17,13 +17,19 @@ export const queries = gql`
 
 export const mutations = gql`
     extend type Mutation {
-        linkRepository(input: InputLinkRepository!): Response!
+        linkRepository(input: InputLinkRepository!): ResponseRepository!
         delinkRepository(input: InputValueString!): Response!
     }
 `;
 
 
 export const types = gql`
+    type ResponseRepository {
+        status: Boolean!
+        error: Error
+        data: Repository
+    }
+
     type ResponseRepositories {
         status: Boolean!
         error: Error

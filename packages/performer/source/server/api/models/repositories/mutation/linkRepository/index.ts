@@ -7,7 +7,7 @@
 
     import {
         handleLinkRepository,
-    } from '#server/logic/repository';
+    } from '#server/api/requesters';
 
     import {
         generateMethodLogs,
@@ -67,9 +67,20 @@ const linkRepository = async (
                 };
             }
 
-            await handleLinkRepository(
+            const repository = await handleLinkRepository(
                 input,
             );
+
+            if (!repository) {
+                logger.log(
+                    linkRepositoryLogs.infoEndPrivateUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
 
             logger.log(
                 linkRepositoryLogs.infoSuccessPrivateUsage,
@@ -78,6 +89,7 @@ const linkRepository = async (
 
             return {
                 status: true,
+                data: repository,
             };
         }
         // #endregion private usage
@@ -92,9 +104,20 @@ const linkRepository = async (
                 logLevels.trace,
             );
 
-            await handleLinkRepository(
+            const repository = await handleLinkRepository(
                 input,
             );
+
+            if (!repository) {
+                logger.log(
+                    linkRepositoryLogs.infoEndCustomLogicUsage,
+                    logLevels.info,
+                );
+
+                return {
+                    status: false,
+                };
+            }
 
             logger.log(
                 linkRepositoryLogs.infoEndCustomLogicUsage,
@@ -103,15 +126,27 @@ const linkRepository = async (
 
             return {
                 status: true,
+                data: repository,
             };
         }
         // #endregion logic usage
 
 
         // #region public usage
-        await handleLinkRepository(
+        const repository = await handleLinkRepository(
             input,
         );
+
+        if (!repository) {
+            logger.log(
+                linkRepositoryLogs.infoEnd,
+                logLevels.info,
+            );
+
+            return {
+                status: false,
+            };
+        }
 
         logger.log(
             linkRepositoryLogs.infoSuccess,
@@ -120,6 +155,7 @@ const linkRepository = async (
 
         return {
             status: true,
+            data: repository,
         };
         // #endregion public usage
     } catch (error) {

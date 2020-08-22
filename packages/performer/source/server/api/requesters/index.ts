@@ -1,14 +1,27 @@
 // #region imports
-import github from './github';
+    // #region external
+    import {
+        InputLinkRepository,
+    } from '#server/data/interfaces';
 
-import {
-    loadProviders,
-} from '#server/logic/loader';
+    import {
+        BITBUCKET_PROVIDER,
+        GITHUB_PROVIDER,
+    } from '#server/data/constants';
 
-import {
-    BITBUCKET_PROVIDER,
-    GITHUB_PROVIDER,
-} from '#server/data/constants';
+    import {
+        loadProviders,
+    } from '#server/logic/loader';
+
+    import {
+        registerRepositoryMetadata,
+    } from '#server/logic/repository';
+    // #endregion external
+
+
+    // #region internal
+    import github from './github';
+    // #endregion internal
 // #endregion imports
 
 
@@ -103,5 +116,43 @@ export const getOwner = async (
                 provider,
             );
     }
+}
+
+
+export const handleLinkRepository = async (
+    input: InputLinkRepository,
+) => {
+    const {
+        providerID,
+        nameWithOwner,
+    } = input;
+
+    const repositoryData = await getRepositoryDataByNameWithOwner(
+        providerID,
+        nameWithOwner,
+    );
+
+    if (!repositoryData) {
+        return;
+    }
+
+    const {
+        name,
+    } = repositoryData;
+
+    if (!name) {
+        return;
+    }
+
+    await getRepository(
+        providerID,
+        name,
+    );
+
+    await registerRepositoryMetadata(
+        repositoryData,
+    );
+
+    return repositoryData;
 }
 // #endregion module
