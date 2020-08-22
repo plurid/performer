@@ -73,6 +73,7 @@ ENV PERFORMER_PRIVATE_TOKEN=$PERFORMER_PRIVATE_TOKEN
 
 
 RUN apk add git
+RUN apk add docker
 
 
 COPY --from=builder /app/package.json ./
