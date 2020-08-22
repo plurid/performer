@@ -148,6 +148,7 @@ export const getRepositoriesData = async (
                     id: databaseId,
                     name: nameWithOwner,
                     isPrivate,
+                    providerID: provider.id,
                 };
 
                 return repository;
@@ -188,16 +189,11 @@ export const getRepositoryDataByNameWithOwner = async (
             return;
         }
 
-        // const {
-        //     defaultBranchRef,
-        // } = data.repository;
-        // const url = defaultBranchRef.target.zipballUrl;
-
         const repositoryData: Repository = {
             id: data.repository.databaseId,
             isPrivate: data.repository.isPrivate,
             name: data.repository.nameWithOwner,
-            // zipURL: url,
+            providerID: provider.id,
         };
 
         return repositoryData;

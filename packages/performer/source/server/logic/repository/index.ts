@@ -11,10 +11,12 @@
     // #region external
     import {
         Repository,
+        Provider,
     } from '#server/data/interfaces';
 
     import {
         repositoriesPath,
+        BASE_PATH_REPOSITORIES,
     } from '#server/data/constants';
 
     import {
@@ -22,6 +24,7 @@
     } from '#server/logic/loader';
 
     import database from '#server/services/database';
+    import storage from '#server/services/storage';
     // #endregion external
 // #endregion imports
 
@@ -46,6 +49,38 @@ export const registerRepositoryMetadata = async (
 export const deregisterRepository = async (
     id: string,
 ) => {
+    const repository: Repository | undefined = await database.get(
+        'repository',
+        id,
+    );
+
+    if (!repository) {
+        return;
+    }
+
+    const {
+        name,
+        providerID,
+    } = repository;
+
+    const provider: Provider | undefined = await database.get(
+        'provider',
+        providerID,
+    );
+
+    if (!provider) {
+        return;
+    }
+
+    const repositoryPath = path.join(
+        BASE_PATH_REPOSITORIES,
+        '/' + provider.type + '/' + name,
+    );
+
+    await storage.obliterateAll(
+        repositoryPath,
+    );
+
     await database.obliterate(
         'repository',
         id,
