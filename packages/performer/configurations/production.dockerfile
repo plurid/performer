@@ -1,8 +1,8 @@
 FROM ubuntu:20.04 AS system
 
-RUN apt update
-
-RUN apt install -y git
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y git
 
 
 
@@ -81,7 +81,7 @@ ENV PERFORMER_PRIVATE_OWNER_KEY=$PERFORMER_PRIVATE_OWNER_KEY
 ENV PERFORMER_PRIVATE_TOKEN=$PERFORMER_PRIVATE_TOKEN
 
 
-COPY --from=system /usr/bin/git /usr/bin/git
+COPY --from=system /usr/bin/git* /usr/bin/
 
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
