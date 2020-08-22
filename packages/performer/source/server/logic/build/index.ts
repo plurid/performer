@@ -30,8 +30,6 @@
     } from '#server/data/interfaces';
 
     import {
-        BASE_PATH_BUILDS,
-        BASE_PATH_BUILD_QUEUE,
         BASE_PATH_BUILD_LOGS,
 
         DOCKER_AUTH_USERNAME,
@@ -63,16 +61,10 @@
 export const pushToBuildQueue = async (
     buildData: BuildData,
 ) => {
-    const buildQueueName = buildData.id + '.json';
-
-    const buildQueuePath = path.join(
-        BASE_PATH_BUILD_QUEUE,
-        buildQueueName,
-    );
-
-    await storage.upload(
-        buildQueuePath,
-        Buffer.from(JSON.stringify(buildData, null, 4), 'utf-8'),
+    await database.store(
+        'buildqueue',
+        buildData.id,
+        buildData,
     );
 
     await writeBuildFile(
@@ -106,16 +98,10 @@ export const writeBuildFile = async (
         project,
     };
 
-    const buildFile = id + '.json';
-
-    const buildPath = path.join(
-        BASE_PATH_BUILDS,
-        buildFile,
-    );
-
-    await storage.upload(
-        buildPath,
-        Buffer.from(JSON.stringify(build, null, 4), 'utf-8'),
+    await database.store(
+        'build',
+        id,
+        build,
     );
 }
 

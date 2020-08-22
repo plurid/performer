@@ -1,17 +1,6 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import path from 'path';
-    // #endregion libraries
-
-
     // #region external
-    import {
-        buildQueuePath,
-    } from '#server/data/constants';
+    import database from '#server/services/database';
     // #endregion external
 // #endregion imports
 
@@ -21,11 +10,9 @@
 export const removeFromQueue = async (
     id: string,
 ) => {
-    const buildQueuedPath = path.join(
-        buildQueuePath,
-        '/' + id + '.json',
+    await database.obliterate(
+        'buildqueue',
+        id,
     );
-
-    fs.unlink(buildQueuedPath);
 }
 // #endregion module

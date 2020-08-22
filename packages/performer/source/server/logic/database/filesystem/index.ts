@@ -56,6 +56,12 @@ const resolveDataPath = (
             return BASE_PATH_PROJECTS;
         case 'repository':
             return BASE_PATH_REPOSITORIES_METADATA;
+        case 'build':
+            return BASE_PATH_BUILDS;
+        case 'buildlog':
+            return BASE_PATH_BUILD_LOGS;
+        case 'buildqueue':
+            return BASE_PATH_BUILD_QUEUE;
         default:
             return '';
     }
