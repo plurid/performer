@@ -44,6 +44,7 @@
 
     import {
         StyledRepository,
+        StyledRepositoryWrapper,
         StyledNoRepositories,
     } from './styled';
     // #endregion internal
@@ -131,6 +132,8 @@ const Repository: React.FC<RepositoryProperties> = (
 
         const repositories: IRepository[] = [];
 
+        setLoading(true);
+
         for (const selectedRepository of selectedRepositories) {
             const repository = providerRepositories.find(
                 repository => repository.id === selectedRepository,
@@ -169,6 +172,8 @@ const Repository: React.FC<RepositoryProperties> = (
             const cleanData: IRepository = graphql.deleteTypenames(data);
             repositories.push(cleanData);
         }
+
+        setLoading(false);
 
         return repositories;
     }
@@ -243,7 +248,7 @@ const Repository: React.FC<RepositoryProperties> = (
         <StyledRepository
             theme={theme}
         >
-            <div>
+            <StyledRepositoryWrapper>
                 <h1>
                     link repositories
                 </h1>
@@ -308,7 +313,7 @@ const Repository: React.FC<RepositoryProperties> = (
                         />
                     </div>
                 )}
-            </div>
+            </StyledRepositoryWrapper>
         </StyledRepository>
     );
     // #endregion render

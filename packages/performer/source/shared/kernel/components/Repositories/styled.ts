@@ -43,6 +43,11 @@ export const StyledRepository = styled.div<IStyledRepository>`
 `;
 
 
+export const StyledRepositoryWrapper = styled.div`
+    min-height: 200px;
+`;
+
+
 export const StyledNoRepositories = styled.div`
     margin: 30px;
     text-align: center;
