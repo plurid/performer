@@ -1,3 +1,12 @@
+FROM ubuntu:20.04 AS system
+
+RUN apt update
+
+RUN apt install -y git
+
+
+
+
 FROM mhart/alpine-node:12 AS builder
 
 
@@ -71,6 +80,8 @@ ENV PERFORMER_PRIVATE_OWNER_IDENTONYM=$PERFORMER_PRIVATE_OWNER_IDENTONYM
 ENV PERFORMER_PRIVATE_OWNER_KEY=$PERFORMER_PRIVATE_OWNER_KEY
 ENV PERFORMER_PRIVATE_TOKEN=$PERFORMER_PRIVATE_TOKEN
 
+
+COPY --from=system /usr/bin/git /usr/bin/git
 
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
