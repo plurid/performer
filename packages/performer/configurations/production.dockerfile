@@ -1,13 +1,4 @@
-FROM ubuntu:20.04 AS system
-
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y git
-
-
-
-
-FROM mhart/alpine-node:12 AS builder
+FROM node:12-alpine AS builder
 
 
 WORKDIR /app
@@ -28,10 +19,10 @@ RUN yarn build.production
 
 
 
-FROM mhart/alpine-node:12
+FROM node:12-alpine
 
 
-ARG PERFORMER_PORT
+ARG PORT=56065
 ARG PERFORMER_QUIET
 ARG DOCKER_AUTH_USERNAME
 ARG DOCKER_AUTH_PASSWORD
@@ -58,9 +49,7 @@ WORKDIR /app
 ENV ENV_MODE production
 ENV NODE_ENV production
 
-ENV PORT=56065
-
-ENV PERFORMER_PORT=$PERFORMER_PORT
+ENV PORT=$PORT
 ENV PERFORMER_QUIET=$PERFORMER_QUIET
 ENV DOCKER_AUTH_USERNAME=$DOCKER_AUTH_USERNAME
 ENV DOCKER_AUTH_PASSWORD=$DOCKER_AUTH_PASSWORD
@@ -81,7 +70,8 @@ ENV PERFORMER_PRIVATE_OWNER_KEY=$PERFORMER_PRIVATE_OWNER_KEY
 ENV PERFORMER_PRIVATE_TOKEN=$PERFORMER_PRIVATE_TOKEN
 
 
-COPY --from=system /usr/bin/git* /usr/bin/
+RUN apk add git
+
 
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build ./build
