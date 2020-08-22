@@ -141,12 +141,14 @@ const Repository: React.FC<RepositoryProperties> = (
                 nameWithOwner: name,
             };
 
-            await client.mutate({
+            const response = await client.mutate({
                 mutation: LINK_REPOSITORY,
                 variables: {
                     input,
                 },
             });
+
+            console.log(response);
         }
     }
 

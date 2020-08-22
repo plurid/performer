@@ -48,6 +48,11 @@ export const LINK_REPOSITORY = gql`
                 path
                 message
             }
+            data {
+                id
+                name
+                isPrivate
+            }
         }
     }
 `;
