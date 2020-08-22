@@ -324,7 +324,14 @@ export const renderGeneralView = (
                 <Repositories
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
-                    action={() => {
+                    action={(repositories) => {
+                        for (const repository of repositories) {
+                            dispatchAddEntity({
+                                type: 'repository',
+                                data: repository,
+                            });
+                        }
+
                         setGeneralView('general');
                     }}
                     cancel={() => setGeneralView('general')}

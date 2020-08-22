@@ -10,12 +10,20 @@
     } from '@plurid/plurid-themes';
 
     import {
+        graphql,
+    } from '@plurid/plurid-functions';
+
+    import {
         PluridSpinner,
     } from '@plurid/plurid-ui-react';
     // #endregion libraries
 
 
     // #region external
+    import {
+        Repository as IRepository,
+    } from '#server/data/interfaces';
+
     import client from '#kernel-services/graphql/client';
     import {
         GET_PROVIDER_REPOSITORIES,
@@ -28,10 +36,6 @@
         StyledPluridPureButton,
         StyledPluridLinkButton,
     } from '#kernel-services/styled';
-
-    import {
-        Repository as IRepository,
-    } from '#server/data/interfaces';
     // #endregion external
 
 
@@ -56,7 +60,9 @@ export interface RepositoryProperties {
         // #endregion values
 
         // #region methods
-        action: () => void;
+        action: (
+            repositories: IRepository[],
+        ) => void;
         // #endregion methods
     // #endregion required
 
@@ -123,6 +129,8 @@ const Repository: React.FC<RepositoryProperties> = (
             return;
         }
 
+        const repositories: IRepository[] = [];
+
         for (const selectedRepository of selectedRepositories) {
             const repository = providerRepositories.find(
                 repository => repository.id === selectedRepository,
@@ -141,15 +149,28 @@ const Repository: React.FC<RepositoryProperties> = (
                 nameWithOwner: name,
             };
 
-            const response = await client.mutate({
+            const mutate = await client.mutate({
                 mutation: LINK_REPOSITORY,
                 variables: {
                     input,
                 },
             });
 
-            console.log(response);
+            const response = mutate.data.linkRepository;
+
+            if (!response.status) {
+                return;
+            }
+
+            const {
+                data,
+            } = response;
+
+            const cleanData: IRepository = graphql.deleteTypenames(data);
+            repositories.push(cleanData);
         }
+
+        return repositories;
     }
 
     const handleSelect = (
@@ -167,6 +188,12 @@ const Repository: React.FC<RepositoryProperties> = (
         const updated = selectedRepositories.filter(repository => repository !== id);
         setSelectedRepositories(updated);
         return;
+    }
+
+    const handleLinkRepositories = async () => {
+        const repositories = await linkRepositories() || [];
+
+        action(repositories);
     }
     // #endregion handlers
 
@@ -260,10 +287,7 @@ const Repository: React.FC<RepositoryProperties> = (
                         <div>
                             <StyledPluridPureButton
                                 text="Link Repositories"
-                                atClick={() => {
-                                    action();
-                                    linkRepositories();
-                                }}
+                                atClick={() => handleLinkRepositories()}
                                 disabled={selectedRepositories.length === 0}
                                 theme={theme}
                                 level={2}
