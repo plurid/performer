@@ -38,6 +38,7 @@ export const handleLinkRepository = async (
         providerID,
         nameWithOwner,
     );
+    console.log('repositoryData', repositoryData);
 
     if (!repositoryData) {
         return {

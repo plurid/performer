@@ -1,7 +1,11 @@
 // #region imports
     // #region libraries
-    import fs from 'fs';
+    import {
+        promises as fs,
+    } from 'fs';
+
     import path from 'path';
+
     import {
         exec,
     } from 'child_process';
@@ -11,6 +15,7 @@
     // #region external
     import {
         BASE_PATH_REPOSITORIES,
+        BASE_PATH,
     } from '#server/data/constants';
 
     import {
@@ -72,6 +77,7 @@ export const downloadRepository = async (
             cwd: repositoryPath,
         }, (error) => {
             if (error) {
+                console.log(error)
                 reject(0);
             }
 
@@ -86,12 +92,18 @@ export const getRepository = async (
     name: string,
 ) => {
     const repositoryPath = BASE_PATH_REPOSITORIES + 'github/' + name;
-    const resolvedRepositoryPath = path.join(process.cwd(), repositoryPath);
+    const resolvedRepositoryPath = path.join(
+        BASE_PATH,
+        repositoryPath,
+    );
 
     try {
-        fs.mkdirSync(repositoryPath, {
-            recursive: true,
-        });
+        await fs.mkdir(
+            resolvedRepositoryPath,
+            {
+                recursive: true,
+            },
+        );
     } catch (error) {
         return;
     }
@@ -176,16 +188,16 @@ export const getRepositoryDataByNameWithOwner = async (
             return;
         }
 
-        const {
-            defaultBranchRef,
-        } = data.repository;
-        const url = defaultBranchRef.target.zipballUrl;
+        // const {
+        //     defaultBranchRef,
+        // } = data.repository;
+        // const url = defaultBranchRef.target.zipballUrl;
 
         const repositoryData: Repository = {
             id: data.repository.databaseId,
             isPrivate: data.repository.isPrivate,
             name: data.repository.nameWithOwner,
-            zipURL: url,
+            // zipURL: url,
         };
 
         return repositoryData;
