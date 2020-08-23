@@ -19,9 +19,9 @@
     } from './resolvers';
 
     import {
-        runInContainer,
         runDockerCommand,
         runKubernetesCommand,
+        runInContainer,
     } from './runners';
     // #endregion internal
 // #endregion imports

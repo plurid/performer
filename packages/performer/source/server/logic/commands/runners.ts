@@ -24,6 +24,8 @@
     } from '#server/data/interfaces';
 
     import {
+        BASE_PATH,
+
         DOCKER_AUTH_USERNAME,
         DOCKER_AUTH_PASSWORD,
         DOCKER_AUTH_SERVER_ADDRESS,
@@ -274,6 +276,7 @@ export const runInContainer = (
 
         // const workingDir = '/app' + (directory || '');
         const workingDir = '/' + (directory || '');
+        console.log('workingDir', workingDir);
 
         const Env = [
             ...environment,
@@ -293,7 +296,9 @@ export const runInContainer = (
         //     },
         // );
 
-        const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
+        // const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
+        // console.log('workDir', workDir);
+        const workDir = workDirectoryPath + workingDir;
         console.log('workDir', workDir);
 
         const container = await docker.createContainer({
@@ -303,12 +308,12 @@ export const runInContainer = (
             Env,
             Volumes: {
                 // '/performer-volume': {},
-                '/app': {},
+                '/app/data': {},
             },
             HostConfig: {
                 Binds: [
                     // `${workDirectoryPath}:/app`,
-                    'performer-volume:/app',
+                    'performer-volume:/app/data',
                 ],
             },
             WorkingDir: workDir,
