@@ -627,7 +627,8 @@ export const runInContainer = (
     return new Promise (async (resolve, reject) => {
         const containerName = uuid.generate();
 
-        const workingDir = '/app' + (directory || '');
+        // const workingDir = '/app' + (directory || '');
+        const workingDir = '/' + (directory || '');
 
         const Env = [
             ...environment,
@@ -640,6 +641,15 @@ export const runInContainer = (
         // const outsidePath = workDirectoryPath.replace('/app/', '/home/ly3xqhl8g9/Documents/Workarea/performer/packages/performer/');
         // console.log('outsidePath', outsidePath);
 
+        // const volumeName = uuid.generate();
+        // const volume = await docker.createVolume(
+        //     {
+        //         Name: volumeName,
+        //     },
+        // );
+
+        const workDir = workDirectoryPath.replace('/app/data', '') + workingDir;
+
         const container = await docker.createContainer({
             Image: imagene,
             name: containerName,
@@ -647,13 +657,15 @@ export const runInContainer = (
             Env,
             Volumes: {
                 '/app': {},
+                // '/': {},
             },
             HostConfig: {
                 Binds: [
-                    `${workDirectoryPath}:/app`,
+                    // `${workDirectoryPath}:/app`,
+                    'performer-volume:/app',
                 ],
             },
-            WorkingDir: workingDir,
+            WorkingDir: workDir,
         });
 
         await container.start();
