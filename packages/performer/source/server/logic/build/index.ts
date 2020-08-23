@@ -622,6 +622,8 @@ export const runInContainer = (
         workDirectoryPath,
     } = performContext;
 
+    console.log('workDirectoryPath', workDirectoryPath);
+
     return new Promise (async (resolve, reject) => {
         const containerName = uuid.generate();
 
@@ -634,6 +636,9 @@ export const runInContainer = (
         const Cmd = typeof command === 'string'
             ? command.split(' ')
             : command;
+
+        // const outsidePath = workDirectoryPath.replace('/app/', '/home/ly3xqhl8g9/Documents/Workarea/performer/packages/performer/');
+        // console.log('outsidePath', outsidePath);
 
         const container = await docker.createContainer({
             Image: imagene,
@@ -651,8 +656,7 @@ export const runInContainer = (
             WorkingDir: workingDir,
         });
 
-        const startedContainer = await container.start();
-        console.log('startedContainer', startedContainer);
+        await container.start();
 
         const streamData: string[] = [];
 
@@ -684,12 +688,15 @@ export const runInContainer = (
                 ? command
                 : command.join(' ');
 
-            saveBuildlog(
+            await saveBuildlog(
                 lineCommand,
                 id,
                 index,
                 streamData.join(''),
             );
+
+            await container.stop();
+            await container.remove();
 
             resolve();
         });
