@@ -196,9 +196,9 @@ const obliterate: DatabaseObliterate = async (
         id + '.json',
     );
 
-    // await filesystemStorage.obliterate(
-    //     entityPath,
-    // );
+    await filesystemStorage.obliterate(
+        entityPath,
+    );
 
     return;
 }

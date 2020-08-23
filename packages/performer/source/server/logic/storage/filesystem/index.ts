@@ -183,7 +183,21 @@ const storageObliterateAll: StorageObliterateAll = async (
             pathway,
         );
 
-        await fs.rmdir(filespath, {recursive: true});
+        const files = await fs.readdir(filespath);
+
+        for (const file of files) {
+            const filepath = path.join(
+                filespath,
+                file,
+            );
+
+            await fs.rmdir(
+                filepath,
+                { recursive: true },
+            );
+        }
+
+        // await fs.rmdir(filespath, {recursive: true});
 
         return true;
     } catch (error) {
