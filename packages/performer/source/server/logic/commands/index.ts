@@ -16,6 +16,7 @@
 
     // #region external
     import {
+        Build,
         Performer,
         PerformerStage,
         BuildData,
@@ -34,10 +35,11 @@
 
     import docker from '#server/logic/engine';
 
+    import database from '#server/services/database';
+
     import {
-        writeBuildFile,
         saveBuildlog,
-    } from '#server/logic/build';
+    } from '#server/logic/buildLogs';
     // #endregion external
 // #endregion imports
 
@@ -93,14 +95,22 @@ export const handlePerformer = async (
 
     const stagesNames = stages.map(stage => stage.name);
 
-    writeBuildFile(
+    const build: Build = {
         id,
-        'SUCCESS',
-        trigger.id,
+        status: 'SUCCESS',
+        trigger: trigger.id,
         time,
         date,
-        stagesNames,
+        stages: [
+            ...stagesNames,
+        ],
         project,
+    };
+
+    await database.store(
+        'build',
+        id,
+        build,
     );
 }
 

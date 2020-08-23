@@ -22,9 +22,17 @@ export interface Repository {
 }
 
 
+export type BuildStatus =
+    | 'QUEUE'
+    | 'RUNNING'
+    | 'FAILED'
+    | 'SUCCESS'
+    | 'CANCELLED'
+    | 'TIMEOUT';
+
 export interface Build {
     id: string;
-    status: string;
+    status: BuildStatus;
     trigger: string;
     time: number;
     date: number;

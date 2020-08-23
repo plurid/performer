@@ -6,7 +6,7 @@
 
     import {
         getBuildLogs as getBuildLogsLogic,
-    } from '#server/logic/build';
+    } from '#server/logic/buildLogs';
 
     import {
         generateMethodLogs,
