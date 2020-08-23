@@ -1,7 +1,17 @@
 // #region module
 export type CodeProvider =
-    | 'bitbucket'
-    | 'github';
+    | CodeProviderGithub
+    | CodeProviderBitbucket;
+
+
+export type CodeProviderGithub = 'github';
+export type CodeProviderBitbucket = 'bitbucket';
+
+export interface CodeProviderData {
+    github: CodeProviderGithub;
+    bitbucket: CodeProviderBitbucket;
+}
+
 
 
 export interface Provider {

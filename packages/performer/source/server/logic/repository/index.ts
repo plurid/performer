@@ -20,6 +20,10 @@
     } from '#server/data/constants';
 
     import {
+        CodeProvider,
+    } from '#server/data/interfaces';
+
+    import {
         loadRepositories,
     } from '#server/logic/loader';
 
@@ -108,10 +112,11 @@ export const getActiveRepository = async (
 
 export const updateRootRepository = async (
     repositoryName: string,
+    type: CodeProvider,
 ) => {
     const repositoryPath = path.join(
         repositoriesPath,
-        './github/' + repositoryName,
+        `/${type}/${repositoryName}`,
     );
     const repositoryRootPath = path.join(
         repositoryPath,
@@ -128,6 +133,25 @@ export const updateRootRepository = async (
 
     execSync(gitCommandPull, {
         cwd: repositoryRootPath,
+        stdio: 'ignore',
+    });
+}
+
+
+export const updateWorkRepository = async (
+    branchName: string,
+    repositoryWorkPath: string,
+) => {
+    const gitCommandFetchOrigin = 'git fetch origin';
+    const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
+
+    execSync(gitCommandFetchOrigin, {
+        cwd: repositoryWorkPath,
+        stdio: 'ignore',
+    });
+
+    execSync(gitCommandResetHardBranch, {
+        cwd: repositoryWorkPath,
         stdio: 'ignore',
     });
 }

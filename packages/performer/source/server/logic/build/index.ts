@@ -36,6 +36,8 @@ export const pushToBuildQueue = async (
         buildData.id,
         build,
     );
+
+    return build;
 }
 
 

@@ -1,5 +1,13 @@
 // #region imports
-import path from 'path';
+    // #region libraries
+    import path from 'path';
+    // #endregion libraries
+
+    // #region external
+    import {
+        CodeProviderData,
+    } from '#server/data/interfaces';
+    // #endregion external
 // #endregion imports
 
 
@@ -13,12 +21,16 @@ export const HEALTH_CHECK_ENDPOINT = '/service-check/health';
 export const GITHUB_API = 'https://api.github.com/graphql';
 export const GITHUB_PROVIDER = 'github';
 
-
 export const BITBUCKET_PROVIDER = 'bitbucket';
 
 
+export const codeProvider: CodeProviderData = {
+    github: GITHUB_PROVIDER,
+    bitbucket: BITBUCKET_PROVIDER,
+}
 
-export const BASE_PATH = process.cwd();
+
+export const BASE_PATH = process.env.PERFORMER_BASE_PATH || process.cwd();
 export const BASE_PATH_PROVIDERS = '/data/providers/';
 export const BASE_PATH_IMAGENES = '/data/imagenes/';
 export const BASE_PATH_REPOSITORIES = '/data/repositories/';

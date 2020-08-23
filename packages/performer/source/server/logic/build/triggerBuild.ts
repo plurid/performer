@@ -17,6 +17,7 @@
     // #region external
     import {
         Performer,
+        Trigger,
         BuildData,
     } from '#server/data/interfaces';
 
@@ -32,12 +33,45 @@
     import {
         handlePerformer,
     } from '#server/logic/commands';
+
+    import {
+        updateWorkRepository,
+    } from '#server/logic/repository';
     // #endregion external
 // #endregion imports
 
 
 
 // #region module
+export const readPerformerTrigger = async (
+    repositoryWorkPath: string,
+    trigger: Trigger,
+) => {
+    const performerFilePath = path.join(
+        repositoryWorkPath,
+        '/' + trigger.file,
+    );
+    const performerFile = await fs.readFile(performerFilePath, 'utf-8');
+    const performerObject = yaml.safeLoad(performerFile);
+
+    if (!performerObject || typeof performerObject === 'string') {
+        return;
+    }
+
+    const performerData: any = performerObject;
+
+    const performer: Performer = {
+        ...performerData,
+        timeout: performerData.timeout ?? 600,
+    };
+
+    return {
+        performer,
+        performerFilePath,
+    };
+}
+
+
 export const triggerBuild = async (
     buildData: BuildData,
 ) => {
@@ -59,47 +93,29 @@ export const triggerBuild = async (
             repositoryWorkPath,
         );
 
-        const gitCommandFetchOrigin = 'git fetch origin';
-        const gitCommandResetHardBranch = `git reset --hard origin/${branchName}`;
-
-        execSync(gitCommandFetchOrigin, {
-            cwd: repositoryWorkPath,
-            stdio: 'ignore',
-        });
-        execSync(gitCommandResetHardBranch, {
-            cwd: repositoryWorkPath,
-            stdio: 'ignore',
-        });
-
-
-        const performerFilePath = path.join(
+        await updateWorkRepository(
+            branchName,
             repositoryWorkPath,
-            '/' + trigger.file,
         );
-        const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-        const performerObject = yaml.safeLoad(performerFile);
 
-        if (!performerObject || typeof performerObject === 'string') {
+        const performerTriggerData = await readPerformerTrigger(
+            repositoryWorkPath,
+            trigger,
+        );
+
+        if (!performerTriggerData) {
             return;
         }
 
-        const performerData: any = performerObject;
-
-        const performer: Performer = {
-            ...performerData,
-            timeout: performerData.timeout ?? 600,
-        };
-
         handlePerformer(
             buildData,
-            performer,
+            performerTriggerData,
             repositoryWorkPath,
-            performerFilePath,
             trigger.project,
         );
     } catch (error) {
         if (logLevel <= logLevels.error) {
-            console.log('[Performer Error 500] :: triggerBuild', error);
+            console.log('[Performer Error] :: triggerBuild', error);
         }
 
         return;

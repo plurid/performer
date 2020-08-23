@@ -15,6 +15,7 @@
     import {
         logLevel,
         logLevels,
+        codeProvider,
     } from '#server/data/constants';
 
     import {
@@ -83,6 +84,7 @@ const handleGithubWebhook = async (
 
         await updateRootRepository(
             repositoryName,
+            codeProvider.github,
         );
 
         const commit: Commit = {
@@ -96,6 +98,7 @@ const handleGithubWebhook = async (
             commit,
             branchName,
             repositoryName,
+            codeProvider.github,
         );
 
         if (logLevel <= logLevels.info) {
