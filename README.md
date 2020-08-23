@@ -174,6 +174,7 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg PERFORMER_STORAGE_TYPE= \
     --build-arg PERFORMER_STORAGE_BUCKET= \
     --build-arg PERFORMER_STORAGE_ROOT_PATH= \
+    --build-arg PERFORMER_BASE_PATH= \
     --build-arg PERFORMER_AWS_API_VERSION= \
     --build-arg PERFORMER_AWS_REGION= \
     --build-arg PERFORMER_AWS_ACCESS_KEY_ID= \
