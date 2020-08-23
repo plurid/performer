@@ -19,7 +19,7 @@
 
     import {
         triggerBuild,
-    } from '#server/logic/build';
+    } from '#server/logic/build/triggerBuild';
 
     import {
         loadBuildsQueued,
