@@ -648,7 +648,8 @@ export const runInContainer = (
         //     },
         // );
 
-        const workDir = workDirectoryPath.replace('/app/data', '') + workingDir;
+        const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
+        console.log('workDir', workDir);
 
         const container = await docker.createContainer({
             Image: imagene,
@@ -656,8 +657,8 @@ export const runInContainer = (
             Cmd,
             Env,
             Volumes: {
+                // '/performer-volume': {},
                 '/app': {},
-                // '/': {},
             },
             HostConfig: {
                 Binds: [
