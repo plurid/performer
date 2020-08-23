@@ -695,8 +695,17 @@ export const runInContainer = (
                 streamData.join(''),
             );
 
-            await container.stop();
-            await container.remove();
+            try {
+                await container.stop();
+                await container.remove();
+            } catch (error) {
+                try {
+                    await container.remove();
+                } catch (error) {
+                    resolve();
+                    return;
+                }
+            }
 
             resolve();
         });
