@@ -254,7 +254,7 @@ export const runInContainer = (
     imagene: string,
     environment: string[],
 ) => {
-    console.log('runInContainer', stage);
+    // console.log('runInContainer', stage);
 
     const {
         command,
@@ -303,13 +303,15 @@ export const runInContainer = (
 
         const workingDirectory = IN_CONTAINER_USAGE
             ? workDirectoryPath + workingDir
-            : '/app/data';
+            : '/app' + workingDir;
         console.log('workingDirectory', workingDirectory);
 
         const hostBind = IN_CONTAINER_USAGE
             ? 'performer-volume'
             : workDirectoryPath;
-        const containerDirectory = '/app/data';
+        const containerDirectory = IN_CONTAINER_USAGE
+            ? '/app/data'
+            : '/app';
 
         const Volumes: any = {};
         Volumes[containerDirectory] = {};

@@ -70,7 +70,6 @@ class BuildQueueWatcher {
             );
 
             const exists = syncFs.existsSync(filepath);
-            console.log('exists', exists, filepath)
             if (!exists) {
                 return;
             }
@@ -92,7 +91,6 @@ class BuildQueueWatcher {
             filename,
         ) => {
             if (event === 'rename') {
-                console.log('startWatcher', event, filename);
                 this.handleFile(filename);
             }
         });
