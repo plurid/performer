@@ -296,7 +296,9 @@ export const runInContainer = (
         // const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
         // console.log('workDir', workDir);
 
-        const workingDirectory = workDirectoryPath + workingDir;
+        const workingDirectory = IN_CONTAINER_USAGE
+            ? workDirectoryPath + workingDir
+            : '/app/data';
         console.log('workingDirectory', workingDirectory);
 
         const hostBind = IN_CONTAINER_USAGE

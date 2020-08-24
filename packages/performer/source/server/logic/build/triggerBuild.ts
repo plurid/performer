@@ -6,10 +6,6 @@
 
     import path from 'path';
 
-    import {
-        execSync,
-    } from 'child_process';
-
     import yaml from 'js-yaml';
     // #endregion libraries
 
