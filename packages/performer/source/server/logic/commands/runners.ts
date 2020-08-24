@@ -24,6 +24,7 @@
         DOCKER_AUTH_USERNAME,
         DOCKER_AUTH_PASSWORD,
         DOCKER_AUTH_SERVER_ADDRESS,
+        IN_CONTAINER_USAGE,
     } from '#server/data/constants';
 
     import docker from '#server/logic/engine';
@@ -298,7 +299,9 @@ export const runInContainer = (
         const workingDirectory = workDirectoryPath + workingDir;
         console.log('workingDirectory', workingDirectory);
 
-        const hostBind = 'performer-volume';
+        const hostBind = IN_CONTAINER_USAGE
+            ? 'performer-volume'
+            : workDirectoryPath;
         const containerDirectory = '/app/data';
 
         const Volumes: any = {};
