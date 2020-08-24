@@ -31,4 +31,14 @@ export const PRIVATE_USAGE = process.env.PERFORMER_PRIVATE_USAGE === 'true'
 export const PRIVATE_OWNER_IDENTONYM = process.env.PERFORMER_PRIVATE_OWNER_IDENTONYM || '';
 export const PRIVATE_OWNER_KEY = process.env.PERFORMER_PRIVATE_OWNER_KEY || '';
 export const PRIVATE_TOKEN = process.env.PERFORMER_PRIVATE_TOKEN || '';
+
+
+
+export const DOCKER_AUTH_USERNAME = process.env.DOCKER_AUTH_USERNAME || '';
+export const DOCKER_AUTH_PASSWORD = process.env.DOCKER_AUTH_PASSWORD || '';
+export const DOCKER_AUTH_SERVER_ADDRESS = process.env.DOCKER_AUTH_SERVER_ADDRESS || 'https://index.docker.io/v2/';
+
+
+
+export const IN_CONTAINER_USAGE = process.env.PERFORMER_IN_CONTAINER_USAGE === 'true';
 // #endregion module

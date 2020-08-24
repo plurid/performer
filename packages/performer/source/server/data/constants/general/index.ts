@@ -27,7 +27,7 @@ export const BITBUCKET_PROVIDER = 'bitbucket';
 export const codeProvider: CodeProviderData = {
     github: GITHUB_PROVIDER,
     bitbucket: BITBUCKET_PROVIDER,
-}
+};
 
 
 export const BASE_PATH = process.env.PERFORMER_BASE_PATH || process.cwd();
@@ -63,10 +63,4 @@ export const buildQueuePath = path.join(BASE_PATH, BASE_PATH_BUILD_QUEUE);
 export const deploysPath = path.join(BASE_PATH, BASE_PATH_DEPLOYS);
 export const deployLogsPath = path.join(BASE_PATH, BASE_PATH_DEPLOY_LOGS);
 export const deployQueuePath = path.join(BASE_PATH, BASE_PATH_DEPLOY_QUEUE);
-
-
-
-export const DOCKER_AUTH_USERNAME = process.env.DOCKER_AUTH_USERNAME || '';
-export const DOCKER_AUTH_PASSWORD = process.env.DOCKER_AUTH_PASSWORD || '';
-export const DOCKER_AUTH_SERVER_ADDRESS = process.env.DOCKER_AUTH_SERVER_ADDRESS || 'https://index.docker.io/v2/';
 // #endregion module
