@@ -89,13 +89,16 @@ export const runDockerCommand = async (
                 command,
             );
 
-            const dockerFileContext = path.join(
-                workDirectoryPath,
-                directory || '/',
-                dockerfile.replace('dockerfile', ''),
-            );
-            console.log('dockerFileContext', dockerFileContext);
+            // const dockerFileContext = path.join(
+            //     workDirectoryPath,
+            //     directory || '/',
+            //     dockerfile.replace('dockerfile', ''),
+            // );
+            // console.log('dockerFileContext', dockerFileContext);
 
+            /**
+             * if the last argument of the docker command is .
+             */
             const dockerContext = path.join(
                 workDirectoryPath,
                 directory || '/',
@@ -104,14 +107,16 @@ export const runDockerCommand = async (
 
             const srcFiles = await fs.readdir(dockerContext);
 
+
             const image = await docker.buildImage(
                 {
-                    context: dockerFileContext,
+                    context: dockerContext,
                     src: [
                         ...srcFiles,
                     ],
                 },
                 {
+                    dockerfile,
                     t: tag,
                 },
             );
