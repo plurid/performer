@@ -185,6 +185,7 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg PERFORMER_PRIVATE_OWNER_IDENTONYM= \
     --build-arg PERFORMER_PRIVATE_OWNER_KEY= \
     --build-arg PERFORMER_PRIVATE_TOKEN= \
+    --build-arg PERFORMER_IN_CONTAINER_USAGE= \
     .
 ```
 
