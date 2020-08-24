@@ -16,24 +16,17 @@
 
     // #region external
     import {
-        Build,
-        Performer,
         PerformerStage,
-        BuildData,
         PerformContext,
     } from '#server/data/interfaces';
 
     import {
-        BASE_PATH,
-
         DOCKER_AUTH_USERNAME,
         DOCKER_AUTH_PASSWORD,
         DOCKER_AUTH_SERVER_ADDRESS,
     } from '#server/data/constants';
 
     import docker from '#server/logic/engine';
-
-    import database from '#server/services/database';
 
     import {
         saveBuildlog,
@@ -45,8 +38,6 @@
     import {
         resolveDockerFile,
         resolveDockerTag,
-        resolveImagene,
-        resolveSecrets,
     } from './resolvers';
     // #endregion internal
 // #endregion imports
@@ -274,7 +265,13 @@ export const runInContainer = (
         const containerName = uuid.generate();
 
         // const workingDir = '/app' + (directory || '');
-        const workingDir = '/' + (directory || '');
+        const cleanDirectory = directory
+            ? directory.startsWith('/')
+                ? directory.slice(1)
+                : directory
+            : '';
+
+        const workingDir = '/' + cleanDirectory;
         console.log('workingDir', workingDir);
 
         const Env = [
@@ -297,25 +294,34 @@ export const runInContainer = (
 
         // const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
         // console.log('workDir', workDir);
-        const workDir = workDirectoryPath + workingDir;
-        console.log('workDir', workDir);
+
+        const workingDirectory = workDirectoryPath + workingDir;
+        console.log('workingDirectory', workingDirectory);
+
+        const hostBind = 'performer-volume';
+        const containerDirectory = '/app/data';
+
+        const Volumes: any = {};
+        Volumes[containerDirectory] = {};
 
         const container = await docker.createContainer({
             Image: imagene,
             name: containerName,
             Cmd,
             Env,
-            Volumes: {
-                // '/performer-volume': {},
-                '/app/data': {},
-            },
+            Volumes,
+            // Volumes: {
+            //     // '/performer-volume': {},
+            //     '/app/data': {},
+            // },
             HostConfig: {
                 Binds: [
                     // `${workDirectoryPath}:/app`,
-                    'performer-volume:/app/data',
+                    // 'performer-volume:/app/data',
+                    `${hostBind}:${containerDirectory}`,
                 ],
             },
-            WorkingDir: workDir,
+            WorkingDir: workingDirectory,
         });
 
         await container.start();
