@@ -309,9 +309,12 @@ export const runInContainer = (
         const hostBind = IN_CONTAINER_USAGE
             ? 'performer-volume'
             : workDirectoryPath;
+        console.log('hostBind', hostBind);
+
         const containerDirectory = IN_CONTAINER_USAGE
             ? '/app/data'
             : '/app';
+        console.log('containerDirectory', containerDirectory);
 
         const Volumes: any = {};
         Volumes[containerDirectory] = {};
