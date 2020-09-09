@@ -338,6 +338,7 @@ export const runInContainer = (
                 ],
             },
             WorkingDir: workingDirectory,
+            NetworkDisabled: false,
         });
 
         await container.start();
