@@ -25,6 +25,7 @@
         DOCKER_AUTH_PASSWORD,
         DOCKER_AUTH_SERVER_ADDRESS,
         IN_CONTAINER_USAGE,
+        IN_CONTAINER_HOST_BIND,
     } from '#server/data/constants';
 
     import docker from '#server/logic/engine';
@@ -307,8 +308,7 @@ export const runInContainer = (
         console.log('workingDirectory', workingDirectory);
 
         const hostBind = IN_CONTAINER_USAGE
-            // ? 'performer-volume'
-            ? '/app/data/performer/'
+            ? IN_CONTAINER_HOST_BIND
             : workDirectoryPath;
         console.log('hostBind', hostBind);
 
@@ -338,7 +338,7 @@ export const runInContainer = (
                 ],
             },
             WorkingDir: workingDirectory,
-            NetworkDisabled: false,
+            // NetworkDisabled: false,
         });
 
         await container.start();
