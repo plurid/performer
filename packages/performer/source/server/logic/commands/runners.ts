@@ -307,7 +307,8 @@ export const runInContainer = (
         console.log('workingDirectory', workingDirectory);
 
         const hostBind = IN_CONTAINER_USAGE
-            ? 'performer-volume'
+            // ? 'performer-volume'
+            ? '/app/data'
             : workDirectoryPath;
         console.log('hostBind', hostBind);
 
