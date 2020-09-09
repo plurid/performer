@@ -652,6 +652,13 @@
   dependencies:
     mkdirp "^1.0.4"
 
+"@plurid/deon@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@plurid/deon/-/deon-0.0.4.tgz#c8980de4a5aa2cc1b702b9b058774146212147ad"
+  integrity sha512-ipjJZctr3eaecDkYtvEbA3RXVT8wMz/4E2csvMblNp786MDfxEvpqqQw3rDDUfABZy/sZTcNCMDmtOwH9bW1eA==
+  dependencies:
+    cross-fetch "^3.0.5"
+
 "@plurid/plurid-data@^0.1.159":
   version "0.1.159"
   resolved "https://registry.yarnpkg.com/@plurid/plurid-data/-/plurid-data-0.1.159.tgz#e07dc2a8eb4508b4438226ac8cc6d23ea8457abb"

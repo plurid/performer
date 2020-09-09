@@ -7,6 +7,11 @@
     import path from 'path';
 
     import yaml from 'js-yaml';
+
+    import Deon, {
+        typer,
+        DEON_FILENAME_EXTENSION,
+    } from '@plurid/deon';
     // #endregion libraries
 
 
@@ -39,14 +44,44 @@
 
 
 // #region module
+export const parseDeonTrigger = async (
+    performerFilePath: string,
+) => {
+    const deon = new Deon();
+    const data = await deon.parseFile(performerFilePath);
+    const typedData = typer(data);
+
+    return typedData;
+}
+
+
 export const readPerformerTrigger = async (
     repositoryWorkPath: string,
     trigger: Trigger,
 ) => {
+    const extension = path.extname(trigger.file);
+
     const performerFilePath = path.join(
         repositoryWorkPath,
         '/' + trigger.file,
     );
+
+    if (extension === DEON_FILENAME_EXTENSION) {
+        const performerObject = await parseDeonTrigger(
+            performerFilePath,
+        );
+
+        const performer: Performer = {
+            ...performerObject,
+            timeout: performerObject.timeout ?? 600,
+        };
+
+        return {
+            performer,
+            performerFilePath,
+        };
+    }
+
     const performerFile = await fs.readFile(performerFilePath, 'utf-8');
     const performerObject = yaml.safeLoad(performerFile);
 
