@@ -55,7 +55,7 @@ export const runDockerCommand = async (
     commit: string,
     environment: string[],
 ) => {
-    console.log('runDockerCommand', stage);
+    // console.log('runDockerCommand', stage);
 
     const {
         command,
@@ -104,7 +104,7 @@ export const runDockerCommand = async (
                 workDirectoryPath,
                 directory || '/',
             );
-            console.log('dockerContext', dockerContext);
+            // console.log('dockerContext', dockerContext);
 
             const srcFiles = await fs.readdir(dockerContext);
 
@@ -150,7 +150,7 @@ export const runDockerCommand = async (
             image.pipe(logStream);
 
             logStream.on('error', (error) => {
-                console.log('runDockerCommand build error', error);
+                console.log('[Performer] :: runDockerCommand build error', error);
             });
 
             logStream.on('end', async () => {
@@ -265,13 +265,11 @@ export const runInContainer = (
     const {
         workDirectoryPath,
     } = performContext;
-
-    console.log('workDirectoryPath', workDirectoryPath);
+    // console.log('workDirectoryPath', workDirectoryPath);
 
     return new Promise (async (resolve, reject) => {
         const containerName = uuid.generate();
 
-        // const workingDir = '/app' + (directory || '');
         const cleanDirectory = directory
             ? directory.startsWith('/')
                 ? directory.slice(1)
@@ -279,7 +277,7 @@ export const runInContainer = (
             : '';
 
         const workingDir = '/' + cleanDirectory;
-        console.log('workingDir', workingDir);
+        // console.log('workingDir', workingDir);
 
         const Env = [
             ...environment,
@@ -289,33 +287,20 @@ export const runInContainer = (
             ? command.split(' ')
             : command;
 
-        // const outsidePath = workDirectoryPath.replace('/app/', '/home/ly3xqhl8g9/Documents/Workarea/performer/packages/performer/');
-        // console.log('outsidePath', outsidePath);
-
-        // const volumeName = uuid.generate();
-        // const volume = await docker.createVolume(
-        //     {
-        //         Name: volumeName,
-        //     },
-        // );
-
-        // const workDir = '/app/' + workDirectoryPath.replace('/app/data', '') + workingDir;
-        // console.log('workDir', workDir);
-
         const workingDirectory = IN_CONTAINER_USAGE
             ? workDirectoryPath + workingDir
             : '/app' + workingDir;
-        console.log('workingDirectory', workingDirectory);
+        // console.log('workingDirectory', workingDirectory);
 
         const hostBind = IN_CONTAINER_USAGE
             ? IN_CONTAINER_HOST_BIND
             : workDirectoryPath;
-        console.log('hostBind', hostBind);
+        // console.log('hostBind', hostBind);
 
         const containerDirectory = IN_CONTAINER_USAGE
             ? '/app/data'
             : '/app';
-        console.log('containerDirectory', containerDirectory);
+        // console.log('containerDirectory', containerDirectory);
 
         const Volumes: any = {};
         Volumes[containerDirectory] = {};
@@ -326,19 +311,12 @@ export const runInContainer = (
             Cmd,
             Env,
             Volumes,
-            // Volumes: {
-            //     // '/performer-volume': {},
-            //     '/app/data': {},
-            // },
             HostConfig: {
                 Binds: [
-                    // `${workDirectoryPath}:/app`,
-                    // 'performer-volume:/app/data',
                     `${hostBind}:${containerDirectory}`,
                 ],
             },
             WorkingDir: workingDirectory,
-            // NetworkDisabled: false,
         });
 
         await container.start();
@@ -363,7 +341,7 @@ export const runInContainer = (
         );
 
         readableStream.on('error', (error) => {
-            console.log('runInContainer error', error);
+            console.log('[Performr] :: runInContainer error', error);
         });
 
         readableStream.on('end', async () => {
