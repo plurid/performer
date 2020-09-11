@@ -73,7 +73,7 @@ export const handlePerformer = async (
     };
 
     for (const [index, stage] of stages.entries()) {
-        console.log('Running stage', index, stage);
+        // console.log('Running stage', index, stage);
         await handleStage(
             id,
             stage,
