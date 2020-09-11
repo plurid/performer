@@ -90,13 +90,6 @@ export const runDockerCommand = async (
                 command,
             );
 
-            // const dockerFileContext = path.join(
-            //     workDirectoryPath,
-            //     directory || '/',
-            //     dockerfile.replace('dockerfile', ''),
-            // );
-            // console.log('dockerFileContext', dockerFileContext);
-
             /**
              * if the last argument of the docker command is .
              */
@@ -218,12 +211,14 @@ export const runDockerCommand = async (
                 logStream.on('end', async () => {
                     logStream.end();
 
-                    saveBuildlog(
+                    await saveBuildlog(
                         commandText,
                         id,
                         index,
                         streamData.join(''),
                     );
+
+                    await docker.getImage(tag).remove();
 
                     resolve();
                 });
