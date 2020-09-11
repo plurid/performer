@@ -6,6 +6,14 @@
 
     import ncp from 'ncp';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        logLevel,
+        logLevels,
+    } from '#server/data/constants';
+    // #endregion external
 // #endregion imports
 
 
@@ -50,6 +58,16 @@ export const copyDirectory = async (
 export const obliterateDirectory = async (
     target: string,
 ) => {
-    await promisesFS.unlink(target);
+    try {
+        await promisesFS.rmdir(target, {
+            recursive: true,
+        });
+    } catch (error) {
+        if (logLevel <= logLevels.error) {
+            console.log('[Performer Error] :: obliterateDirectory', error);
+        }
+
+        return;
+    }
 }
 // #endregion module
