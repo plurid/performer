@@ -1,6 +1,8 @@
 // #region imports
     // #region libraries
-    import fs from 'fs';
+    import fs, {
+        promises as promisesFS,
+    } from 'fs';
 
     import ncp from 'ncp';
     // #endregion libraries
@@ -42,5 +44,12 @@ export const copyDirectory = async (
             resolve();
         });
     });
+}
+
+
+export const obliterateDirectory = async (
+    target: string,
+) => {
+    await promisesFS.unlink(target);
 }
 // #endregion module

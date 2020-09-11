@@ -9,6 +9,10 @@
     } from '#server/data/interfaces';
 
     import database from '#server/services/database';
+
+    import {
+        obliterateDirectory,
+    } from '#server/utilities';
     // #endregion external
 
 
@@ -102,6 +106,10 @@ export const handlePerformer = async (
         'build',
         id,
         build,
+    );
+
+    await obliterateDirectory(
+        workDirectoryPath,
     );
 }
 
