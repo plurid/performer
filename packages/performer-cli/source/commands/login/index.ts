@@ -1,18 +1,5 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import Deon from '@plurid/deon';
-    // #endregion libraries
-
-
     // #region external
-    import {
-        performerConfigurationPath
-    } from '../../data/constants';
-
     import client from '../../services/graphql/client';
 
     import {
@@ -22,6 +9,10 @@
     import {
         extractServerName,
     } from '../../services/utilities';
+
+    import {
+        updateConfigurationFile,
+    } from '../../services/utilities/configuration';
     // #endregion external
 // #endregion imports
 
@@ -42,7 +33,7 @@ const login = async (
     const data = {
         server,
         identonym,
-        key
+        key,
     };
 
     try {
@@ -63,13 +54,11 @@ const login = async (
             return;
         }
 
-        const deon = new Deon();
-        const deonData = deon.stringify(data);
-
-        await fs.writeFile(
-            performerConfigurationPath,
-            deonData,
-        );
+        // HACK
+        // to allow the token writing inside the apollo afterwareLink
+        setTimeout(async () => {
+            await updateConfigurationFile(data);
+        }, 1000);
 
         console.log(`Logged in the performer server '${serverName}' as '${identonym}'.`);
     } catch (error) {

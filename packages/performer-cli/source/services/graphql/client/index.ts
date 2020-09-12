@@ -6,11 +6,17 @@
         ApolloClient,
         HttpLink,
         ApolloLink,
-        createHttpLink,
         InMemoryCache,
         from,
     } from '@apollo/client';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        updateConfigurationFile,
+    } from '../../utilities/configuration';
+     // #endregion external
 // #endregion imports
 
 
@@ -30,38 +36,47 @@ const client = (
     });
 
     const afterwareLink = new ApolloLink((operation, forward) => {
-        return forward(operation).map(response => {
-            const context = operation.getContext()
+        return forward(operation).map((response) => {
+            const context = operation.getContext();
             const {
                 response: { headers },
             } = context;
 
-            console.log(headers);
+            if (!headers) {
+                return response;
+            }
 
-            // if (headers) {
-            //     const refreshToken = headers.get('refreshToken')
-            //     if (refreshToken) {
-            //     localStorage.setItem(AUTH_TOKEN, refreshToken)
-            //     }
-            // }
+            const cookie = headers.get('set-cookie');
+            if (!cookie) {
+                return response;
+            }
 
-            return response
+            const split = cookie.split(';');
+            const privateToken = split[0];
+            if (!privateToken) {
+                return response;
+            }
+
+            const privateTokenValue = privateToken.replace('PVTTKN=', '');
+            if (!privateTokenValue) {
+                return response;
+            }
+
+            const data = {
+                token: privateTokenValue,
+            };
+
+            updateConfigurationFile(data);
+
+            return response;
         });
-    })
+    });
 
     return new ApolloClient({
         link: from([
             afterwareLink,
             httpLink,
         ]),
-        // link: createHttpLink({
-        //     uri,
-        //     credentials: 'include',
-        //     fetch,
-        //     headers: {
-        //         Cookie: cookie,
-        //     },
-        // }),
         cache: new InMemoryCache(),
     });
 };
