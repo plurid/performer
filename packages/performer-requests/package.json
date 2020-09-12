@@ -1,0 +1,62 @@
+{
+    "name": "@plurid/performer-requests",
+    "version": "0.0.0",
+    "description": "Requests for Performer",
+    "keywords": [
+        "performer",
+        "api",
+        "requests"
+    ],
+    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/plurid/performer"
+    },
+    "bugs": {
+        "email": "source@plurid.com",
+        "url": "https://github.com/plurid/performer/issues"
+    },
+    "homepage": "https://github.com/plurid/performer/blob/master/packages/performer-requests/README.md",
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "main": "distribution/index.js",
+    "module": "distribution/index.es.js",
+    "typings": "distribution/index.d.ts",
+    "files": [
+        "distribution"
+    ],
+    "preferGlobal": true,
+    "scripts": {
+        "start": "rollup -c ./scripts/rollup.config.ts -w",
+        "build": "rollup -c ./scripts/rollup.config.ts",
+        "prebuild": "rm -rf distribution",
+        "prepublishOnly": "yarn build"
+    },
+    "peerDependencies": {
+        "@apollo/client": ">=3.1",
+        "graphql": ">=15.3",
+        "graphql-tag": ">=2.11",
+        "subscriptions-transport-ws": ">=0.9.18"
+    },
+    "devDependencies": {
+        "@apollo/client": "^3.1.5",
+        "@rollup/plugin-commonjs": "^15.0.0",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "@types/node": "^14.10.1",
+        "@typescript-eslint/eslint-plugin": "^4.1.0",
+        "@typescript-eslint/parser": "^4.1.0",
+        "eslint": "^7.8.1",
+        "graphql": "^15.3.0",
+        "graphql-tag": "^2.11.0",
+        "rollup": "^2.26.11",
+        "rollup-plugin-typescript2": "^0.27.2",
+        "subscriptions-transport-ws": "^0.9.18",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.2"
+    }
+}
