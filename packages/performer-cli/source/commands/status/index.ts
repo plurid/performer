@@ -2,7 +2,7 @@
     // #region external
     import {
         readConfigurationFile,
-    } from '../../services/utilities/configuration';
+    } from '../../services/utilities';
     // #endregion external
 // #endregion imports
 

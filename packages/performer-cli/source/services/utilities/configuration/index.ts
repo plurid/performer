@@ -1,6 +1,6 @@
 // #region imports
     // #region libraries
-    import syncFS, {
+    import {
         promises as fs,
     } from 'fs';
 
@@ -16,6 +16,10 @@
     import {
         performerConfigurationPath,
     } from '../../../data/constants';
+
+    import {
+        fileExists,
+    } from '../general';
     // #endregion external
 // #endregion imports
 
@@ -28,7 +32,7 @@ const updateConfigurationFile = async (
     try {
         const deon = new Deon();
 
-        const exists = syncFS.existsSync(performerConfigurationPath);
+        const exists = await fileExists(performerConfigurationPath);
 
         if (!exists) {
             await fs.writeFile(

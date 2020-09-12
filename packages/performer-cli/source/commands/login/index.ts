@@ -1,18 +1,15 @@
 // #region imports
     // #region external
     import client from '../../services/graphql/client';
-
     import {
         LOGIN,
     } from '../../services/graphql/mutate';
 
     import {
         extractServerName,
-    } from '../../services/utilities';
 
-    import {
         updateConfigurationFile,
-    } from '../../services/utilities/configuration';
+    } from '../../services/utilities';
     // #endregion external
 // #endregion imports
 
