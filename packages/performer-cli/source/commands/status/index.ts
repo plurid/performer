@@ -2,6 +2,7 @@
     // #region external
     import {
         readConfigurationFile,
+        extractServerName,
     } from '../../services/utilities';
     // #endregion external
 // #endregion imports
@@ -22,7 +23,9 @@ const status = async () => {
         return;
     }
 
-    console.log(`Logged in the performer server '${ownerData.server}' as '${ownerData.identonym}'.`);
+    const serverName = extractServerName(ownerData.server);
+
+    console.log(`Logged into the performer server '${serverName}' as '${ownerData.identonym}'.`);
 }
 // #endregion module
 
