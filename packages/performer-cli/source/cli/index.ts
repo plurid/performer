@@ -40,7 +40,7 @@ const main = async (
         .command('status')
         .description('show the connection status')
         .action(async () => {
-            console.log('Logged in the performer server.');
+            await status();
         });
 
     program
@@ -59,17 +59,18 @@ const main = async (
             'key',
         )
         .action(async (options: any) => {
-            console.log('server', options.server);
-            console.log('identonym', options.identonym);
-            console.log('key', options.key);
-            console.log('Logged in the performer server.');
+            await login(
+                options.server,
+                options.identonym,
+                options.key,
+            );
         });
 
     program
         .command('logout')
         .description('log out of the performer server')
         .action(async () => {
-            console.log('Logged out of the performer server.');
+            await logout();
         });
 
 
