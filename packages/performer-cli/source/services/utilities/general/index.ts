@@ -4,21 +4,6 @@
         promises as fs,
     } from 'fs';
     // #endregion libraries
-
-
-    // #region external
-    import {
-        PERFORMER_COOKIE,
-    } from '../../../data/constants';
-
-    import {
-        client,
-    } from '../../graphql';
-
-    import {
-        readConfigurationFile,
-    } from '../configuration';
-    // #endregion external
 // #endregion imports
 
 
@@ -73,31 +58,6 @@ const extractServerName = (
 ) => {
     return server.replace(/https?:\/\//, '');
 }
-
-
-const performerCookieFromToken = (
-    token: string,
-) => {
-    return PERFORMER_COOKIE + '=' + token;
-}
-
-
-const getPerformer = async () => {
-    const configuration = await readConfigurationFile();
-
-    if (!configuration.token || !configuration.server) {
-        return;
-    }
-
-    const cookie = performerCookieFromToken(configuration.token);
-
-    const performer = client(
-        configuration.server,
-        cookie,
-    );
-
-    return performer;
-}
 // #endregion module
 
 
@@ -107,7 +67,5 @@ export {
     fileExists,
     debouncedCallback,
     extractServerName,
-    performerCookieFromToken,
-    getPerformer,
 };
 // #endregion exports
