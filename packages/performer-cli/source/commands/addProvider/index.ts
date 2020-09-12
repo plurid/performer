@@ -29,7 +29,7 @@ const addProvider = async (
     const data = await readConfigurationFile();
 
     if (!data.token) {
-        console.log('Could not add token. Not logged in.');
+        console.log('Could not add provider. Not logged in.');
         return;
     }
 
@@ -57,7 +57,7 @@ const addProvider = async (
         const response = mutation.data.addProvider;
 
         if (!response.status) {
-            console.log('Could not add token. Something went wrong.');
+            console.log('Could not add provider. Something went wrong.');
             return;
         }
 
@@ -65,7 +65,7 @@ const addProvider = async (
 
         return;
     } catch (error) {
-        console.log('Could not add token. Something went wrong.');
+        console.log('Could not add provider. Something went wrong.');
         return;
     }
 }
