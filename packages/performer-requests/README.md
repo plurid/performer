@@ -198,9 +198,9 @@ docker build --file ./configurations/production.dockerfile \
     <img src="https://img.shields.io/npm/v/@plurid/performer.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
 </a>
 
-[@plurid/performer][performer] • the server application
+[@plurid/performer][performer-server] • the server application
 
-[performer]: https://github.com/plurid/datasign/tree/master/packages/performer
+[performer-server]: https://github.com/plurid/datasign/tree/master/packages/performer-server
 
 
 <a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-cli">

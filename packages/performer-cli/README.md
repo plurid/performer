@@ -198,9 +198,9 @@ docker build --file ./configurations/production.dockerfile \
     <img src="https://img.shields.io/npm/v/@plurid/performer.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
 </a>
 
-[@plurid/performer][performer] • the server application
+[@plurid/performer][performer-server] • the server application
 
-[performer]: https://github.com/plurid/datasign/tree/master/packages/performer
+[performer-server]: https://github.com/plurid/datasign/tree/master/packages/performer-server
 
 
 <a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-cli">
@@ -210,3 +210,12 @@ docker build --file ./configurations/production.dockerfile \
 [@plurid/performer-cli][performer-cli] • the command-line interface
 
 [performer-cli]: https://github.com/plurid/datasign/tree/master/packages/performer-cli
+
+
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-requests">
+    <img src="https://img.shields.io/npm/v/@plurid/performer-requests.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/performer-requests][performer-requests] • the API requests
+
+[performer-requests]: https://github.com/plurid/datasign/tree/master/packages/performer-requests
