@@ -12,6 +12,16 @@
     import {
         performerConfigurationPath
     } from '../../data/constants';
+
+    import client from '../../services/graphql/client';
+
+    import {
+        LOGIN,
+    } from '../../services/graphql/mutate';
+
+    import {
+        extractServerName,
+    } from '../../services/utilities';
     // #endregion external
 // #endregion imports
 
@@ -23,25 +33,48 @@ const login = async (
     identonym: string,
     key: string,
 ) => {
+    const performer = client(
+        server,
+    );
+
+    const serverName = extractServerName(server);
+
     const data = {
         server,
         identonym,
         key
     };
 
-    const deon = new Deon();
-    const deonData = deon.stringify(data);
+    try {
+        const mutation = await performer.mutate({
+            mutation: LOGIN,
+            variables: {
+                input: {
+                    identonym,
+                    key,
+                },
+            },
+        });
 
-    // try to login into the server
-    // if true save file
-    // else return error
+        const response = mutation.data.login;
 
-    await fs.writeFile(
-        performerConfigurationPath,
-        deonData,
-    );
+        if (!response.status) {
+            console.log(`Could not log in into the performer server '${serverName}' as '${identonym}'.`);
+            return;
+        }
 
-    console.log(`Logged in the performer server '${server}' as '${identonym}'.`);
+        const deon = new Deon();
+        const deonData = deon.stringify(data);
+
+        await fs.writeFile(
+            performerConfigurationPath,
+            deonData,
+        );
+
+        console.log(`Logged in the performer server '${serverName}' as '${identonym}'.`);
+    } catch (error) {
+        console.log(`Could not log in into the performer server '${serverName}' as '${identonym}'.`);
+    }
 }
 // #endregion module
 

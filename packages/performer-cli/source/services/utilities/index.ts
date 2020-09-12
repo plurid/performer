@@ -44,3 +44,10 @@ export function debouncedCallback<A extends any[]>(
         }, wait);
     };
 }
+
+
+export const extractServerName = (
+    server: string,
+) => {
+    return server.replace(/https?:\/\//, '');
+}

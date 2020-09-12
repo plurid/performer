@@ -44,9 +44,13 @@
         "prepublishOnly": "yarn build"
     },
     "dependencies": {
+        "@apollo/client": "^3.1.5",
         "@plurid/deon": "^0.0.3",
         "commander": "^6.1.0",
-        "js-yaml": "^3.14.0"
+        "cross-fetch": "^3.0.6",
+        "graphql": "^15.3.0",
+        "js-yaml": "^3.14.0",
+        "subscriptions-transport-ws": "^0.9.18"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^15.0.0",
