@@ -4,6 +4,13 @@
         promises as fs,
     } from 'fs';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        PERFORMER_COOKIE,
+    } from '../../../data/constants';
+    // #endregion external
 // #endregion imports
 
 
@@ -58,6 +65,13 @@ const extractServerName = (
 ) => {
     return server.replace(/https?:\/\//, '');
 }
+
+
+const performerCookieFromToken = (
+    token: string,
+) => {
+    return PERFORMER_COOKIE + '=' + token;
+}
 // #endregion module
 
 
@@ -67,5 +81,6 @@ export {
     fileExists,
     debouncedCallback,
     extractServerName,
+    performerCookieFromToken,
 };
 // #endregion exports

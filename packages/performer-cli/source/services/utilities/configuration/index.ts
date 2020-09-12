@@ -72,7 +72,7 @@ const readConfigurationFile = async () => {
     );
 
     const deon = new Deon();
-    const ownerData = await deon.parse(data);
+    const ownerData: ConfigurationFile = await deon.parse(data);
 
     return ownerData;
 }

@@ -14,6 +14,10 @@
 
     // #region external
     import {
+        PERFORMER_COOKIE,
+    } from '../../../data/constants';
+
+    import {
         updateConfigurationFile,
     } from '../../utilities/configuration';
      // #endregion external
@@ -57,7 +61,7 @@ const client = (
                 return response;
             }
 
-            const privateTokenValue = privateToken.replace('PVTTKN=', '');
+            const privateTokenValue = privateToken.replace(PERFORMER_COOKIE + '=', '');
             if (!privateTokenValue) {
                 return response;
             }

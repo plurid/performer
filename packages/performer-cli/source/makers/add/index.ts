@@ -31,8 +31,8 @@ const makeAddCommand = (
         .command('provider')
         .description('add a provider')
         .requiredOption(
-            '-k, --kind <kind>',
-            'kind',
+            '-e, --type <type>',
+            'type',
         )
         .requiredOption(
             '-n, --name <name>',
@@ -44,7 +44,7 @@ const makeAddCommand = (
         )
         .action(async (options: any) => {
             await addProvider(
-                options.kind,
+                options.type,
                 options.name,
                 options.token,
             );

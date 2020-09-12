@@ -15,6 +15,8 @@ const performerConfigurationPath = path.join(
     homeDirectory,
     PERFORMER_CONFIGURATION_FILE
 );
+
+const PERFORMER_COOKIE = 'PVTTKN';
 // #endregion module
 
 
@@ -25,5 +27,7 @@ export {
 
     PERFORMER_CONFIGURATION_FILE,
     performerConfigurationPath,
+
+    PERFORMER_COOKIE,
 };
 // #endregion exports
