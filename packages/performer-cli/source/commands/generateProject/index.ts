@@ -28,7 +28,7 @@ const generateProject = async (
         }
 
         const input = {
-            name,
+            value: name,
         };
 
         const mutation = await performer.mutate({
