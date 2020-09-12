@@ -12,26 +12,27 @@
 const pkg = require('../package.json');
 
 
-const globals = {
-    commander: 'program',
-};
-
-
 export default {
     input: './source/index.ts',
     output: [
         {
             file: pkg.main,
             format: 'cjs',
-            globals,
         },
     ],
     external: [
-        'child_process',
-        'path',
         'fs',
-        'http',
+        'os',
+        'path',
         'events',
+        'child_process',
+        '@plurid/deon',
+        'https',
+        'http',
+        'url',
+        'stream',
+        'zlib',
+        'react',
     ],
     watch: {
         include: 'source/**',
