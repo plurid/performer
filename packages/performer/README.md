@@ -188,3 +188,25 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg PERFORMER_IN_CONTAINER_USAGE= \
     .
 ```
+
+
+
+## Packages
+
+
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/performer">
+    <img src="https://img.shields.io/npm/v/@plurid/performer.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/performer][performer] • the server application
+
+[performer]: https://github.com/plurid/datasign/tree/master/packages/performer
+
+
+<a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-cli">
+    <img src="https://img.shields.io/npm/v/@plurid/performer-cli.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
+</a>
+
+[@plurid/performer-cli][performer-cli] • the command-line interface
+
+[performer-cli]: https://github.com/plurid/datasign/tree/master/packages/performer-cli
