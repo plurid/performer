@@ -1,7 +1,7 @@
 {
     "name": "@plurid/performer-cli",
     "version": "0.0.0",
-    "description": "Command-Line Interface for Performr",
+    "description": "Command-Line Interface for Performer",
     "keywords": [
         "performer",
         "cli"
@@ -46,23 +46,22 @@
     "dependencies": {
         "@apollo/client": "^3.1.5",
         "@plurid/deon": "^0.0.8",
+        "@plurid/performer-requests": "^0.0.0",
         "commander": "^6.1.0",
         "cross-fetch": "^3.0.6",
         "graphql": "^15.3.0",
-        "js-yaml": "^3.14.0",
+        "graphql-tag": "^2.11.0",
         "subscriptions-transport-ws": "^0.9.18"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^15.0.0",
         "@rollup/plugin-node-resolve": "^9.0.0",
-        "@types/js-yaml": "^3.12.5",
         "@types/node": "^14.10.1",
         "@typescript-eslint/eslint-plugin": "^4.1.0",
         "@typescript-eslint/parser": "^4.1.0",
         "eslint": "^7.8.1",
         "jest": "^26.4.2",
         "jest-config": "^26.4.2",
-        "replace-in-file": "^6.1.0",
         "rollup": "^2.26.11",
         "rollup-plugin-typescript2": "^0.27.2",
         "ts-jest": "^26.3.0",

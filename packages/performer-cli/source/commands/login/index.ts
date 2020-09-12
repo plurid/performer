@@ -3,7 +3,7 @@
     import client from '../../services/graphql/client';
     import {
         LOGIN,
-    } from '../../services/graphql/mutate';
+    } from '@plurid/performer-requests';
 
     import {
         extractServerName,

@@ -531,6 +531,11 @@
   dependencies:
     cross-fetch "^3.0.6"
 
+"@plurid/performer-requests@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@plurid/performer-requests/-/performer-requests-0.0.0.tgz#d83bea5ccd4caefa0d4dcc3f7623ae84356ec965"
+  integrity sha512-2+4wxW2LhYeJeCFm5H3wNc3j1PiswRCiqOSaGAP6pvpGc+ga+0e3MxzpyYfH9lUx+baGGx3kH+U7d5OHusaPRw==
+
 "@rollup/plugin-commonjs@^15.0.0":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-15.0.0.tgz#690d15a9d54ba829db93555bff9b98ff34e08574"
@@ -668,11 +673,6 @@
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
-
-"@types/js-yaml@^3.12.5":
-  version "3.12.5"
-  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-3.12.5.tgz#136d5e6a57a931e1cce6f9d8126aa98a9c92a6bb"
-  integrity sha512-JCcp6J0GV66Y4ZMDAQCXot4xprYB+Zfd3meK9+INSJeVZwJmHAW30BBEEkPzXswMXuiyReUGOP3GxrADc9wPww==
 
 "@types/json-schema@^7.0.3":
   version "7.0.6"
@@ -2816,7 +2816,7 @@ jest@^26.4.2:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
-js-yaml@^3.13.1, js-yaml@^3.14.0:
+js-yaml@^3.13.1:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.14.0.tgz#a7a34170f26a21bb162424d8adacb4113a69e482"
   integrity sha512-/4IbIeHcD9VMHFqDR/gQ7EdZdLimOvW2DdcxFjdyyZ9NsbS+ccrXqVWDtab/lRl5AlUqmpBx8EhPaWR+OtY17A==
@@ -3547,15 +3547,6 @@ repeat-string@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha1-jcrkcOHIirwtYA//Sndihtp15jc=
-
-replace-in-file@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/replace-in-file/-/replace-in-file-6.1.0.tgz#9f9ddd7bb70d6ad231d2ad692e1b646e73d06647"
-  integrity sha512-URzjyF3nucvejuY13HFd7O+Q6tFJRLKGHLYVvSh+LiZj3gFXzSYGnIkQflnJJulCAI2/RTZaZkpOtdVdW0EhQA==
-  dependencies:
-    chalk "^4.0.0"
-    glob "^7.1.6"
-    yargs "^15.3.1"
 
 request-promise-core@1.1.4:
   version "1.1.4"
