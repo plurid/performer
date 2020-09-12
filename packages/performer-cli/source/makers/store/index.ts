@@ -4,6 +4,13 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        storeSecret,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -35,9 +42,17 @@ const makeStoreCommand = (
             'project',
         )
         .action(async (options: any) => {
-            console.log('name', options.name);
-            console.log('value', options.value);
-            console.log('project', options.project);
+            const {
+                name,
+                value,
+                project,
+            } = options;
+
+            await storeSecret(
+                name,
+                value,
+                project,
+            );
         });
 
     return store;

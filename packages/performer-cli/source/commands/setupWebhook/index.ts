@@ -1,6 +1,8 @@
 // #region module
-const setupWebhook = async () => {
-
+const setupWebhook = async (
+    path: string,
+) => {
+    console.log('path', path);
 }
 // #endregion module
 

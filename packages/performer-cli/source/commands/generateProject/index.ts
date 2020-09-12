@@ -1,6 +1,8 @@
 // #region module
-const generateProject = async () => {
-
+const generateProject = async (
+    name: string,
+) => {
+    console.log('name', name);
 }
 // #endregion module
 

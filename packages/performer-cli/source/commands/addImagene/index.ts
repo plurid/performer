@@ -1,5 +1,8 @@
 // #region module
-const addImagene = async () => {
+const addImagene = async (
+    name: string,
+) => {
+    console.log('name', name);
 
 }
 // #endregion module

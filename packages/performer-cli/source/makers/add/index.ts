@@ -4,6 +4,14 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        addProvider,
+        addImagene,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -35,9 +43,11 @@ const makeAddCommand = (
             'token',
         )
         .action(async (options: any) => {
-            console.log('kind', options.kind);
-            console.log('name', options.name);
-            console.log('token', options.token);
+            await addProvider(
+                options.kind,
+                options.name,
+                options.token,
+            );
         });
 
     add
@@ -48,7 +58,9 @@ const makeAddCommand = (
             'name',
         )
         .action(async (options: any) => {
-            console.log('name', options.name);
+            await addImagene(
+                options.name,
+            );
         });
 
     return add;

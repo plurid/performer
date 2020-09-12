@@ -1,6 +1,12 @@
 // #region module
-const storeSecret = async () => {
-
+const storeSecret = async (
+    name: string,
+    value: string,
+    project: string,
+) => {
+    console.log('name', name);
+    console.log('value', value);
+    console.log('project', project);
 }
 // #endregion module
 

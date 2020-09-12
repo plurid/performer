@@ -4,6 +4,13 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        linkRepository,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -26,12 +33,10 @@ const makeLinkCommand = (
             '-n, --name <name>',
             'name',
         )
-        .requiredOption(
-            '-p, --name <name>',
-            'name',
-        )
         .action(async (options: any) => {
-            console.log('name', options.name);
+            await linkRepository(
+                options.name,
+            );
         });
 
     return link;

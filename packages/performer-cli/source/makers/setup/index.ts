@@ -4,6 +4,13 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        setupWebhook,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -27,7 +34,9 @@ const makeSetupCommand = (
             'path',
         )
         .action(async (options: any) => {
-            console.log('kind', options.path);
+            await setupWebhook(
+                options.path
+            );
         });
 
     return setup;

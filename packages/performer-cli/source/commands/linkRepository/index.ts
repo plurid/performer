@@ -1,6 +1,8 @@
 // #region module
-const linkRepository = async () => {
-
+const linkRepository = async (
+    name: string,
+) => {
+    console.log('name', name);
 }
 // #endregion module
 
