@@ -7,6 +7,7 @@
     import {
         readConfigurationFile,
         updateConfigurationFile,
+        extractServerName,
     } from '../../services/utilities';
     // #endregion external
 // #endregion imports
@@ -30,7 +31,9 @@ const logout = async () => {
     };
     await updateConfigurationFile(data);
 
-    console.log(`Logged out identonym '${ownerData.identonym}' from the performer server '${ownerData.server}'.`);
+    const serverName = extractServerName(ownerData.server);
+
+    console.log(`Logged out identonym '${ownerData.identonym}' from the performer server '${serverName}'.`);
 }
 // #endregion module
 
