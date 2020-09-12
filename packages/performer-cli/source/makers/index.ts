@@ -6,6 +6,7 @@
     import makeStoreCommand from './store';
     import makeGenerateCommand from './generate';
     import makeGetCommand from './get';
+    import makeObliterateCommand from './obliterate';
     // #endregion internal
 // #endregion imports
 
@@ -19,5 +20,6 @@ export {
     makeStoreCommand,
     makeGenerateCommand,
     makeGetCommand,
+    makeObliterateCommand,
 };
 // #endregion exports

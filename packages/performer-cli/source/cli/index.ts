@@ -15,6 +15,7 @@ import {
     makeStoreCommand,
     makeGenerateCommand,
     makeGetCommand,
+    makeObliterateCommand,
 } from '../makers';
 
 
@@ -94,6 +95,10 @@ const main = async (
 
     program.addCommand(
         makeGetCommand(program)
+    );
+
+    program.addCommand(
+        makeObliterateCommand(program)
     );
 
 
