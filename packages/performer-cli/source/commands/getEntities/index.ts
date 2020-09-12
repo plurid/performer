@@ -23,7 +23,7 @@ const getEntities = async (
         const performer = await getPerformer();
 
         if (!performer) {
-            console.log('Could not add provider. Not logged in.');
+            console.log(`Could not get ${type}. Not logged in.`);
             return;
         }
 

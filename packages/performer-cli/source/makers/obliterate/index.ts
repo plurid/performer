@@ -4,6 +4,13 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        obliterateEntity,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -27,6 +34,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'provider',
+                options.id,
+            );
         });
 
     obliterate
@@ -37,6 +48,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'imagene',
+                options.id,
+            );
         });
 
     obliterate
@@ -47,6 +62,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'repository',
+                options.id,
+            );
         });
 
     obliterate
@@ -57,6 +76,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'webhook',
+                options.id,
+            );
         });
 
     obliterate
@@ -67,6 +90,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'project',
+                options.id,
+            );
         });
 
     obliterate
@@ -77,6 +104,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'secret',
+                options.id,
+            );
         });
 
     obliterate
@@ -87,6 +118,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
+            await obliterateEntity(
+                'trigger',
+                options.id,
+            );
         });
 
     obliterate
@@ -97,7 +132,10 @@ const makeObliterateCommand = (
             'id',
         )
         .action(async (options: any) => {
-            console.log('id', options.id);
+            await obliterateEntity(
+                'deployer',
+                options.id,
+            );
         });
 
     obliterate

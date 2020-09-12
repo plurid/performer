@@ -16,6 +16,7 @@
     import getDeploy from './getDeploy';
     import getDeploys from './getDeploys';
     import getEntities from './getEntities';
+    import obliterateEntity from './obliterateEntity';
     // #endregion internal
 // #endregion imports
 
@@ -39,5 +40,6 @@ export {
     getDeploy,
     getDeploys,
     getEntities,
+    obliterateEntity,
 };
 // #endregion exports
