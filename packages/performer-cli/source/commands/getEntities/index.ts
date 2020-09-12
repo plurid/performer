@@ -1,7 +1,7 @@
 // #region imports
     // #region libraries
     import {
-        ADD_PROVIDER,
+        GET_SETUP,
     } from '@plurid/performer-requests';
     // #endregion libraries
 
@@ -16,10 +16,8 @@
 
 
 // #region module
-const addProvider = async (
+const getEntities = async (
     type: string,
-    name: string,
-    token: string,
 ) => {
     try {
         const performer = await getPerformer();
@@ -29,31 +27,28 @@ const addProvider = async (
             return;
         }
 
-        const input = {
-            type,
-            name,
-            token,
-        };
-
-        const mutation = await performer.mutate({
-            mutation: ADD_PROVIDER,
-            variables: {
-                input,
-            },
+        const query = await performer.query({
+            query: GET_SETUP,
         });
 
-        const response = mutation.data.addProvider;
+        const response = query.data.getSetup;
 
         if (!response.status) {
-            console.log('Could not add provider. Something went wrong.');
+            console.log(`Could not get ${type}. Something went wrong.`);
             return;
         }
 
-        console.log(`Added '${type}' provider with name '${name}'.`);
+        const responseData = response.data[type];
+
+        if (!responseData) {
+            console.log(`Could not get ${type}. Something went wrong.`);
+        }
+
+        console.log(JSON.stringify(responseData));
 
         return;
     } catch (error) {
-        console.log('Could not add provider. Something went wrong.');
+        console.log(`Could not get ${type}. Something went wrong.`);
         return;
     }
 }
@@ -62,5 +57,5 @@ const addProvider = async (
 
 
 // #region exports
-export default addProvider;
+export default getEntities;
 // #endregion exports

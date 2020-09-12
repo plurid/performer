@@ -1,21 +1,27 @@
-import status from './status';
-import login from './login';
-import logout from './logout';
-import addProvider from './addProvider';
-import addImagene from './addImagene';
-import linkRepository from './linkRepository';
-import setupWebhook from './setupWebhook';
-import generateProject from './generateProject';
-import storeSecret from './storeSecret';
-import generateTrigger from './generateTrigger';
-import generateDeployer from './generateDeployer';
-import getBuilds from './getBuilds';
-import getBuild from './getBuild';
-import getDeploys from './getDeploys';
-import getDeploy from './getDeploy';
+// #region imports
+    // #region internal
+    import status from './status';
+    import login from './login';
+    import logout from './logout';
+    import addProvider from './addProvider';
+    import addImagene from './addImagene';
+    import linkRepository from './linkRepository';
+    import setupWebhook from './setupWebhook';
+    import generateProject from './generateProject';
+    import storeSecret from './storeSecret';
+    import generateTrigger from './generateTrigger';
+    import generateDeployer from './generateDeployer';
+    import getBuild from './getBuild';
+    import getBuilds from './getBuilds';
+    import getDeploy from './getDeploy';
+    import getDeploys from './getDeploys';
+    import getEntities from './getEntities';
+    // #endregion internal
+// #endregion imports
 
 
 
+// #region exports
 export {
     status,
     login,
@@ -28,8 +34,10 @@ export {
     storeSecret,
     generateTrigger,
     generateDeployer,
-    getBuilds,
     getBuild,
-    getDeploys,
+    getBuilds,
     getDeploy,
+    getDeploys,
+    getEntities,
 };
+// #endregion exports

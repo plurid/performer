@@ -4,6 +4,13 @@
         CommanderStatic,
     } from 'commander';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        getEntities,
+    } from '../../commands';
+    // #endregion external
 // #endregion imports
 
 
@@ -20,6 +27,62 @@ const makeGetCommand = (
         .description('get one or more entities');
 
     get
+        .command('providers')
+        .description('get the providers')
+        .action(async () => {
+            await getEntities('providers');
+        });
+
+    get
+        .command('imagenes')
+        .description('get the imagenes')
+        .action(async () => {
+            await getEntities('imagenes');
+        });
+
+    get
+        .command('repositories')
+        .description('get the repositories')
+        .action(async () => {
+            await getEntities('repositories');
+        });
+
+    get
+        .command('webhooks')
+        .description('get the webhooks')
+        .action(async () => {
+            await getEntities('webhooks');
+        });
+
+    get
+        .command('projects')
+        .description('get the projects')
+        .action(async () => {
+            await getEntities('projects');
+        });
+
+    get
+        .command('secrets')
+        .description('get the secrets')
+        .action(async () => {
+            await getEntities('secrets');
+        });
+
+    get
+        .command('triggers')
+        .description('get the triggers')
+        .action(async () => {
+            await getEntities('triggers');
+        });
+
+    get
+        .command('deployers')
+        .description('get the deployers')
+        .action(async () => {
+            await getEntities('deployers');
+        });
+
+    get
         .command('build')
         .description('get a build')
         .requiredOption(
@@ -31,8 +94,15 @@ const makeGetCommand = (
         });
 
     get
-        .command('deployer')
-        .description('get a deployer')
+        .command('builds')
+        .description('get the builds')
+        .action(async () => {
+            await getEntities('builds');
+        });
+
+    get
+        .command('build')
+        .description('get a deploy')
         .requiredOption(
             '-i, --id <id>',
             'id',
@@ -42,63 +112,10 @@ const makeGetCommand = (
         });
 
     get
-        .command('providers')
-        .description('get the providers')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('imagenes')
-        .description('get the imagenes')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('repositories')
-        .description('get the repositories')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('webhooks')
-        .description('get the webhooks')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('projects')
-        .description('get the projects')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('secrets')
-        .description('get the secrets')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('triggers')
-        .description('get the triggers')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('deployers')
-        .description('get the deployers')
-        .action(async (options: any) => {
-        });
-
-    get
-        .command('builds')
-        .description('get the builds')
-        .action(async (options: any) => {
-        });
-
-    get
         .command('deploys')
         .description('get the deploys')
-        .action(async (options: any) => {
+        .action(async () => {
+            await getEntities('deploys');
         });
 
     return get;

@@ -10,6 +10,14 @@
     import {
         PERFORMER_COOKIE,
     } from '../../../data/constants';
+
+    import {
+        client,
+    } from '../../graphql';
+
+    import {
+        readConfigurationFile,
+    } from '../configuration';
     // #endregion external
 // #endregion imports
 
@@ -72,6 +80,24 @@ const performerCookieFromToken = (
 ) => {
     return PERFORMER_COOKIE + '=' + token;
 }
+
+
+const getPerformer = async () => {
+    const configuration = await readConfigurationFile();
+
+    if (!configuration.token || !configuration.server) {
+        return;
+    }
+
+    const cookie = performerCookieFromToken(configuration.token);
+
+    const performer = client(
+        configuration.server,
+        cookie,
+    );
+
+    return performer;
+}
 // #endregion module
 
 
@@ -82,5 +108,6 @@ export {
     debouncedCallback,
     extractServerName,
     performerCookieFromToken,
+    getPerformer,
 };
 // #endregion exports
