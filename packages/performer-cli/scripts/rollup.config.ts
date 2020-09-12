@@ -27,6 +27,7 @@ export default {
         'events',
         'child_process',
         '@plurid/deon',
+        '@plurid/performer-requests',
         'https',
         'http',
         'url',
