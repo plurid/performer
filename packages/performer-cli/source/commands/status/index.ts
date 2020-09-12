@@ -1,17 +1,8 @@
 // #region imports
-    // #region libraries
-    import {
-        promises as fs,
-    } from 'fs';
-
-    import Deon from '@plurid/deon';
-    // #endregion libraries
-
-
     // #region external
     import {
-        performerConfigurationPath,
-    } from '../../data/constants';
+        readConfigurationFile,
+    } from '../../services/utilities/configuration';
     // #endregion external
 // #endregion imports
 
@@ -19,16 +10,19 @@
 
 // #region module
 const status = async () => {
-    const data = await fs.readFile(performerConfigurationPath, 'utf-8');
-    const deon = new Deon();
-    const ownerData = await deon.parse(data);
+    const ownerData = await readConfigurationFile();
 
-    if (ownerData.server) {
-        console.log(`Logged in the performer server '${ownerData.server}' as '${ownerData.identonym}'.`);
+    if (
+        !ownerData.server
+        || !ownerData.identonym
+        || !ownerData.token
+        || !ownerData.key
+    ) {
+        console.log(`Not logged into a performer server.`);
         return;
     }
 
-    console.log(`Not logged into a performer server.`);
+    console.log(`Logged in the performer server '${ownerData.server}' as '${ownerData.identonym}'.`);
 }
 // #endregion module
 

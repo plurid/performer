@@ -59,12 +59,26 @@ const updateConfigurationFile = async (
         return false;
     }
 }
+
+
+const readConfigurationFile = async () => {
+    const data = await fs.readFile(
+        performerConfigurationPath,
+        'utf-8',
+    );
+
+    const deon = new Deon();
+    const ownerData = await deon.parse(data);
+
+    return ownerData;
+}
 // #endregion module
 
 
 
 // #region exports
 export {
+    readConfigurationFile,
     updateConfigurationFile,
 };
 // #endregion exports
