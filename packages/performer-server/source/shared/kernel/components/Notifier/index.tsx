@@ -115,7 +115,7 @@ const Notifier: React.FC<NotifierProperties> = (
         >
             <div>
                 <h1>
-                    add Notifier
+                    add notifier
                 </h1>
 
                 <div>

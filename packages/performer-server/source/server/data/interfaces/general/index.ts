@@ -59,50 +59,6 @@ export interface Imagene {
 }
 
 
-export interface Notifier {
-    id: string;
-    type: string;
-    data: ClientNotifierEmail;
-}
-
-export interface NotifierEmail {
-    authentication: NotifierEmailAuthentication;
-    notifyTo: string[];
-}
-
-export interface ClientNotifierEmail {
-    authentication: ClientNotifierEmailAuthentication;
-    notifyTo: string[];
-}
-
-export type ClientNotifierEmailAuthentication = Omit<NotifierEmailAuthentication, 'password'>;
-
-export interface NotifierEmailAuthentication {
-    host: string;
-    port: number;
-    secure: boolean;
-    username: string;
-    password: string;
-    sender: string;
-}
-
-
-export interface NotifierAPI {
-    endpoint: string;
-    token: string;
-}
-
-
-export interface Notification {
-    status: 'SUCCESS' | 'ERROR';
-    kind: 'REGISTER' | 'DEREGISTER';
-    entity:
-        | 'PROVIDER' | 'IMAGENE' | 'REPOSITORY' | 'WEBHOOK' | 'PROJECT' | 'SECRET' | 'TRIGGER' | 'DEPLOYER'
-        | 'BUILD' | 'DEPLOY';
-    data: string;
-}
-
-
 export interface Webhook {
     id: string;
     path: string;
