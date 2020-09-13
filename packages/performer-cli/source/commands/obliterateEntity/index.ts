@@ -114,7 +114,7 @@ const obliterateEntity = async (
             return;
         }
 
-        console.log(`Obliterated ${type} with id ${id}`);
+        console.log(`Obliterated ${type} with id '${id}'.`);
 
         return;
     } catch (error) {
