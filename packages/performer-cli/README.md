@@ -57,7 +57,7 @@ npm install -g @plurid/performer-cli
 ## Usage
 
 
-``` bash
+```
 Usage: performer <command>
 
 Options:
