@@ -9,6 +9,7 @@
     // #region external
     import {
         obliterateEntity,
+        obliterateEntities,
     } from '../../commands';
     // #endregion external
 // #endregion imports
@@ -141,13 +142,19 @@ const makeObliterateCommand = (
     obliterate
         .command('builds')
         .description('obliterate the builds')
-        .action(async (options: any) => {
+        .action(async () => {
+            await obliterateEntities(
+                'builds',
+            );
         });
 
     obliterate
         .command('deploys')
         .description('obliterate the deploys')
-        .action(async (options: any) => {
+        .action(async () => {
+            await obliterateEntities(
+                'deploys',
+            );
         });
 
     return obliterate;
