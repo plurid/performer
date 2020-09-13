@@ -35,7 +35,7 @@ const makeSetupCommand = (
         )
         .action(async (options: any) => {
             await setupWebhook(
-                options.path
+                options.path,
             );
         });
 
