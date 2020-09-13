@@ -15,7 +15,7 @@
 
 <h3 align="center">
     Cloud-Native Continuous Integration/Continuous Delivery Builder
-</h1>
+</h3>
 
 
 Performer is a service or self-hosted system task-runner/builder based on GitOps.
