@@ -87,6 +87,22 @@ export interface NotifierEmailAuthentication {
 }
 
 
+export interface NotifierAPI {
+    endpoint: string;
+    token: string;
+}
+
+
+export interface Notification {
+    status: 'SUCCESS' | 'ERROR';
+    kind: 'REGISTER' | 'DEREGISTER';
+    entity:
+        | 'PROVIDER' | 'IMAGENE' | 'REPOSITORY' | 'WEBHOOK' | 'PROJECT' | 'SECRET' | 'TRIGGER' | 'DEPLOYER'
+        | 'BUILD' | 'DEPLOY';
+    data: string;
+}
+
+
 export interface Webhook {
     id: string;
     path: string;
