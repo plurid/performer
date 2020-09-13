@@ -62,9 +62,24 @@ export interface Imagene {
 export interface Notifier {
     id: string;
     type: string;
+    data: ClientNotifierEmail;
 }
 
 export interface NotifierEmail {
+    authentication: NotifierEmailAuthentication;
+    notifyTo: string[];
+}
+
+export interface ClientNotifierEmail {
+    authentication: ClientNotifierEmailAuthentication;
+    notifyTo: string[];
+}
+
+export type ClientNotifierEmailAuthentication = Omit<NotifierEmailAuthentication, 'password'>;
+
+export interface NotifierEmailAuthentication {
+    host: string;
+    port: number;
     username: string;
     password: string;
 }
