@@ -270,6 +270,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

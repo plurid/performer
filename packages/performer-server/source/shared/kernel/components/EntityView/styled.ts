@@ -26,6 +26,19 @@ export const StyledEntityView = styled.div<IStyledEntityView>`
 `;
 
 
+export const StyledEntityViewTop = styled.div`
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    margin-bottom: 30px;
+`;
+
+
+export const StyledTopButtons = styled.div`
+    text-align: right;
+`;
+
+
 export interface IStyledEntityList {
     theme: Theme;
 }

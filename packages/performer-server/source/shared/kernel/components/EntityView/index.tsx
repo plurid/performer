@@ -2,6 +2,7 @@
     // #region libraries
     import React, {
         useState,
+        useEffect,
     } from 'react';
 
     import {
@@ -12,11 +13,18 @@
         PluridTextline,
         PluridPureButton,
     } from '@plurid/plurid-ui-react';
+
+    import {
+        PluridIconReset,
+    } from '@plurid/plurid-icons-react';
     // #endregion libraries
+
 
     // #region internal
     import {
         StyledEntityView,
+        StyledEntityViewTop,
+        StyledTopButtons,
         StyledEntityList,
         StyledEntityListItem,
         StyledActionButton,
@@ -44,7 +52,10 @@ export interface EntityViewProperties {
 
         // #region methods
         actionButtonClick?: () => void;
-        filterUpdate?: any;
+        filterUpdate?: (
+            value: any,
+        ) => void;
+        refresh?: () => void;
         // #endregion methods
     // #endregion required
 }
@@ -70,6 +81,7 @@ const EntityView: React.FC<EntityViewProperties> = (
             // #region methods
             actionButtonClick,
             filterUpdate,
+            refresh,
             // #endregion methods
         // #endregion required
     } = properties;
@@ -81,7 +93,24 @@ const EntityView: React.FC<EntityViewProperties> = (
         searchValue,
         setSearchValue,
     ] = useState('');
+    const [
+        refreshClicked,
+        setRefreshClicked,
+    ] = useState(false);
     // #endregion state
+
+
+    // #region effects
+    useEffect(() => {
+        if (refreshClicked) {
+            setTimeout(() => {
+                setRefreshClicked(false);
+            }, 1500);
+        }
+    }, [
+        refreshClicked,
+    ]);
+    // #endregion effects
 
 
     // #region render
@@ -89,31 +118,46 @@ const EntityView: React.FC<EntityViewProperties> = (
         <StyledEntityView
             theme={generalTheme}
         >
-            <PluridTextline
-                text={searchValue}
-                placeholder="filter"
-                atChange={(event) => {
-                    const {
-                        value,
-                    } = event.target;
+            <StyledEntityViewTop>
+                <div>
+                    <PluridTextline
+                        text={searchValue}
+                        placeholder="filter"
+                        atChange={(event) => {
+                            const {
+                                value,
+                            } = event.target;
 
-                    setSearchValue(value);
+                            setSearchValue(value);
 
-                    if (filterUpdate) {
-                        filterUpdate(value);
-                    }
-                }}
-                theme={interactionTheme}
-                spellCheck={false}
-                autoCapitalize="false"
-                autoComplete="false"
-                autoCorrect="false"
-                level={2}
-                style={{
-                    width: '300px',
-                    marginBottom: '30px',
-                }}
-            />
+                            if (filterUpdate) {
+                                filterUpdate(value);
+                            }
+                        }}
+                        theme={interactionTheme}
+                        spellCheck={false}
+                        autoCapitalize="false"
+                        autoComplete="false"
+                        autoCorrect="false"
+                        level={2}
+                        style={{
+                            width: '300px',
+                        }}
+                    />
+                </div>
+
+                <StyledTopButtons>
+                    {refresh && !refreshClicked && (
+                        <PluridIconReset
+                            atClick={() => {
+                                setRefreshClicked(true);
+                                refresh();
+                            }}
+                            theme={generalTheme}
+                        />
+                    )}
+                </StyledTopButtons>
+            </StyledEntityViewTop>
 
             {rows.length === 0 && (
                 <StyledNoRows>

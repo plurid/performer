@@ -253,6 +253,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

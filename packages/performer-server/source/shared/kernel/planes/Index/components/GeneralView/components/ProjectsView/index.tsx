@@ -245,6 +245,7 @@ const ProjectsView: React.FC<ProjectsViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

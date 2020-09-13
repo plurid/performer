@@ -216,6 +216,7 @@ const DeploysView: React.FC<DeploysViewProperties> = (
                 noRows="no deploys"
 
                 filterUpdate={filterUpdate}
+                refresh={() => {}}
             />
 
             {stateDeploys.length > 0 && (

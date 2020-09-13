@@ -216,6 +216,7 @@ const NotifiersView: React.FC<NotifiersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

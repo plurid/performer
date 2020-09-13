@@ -260,6 +260,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 noRows="no builds"
 
                 filterUpdate={filterUpdate}
+                refresh={() => {}}
             />
 
             {stateBuilds.length > 0 && (

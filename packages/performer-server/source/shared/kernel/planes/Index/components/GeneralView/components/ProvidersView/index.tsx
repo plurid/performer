@@ -12,15 +12,6 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
-
-    import {
-        PluridIconValid,
-        PluridIconDelete,
-    } from '@plurid/plurid-icons-react';
-
-    import {
-        PluridLinkButton,
-    } from '@plurid/plurid-ui-react';
     // #endregion libraries
 
 
@@ -270,6 +261,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

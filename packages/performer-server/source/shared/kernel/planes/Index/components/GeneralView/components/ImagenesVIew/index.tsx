@@ -224,6 +224,7 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

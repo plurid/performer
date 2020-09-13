@@ -253,6 +253,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

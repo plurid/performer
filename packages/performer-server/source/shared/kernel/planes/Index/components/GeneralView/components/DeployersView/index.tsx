@@ -264,6 +264,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render

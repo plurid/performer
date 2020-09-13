@@ -283,6 +283,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
+            refresh={() => {}}
         />
     );
     // #endregion render
