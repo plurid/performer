@@ -31,15 +31,18 @@ export const types = gql`
     }
 
     type Notifier {
+        value: string;
     }
 `;
 
 
 export const inputs = gql`
     input InputSetupNotifier {
+        value: string;
     }
 
     input InputUpdateNotifier {
+        value: string;
     }
 `;
 // #endregion module
