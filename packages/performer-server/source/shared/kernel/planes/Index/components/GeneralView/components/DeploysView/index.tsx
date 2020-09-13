@@ -37,6 +37,10 @@
         Deploy,
     } from '#server/data/interfaces';
 
+    import {
+        getSetup,
+    } from '#kernel-services/logic/queries';
+
     import EntityView from '#kernel-components/EntityView';
 
     import { AppState } from '#kernel-services/state/store';
@@ -71,6 +75,7 @@ export interface DeploysViewStateProperties {
 }
 
 export interface DeploysViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
 }
 
 export type DeploysViewProperties = DeploysViewOwnProperties
@@ -87,6 +92,10 @@ const DeploysView: React.FC<DeploysViewProperties> = (
         stateInteractionTheme,
         stateDeploys,
         // #endregion state
+
+        // #region dispatch
+        dispatch,
+        // #endregion dispatch
     } = properties;
     // #endregion properties
 
@@ -216,7 +225,9 @@ const DeploysView: React.FC<DeploysViewProperties> = (
                 noRows="no deploys"
 
                 filterUpdate={filterUpdate}
-                refresh={() => {}}
+                refresh={() => {
+                    getSetup(dispatch);
+                }}
             />
 
             {stateDeploys.length > 0 && (
@@ -246,6 +257,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): DeploysViewDispatchProperties => ({
+    dispatch,
 });
 
 

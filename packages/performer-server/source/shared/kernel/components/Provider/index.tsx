@@ -8,6 +8,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        ADD_PROVIDER,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -15,10 +19,6 @@
     import {
         Provider as IProvider,
     } from '#server/data/interfaces';
-
-    import {
-        ADD_PROVIDER,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         addEntityMutation,

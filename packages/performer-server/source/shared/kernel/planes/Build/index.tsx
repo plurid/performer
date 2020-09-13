@@ -20,6 +20,10 @@
     import {
         PluridComponentProperty,
     } from '@plurid/plurid-react';
+
+    import {
+        GET_BUILD_LOGS,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -29,9 +33,6 @@
     } from '#server/data/interfaces';
 
     import client from '#kernel-services/graphql/client';
-    import {
-        GET_BUILD_LOGS,
-    } from '#kernel-services/graphql/query';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';

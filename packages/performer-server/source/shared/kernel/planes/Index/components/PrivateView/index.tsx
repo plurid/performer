@@ -11,6 +11,10 @@
     import {
         PluridPureButton,
     } from '@plurid/plurid-ui-react';
+
+    import {
+        LOGIN,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -18,9 +22,6 @@
     import performerLogo from '../../assets/performer-logo.png';
 
     import client from '#kernel-services/graphql/client';
-    import {
-        LOGIN,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         StyledPluridTextline,
@@ -31,7 +32,7 @@
     } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
-    import selectors from '#kernel-services/state/selectors';
+    // import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
     // #endregion external
 

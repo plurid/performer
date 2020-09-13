@@ -16,6 +16,11 @@
     import {
         PluridSpinner,
     } from '@plurid/plurid-ui-react';
+
+    import {
+        GET_PROVIDER_REPOSITORIES,
+        LINK_REPOSITORY,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -25,12 +30,6 @@
     } from '#server/data/interfaces';
 
     import client from '#kernel-services/graphql/client';
-    import {
-        GET_PROVIDER_REPOSITORIES,
-    } from '#kernel-services/graphql/query';
-    import {
-        LINK_REPOSITORY,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         StyledPluridPureButton,

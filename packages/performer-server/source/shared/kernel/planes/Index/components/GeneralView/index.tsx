@@ -11,6 +11,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        LOGOUT
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -25,9 +29,6 @@
     } from '#kernel-data/constants';
 
     import client from '#kernel-services/graphql/client';
-    import {
-        LOGOUT
-    } from '#kernel-services/graphql/mutate';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';

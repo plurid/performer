@@ -8,6 +8,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        GENERATE_DEPLOYER,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -15,10 +19,6 @@
     import {
         Deployer as IDeployer,
     } from '#server/data/interfaces';
-
-    import {
-        GENERATE_DEPLOYER,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         addEntityMutation,

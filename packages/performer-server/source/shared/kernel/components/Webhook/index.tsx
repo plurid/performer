@@ -8,6 +8,11 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        UPDATE_WEBHOOK,
+        SETUP_WEBHOOK,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -15,11 +20,6 @@
     import {
         Webhook as IWebhook,
     } from '#server/data/interfaces';
-
-    import {
-        UPDATE_WEBHOOK,
-        SETUP_WEBHOOK,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         addEntityMutation,

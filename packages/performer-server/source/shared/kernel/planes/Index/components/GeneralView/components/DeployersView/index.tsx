@@ -12,6 +12,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        OBLITERATE_DEPLOYER,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -27,9 +31,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        OBLITERATE_DEPLOYER,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -78,6 +83,7 @@ export interface DeployersViewStateProperties {
 }
 
 export interface DeployersViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
@@ -114,6 +120,7 @@ const DeployersView: React.FC<DeployersViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchRemoveEntity,
         // #endregion dispatch
     } = properties;
@@ -264,7 +271,9 @@ const DeployersView: React.FC<DeployersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -283,6 +292,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): DeployersViewDispatchProperties => ({
+    dispatch,
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (

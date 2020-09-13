@@ -12,6 +12,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        OBLITERATE_PROVIDER,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -27,9 +31,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        OBLITERATE_PROVIDER,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -80,6 +85,7 @@ export interface ProvidersViewStateProperties {
 }
 
 export interface ProvidersViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchRemoveEntity: typeof actions.data.removeEntity;
     dispatchSetActiveProviderID: typeof actions.data.setActiveProviderID;
 }
@@ -118,6 +124,7 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchRemoveEntity,
         dispatchSetActiveProviderID,
         // #endregion dispatch
@@ -261,7 +268,9 @@ const ProvidersView: React.FC<ProvidersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -281,6 +290,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): ProvidersViewDispatchProperties => ({
+    dispatch,
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (

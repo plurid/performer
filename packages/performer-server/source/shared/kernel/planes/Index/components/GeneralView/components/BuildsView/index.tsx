@@ -25,6 +25,10 @@
         PluridApplicationConfigurator,
         TOPICS,
     } from '@plurid/plurid-react';
+
+    import {
+        CLEAR_BUILDS,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -40,9 +44,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        CLEAR_BUILDS,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -76,6 +81,7 @@ export interface BuildsViewStateProperties {
 }
 
 export interface BuildsViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchClearBuilds: typeof actions.data.clearBuilds;
 }
 
@@ -95,6 +101,7 @@ const BuildsView: React.FC<BuildsViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchClearBuilds,
         // #endregion dispatch
     } = properties;
@@ -260,7 +267,9 @@ const BuildsView: React.FC<BuildsViewProperties> = (
                 noRows="no builds"
 
                 filterUpdate={filterUpdate}
-                refresh={() => {}}
+                refresh={() => {
+                    getSetup(dispatch);
+                }}
             />
 
             {stateBuilds.length > 0 && (
@@ -290,6 +299,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): BuildsViewDispatchProperties => ({
+    dispatch,
     dispatchClearBuilds: () => dispatch(
         actions.data.clearBuilds(),
     ),

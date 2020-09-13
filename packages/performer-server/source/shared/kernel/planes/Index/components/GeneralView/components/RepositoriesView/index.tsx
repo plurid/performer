@@ -14,12 +14,8 @@
     } from '@plurid/plurid-themes';
 
     import {
-        PluridIconDelete,
-    } from '@plurid/plurid-icons-react';
-
-    import {
-        PluridLinkButton,
-    } from '@plurid/plurid-ui-react';
+        DELINK_REPOSITORY,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -35,9 +31,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        DELINK_REPOSITORY,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -86,6 +83,7 @@ export interface RepositoriesViewStateProperties {
 }
 
 export interface RepositoriesViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
@@ -122,6 +120,7 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchRemoveEntity,
         // #endregion dispatch
     } = properties;
@@ -253,7 +252,9 @@ const RepositoriesView: React.FC<RepositoriesViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -272,6 +273,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): RepositoriesViewDispatchProperties => ({
+    dispatch,
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (

@@ -24,6 +24,10 @@
         Notifier,
     } from '#server/data/interfaces';
 
+    import {
+        getSetup,
+    } from '#kernel-services/logic/queries';
+
     import EntityView from '#kernel-components/EntityView';
 
     import { AppState } from '#kernel-services/state/store';
@@ -73,6 +77,7 @@ export interface NotifiersViewStateProperties {
 }
 
 export interface NotifiersViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
 }
 
 export type NotifiersViewProperties = NotifiersViewOwnProperties
@@ -106,6 +111,10 @@ const NotifiersView: React.FC<NotifiersViewProperties> = (
         stateInteractionTheme,
         stateNotifiers,
         // #endregion state
+
+        // #region dispatch
+        dispatch,
+        // #endregion dispatch
     } = properties;
     // #endregion properties
 
@@ -216,7 +225,9 @@ const NotifiersView: React.FC<NotifiersViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -235,6 +246,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): NotifiersViewDispatchProperties => ({
+    dispatch,
 });
 
 

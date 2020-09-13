@@ -24,6 +24,10 @@
         Imagene,
     } from '#server/data/interfaces';
 
+    import {
+        getSetup,
+    } from '#kernel-services/logic/queries';
+
     import EntityView from '#kernel-components/EntityView';
 
     import { AppState } from '#kernel-services/state/store';
@@ -73,6 +77,7 @@ export interface ImagenesViewStateProperties {
 }
 
 export interface ImagenesViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
 }
 
 export type ImagenesViewProperties = ImagenesViewOwnProperties
@@ -106,6 +111,10 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
         stateInteractionTheme,
         stateImagenes,
         // #endregion state
+
+        // #region dispatch
+        dispatch,
+        // #endregion dispatch
     } = properties;
     // #endregion properties
 
@@ -224,7 +233,9 @@ const ImagenesView: React.FC<ImagenesViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -243,6 +254,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): ImagenesViewDispatchProperties => ({
+    dispatch,
 });
 
 

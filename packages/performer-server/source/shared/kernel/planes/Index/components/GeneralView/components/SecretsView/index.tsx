@@ -12,6 +12,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        OBLITERATE_SECRET,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -27,9 +31,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        OBLITERATE_SECRET,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -78,6 +83,7 @@ export interface SecretsViewStateProperties {
 }
 
 export interface SecretsViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchRemoveEntity: typeof actions.data.removeEntity;
 }
 
@@ -114,6 +120,7 @@ const SecretsView: React.FC<SecretsViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchRemoveEntity,
         // #endregion dispatch
     } = properties;
@@ -253,7 +260,9 @@ const SecretsView: React.FC<SecretsViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -272,6 +281,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): SecretsViewDispatchProperties => ({
+    dispatch,
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (

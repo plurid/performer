@@ -8,6 +8,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        STORE_SECRET,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -15,10 +19,6 @@
     import {
         Secret as ISecret,
     } from '#server/data/interfaces';
-
-    import {
-        STORE_SECRET,
-    } from '#kernel-services/graphql/mutate';
 
     import {
         addEntityMutation,

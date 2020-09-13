@@ -12,6 +12,10 @@
     import {
         Theme,
     } from '@plurid/plurid-themes';
+
+    import {
+        OBLITERATE_WEBHOOK,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
@@ -27,9 +31,10 @@
     import EntityView from '#kernel-components/EntityView';
 
     import client from '#kernel-services/graphql/client';
+
     import {
-        OBLITERATE_WEBHOOK,
-    } from '#kernel-services/graphql/mutate';
+        getSetup,
+    } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
     import selectors from '#kernel-services/state/selectors';
@@ -78,6 +83,7 @@ export interface WebhooksViewStateProperties {
 }
 
 export interface WebhooksViewDispatchProperties {
+    dispatch: ThunkDispatch<{}, {}, AnyAction>,
     dispatchRemoveEntity: typeof actions.data.removeEntity;
     dispatchViewSetEditID: typeof actions.view.setEditID;
 }
@@ -115,6 +121,7 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
         // #endregion state
 
         // #region dispatch
+        dispatch,
         dispatchRemoveEntity,
         dispatchViewSetEditID,
         // #endregion dispatch
@@ -270,7 +277,9 @@ const WebhooksView: React.FC<WebhooksViewProperties> = (
             }}
 
             filterUpdate={filterUpdate}
-            refresh={() => {}}
+            refresh={() => {
+                getSetup(dispatch);
+            }}
         />
     );
     // #endregion render
@@ -289,6 +298,7 @@ const mapStateToProperties = (
 const mapDispatchToProperties = (
     dispatch: ThunkDispatch<{}, {}, AnyAction>,
 ): WebhooksViewDispatchProperties => ({
+    dispatch,
     dispatchRemoveEntity: (
         payload,
     ) => dispatch (

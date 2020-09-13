@@ -6,16 +6,17 @@
     import {
         graphql,
     } from '@plurid/plurid-functions';
+
+    import {
+        GET_CURRENT_OWNER,
+        GET_USAGE_TYPE,
+        GET_SETUP,
+    } from '@plurid/performer-requests';
     // #endregion libraries
 
 
     // #region external
     import client from '#kernel-services/graphql/client';
-    import {
-        GET_CURRENT_OWNER,
-        GET_USAGE_TYPE,
-        GET_SETUP,
-    } from '#kernel-services/graphql/query';
 
     import actions from '#kernel-services/state/actions';
     // #endregion external
