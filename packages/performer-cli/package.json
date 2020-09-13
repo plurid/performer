@@ -47,6 +47,7 @@
         "@apollo/client": "^3.1.5",
         "@plurid/deon": "^0.0.8",
         "@plurid/performer-requests": "^0.0.0",
+        "@plurid/plurid-functions": "^0.1.15",
         "commander": "^6.1.0",
         "cross-fetch": "^3.0.6",
         "graphql": "^15.3.0",

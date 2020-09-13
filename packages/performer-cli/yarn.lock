@@ -536,6 +536,11 @@
   resolved "https://registry.yarnpkg.com/@plurid/performer-requests/-/performer-requests-0.0.0.tgz#d83bea5ccd4caefa0d4dcc3f7623ae84356ec965"
   integrity sha512-2+4wxW2LhYeJeCFm5H3wNc3j1PiswRCiqOSaGAP6pvpGc+ga+0e3MxzpyYfH9lUx+baGGx3kH+U7d5OHusaPRw==
 
+"@plurid/plurid-functions@^0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@plurid/plurid-functions/-/plurid-functions-0.1.15.tgz#4900bf02bb36240e8d2cafd1d27c0e9712ac3ebf"
+  integrity sha512-gTzhFlbK6G5jE+KBpcT4UlnO9poUOLLihXS3qwAYtu3ldSvGbu4g+bKJgaAwTBmS+t8B6vWntU5qXyi4pdX/7A==
+
 "@rollup/plugin-commonjs@^15.0.0":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-15.0.0.tgz#690d15a9d54ba829db93555bff9b98ff34e08574"
