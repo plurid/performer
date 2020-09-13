@@ -1,5 +1,7 @@
 // #region imports
     // #region external
+    import obliterateEntity from '../obliterateEntity';
+
     import {
         readConfigurationFile,
         resolveFilepath,
@@ -103,7 +105,17 @@ const deregisterTriggers = async (
     }
 
     for (const trigger of triggers) {
-        console.log(trigger);
+        const {
+            id,
+        } = trigger;
+
+        // get all triggers
+        // check for match
+
+        await obliterateEntity(
+            'trigger',
+            id,
+        );
     }
 }
 

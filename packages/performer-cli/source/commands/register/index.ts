@@ -1,5 +1,7 @@
 // #region imports
     // #region external
+    import generateTrigger from '../generateTrigger';
+
     import {
         readConfigurationFile,
         resolveFilepath,
@@ -103,7 +105,36 @@ const registerTriggers = async (
     }
 
     for (const trigger of triggers) {
-        console.log(trigger);
+        const {
+            id,
+            name,
+            project,
+            repository,
+            branch,
+            path,
+            file,
+        } = trigger;
+
+        if (
+            !name
+            || !project
+            || !repository
+            || !branch
+            || !path
+            || !file
+        ) {
+            continue;
+        }
+
+        await generateTrigger(
+            id,
+            name,
+            project,
+            repository,
+            branch,
+            path,
+            file,
+        );
     }
 }
 
