@@ -23,6 +23,10 @@
     } from '../general';
 
     import {
+        Notifier,
+    } from '../notifier';
+
+    import {
         PerformerLogic,
     } from '../logic';
 
@@ -44,6 +48,7 @@ export interface Context {
 
     providers: Provider[];
     imagenes: Imagene[];
+    notifiers: Notifier[];
     repositories: Repository[];
     webhooks: Webhook[];
     projects: Project[];

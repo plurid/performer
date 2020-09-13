@@ -1,3 +1,13 @@
+// #region imports
+    // #region libraries
+    import {
+        Notifier,
+    } from '../notifier';
+    // #endregion libraries
+// #endregion imports
+
+
+
 // #region module
 export type CodeProvider =
     | CodeProviderGithub
@@ -192,6 +202,7 @@ export interface PerformerOwner {
     id: string;
     providers: Provider[];
     imagenes: Imagene[];
+    notifiers: Notifier[];
     repositories: Repository[];
     webhooks: Webhook[];
     projects: Project[];

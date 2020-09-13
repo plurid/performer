@@ -33,6 +33,7 @@ export const codeProvider: CodeProviderData = {
 export const BASE_PATH = process.env.PERFORMER_BASE_PATH || process.cwd();
 export const BASE_PATH_PROVIDERS = '/data/providers/';
 export const BASE_PATH_IMAGENES = '/data/imagenes/';
+export const BASE_PATH_NOTIFIERS = '/data/notifiers/';
 export const BASE_PATH_REPOSITORIES = '/data/repositories/';
 export const BASE_PATH_REPOSITORIES_METADATA = '/data/repositories/metadata/';
 export const BASE_PATH_WEBHOOKS = '/data/webhooks/';
@@ -50,6 +51,7 @@ export const BASE_PATH_DEPLOY_QUEUE = '/data/deploysqueue/';
 
 export const providersPath = path.join(BASE_PATH, BASE_PATH_PROVIDERS);
 export const imagenesPath = path.join(BASE_PATH, BASE_PATH_IMAGENES);
+export const notifiersPath = path.join(BASE_PATH, BASE_PATH_NOTIFIERS);
 export const repositoriesPath = path.join(BASE_PATH, BASE_PATH_REPOSITORIES);
 export const repositoriesMetadataPath = path.join(BASE_PATH, BASE_PATH_REPOSITORIES_METADATA);
 export const webhooksPath = path.join(BASE_PATH, BASE_PATH_WEBHOOKS);

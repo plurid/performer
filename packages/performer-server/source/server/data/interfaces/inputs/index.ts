@@ -77,4 +77,11 @@ export interface InputGenerateDeployer {
     file: string,
     project: string,
 }
+
+
+export interface InputSetupNotifier {
+}
+
+export interface InputUpdateNotifier {
+}
 // #endregion module

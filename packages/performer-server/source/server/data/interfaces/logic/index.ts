@@ -10,6 +10,10 @@
     } from '../general';
 
     import {
+        Notifier,
+    } from '../notifier';
+
+    import {
         Logger,
     } from '../logger';
 
@@ -18,6 +22,8 @@
 
         InputAddProvider,
         InputAddImagene,
+
+        InputSetupNotifier,
     } from '../inputs';
     // #endregion external
 // #endregion imports
@@ -39,6 +45,16 @@ export interface PerformerLogicImagene {
     register: (
         input: InputAddImagene,
     ) => Promise<Imagene | undefined>;
+    deregister: (
+        id: string,
+    ) => Promise<boolean>;
+}
+
+
+export interface PerformerLogicNotifier {
+    register: (
+        input: InputSetupNotifier,
+    ) => Promise<Notifier | undefined>;
     deregister: (
         id: string,
     ) => Promise<boolean>;
@@ -69,6 +85,7 @@ export interface PerformerLogic {
 
     provider: PerformerLogicProvider;
     imagene: PerformerLogicImagene;
+    notifier: PerformerLogicNotifier;
     builds: PerformerLogicBuilds;
 }
 // #endregion module

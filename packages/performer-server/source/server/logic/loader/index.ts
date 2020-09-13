@@ -3,6 +3,7 @@
     import {
         Provider,
         Imagene,
+        Notifier,
         Repository,
         Project,
         Secret,
@@ -41,6 +42,13 @@ export const loadImagenes = async () => {
     );
 
     return sortedImagenes || [];
+}
+
+
+export const loadNotifiers = async () => {
+    const notifiers: Notifier[] = await database.getAll('notifiers');
+
+    return notifiers || [];
 }
 
 
@@ -142,6 +150,7 @@ export const loadDeploys = async () => {
 const loadData = async () => {
     const providers = await loadProviders();
     const imagenes = await loadImagenes();
+    const notifiers = await loadNotifiers();
     const repositories = await loadRepositories();
     const webhooks = await loadWebhooks();
     const projects = await loadProjects();
@@ -155,6 +164,7 @@ const loadData = async () => {
     const data = {
         providers,
         imagenes,
+        notifiers,
         repositories,
         webhooks,
         projects,

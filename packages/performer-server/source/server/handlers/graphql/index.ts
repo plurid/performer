@@ -77,6 +77,7 @@ const setupGraphQLServer = async (
             const {
                 providers,
                 imagenes,
+                notifiers,
                 repositories,
                 webhooks,
                 projects,
@@ -104,6 +105,7 @@ const setupGraphQLServer = async (
 
                 providers,
                 imagenes,
+                notifiers,
                 repositories,
                 webhooks,
                 projects,

@@ -4,6 +4,7 @@
     import Deployers from './deployers';
     import Deploys from './deploys';
     import Imagenes from './imagenes';
+    import Notifiers from './notifiers';
     import Owner from './owner';
     import Projects from './projects';
     import Providers from './providers';
@@ -23,6 +24,7 @@ export {
     Deployers,
     Deploys,
     Imagenes,
+    Notifiers,
     Owner,
     Projects,
     Providers,

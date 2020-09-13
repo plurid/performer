@@ -4,6 +4,11 @@ export type Notifier =
     | NotifierEmail;
 
 
+export type ClientNotifier =
+    | ClientNotifierAPI
+    | ClientNotifierEmail;
+
+
 export interface NotifierBase {
     id: string;
     notifyOn: NotificationType[];
@@ -11,12 +16,22 @@ export interface NotifierBase {
 
 export interface NotifierAPI extends NotifierBase {
     type: NotifierTypeAPI;
-    data: ClientNotifierAPI;
+    data: StoredNotifierAPIData;
+}
+
+export interface ClientNotifierAPI extends NotifierBase {
+    type: NotifierTypeAPI;
+    data: ClientNotifierAPIData;
 }
 
 export interface NotifierEmail extends NotifierBase {
     type: NotifierTypeEmail;
-    data: ClientNotifierEmail;
+    data: StoredNotifierEmailData;
+}
+
+export interface ClientNotifierEmail extends NotifierBase {
+    type: NotifierTypeEmail;
+    data: ClientNotifierEmailData;
 }
 
 
@@ -31,11 +46,11 @@ export interface NotifierEmailBase {
     notifyTo: string[];
 }
 
-export interface StoredNotifierEmail extends NotifierEmailBase {
+export interface StoredNotifierEmailData extends NotifierEmailBase {
     authentication: NotifierEmailAuthentication;
 }
 
-export interface ClientNotifierEmail extends NotifierEmailBase {
+export interface ClientNotifierEmailData extends NotifierEmailBase {
     authentication: ClientNotifierEmailAuthentication;
 }
 
@@ -51,15 +66,15 @@ export interface NotifierEmailAuthentication {
 }
 
 
-export interface NotifierAPIBase {
+export interface NotifierAPIBaseData {
     endpoint: string;
 }
 
-export interface StoredNotifierAPI extends NotifierAPIBase {
+export interface StoredNotifierAPIData extends NotifierAPIBaseData {
     token: string;
 }
 
-export interface ClientNotifierAPI extends NotifierAPIBase {
+export interface ClientNotifierAPIData extends NotifierAPIBaseData {
     startsWith: string;
 }
 
@@ -94,4 +109,6 @@ export type NotificationType =
     | 'DEREGISTER_BUILD'
     | 'REGISTER_DEPLOY'
     | 'DEREGISTER_DEPLOY';
+
+export type NotificationTypes = Record<NotificationType, NotificationType>;
 // #endregion module
