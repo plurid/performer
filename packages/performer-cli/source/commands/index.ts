@@ -18,6 +18,8 @@
     import getEntities from './getEntities';
     import obliterateEntity from './obliterateEntity';
     import obliterateEntities from './obliterateEntities';
+    import register from './register';
+    import deregister from './deregister';
     // #endregion internal
 // #endregion imports
 
@@ -43,5 +45,7 @@ export {
     getEntities,
     obliterateEntity,
     obliterateEntities,
+    register,
+    deregister,
 };
 // #endregion exports

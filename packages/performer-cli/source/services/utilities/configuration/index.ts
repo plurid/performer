@@ -73,7 +73,7 @@ const readConfigurationFile = async () => {
             performerConfigurationPath,
             '',
         );
-        return {};
+        return {} as any;
     }
 
     const data = await fs.readFile(

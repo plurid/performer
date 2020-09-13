@@ -6,6 +6,8 @@ import {
     status,
     login,
     logout,
+    register,
+    deregister,
 } from '../commands';
 
 import {
@@ -101,6 +103,21 @@ const main = async (
     program.addCommand(
         makeObliterateCommand(program)
     );
+
+
+    program
+        .command('register <files...>')
+        .description('register entities from one or more files')
+        .action(async (files: any) => {
+            await register(files);
+        });
+
+    program
+        .command('deregister <files...>')
+        .description('deregister entities from one or more files')
+        .action(async (files: any) => {
+            await deregister(files);
+        });
 
 
     program.parseAsync(process.argv);
