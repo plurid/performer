@@ -1,6 +1,10 @@
 // #region imports
     // #region libraries
     import {
+        graphql,
+    } from '@plurid/plurid-functions';
+
+    import {
         GET_SETUP,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -44,7 +48,11 @@ const getEntities = async (
             console.log(`Could not get ${type}. Something went wrong.`);
         }
 
-        console.log(JSON.stringify(responseData));
+        console.log(
+            JSON.stringify(
+                graphql.deleteTypenames(responseData),
+            ),
+        );
 
         return;
     } catch (error) {
