@@ -28,6 +28,7 @@ const performerLogic: PerformerLogic = {
             id: uuid.generate(),
             providers: [],
             imagenes: [],
+            notifiers: [],
             repositories: [],
             webhooks: [],
             projects: [],
@@ -70,6 +71,19 @@ const performerLogic: PerformerLogic = {
     },
 
     imagene: {
+        register: async (
+            input,
+        ) => {
+            return undefined;
+        },
+        deregister: async (
+            id,
+        ) => {
+            return true;
+        },
+    },
+
+    notifier: {
         register: async (
             input,
         ) => {
