@@ -59,6 +59,12 @@ export interface Imagene {
 }
 
 
+export interface Notifier {
+    id: string;
+    type: string;
+}
+
+
 export interface Webhook {
     id: string;
     path: string;

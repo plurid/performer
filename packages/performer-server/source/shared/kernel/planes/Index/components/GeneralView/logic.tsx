@@ -5,6 +5,7 @@
     import {
         PluridIconToolbox,
         PluridIconRepository,
+        PluridIconContact,
         PluridIconWebhook,
         PluridIconSpace,
         PluridIconTools,
@@ -26,6 +27,7 @@
 
     import Provider from '#kernel-components/Provider';
     import Imagene from '#kernel-components/Imagene';
+    import Notifier from '#kernel-components/Notifier';
     import Repositories from '#kernel-components/Repositories';
     import Project from '#kernel-components/Project';
     import Secret from '#kernel-components/Secret';
@@ -38,6 +40,7 @@
     // #region internal
     import ProvidersView from './components/ProvidersView';
     import ImagenesView from './components/ImagenesVIew';
+    import NotifiersView from './components/NotifiersView';
     import RepositoriesView from './components/RepositoriesView';
     import WebhooksView from './components/WebhooksView';
     import ProjectsView from './components/ProjectsView';
@@ -65,6 +68,7 @@
 export const generalSelectors = [
     'providers',
     'imagenes',
+    'notifiers',
     'repositories',
     'webhooks',
     'projects',
@@ -78,6 +82,7 @@ export const generalSelectors = [
 export const generalSelectorsIcons = {
     providers: PluridIconToolbox,
     imagenes: PluridIconTools,
+    notifiers: PluridIconContact,
     repositories: PluridIconRepository,
     webhooks: PluridIconWebhook,
     projects: PluridIconApps,
@@ -103,6 +108,12 @@ export const renderSelectedView = (
         case 'imagenes':
             return (
                 <ImagenesView
+                    setGeneralView={setGeneralView}
+                />
+            );
+        case 'notifiers':
+            return (
+                <NotifiersView
                     setGeneralView={setGeneralView}
                 />
             );
@@ -311,6 +322,17 @@ export const renderGeneralView = (
         case 'add-imagene':
             return (
                 <Imagene
+                    theme={stateInteractionTheme}
+                    providerID={stateActiveProviderID}
+                    action={() => {
+                        setGeneralView('general');
+                    }}
+                    cancel={() => setGeneralView('general')}
+                />
+            );
+        case 'add-notifier':
+            return (
+                <Notifier
                     theme={stateInteractionTheme}
                     providerID={stateActiveProviderID}
                     action={() => {

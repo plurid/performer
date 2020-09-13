@@ -12,6 +12,7 @@
 const getActiveProviderID = (state: AppState) => state.data.activeProviderID;
 const getProviders = (state: AppState) => state.data.providers;
 const getImagenes = (state: AppState) => state.data.imagenes;
+const getNotifiers = (state: AppState) => state.data.notifiers;
 const getRepositories = (state: AppState) => state.data.repositories;
 const getWebhooks = (state: AppState) => state.data.webhooks;
 const getProjects = (state: AppState) => state.data.projects;
@@ -27,6 +28,7 @@ const selectors = {
     getActiveProviderID,
     getProviders,
     getImagenes,
+    getNotifiers,
     getRepositories,
     getWebhooks,
     getProjects,

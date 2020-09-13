@@ -11,6 +11,7 @@ const initialState: Types.State = {
     activeProviderID: '',
     providers: [],
     imagenes: [],
+    notifiers: [],
     repositories: [],
     projects: [],
     secrets: [],

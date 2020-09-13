@@ -3,6 +3,7 @@
     import {
         ClientProvider,
         Imagene,
+        Notifier,
         Repository,
         Project,
         Secret,
@@ -161,6 +162,7 @@ export interface State {
     activeProviderID: string;
     providers: ClientProvider[];
     imagenes: Imagene[];
+    notifiers: Notifier[];
     repositories: Repository[];
     webhooks: Webhook[];
     projects: Project[];
