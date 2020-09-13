@@ -90,7 +90,7 @@ Commands:
 
 [@plurid/performer][performer-server] • the server application
 
-[performer-server]: https://github.com/plurid/datasign/tree/master/packages/performer-server
+[performer-server]: https://github.com/plurid/performer/tree/master/packages/performer-server
 
 
 <a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-cli">
@@ -99,7 +99,7 @@ Commands:
 
 [@plurid/performer-cli][performer-cli] • the command-line interface
 
-[performer-cli]: https://github.com/plurid/datasign/tree/master/packages/performer-cli
+[performer-cli]: https://github.com/plurid/performer/tree/master/packages/performer-cli
 
 
 <a target="_blank" href="https://www.npmjs.com/package/@plurid/performer-requests">
@@ -108,4 +108,4 @@ Commands:
 
 [@plurid/performer-requests][performer-requests] • the API requests
 
-[performer-requests]: https://github.com/plurid/datasign/tree/master/packages/performer-requests
+[performer-requests]: https://github.com/plurid/performer/tree/master/packages/performer-requests
