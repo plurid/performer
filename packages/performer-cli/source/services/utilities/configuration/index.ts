@@ -66,6 +66,16 @@ const updateConfigurationFile = async (
 
 
 const readConfigurationFile = async () => {
+    const exists = await fileExists(performerConfigurationPath);
+
+    if (!exists) {
+        await fs.writeFile(
+            performerConfigurationPath,
+            '',
+        );
+        return {};
+    }
+
     const data = await fs.readFile(
         performerConfigurationPath,
         'utf-8',
