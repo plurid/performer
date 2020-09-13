@@ -123,6 +123,17 @@ const TriggersView: React.FC<TriggersViewProperties> = (
 
 
     // #region handlers
+    const handleTriggerRun = async (
+        id: string,
+    ) => {
+        try {
+
+            return;
+        } catch (error) {
+            return;
+        }
+    }
+
     const handleTriggerEdit = async (
         id: string,
     ) => {
@@ -168,6 +179,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         stateTriggers.map(
             trigger => triggerRowRenderer(
                 trigger,
+                handleTriggerRun,
                 handleTriggerEdit,
                 handleTriggerObliterate,
             ),
@@ -200,6 +212,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             sortedTriggers.map(
                 trigger => triggerRowRenderer(
                     trigger,
+                    handleTriggerRun,
                     handleTriggerEdit,
                     handleTriggerObliterate,
                 ),
@@ -217,6 +230,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         const filteredRows = stateTriggers.map(
             trigger => triggerRowRenderer(
                 trigger,
+                handleTriggerRun,
                 handleTriggerEdit,
                 handleTriggerObliterate,
             ),
@@ -260,6 +274,8 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             <div />
 
             <div />
+
+            <div />
         </>
     );
 
@@ -268,7 +284,7 @@ const TriggersView: React.FC<TriggersViewProperties> = (
             generalTheme={stateGeneralTheme}
             interactionTheme={stateInteractionTheme}
 
-            rowTemplate="2fr 1fr 0.5fr 2fr 2fr 1fr 30px 30px"
+            rowTemplate="2fr 1fr 0.5fr 2fr 2fr 1fr 30px 30px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
             noRows="no triggers"

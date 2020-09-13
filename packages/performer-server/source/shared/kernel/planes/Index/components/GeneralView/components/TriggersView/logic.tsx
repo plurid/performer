@@ -3,6 +3,7 @@
     import React from 'react';
 
     import {
+        PluridIconNewStateline,
         PluridIconEdit,
         PluridIconDelete,
     } from '@plurid/plurid-icons-react';
@@ -21,6 +22,9 @@
 // #region module
 export const triggerRowRenderer = (
     trigger: Trigger,
+    handleTriggerRun: (
+        id: string,
+    ) => void,
     handleTriggerEdit: (
         id: string,
     ) => void,
@@ -63,6 +67,10 @@ export const triggerRowRenderer = (
             <div>
                 {project}
             </div>
+
+            <PluridIconNewStateline
+                atClick={() => handleTriggerRun(id)}
+            />
 
             <PluridIconEdit
                 atClick={() => handleTriggerEdit(id)}
