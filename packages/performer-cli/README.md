@@ -12,7 +12,7 @@
 
 
 <h1 align="center">
-    performer · command line interface
+    performer · command-line interface
 </h1>
 
 
