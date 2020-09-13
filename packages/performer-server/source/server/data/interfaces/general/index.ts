@@ -80,8 +80,10 @@ export type ClientNotifierEmailAuthentication = Omit<NotifierEmailAuthentication
 export interface NotifierEmailAuthentication {
     host: string;
     port: number;
+    secure: boolean;
     username: string;
     password: string;
+    sender: string;
 }
 
 
