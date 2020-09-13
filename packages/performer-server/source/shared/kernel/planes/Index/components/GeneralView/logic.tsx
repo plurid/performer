@@ -330,7 +330,7 @@ export const renderGeneralView = (
                     cancel={() => setGeneralView('general')}
                 />
             );
-        case 'add-notifier':
+        case 'setup-notifier':
             return (
                 <Notifier
                     theme={stateInteractionTheme}

@@ -193,15 +193,7 @@ const NotifiersView: React.FC<NotifiersViewProperties> = (
     const rowsHeader = (
         <>
             <div>
-                name
-            </div>
-
-            <div>
-                version
-            </div>
-
-            <div>
-                size
+                type
             </div>
 
             <div />
@@ -216,11 +208,11 @@ const NotifiersView: React.FC<NotifiersViewProperties> = (
             rowTemplate="auto 120px 120px 30px"
             rowsHeader={rowsHeader}
             rows={filteredRows}
-            noRows="no imagenes"
+            noRows="no notifiers"
 
-            actionButtonText="Add Imagene"
+            actionButtonText="Setup Notifier"
             actionButtonClick={() => {
-                setGeneralView('add-imagene');
+                setGeneralView('setup-notifier');
             }}
 
             filterUpdate={filterUpdate}

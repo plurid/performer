@@ -64,6 +64,11 @@ export interface Notifier {
     type: string;
 }
 
+export interface NotifierEmail {
+    username: string;
+    password: string;
+}
+
 
 export interface Webhook {
     id: string;
