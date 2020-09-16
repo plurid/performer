@@ -1,0 +1,12 @@
+FROM node:10-slim AS builder
+
+WORKDIR /app
+
+COPY . .
+
+ENV ENV_MODE=development
+ENV NODE_ENV=development
+
+RUN yarn install --production false
+
+CMD ["yarn", "start"]

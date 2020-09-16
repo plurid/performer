@@ -1,0 +1,19 @@
+# FROM ubuntu:20.04
+
+# RUN ping google.com
+
+
+
+FROM node:12-slim AS builder
+
+WORKDIR /app
+
+COPY . .
+
+ENV ENV_MODE=development
+ENV NODE_ENV=development
+
+RUN yarn install --production false
+# RUN npm install
+
+CMD ["npm", "start"]

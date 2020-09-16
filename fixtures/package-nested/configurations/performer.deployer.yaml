@@ -1,0 +1,18 @@
+stages:
+- name: 'Generate Latest Deployment'
+  directory: '/packages/package-npm'
+  imagene: 'ubuntu'
+  command: [
+    '/bin/bash',
+    '-c',
+    'sed "s/COMMIT_SHA/${SHORT_SHA}/g" Deployment.template.yaml > Deployment.latest.yaml'
+  ]
+
+- name: 'Deploy Latest Imagene'
+  directory: '/packages/package-npm'
+  imagene: 'kubectl'
+  command: [
+    'apply',
+    '-f',
+    'Deployment.latest.yaml'
+  ]

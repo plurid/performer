@@ -1,0 +1,37 @@
+stages:
+- name: 'Setup NPM Private Access 16'
+  directory: '/packages/package-npm'
+  imagene: 'ubuntu'
+  command: [
+    '/bin/bash',
+    '.npmrc.sh',
+  ]
+  secretsEnvironment: [
+    'NPM_TOKEN'
+  ]
+
+- name: 'Generate new imagene'
+  directory: '/packages/package-npm'
+  imagene: 'docker'
+  command: [
+    'build',
+    '-f ./dockerfile',
+    '-t hypod.cloud/plurid/production/package-npm:$SHORT_SHA',
+    '.'
+  ]
+
+- name: 'Push the imagene'
+  directory: '/packages/package-npm'
+  imagene: 'docker'
+  command: [
+    'push',
+    'hypod.cloud/plurid/production/package-npm:$SHORT_SHA',
+  ]
+
+# - name: 'Trigger deploy'
+#   imagene: 'deployer'
+#   id: 'package-npm-test'
+
+secrets: [
+  'NPM_TOKEN'
+]

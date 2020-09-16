@@ -1,0 +1,37 @@
+stages:
+- name: 'Setup NPM Private Access 2'
+  directory: '/packages/package-nested'
+  imagene: 'ubuntu'
+  command: [
+    '/bin/bash',
+    './configurations/.npmrc.sh',
+  ]
+  secretsEnvironment: [
+    'NPM_TOKEN'
+  ]
+
+- name: 'Generate new imagene'
+  directory: '/packages/package-nested'
+  imagene: 'docker'
+  command: [
+    'build',
+    '-f ./configurations/dockerfile',
+    '-t hypod.cloud/plurid/production/test/package-nested:$SHORT_SHA',
+    '.'
+  ]
+
+- name: 'Push the imagene'
+  directory: '/packages/package-nested'
+  imagene: 'docker'
+  command: [
+    'push',
+    'hypod.cloud/plurid/production/test/package-nested:$SHORT_SHA',
+  ]
+
+# - name: 'Trigger deploy'
+#   imagene: 'deployer'
+#   id: 'package-npm-test'
+
+secrets: [
+  'NPM_TOKEN'
+]
