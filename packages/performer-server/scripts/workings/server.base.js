@@ -75,9 +75,38 @@ const plugins = {
 };
 
 
+const handlePerformerWorker = {
+    input: 'source/server/logic/worker/handlePerformer.ts',
+    output: [
+        {
+            file: `./${BUILD_DIRECTORY}/handlePerformer.js`,
+            format: 'cjs',
+            exports: 'named',
+        },
+    ],
+    external: [
+        'worker_threads',
+        'fs',
+        'path',
+        'stream',
+        '@plurid/plurid-functions',
+        'ncp',
+        'dockerode',
+        'aws-sdk',
+    ],
+    plugins: [
+        plugins.typescript(),
+        plugins.sourceMaps(),
+    ],
+};
+
+
+
 module.exports = {
     input,
     output,
     plugins,
     externalPackages,
-}
+
+    handlePerformerWorker,
+};
