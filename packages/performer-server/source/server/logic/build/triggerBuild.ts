@@ -32,12 +32,16 @@
     } from '#server/utilities';
 
     import {
-        handlePerformer,
-    } from '#server/logic/commands';
-
-    import {
         updateWorkRepository,
     } from '#server/logic/repository';
+
+    // import {
+    //     handlePerformer,
+    // } from '#server/logic/commands';
+
+    import {
+        handlePerformerInWorker,
+    } from '#server/logic/worker';
     // #endregion external
 // #endregion imports
 
@@ -138,12 +142,21 @@ export const triggerBuild = async (
             return;
         }
 
-        handlePerformer(
+        // handlePerformer(
+        //     buildData,
+        //     performerTriggerData,
+        //     repositoryWorkPath,
+        //     trigger.project,
+        // );
+
+        const data = {
             buildData,
             performerTriggerData,
-            repositoryWorkPath,
-            trigger.project,
-        );
+            workDirectoryPath: repositoryWorkPath,
+            project: trigger.project,
+        };
+
+        handlePerformerInWorker(data);
     } catch (error) {
         if (logLevel <= logLevels.error) {
             console.log('[Performer Error] :: triggerBuild', error);
