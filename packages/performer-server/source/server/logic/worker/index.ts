@@ -4,6 +4,13 @@
         Worker,
     } from 'worker_threads';
     // #endregion libraries
+
+
+    // #region external
+    import {
+        BUILD_DIRECTORY,
+    } from '#server/data/constants';
+    // #endregion external
 // #endregion imports
 
 
@@ -13,7 +20,7 @@ const handlePerformerInWorker = (
     data: any,
 ) => {
     const worker = new Worker(
-        './handlePerformer.js',
+        `./${BUILD_DIRECTORY}/handlePerformer.js`,
         {
             workerData: {
                 ...data,

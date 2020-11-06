@@ -13,6 +13,8 @@
 
 
 // #region module
+export const BUILD_DIRECTORY = 'build';
+
 export const COOKIE_PRIVATE_TOKEN = 'PVTTKN';
 
 export const HEALTH_CHECK_ENDPOINT = '/service-check/health';
