@@ -31,6 +31,15 @@ const handlePerformerInWorker = (
         );
     }
 }
+
+
+const cleanDockerImagesInWorker = () => {
+    if (isMainThread) {
+        new Worker(
+            `./${BUILD_DIRECTORY}/cleanDockerImages.js`,
+        );
+    }
+}
 // #endregion module
 
 
@@ -38,5 +47,6 @@ const handlePerformerInWorker = (
 // #region exports
 export {
     handlePerformerInWorker,
+    cleanDockerImagesInWorker,
 };
 // #endregion exports
