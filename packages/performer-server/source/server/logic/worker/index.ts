@@ -2,6 +2,7 @@
     // #region libraries
     import {
         Worker,
+        isMainThread,
     } from 'worker_threads';
     // #endregion libraries
 
@@ -19,22 +20,24 @@
 const handlePerformerInWorker = (
     data: any,
 ) => {
-    const worker = new Worker(
-        `./${BUILD_DIRECTORY}/handlePerformer.js`,
-        {
-            workerData: {
-                ...data,
+    if (isMainThread) {
+        const worker = new Worker(
+            `./${BUILD_DIRECTORY}/handlePerformer.js`,
+            {
+                workerData: {
+                    ...data,
+                },
             },
-        },
-    );
+        );
 
-    worker.on('message', (result) => {
-        console.log('Worker finished ', result);
-    });
+        worker.on('message', (result) => {
+            console.log('Worker finished ', result);
+        });
 
-    worker.on('exit', (code) => {
-        console.log('Worker stopped ' + code);
-    });
+        worker.on('exit', (code) => {
+            console.log('Worker stopped ' + code);
+        });
+    }
 }
 // #endregion module
 

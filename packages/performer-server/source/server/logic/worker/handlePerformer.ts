@@ -17,7 +17,7 @@
 
 
 // #region module
-parentPort?.postMessage(async () => {
+const main = async () => {
     try {
         await handlePerformer(
             workerData.buildData,
@@ -30,5 +30,12 @@ parentPort?.postMessage(async () => {
     } catch (error) {
         return false;
     }
+}
+
+main();
+
+
+parentPort?.postMessage(async () => {
+    return 'runs';
 });
 // #endregion module
