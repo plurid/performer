@@ -21,7 +21,7 @@ const handlePerformerInWorker = (
     data: any,
 ) => {
     if (isMainThread) {
-        const worker = new Worker(
+        new Worker(
             `./${BUILD_DIRECTORY}/handlePerformer.js`,
             {
                 workerData: {
@@ -29,14 +29,6 @@ const handlePerformerInWorker = (
                 },
             },
         );
-
-        worker.on('message', (result) => {
-            console.log('Worker finished ', result);
-        });
-
-        worker.on('exit', (code) => {
-            console.log('Worker stopped ' + code);
-        });
     }
 }
 // #endregion module

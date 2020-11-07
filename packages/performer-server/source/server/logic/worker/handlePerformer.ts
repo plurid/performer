@@ -2,7 +2,6 @@
     // #region libraries
     import {
         workerData,
-        parentPort,
     } from 'worker_threads';
     // #endregion libraries
 
@@ -26,16 +25,11 @@ const main = async () => {
             workerData.project,
         );
 
-        return true;
+        return;
     } catch (error) {
-        return false;
+        return;
     }
 }
 
 main();
-
-
-parentPort?.postMessage(async () => {
-    return 'runs';
-});
 // #endregion module
