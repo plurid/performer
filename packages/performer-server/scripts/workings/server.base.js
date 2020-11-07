@@ -97,7 +97,6 @@ const handlePerformerWorker = {
     ],
     plugins: [
         plugins.typescript(),
-        plugins.sourceMaps(),
     ],
 };
 
@@ -116,7 +115,6 @@ const cleanDockerImagesWorker = {
     ],
     plugins: [
         plugins.typescript(),
-        plugins.sourceMaps(),
     ],
 };
 
