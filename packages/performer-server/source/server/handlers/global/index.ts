@@ -2,6 +2,11 @@
     // #region external
     import storage from '#server/services/storage';
     // #endregion external
+
+
+    // #region internal
+    // import schedules from './schedules';
+    // #endregion internal
 // #endregion imports
 
 
@@ -10,6 +15,8 @@
 const setup = () => {
     try {
         storage.generateLocations();
+
+        // schedules();
     } catch (error) {
         return;
     }

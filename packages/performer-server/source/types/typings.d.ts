@@ -51,3 +51,8 @@ declare module '*.pdf' {
     const value: any;
     export default value;
 }
+
+
+
+// Typeless Modules
+declare module 'bree';
