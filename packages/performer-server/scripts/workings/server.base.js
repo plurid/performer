@@ -32,6 +32,7 @@ const externalPackages = [
     'https',
     'path',
     'stream',
+    'worker_threads',
 ];
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
