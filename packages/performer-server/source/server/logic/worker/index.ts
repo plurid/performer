@@ -22,7 +22,7 @@ const handlePerformerInWorker = (
 ) => {
     if (isMainThread) {
         new Worker(
-            `./${BUILD_DIRECTORY}/handlePerformer.js`,
+            `./${BUILD_DIRECTORY}/worker_handlePerformer.js`,
             {
                 workerData: {
                     ...data,
@@ -36,7 +36,7 @@ const handlePerformerInWorker = (
 const cleanDockerImagesInWorker = () => {
     if (isMainThread) {
         new Worker(
-            `./${BUILD_DIRECTORY}/cleanDockerImages.js`,
+            `./${BUILD_DIRECTORY}/worker_cleanDockerImages.js`,
         );
     }
 }
