@@ -80,7 +80,7 @@ const handlePerformerWorker = {
     input: 'source/server/logic/worker/handlePerformer.ts',
     output: [
         {
-            file: `./${BUILD_DIRECTORY}/handlePerformer.js`,
+            file: `./${BUILD_DIRECTORY}/worker_handlePerformer.js`,
             format: 'cjs',
             exports: 'named',
         },
@@ -102,6 +102,30 @@ const handlePerformerWorker = {
 };
 
 
+const cleanDockerImagesWorker = {
+    input: 'source/server/logic/worker/cleanDockerImages.ts',
+    output: [
+        {
+            file: `./${BUILD_DIRECTORY}/worker_cleanDockerImages.js`,
+            format: 'cjs',
+            exports: 'named',
+        },
+    ],
+    external: [
+        'dockerode',
+    ],
+    plugins: [
+        plugins.typescript(),
+        plugins.sourceMaps(),
+    ],
+};
+
+const workers = [
+    handlePerformerWorker,
+    cleanDockerImagesWorker,
+];
+
+
 
 module.exports = {
     input,
@@ -109,5 +133,5 @@ module.exports = {
     plugins,
     externalPackages,
 
-    handlePerformerWorker,
+    workers,
 };

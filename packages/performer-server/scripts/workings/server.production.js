@@ -4,7 +4,7 @@ const {
     plugins,
     externalPackages,
 
-    handlePerformerWorker,
+    workers,
 } = require('./server.base');
 
 
@@ -27,5 +27,5 @@ export default [
         ],
     },
 
-    handlePerformerWorker,
+    ...workers,
 ];
