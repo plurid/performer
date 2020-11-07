@@ -76,7 +76,7 @@ const commandStartLocal = [
 
 const commandWatch = [
     `${crossCommand('rimraf')} ${path.join(buildFolder, '/stills')}`,
-    `PLURID_WATCH_MODE=true concurrently \"yarn watch.client verbose\" \"yarn watch.server verbose\" \"yarn start.local verbose\"`,
+    `PLURID_WATCH_MODE=true concurrently --kill-others --restart-after 5 --restart-tries 10 \"yarn watch.client verbose\" \"yarn watch.server verbose\" \"yarn start.local verbose\"`,
 ];
 
 

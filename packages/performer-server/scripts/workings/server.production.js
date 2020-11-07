@@ -10,6 +10,8 @@ const {
 
 
 export default [
+    ...workers,
+
     {
         input,
         output,
@@ -26,6 +28,4 @@ export default [
             plugins.typescript(),
         ],
     },
-
-    ...workers,
 ];
