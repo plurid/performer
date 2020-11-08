@@ -1,34 +1,24 @@
 // #region imports
-    // #region libraries
-    import path from 'path';
+    // #region external
+    import {
+        CLEAN_DOCKER_IMAGES_WINDOW_HOURS,
+    } from '#server/data/constants';
 
-    import Bree from 'bree';
-    // #endregion libraries
+    import {
+        cleanDockerImagesInWorker,
+    } from '#server/logic/worker';
+    // #endregion external
 // #endregion imports
 
 
 
 // #region module
 const schedules = () => {
-    const scheduler = new Bree({
-        jobs: [
-            {
-                name: 'cleanDockerImages',
-                path: path.join(
-                    __dirname,
-                    'worker_cleanDockerImages',
-                ),
-                interval: 'every 2 minutes',
-            },
-        ],
-    });
+    const time = 1_000 * 60 * CLEAN_DOCKER_IMAGES_WINDOW_HOURS;
 
-    scheduler.start();
-
-    scheduler.on('worker created', (name: string) => {
-        console.log('worker created', name);
-        console.log(scheduler.workers[name]);
-    });
+    setInterval(() => {
+        cleanDockerImagesInWorker();
+    }, time);
 };
 // #endregion module
 

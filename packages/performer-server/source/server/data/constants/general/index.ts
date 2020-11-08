@@ -19,6 +19,8 @@ export const COOKIE_PRIVATE_TOKEN = 'PVTTKN';
 
 export const HEALTH_CHECK_ENDPOINT = '/service-check/health';
 
+export const CLEAN_DOCKER_IMAGES_WINDOW_HOURS = 1;
+
 
 export const GITHUB_API = 'https://api.github.com/graphql';
 export const GITHUB_PROVIDER = 'github';

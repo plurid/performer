@@ -5,7 +5,7 @@
 
 
     // #region internal
-    // import schedules from './schedules';
+    import schedules from './schedules';
     // #endregion internal
 // #endregion imports
 
@@ -16,7 +16,7 @@ const setup = () => {
     try {
         storage.generateLocations();
 
-        // schedules();
+        schedules();
     } catch (error) {
         return;
     }

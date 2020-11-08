@@ -13,10 +13,6 @@
     import {
         obliterateDirectory,
     } from '#server/utilities';
-
-    import {
-        cleanDockerImagesInWorker,
-    } from '#server/logic/worker';
     // #endregion external
 
 
@@ -115,8 +111,6 @@ export const handlePerformer = async (
     await obliterateDirectory(
         workDirectoryPath,
     );
-
-    cleanDockerImagesInWorker();
 }
 
 

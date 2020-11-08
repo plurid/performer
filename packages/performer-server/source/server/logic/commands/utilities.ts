@@ -1,5 +1,9 @@
 // #region imports
     // #region external
+    import {
+        CLEAN_DOCKER_IMAGES_WINDOW_HOURS,
+    } from '#server/data/constants';
+
     import docker from '#server/logic/engine';
     // #endregion external
 // #endregion imports
@@ -18,12 +22,18 @@ export const cleanDockerImages = async () => {
                     Created: created,
                 } = image;
 
-                const windowHours = 1;
+                const windowHours = CLEAN_DOCKER_IMAGES_WINDOW_HOURS * 3_600;
                 const now = Math.floor(Date.now() / 1000);
                 // window hours ago
-                const past = now - 3600 * windowHours;
+                const past = now - windowHours;
                 // window hours from now
-                const future = now + 3600 * windowHours;
+                const future = now + windowHours;
+
+                // check if im  age is older than window hours
+                const difference = created - past;
+                if (difference < windowHours) {
+                    continue;
+                }
 
                 if (created > past && created < future) {
                     console.log(`Performer :: removed docker image ${id}`);
