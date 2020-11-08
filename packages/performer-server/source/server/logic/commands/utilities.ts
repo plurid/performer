@@ -26,6 +26,8 @@ export const cleanDockerImages = async () => {
                 const future = now + 3600 * windowHours;
 
                 if (created > past && created < future) {
+                    console.log(`Performer :: removed docker image ${id}`);
+
                     const dockerImage = docker.getImage(id);
 
                     await dockerImage.remove();
