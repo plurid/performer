@@ -112,6 +112,7 @@ const cleanDockerImagesWorker = {
     ],
     external: [
         'dockerode',
+        'path',
     ],
     plugins: [
         plugins.typescript(),
