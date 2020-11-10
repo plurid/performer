@@ -17,8 +17,8 @@ export const STORAGE_TYPE = (process.env.PERFORMER_STORAGE_TYPE as StorageType |
     || 'filesystem';
 
 
-export const LOG_LEVEL = process.env.PERFORMER_LOG_LEVEL || '7';
 export const QUIET = process.env.PERFORMER_QUIET === 'true';
+export const LOG_LEVEL = process.env.PERFORMER_LOG_LEVEL || '7';
 
 export const logLevel = QUIET
     ? 0
