@@ -1,34 +1,14 @@
-import base from https://raw.githubusercontent.com/plurid/joiner/master/packages/joiner-data/values/base.deon
+import develop from https://raw.githubusercontent.com/plurid/joiner/master/packages/joiner-data/values/develop.deon
 
 
 
 {
-    ...#base
+    ...#develop
     #packages
-    #package
-    #development
 }
 
 
 packages [
-    './packages/*'
+    ...#develop.packages
     './fixtures/*'
 ]
-
-package {
-    ...#base.package
-    ignore [
-        node_modules
-    ]
-}
-
-development {
-    watchPackages all
-    serverPort 55000
-    watchDirectories [
-        'build'
-        'distribution'
-        'dist'
-    ]
-    externalPackages []
-}
