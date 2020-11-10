@@ -42,4 +42,8 @@ export const DOCKER_AUTH_SERVER_ADDRESS = process.env.DOCKER_AUTH_SERVER_ADDRESS
 
 export const IN_CONTAINER_USAGE = process.env.PERFORMER_IN_CONTAINER_USAGE === 'true';
 export const IN_CONTAINER_HOST_BIND = process.env.PERFORMER_IN_CONTAINER_HOST_BIND || '';
+
+
+
+export const USE_DELOG = process.env.USE_DELOG === 'true';
 // #endregion module

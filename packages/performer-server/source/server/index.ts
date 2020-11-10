@@ -8,10 +8,7 @@
         PluridServerTemplateConfiguration,
     } from '@plurid/plurid-react-server';
 
-    import helmet from '#kernel-services/helmet';
-
-    import reduxStore from '#kernel-services/state/store';
-    import apolloClient from '#kernel-services/graphql/client';
+    import delog from '@plurid/delog';
     // #endregion libraries
 
 
@@ -20,6 +17,15 @@
         routes,
         shell,
     } from '../shared';
+
+    import {
+        USE_DELOG,
+    } from '#server/data/constants';
+
+    import helmet from '#kernel-services/helmet';
+
+    import reduxStore from '#kernel-services/state/store';
+    import apolloClient from '#kernel-services/graphql/client';
     // #endregion external
 
 
@@ -140,6 +146,12 @@ if (require.main === module) {
     );
 
     performerServer.start(port);
+
+    if (USE_DELOG) {
+        delog({
+            text: 'Performer start',
+        });
+    }
 }
 // #endregion run
 
