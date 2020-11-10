@@ -54,6 +54,7 @@
     "dependencies": {
         "@apollo/client": "^3.2.5",
         "@google-cloud/storage": "^5.4.0",
+        "@plurid/delog": "^0.0.14",
         "@plurid/deon": "^0.0.35",
         "@plurid/performer-requests": "^0.0.0",
         "@plurid/plurid-data": "^0.1.161",

@@ -671,6 +671,18 @@
   dependencies:
     mkdirp "^1.0.4"
 
+"@plurid/delog@^0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@plurid/delog/-/delog-0.0.14.tgz#2fb03fa07991c72003b5fcae293930ed2b10e2b1"
+  integrity sha512-fEY6U6u4BEE66LiLJ056ewMOD9xN77pWkjqd7difMqRDFFa6Jd+EQT5nAXQINqCqlN4KVr2urkX/7hksRWlaJw==
+  dependencies:
+    "@apollo/client" "^3.2.5"
+    "@plurid/plurid-functions" "^0.1.18"
+    cross-fetch "^3.0.6"
+    graphql "^15.4.0"
+    graphql-tag "^2.11.0"
+    subscriptions-transport-ws "^0.9.18"
+
 "@plurid/deon@^0.0.35":
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@plurid/deon/-/deon-0.0.35.tgz#1049957fa2acd674a1201ee048ff04d58c91ee51"
