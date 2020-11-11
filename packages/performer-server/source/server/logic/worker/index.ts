@@ -17,6 +17,22 @@
 
 
 // #region module
+const triggerBuildInWorker = (
+    data: any,
+) => {
+    if (isMainThread) {
+        new Worker(
+            `./${BUILD_DIRECTORY}/worker_triggerBuild.js`,
+            {
+                workerData: {
+                    data,
+                },
+            },
+        );
+    }
+}
+
+
 const handlePerformerInWorker = (
     data: any,
 ) => {
@@ -46,6 +62,7 @@ const cleanDockerImagesInWorker = () => {
 
 // #region exports
 export {
+    triggerBuildInWorker,
     handlePerformerInWorker,
     cleanDockerImagesInWorker,
 };
