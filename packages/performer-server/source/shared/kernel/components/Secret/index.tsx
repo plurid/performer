@@ -10,6 +10,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         STORE_SECRET,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -167,76 +171,51 @@ const Secret: React.FC<SecretProperties> = (
         <StyledSecret
             theme={theme}
         >
-            <div>
-                <h1>
-                    store secret
-                </h1>
+            <h1>
+                store secret
+            </h1>
 
+            <PluridInputLine
+                text={secretName}
+                name="name"
+                atChange={(event) => setSecretName(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
+
+            <PluridInputLine
+                text={secretValue}
+                name="value"
+                atChange={(event) => setSecretValue(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
+
+            <PluridInputLine
+                text={secretProject}
+                name="project"
+                atChange={(event) => setSecretProject(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
+
+            <StyledPluridPureButton
+                text="Store Secret"
+                atClick={() => storeSecret()}
+                level={2}
+                disabled={!secretName}
+            />
+
+            {cancel && (
                 <div>
-                    <StyledPluridTextline
-                        text={secretName}
-                        placeholder="name"
-                        atChange={(event) => setSecretName(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
+                    <StyledPluridLinkButton
+                        text="cancel"
+                        atClick={() => cancel()}
                         theme={theme}
                         level={2}
                     />
                 </div>
-
-                <div>
-                    <StyledPluridTextline
-                        text={secretValue}
-                        placeholder="value"
-                        atChange={(event) => setSecretValue(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                <div>
-                    <StyledPluridTextline
-                        text={secretProject}
-                        placeholder="project"
-                        atChange={(event) => setSecretProject(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                <div>
-                    <StyledPluridPureButton
-                        text="Store Secret"
-                        atClick={() => storeSecret()}
-                        level={2}
-                        disabled={!secretName}
-                    />
-                </div>
-
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
-            </div>
+            )}
         </StyledSecret>
     );
     // #endregion render

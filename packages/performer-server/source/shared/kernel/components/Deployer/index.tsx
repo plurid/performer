@@ -10,6 +10,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         GENERATE_DEPLOYER,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -25,7 +29,6 @@
     } from '#kernel-services/logic/mutations';
 
     import {
-        StyledPluridTextline,
         StyledPluridPureButton,
         StyledPluridLinkButton,
     } from '#kernel-services/styled';
@@ -192,132 +195,77 @@ const Deployer: React.FC<DeployerProperties> = (
                 {editID ? 'update' : 'generate'} deployer
             </h1>
 
-            <div>
-                <div>
-                    <StyledPluridTextline
-                        text={deployerID}
-                        placeholder="id"
-                        atChange={(event) => setDeployerID(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerID}
+                name="id"
+                atChange={(event) => setDeployerID(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerName}
-                        placeholder="name"
-                        atChange={(event) => setDeployerName(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerName}
+                name="name"
+                atChange={(event) => setDeployerName(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerProject}
-                        placeholder="project"
-                        atChange={(event) => setDeployerProject(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerProject}
+                name="project"
+                atChange={(event) => setDeployerProject(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerRepository}
-                        placeholder="repository"
-                        atChange={(event) => setDeployerRepository(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerRepository}
+                name="repository"
+                atChange={(event) => setDeployerRepository(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerBranch}
-                        placeholder="branch"
-                        atChange={(event) => setDeployerBranch(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerBranch}
+                name="branch"
+                atChange={(event) => setDeployerBranch(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerPath}
-                        placeholder="path"
-                        atChange={(event) => setDeployerPath(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerPath}
+                name="path"
+                atChange={(event) => setDeployerPath(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={deployerFile}
-                        placeholder="file"
-                        atChange={(event) => setDeployerFile(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={deployerFile}
+                name="file"
+                atChange={(event) => setDeployerFile(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridPureButton
-                        text={editID ? 'Update Deployer' : 'Generate Deployer'}
-                        atClick={() => generateDeployer()}
-                        level={2}
-                        disabled={!validDeployer}
-                    />
-                </div>
+            <StyledPluridPureButton
+                text={editID ? 'Update Deployer' : 'Generate Deployer'}
+                atClick={() => generateDeployer()}
+                level={2}
+                disabled={!validDeployer}
+            />
 
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
-            </div>
+            {cancel && (
+                <StyledPluridLinkButton
+                    text="cancel"
+                    atClick={() => cancel()}
+                    theme={theme}
+                    level={2}
+                />
+            )}
         </StyledDeployer>
     );
     // #endregion render

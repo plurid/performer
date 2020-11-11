@@ -10,6 +10,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         ADD_PROVIDER,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -169,68 +173,48 @@ const Provider: React.FC<ProviderProperties> = (
         <StyledProvider
             theme={theme}
         >
-            <div>
-                <h1>
-                    setup provider
-                </h1>
+            <h1>
+                setup provider
+            </h1>
 
-                <ProviderSelector
+            <ProviderSelector
+                theme={theme}
+                selectedProvider={providerType}
+                setSelectedProvider={setProviderType}
+            />
+
+            <PluridInputLine
+                text={providerName}
+                name="name"
+                atChange={(event) => setProviderName(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
+
+            <PluridInputLine
+                text={providerToken}
+                name="token"
+                atChange={(event) => setProviderToken(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
+
+            <StyledPluridPureButton
+                text="Add Provider"
+                atClick={() => addProvider()}
+                disabled={!validProvider}
+                theme={theme}
+                level={2}
+            />
+
+            {cancel && (
+                <StyledPluridLinkButton
+                    text="cancel"
+                    atClick={() => cancel()}
                     theme={theme}
-                    selectedProvider={providerType}
-                    setSelectedProvider={setProviderType}
+                    level={2}
                 />
-
-                <div>
-                    <StyledPluridTextline
-                        text={providerName}
-                        atChange={(event) => setProviderName(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        placeholder="name"
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                <div>
-                    <StyledPluridTextline
-                        text={providerToken}
-                        atChange={(event) => setProviderToken(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        placeholder="token"
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                <div>
-                    <StyledPluridPureButton
-                        text="Add Provider"
-                        atClick={() => addProvider()}
-                        disabled={!validProvider}
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
-            </div>
+            )}
         </StyledProvider>
     );
     // #endregion render

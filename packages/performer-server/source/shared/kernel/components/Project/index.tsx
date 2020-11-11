@@ -9,6 +9,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         GENERATE_PROJECT,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -117,6 +121,14 @@ const Project: React.FC<ProjectProperties> = (
             action(project);
         }
     }
+
+    const handleEnter = (
+        event: React.KeyboardEvent<HTMLInputElement>,
+    ) => {
+        if (event.key === 'Enter') {
+            addProject();
+        }
+    }
     // #endregion handlers
 
 
@@ -125,50 +137,33 @@ const Project: React.FC<ProjectProperties> = (
         <StyledProject
             theme={theme}
         >
-            <div>
-                <h1>
-                    add project
-                </h1>
+            <h1>
+                add project
+            </h1>
 
-                <div>
-                    <StyledPluridTextline
-                        text={projectName}
-                        placeholder="name"
-                        atChange={(event) => setProjectName(event.target.value)}
-                        atKeyDown={(event) => {
-                            if (event.key === 'Enter') {
-                                addProject();
-                            }
-                        }}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={projectName}
+                name="name"
+                atChange={(event) => setProjectName(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridPureButton
-                        text="Add Project"
-                        atClick={() => addProject()}
-                        level={2}
-                        disabled={!projectName}
-                    />
-                </div>
+            <StyledPluridPureButton
+                text="Add Project"
+                atClick={() => addProject()}
+                level={2}
+                disabled={!projectName}
+            />
 
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
-            </div>
+            {cancel && (
+                <StyledPluridLinkButton
+                    text="cancel"
+                    atClick={() => cancel()}
+                    theme={theme}
+                    level={2}
+                />
+            )}
         </StyledProject>
     );
     // #endregion render

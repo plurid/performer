@@ -10,6 +10,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         UPDATE_WEBHOOK,
         SETUP_WEBHOOK,
     } from '@plurid/performer-requests';
@@ -239,46 +243,35 @@ const Webhook: React.FC<WebhookProperties> = (
         <StyledWebhook
             theme={theme}
         >
+            <h1>
+                {editID ? 'update' : 'setup'} webhook
+            </h1>
+
             <div>
-                <h1>
-                    {editID ? 'update' : 'setup'} webhook
-                </h1>
-
-                <div>
-                    <StyledPluridTextline
-                        text={webhookPath}
-                        placeholder="/path/to/webhook"
-                        atChange={(event) => setWebhookPath(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
-
-                <div>
-                    <StyledPluridPureButton
-                        text={editID ? 'Update Webhook' : 'Setup Webhook'}
-                        atClick={() => setupWebhook()}
-                        level={2}
-                        disabled={!validWebhookPath}
-                    />
-                </div>
-
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
+                <PluridInputLine
+                    text={webhookPath}
+                    name="/path/to/webhook"
+                    atChange={(event) => setWebhookPath(event.target.value)}
+                    atKeyDown={handleEnter}
+                    theme={theme}
+                />
             </div>
+
+            <StyledPluridPureButton
+                text={editID ? 'Update Webhook' : 'Setup Webhook'}
+                atClick={() => setupWebhook()}
+                level={2}
+                disabled={!validWebhookPath}
+            />
+
+            {cancel && (
+                <StyledPluridLinkButton
+                    text="cancel"
+                    atClick={() => cancel()}
+                    theme={theme}
+                    level={2}
+                />
+            )}
         </StyledWebhook>
     );
     // #endregion render

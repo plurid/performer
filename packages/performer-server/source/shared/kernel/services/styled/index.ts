@@ -21,6 +21,7 @@ export const StyledPluridTextline = styled(PluridTextline)`
 
 export const StyledPluridPureButton = styled(PluridPureButton)`
     margin: 20px auto;
+    margin-top: 40px;
     width: 250px;
 `;
 

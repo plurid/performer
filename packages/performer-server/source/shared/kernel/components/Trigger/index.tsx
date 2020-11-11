@@ -10,6 +10,10 @@
     } from '@plurid/plurid-themes';
 
     import {
+        PluridInputLine,
+    } from '@plurid/plurid-ui-react';
+
+    import {
         UPDATE_TRIGGER,
         GENERATE_TRIGGER,
     } from '@plurid/performer-requests';
@@ -240,138 +244,84 @@ const Trigger: React.FC<TriggerProperties> = (
                 {editID ? 'update' : 'generate'} trigger
             </h1>
 
-            <div>
-                <div>
-                    <StyledPluridTextline
-                        text={triggerID}
-                        placeholder="id"
-                        atChange={(event) => {
-                            if (editID) {
-                                return;
-                            }
 
-                            setTriggerID(event.target.value);
-                        }}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerID}
+                name="name"
+                atChange={(event) => {
+                    if (editID) {
+                        return;
+                    }
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerName}
-                        placeholder="name"
-                        atChange={(event) => setTriggerName(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+                    setTriggerID(event.target.value);
+                }}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerProject}
-                        placeholder="project"
-                        atChange={(event) => setTriggerProject(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerName}
+                name="name"
+                atChange={(event) => setTriggerName(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerRepository}
-                        placeholder="repository"
-                        atChange={(event) => setTriggerRepository(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerProject}
+                name="project"
+                atChange={(event) => setTriggerProject(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerBranch}
-                        placeholder="branch"
-                        atChange={(event) => setTriggerBranch(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerRepository}
+                name="repository"
+                atChange={(event) => setTriggerRepository(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerPath}
-                        placeholder="path"
-                        atChange={(event) => setTriggerPath(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerBranch}
+                name="branch"
+                atChange={(event) => setTriggerBranch(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridTextline
-                        text={triggerFile}
-                        placeholder="file"
-                        atChange={(event) => setTriggerFile(event.target.value)}
-                        atKeyDown={(event) => handleEnter(event)}
-                        spellCheck={false}
-                        autoCapitalize="false"
-                        autoComplete="false"
-                        autoCorrect="false"
-                        theme={theme}
-                        level={2}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerPath}
+                name="path"
+                atChange={(event) => setTriggerPath(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                <div>
-                    <StyledPluridPureButton
-                        text={editID ? 'Update Trigger' : 'Generate Trigger'}
-                        atClick={() => generateTrigger()}
-                        level={2}
-                        disabled={!validTrigger}
-                    />
-                </div>
+            <PluridInputLine
+                text={triggerFile}
+                name="file"
+                atChange={(event) => setTriggerFile(event.target.value)}
+                atKeyDown={handleEnter}
+                theme={theme}
+            />
 
-                {cancel && (
-                    <div>
-                        <StyledPluridLinkButton
-                            text="cancel"
-                            atClick={() => cancel()}
-                            theme={theme}
-                            level={2}
-                        />
-                    </div>
-                )}
-            </div>
+            <StyledPluridPureButton
+                text={editID ? 'Update Trigger' : 'Generate Trigger'}
+                atClick={() => generateTrigger()}
+                level={2}
+                disabled={!validTrigger}
+            />
+
+            {cancel && (
+                <StyledPluridLinkButton
+                    text="cancel"
+                    atClick={() => cancel()}
+                    theme={theme}
+                    level={2}
+                />
+            )}
         </StyledTrigger>
     );
     // #endregion render
