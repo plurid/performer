@@ -87,6 +87,13 @@ const triggerBuildWorker = {
     ],
     external: [
         'worker_threads',
+        'fs',
+        'path',
+        'js-yaml',
+        '@plurid/deon',
+        'child_process',
+        'ncp',
+        'aws-sdk',
     ],
     plugins: [
         plugins.typescript(),
