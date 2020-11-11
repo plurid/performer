@@ -32,9 +32,9 @@
 
     import setupHandlers from './handlers';
 
-    import mockLogic from './logic/mock';
-
     import logger from './services/logger';
+
+    import mockLogic from './logic/mock';
     // #endregion internal
 // #endregion imports
 
@@ -46,7 +46,7 @@
 const watchMode = process.env.PLURID_WATCH_MODE === 'true';
 const isProduction = process.env.ENV_MODE === 'production';
 const buildDirectory = process.env.PLURID_BUILD_DIRECTORY || 'build';
-const port = process.env.PERFORMER_PORT || 56065;
+const port = process.env.PORT || 56065;
 
 const applicationRoot = 'performer-application';
 const openAtStart = watchMode
