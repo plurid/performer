@@ -17,9 +17,13 @@
         BuildData,
     } from '#server/data/interfaces';
 
+    // import {
+    //     triggerBuild,
+    // } from '#server/logic/build/triggerBuild';
+
     import {
-        triggerBuild,
-    } from '#server/logic/build/triggerBuild';
+        triggerBuildInWorker,
+    } from '#server/logic/worker';
 
     import {
         loadBuildsQueued,
@@ -53,7 +57,7 @@ class BuildQueueWatcher {
     async handleQueuedBuild(
         buildData: BuildData,
     ) {
-        await triggerBuild(buildData);
+        triggerBuildInWorker(buildData);
 
         await removeFromQueue(buildData.id);
     }

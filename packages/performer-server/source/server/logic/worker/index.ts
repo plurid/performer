@@ -9,6 +9,10 @@
 
     // #region external
     import {
+        BuildData,
+    } from '#server/data/interfaces';
+
+    import {
         BUILD_DIRECTORY,
     } from '#server/data/constants';
     // #endregion external
@@ -18,7 +22,7 @@
 
 // #region module
 const triggerBuildInWorker = (
-    data: any,
+    data: BuildData,
 ) => {
     if (isMainThread) {
         new Worker(
