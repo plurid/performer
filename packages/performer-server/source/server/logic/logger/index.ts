@@ -1,7 +1,13 @@
 // #region imports
+    // #region libraries
+    import delog from '@plurid/delog';
+    // #endregion libraries
+
+
     // #region external
     import {
         logLevels,
+        USE_DELOG,
     } from '#server/data/constants';
 
     import {
@@ -27,6 +33,15 @@ class Logger {
         level = logLevels.info,
         error?: any,
     ) {
+        if (USE_DELOG) {
+            delog({
+                text: data,
+                level,
+                error,
+            });
+            return;
+        }
+
         if (this.level <= level) {
             console.log(data);
 

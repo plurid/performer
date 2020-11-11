@@ -34,7 +34,7 @@
 
     import mockLogic from './logic/mock';
 
-    import delog from './services/delog';
+    import logger from './services/logger';
     // #endregion internal
 // #endregion imports
 
@@ -143,9 +143,9 @@ if (require.main === module) {
 
     performerServer.start(port);
 
-    delog({
-        text: 'Performer start',
-    });
+    logger.log(
+        'Performer start',
+    );
 }
 // #endregion run
 

@@ -11,8 +11,6 @@
     import {
         generateMethodLogs,
     } from '#server/utilities';
-
-    import delog from '#server/services/delog';
     // #endregion external
 // #endregion imports
 
@@ -42,10 +40,6 @@ const clearBuilds = async (
         clearBuildsLogs.infoStart,
         logLevels.info,
     );
-    delog({
-        text: clearBuildsLogs.infoStart,
-        level: logLevels.info,
-    });
     // #endregion log start
 
 
@@ -56,20 +50,12 @@ const clearBuilds = async (
                 clearBuildsLogs.infoHandlePrivateUsage,
                 logLevels.trace,
             );
-            delog({
-                text: clearBuildsLogs.infoHandlePrivateUsage,
-                level: logLevels.trace,
-            });
 
             if (!privateOwnerIdentonym) {
                 logger.log(
                     clearBuildsLogs.infoEndPrivateUsage,
                     logLevels.info,
                 );
-                delog({
-                    text: clearBuildsLogs.infoEndPrivateUsage,
-                    level: logLevels.info,
-                });
 
                 return {
                     status: false,
@@ -82,10 +68,6 @@ const clearBuilds = async (
                 clearBuildsLogs.infoSuccessPrivateUsage,
                 logLevels.info,
             );
-            delog({
-                text: clearBuildsLogs.infoSuccessPrivateUsage,
-                level: logLevels.info,
-            });
 
             return {
                 status: true,
@@ -102,10 +84,6 @@ const clearBuilds = async (
                 clearBuildsLogs.infoHandleCustomLogicUsage,
                 logLevels.trace,
             );
-            delog({
-                text: clearBuildsLogs.infoHandleCustomLogicUsage,
-                level: logLevels.trace,
-            });
 
             await logic.builds.clear();
 
@@ -113,10 +91,6 @@ const clearBuilds = async (
                 clearBuildsLogs.infoEndCustomLogicUsage,
                 logLevels.info,
             );
-            delog({
-                text: clearBuildsLogs.infoEndCustomLogicUsage,
-                level: logLevels.info,
-            });
 
             return {
                 status: true,
@@ -132,10 +106,6 @@ const clearBuilds = async (
             clearBuildsLogs.infoSuccess,
             logLevels.info,
         );
-        delog({
-            text: clearBuildsLogs.infoSuccess,
-            level: logLevels.info,
-        });
         // #endregion log success
 
 
@@ -151,11 +121,6 @@ const clearBuilds = async (
             logLevels.error,
             error,
         );
-        delog({
-            text: clearBuildsLogs.errorEnd,
-            level: logLevels.error,
-            error,
-        });
 
         return {
             status: false,

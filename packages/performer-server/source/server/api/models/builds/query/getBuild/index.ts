@@ -38,7 +38,7 @@ const getBuild = async (
 
     // #region log start
     logger.log(
-        '[Performer Info : Start] :: getBuild',
+        getBuildLogs.infoStart,
         logLevels.info,
     );
     // #endregion log start
@@ -150,7 +150,7 @@ const getBuild = async (
     } catch (error) {
         // #region error handle
         logger.log(
-            '[Performer Error : End] :: getBuild',
+            getBuildLogs.errorEnd,
             logLevels.error,
             error,
         );
