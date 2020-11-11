@@ -94,6 +94,7 @@ const triggerBuildWorker = {
         'child_process',
         'ncp',
         'aws-sdk',
+        '@plurid/delog',
     ],
     plugins: [
         plugins.typescript(),
@@ -118,6 +119,7 @@ const handlePerformerWorker = {
         'ncp',
         'dockerode',
         'aws-sdk',
+        '@plurid/delog',
     ],
     plugins: [
         plugins.typescript(),
