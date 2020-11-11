@@ -7,8 +7,6 @@
         PluridServerPartialOptions,
         PluridServerTemplateConfiguration,
     } from '@plurid/plurid-react-server';
-
-    import delog from '@plurid/delog';
     // #endregion libraries
 
 
@@ -17,10 +15,6 @@
         routes,
         shell,
     } from '../shared';
-
-    import {
-        USE_DELOG,
-    } from '#server/data/constants';
 
     import helmet from '#kernel-services/helmet';
 
@@ -39,6 +33,8 @@
     import setupHandlers from './handlers';
 
     import mockLogic from './logic/mock';
+
+    import delog from './services/delog';
     // #endregion internal
 // #endregion imports
 
@@ -147,11 +143,9 @@ if (require.main === module) {
 
     performerServer.start(port);
 
-    if (USE_DELOG) {
-        delog({
-            text: 'Performer start',
-        });
-    }
+    delog({
+        text: 'Performer start',
+    });
 }
 // #endregion run
 
