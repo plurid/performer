@@ -38,6 +38,7 @@ Performer uses [plurid](https://github.com/plurid/plurid) to explore information
 
 + [Install](#install)
 + [Usage](#usage)
++ [Building](#building)
 + [Packages](#packages)
 
 
@@ -187,7 +188,27 @@ docker build --file ./configurations/production.dockerfile \
     --build-arg PERFORMER_PRIVATE_OWNER_KEY= \
     --build-arg PERFORMER_PRIVATE_TOKEN= \
     --build-arg PERFORMER_IN_CONTAINER_USAGE= \
+    --build-arg PERFORMER_IN_CONTAINER_HOST_BIND= \
     .
+```
+
+`performer` uses by default [`delog`](https://github.com/plurid/delog) for logging purposes.
+
+In order to configure `performer` with `delog` pass the following required build arguments
+
+```
+    --build-arg USE_DELOG=true \
+    --build-arg DELOG_ENDPOINT= \
+    --build-arg DELOG_TOKEN= \
+```
+
+or customize the `delog` through any other build arguments
+
+```
+    --build-arg DELOG_GROUND_LEVEL= \
+    --build-arg DELOG_FORMAT= \
+    --build-arg DELOG_PROJECT= \
+    --build-arg DELOG_SPACE= \
 ```
 
 
