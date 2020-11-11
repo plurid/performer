@@ -9,7 +9,12 @@
     import { ThunkDispatch } from 'redux-thunk';
 
     import {
+        Theme
+    } from '@plurid/plurid-themes';
+
+    import {
         PluridPureButton,
+        PluridInputLine,
     } from '@plurid/plurid-ui-react';
 
     import {
@@ -24,15 +29,11 @@
     import client from '#kernel-services/graphql/client';
 
     import {
-        StyledPluridTextline,
-    } from '#kernel-services/styled';
-
-    import {
         getSetup,
     } from '#kernel-services/logic/queries';
 
     import { AppState } from '#kernel-services/state/store';
-    // import selectors from '#kernel-services/state/selectors';
+    import selectors from '#kernel-services/state/selectors';
     import actions from '#kernel-services/state/actions';
     // #endregion external
 
@@ -53,6 +54,7 @@ export interface PrivateViewOwnProperties {
 }
 
 export interface PrivateViewStateProperties {
+    stateGeneralTheme: Theme;
 }
 
 export interface PrivateViewDispatchProperties {
@@ -70,6 +72,10 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 ) => {
     // #region properties
     const {
+        // #region state
+        stateGeneralTheme,
+        // #endregion state
+
         // #region dispatch
         dispatch,
         dispatchSetViewType,
@@ -164,21 +170,21 @@ const PrivateView: React.FC<PrivateViewProperties> = (
             </h1>
 
             <StyledLoginButtons>
-                <StyledPluridTextline
+                <PluridInputLine
+                    name="identonym"
                     text={identonym}
-                    placeholder="identonym"
                     atChange={(event) => setIdentonym(event.target.value)}
                     atKeyDown={(event) => handleEnter(event)}
-                    level={2}
+                    theme={stateGeneralTheme}
                 />
 
-                <StyledPluridTextline
+                <PluridInputLine
+                    name="key"
                     text={key}
-                    placeholder="key"
-                    type="password"
                     atChange={(event) => setKey(event.target.value)}
                     atKeyDown={(event) => handleEnter(event)}
-                    level={2}
+                    theme={stateGeneralTheme}
+                    type="password"
                 />
 
                 <div
@@ -206,6 +212,7 @@ const PrivateView: React.FC<PrivateViewProperties> = (
 const mapStateToProperties = (
     state: AppState,
 ): PrivateViewStateProperties => ({
+    stateGeneralTheme: selectors.themes.getGeneralTheme(state),
 });
 
 
