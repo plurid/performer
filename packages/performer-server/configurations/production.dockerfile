@@ -115,8 +115,8 @@ RUN apk add docker
 
 
 COPY --from=builder /app/package.json ./
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/build/ ./build/
+COPY --from=builder /app/scripts/ ./scripts/
 
 
 RUN yarn install --production --network-timeout 1000000
