@@ -76,8 +76,25 @@ const plugins = {
 };
 
 
+const triggerBuildWorker = {
+    input: 'source/server/logic/workers/triggerBuild.ts',
+    output: [
+        {
+            file: `./${BUILD_DIRECTORY}/worker_triggerBuild.js`,
+            format: 'cjs',
+            exports: 'named',
+        },
+    ],
+    external: [
+        'worker_threads',
+    ],
+    plugins: [
+        plugins.typescript(),
+    ],
+};
+
 const handlePerformerWorker = {
-    input: 'source/server/logic/worker/handlePerformer.ts',
+    input: 'source/server/logic/workers/handlePerformer.ts',
     output: [
         {
             file: `./${BUILD_DIRECTORY}/worker_handlePerformer.js`,
@@ -100,9 +117,8 @@ const handlePerformerWorker = {
     ],
 };
 
-
 const cleanDockerImagesWorker = {
-    input: 'source/server/logic/worker/cleanDockerImages.ts',
+    input: 'source/server/logic/workers/cleanDockerImages.ts',
     output: [
         {
             file: `./${BUILD_DIRECTORY}/worker_cleanDockerImages.js`,
@@ -120,6 +136,7 @@ const cleanDockerImagesWorker = {
 };
 
 const workers = [
+    triggerBuildWorker,
     handlePerformerWorker,
     cleanDockerImagesWorker,
 ];
