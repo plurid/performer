@@ -23,7 +23,6 @@
     } from '#server/data/interfaces';
 
     import {
-        logLevel,
         logLevels,
     } from '#server/data/constants';
 
@@ -35,13 +34,11 @@
         updateWorkRepository,
     } from '#server/logic/repository';
 
-    // import {
-    //     handlePerformer,
-    // } from '#server/logic/commands';
-
     import {
         handlePerformerInWorker,
     } from '#server/logic/worker';
+
+    import logger from '#server/services/logger';
     // #endregion external
 // #endregion imports
 
@@ -142,13 +139,6 @@ export const triggerBuild = async (
             return;
         }
 
-        // handlePerformer(
-        //     buildData,
-        //     performerTriggerData,
-        //     repositoryWorkPath,
-        //     trigger.project,
-        // );
-
         const data = {
             buildData,
             performerTriggerData,
@@ -158,9 +148,11 @@ export const triggerBuild = async (
 
         handlePerformerInWorker(data);
     } catch (error) {
-        if (logLevel <= logLevels.error) {
-            console.log('[Performer Error] :: triggerBuild', error);
-        }
+        logger.log(
+            '[Performer Error] :: triggerBuild',
+            logLevels.error,
+            error,
+        );
 
         return;
     }

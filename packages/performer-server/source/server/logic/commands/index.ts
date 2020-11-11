@@ -8,7 +8,12 @@
         PerformContext,
     } from '#server/data/interfaces';
 
+    import {
+        logLevels,
+    } from '#server/data/constants';
+
     import database from '#server/services/database';
+    import logger from '#server/services/logger';
 
     import {
         obliterateDirectory,
@@ -42,75 +47,87 @@ export const handlePerformer = async (
     workDirectoryPath: string,
     project: string,
 ) => {
-    const {
-        performer,
-        performerFilePath,
-    } = performerTriggerData;
+    try {
+        const {
+            performer,
+            performerFilePath,
+        } = performerTriggerData;
 
 
-    const start = Date.now();
+        const start = Date.now();
 
-    const {
-        id,
-        trigger,
-        date,
-        commit,
-    } = buildData;
-
-    const {
-        stages,
-        timeout,
-        nodejs,
-        secrets,
-    } = performer;
-
-    const performContext: PerformContext = {
-        timeout,
-        nodejs,
-        secrets,
-        workDirectoryPath,
-        performerFilePath,
-    };
-
-    for (const [index, stage] of stages.entries()) {
-        // console.log('Running stage', index, stage);
-        await handleStage(
+        const {
             id,
-            stage,
-            index,
-            performContext,
-            start,
+            trigger,
+            date,
             commit,
+        } = buildData;
+
+        const {
+            stages,
+            timeout,
+            nodejs,
+            secrets,
+        } = performer;
+
+        const performContext: PerformContext = {
+            timeout,
+            nodejs,
+            secrets,
+            workDirectoryPath,
+            performerFilePath,
+        };
+
+        for (const [index, stage] of stages.entries()) {
+            // console.log('Running stage', index, stage);
+            await handleStage(
+                id,
+                stage,
+                index,
+                performContext,
+                start,
+                commit,
+                project,
+            );
+        }
+
+        const end = Date.now();
+        const time = Math.floor((end - start) / 1000);
+
+        const stagesNames = stages.map(stage => stage.name);
+
+        const build: Build = {
+            id,
+            status: 'SUCCESS',
+            trigger: trigger.id,
+            time,
+            date,
+            stages: [
+                ...stagesNames,
+            ],
             project,
+        };
+
+        await database.store(
+            'build',
+            id,
+            build,
         );
+
+        await obliterateDirectory(
+            workDirectoryPath,
+        );
+
+        return;
+    } catch (error) {
+        logger.log(
+            '[Performer Error] :: handlePerformer',
+            logLevels.error,
+            error,
+        );
+
+        return;
     }
-
-    const end = Date.now();
-    const time = Math.floor((end - start) / 1000);
-
-    const stagesNames = stages.map(stage => stage.name);
-
-    const build: Build = {
-        id,
-        status: 'SUCCESS',
-        trigger: trigger.id,
-        time,
-        date,
-        stages: [
-            ...stagesNames,
-        ],
-        project,
-    };
-
-    await database.store(
-        'build',
-        id,
-        build,
-    );
-
-    await obliterateDirectory(
-        workDirectoryPath,
-    );
 }
 
 
