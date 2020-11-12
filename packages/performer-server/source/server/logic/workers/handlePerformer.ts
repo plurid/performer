@@ -30,6 +30,7 @@ const main = async () => {
         );
 
         await handlePerformer(
+            workerData.start,
             workerData.buildData,
             workerData.performerTriggerData,
             workerData.workDirectoryPath,

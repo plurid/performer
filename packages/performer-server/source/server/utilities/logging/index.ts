@@ -9,7 +9,7 @@ export const generateLog = (
         ? ` · ${usage}`
         : '';
 
-    const log = `[Performer ${type} : ${state}] :: ${method}` + usageString;
+    const log = `performer ${type} : ${state} :: ${method}` + usageString;
 
     return log;
 }
@@ -19,19 +19,19 @@ export const generateMethodLogs = (
     method: string,
 ) => {
     return {
-        infoStart: generateLog('Info', 'Start', method),
-        infoSuccess: generateLog('Info', 'Success', method),
-        infoEnd: generateLog('Info', 'End', method),
+        infoStart: generateLog('info', 'start', method),
+        infoSuccess: generateLog('info', 'success', method),
+        infoEnd: generateLog('info', 'end', method),
 
-        errorEnd: generateLog('Error', 'End', method),
+        errorEnd: generateLog('error', 'end', method),
 
-        infoHandlePrivateUsage: generateLog('Info', 'Handle', method, 'privateUsage'),
-        infoEndPrivateUsage: generateLog('Info', 'End', method, 'privateUsage'),
-        infoSuccessPrivateUsage: generateLog('Info', 'Success', method, 'privateUsage'),
+        infoHandlePrivateUsage: generateLog('info', 'handle', method, 'privateUsage'),
+        infoEndPrivateUsage: generateLog('info', 'end', method, 'privateUsage'),
+        infoSuccessPrivateUsage: generateLog('info', 'success', method, 'privateUsage'),
 
-        infoHandleCustomLogicUsage: generateLog('Info', 'Handle', method, 'customLogicUsage'),
-        infoEndCustomLogicUsage: generateLog('Info', 'End', method, 'customLogicUsage'),
-        infoSuccessCustomLogicUsage: generateLog('Info', 'Success', method, 'customLogicUsage'),
+        infoHandleCustomLogicUsage: generateLog('info', 'handle', method, 'customLogicUsage'),
+        infoEndCustomLogicUsage: generateLog('info', 'end', method, 'customLogicUsage'),
+        infoSuccessCustomLogicUsage: generateLog('info', 'success', method, 'customLogicUsage'),
     };
 }
 // #endregion module

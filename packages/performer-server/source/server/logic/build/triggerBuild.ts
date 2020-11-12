@@ -113,6 +113,7 @@ export const triggerBuild = async (
             logLevels.trace,
         );
 
+        const start = Date.now();
         const {
             branchName,
             repositoryRootPath,
@@ -127,6 +128,8 @@ export const triggerBuild = async (
         logger.log(
             'performer :: triggerBuild fs.mkdir',
             logLevels.trace,
+            undefined,
+            JSON.stringify({repositoryWorkPath}),
         );
 
 
@@ -170,6 +173,7 @@ export const triggerBuild = async (
 
 
         const data = {
+            start,
             buildData,
             performerTriggerData,
             workDirectoryPath: repositoryWorkPath,

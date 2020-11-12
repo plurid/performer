@@ -39,6 +39,7 @@
 
 // #region module
 export const handlePerformer = async (
+    start: number,
     buildData: BuildData,
     performerTriggerData: {
         performer: Performer,
@@ -58,8 +59,6 @@ export const handlePerformer = async (
             performerFilePath,
         } = performerTriggerData;
 
-
-        const start = Date.now();
 
         const {
             id,
