@@ -30,16 +30,14 @@ export const cleanDockerImages = async () => {
                 const now = Math.floor(Date.now() / 1000);
                 // window hours ago
                 const past = now - windowHours;
-                // window hours from now
-                const future = now + windowHours;
 
-                // check if im  age is older than window hours
+                // check if age is older than window hours
                 const difference = created - past;
                 if (difference < windowHours) {
                     continue;
                 }
 
-                if (created > past && created < future) {
+                if (created > past) {
                     logging.log(
                         `performer :: removed docker image ${id}`,
                         logLevels.trace,
