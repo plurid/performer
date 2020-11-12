@@ -1,10 +1,14 @@
 // #region imports
     // #region external
     import {
+        logLevels,
+
         CLEAN_DOCKER_IMAGES_WINDOW_HOURS,
     } from '#server/data/constants';
 
     import docker from '#server/logic/engine';
+
+    import logging from '#server/services/logger';
     // #endregion external
 // #endregion imports
 
@@ -36,19 +40,32 @@ export const cleanDockerImages = async () => {
                 }
 
                 if (created > past && created < future) {
-                    console.log(`Performer :: removed docker image ${id}`);
+                    logging.log(
+                        `performer :: removed docker image ${id}`,
+                        logLevels.trace,
+                    );
 
                     const dockerImage = docker.getImage(id);
 
                     await dockerImage.remove();
                 }
             } catch (error) {
-                console.log('Performer :: error cleanDockerImages > remove image', image.Id, error);
+                logging.log(
+                    `performer :: error cleanDockerImages > remove image ${image.Id}`,
+                    logLevels.error,
+                    error
+                );
+
                 continue;
             }
         }
     } catch (error) {
-        console.log('Performer :: error cleanDockerImages', error);
+        logging.log(
+            `performer :: error cleanDockerImages`,
+            logLevels.error,
+            error
+        );
+
         return;
     }
 }
