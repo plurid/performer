@@ -144,7 +144,7 @@ if (require.main === module) {
     performerServer.start(port);
 
     logger.log(
-        'Performer start',
+        'performer :: server started',
     );
 }
 // #endregion run
