@@ -38,19 +38,19 @@ const config = {
                 },
             },
         },
-        minimize: true,
-        minimizer: [
-            new TerserPlugin({
-                // test: /\.js(\?.*)?$/i,
-                // sourceMap: true,
-                // terserOptions: {
-                //     output: {
-                //         comments: false,
-                //     },
-                // },
-                // extractComments: false,
-            }),
-        ],
+        // minimize: true,
+        // minimizer: [
+        //     new TerserPlugin({
+        //         test: /\.js(\?.*)?$/i,
+        //         // sourceMap: true,
+        //         // terserOptions: {
+        //         //     output: {
+        //         //         comments: false,
+        //         //     },
+        //         // },
+        //         // extractComments: false,
+        //     }),
+        // ],
     },
 
     plugins: [
