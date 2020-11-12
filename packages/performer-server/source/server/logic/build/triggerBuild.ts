@@ -108,6 +108,11 @@ export const triggerBuild = async (
     buildData: BuildData,
 ) => {
     try {
+        logger.log(
+            'performer :: triggerBuild started',
+            logLevels.trace,
+        );
+
         const {
             branchName,
             repositoryRootPath,
@@ -119,25 +124,50 @@ export const triggerBuild = async (
         await fs.mkdir(repositoryWorkPath, {
             recursive: true,
         });
+        logger.log(
+            'performer :: triggerBuild fs.mkdir',
+            logLevels.trace,
+        );
+
 
         await copyDirectory(
             repositoryRootPath,
             repositoryWorkPath,
         );
+        logger.log(
+            'performer :: triggerBuild copyDirectory',
+            logLevels.trace,
+        );
+
 
         await updateWorkRepository(
             branchName,
             repositoryWorkPath,
         );
+        logger.log(
+            'performer :: triggerBuild updateWorkRepository',
+            logLevels.trace,
+        );
+
 
         const performerTriggerData = await readPerformerTrigger(
             repositoryWorkPath,
             trigger,
         );
+        logger.log(
+            'performer :: triggerBuild readPerformerTrigger',
+            logLevels.trace,
+        );
 
         if (!performerTriggerData) {
+            logger.log(
+                'performer :: triggerBuild no performerTriggerData',
+                logLevels.trace,
+            );
+
             return;
         }
+
 
         const data = {
             buildData,
@@ -147,9 +177,14 @@ export const triggerBuild = async (
         };
 
         handlePerformerInWorker(data);
+
+        logger.log(
+            'performer :: triggerBuild handlePerformerInWorker',
+            logLevels.trace,
+        );
     } catch (error) {
         logger.log(
-            '[Performer Error] :: triggerBuild',
+            'performer :: triggerBuild',
             logLevels.error,
             error,
         );

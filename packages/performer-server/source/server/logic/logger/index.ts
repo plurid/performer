@@ -32,12 +32,14 @@ class Logger {
         data: string,
         level = logLevels.info,
         error?: any,
+        extradata?: string,
     ) {
         if (USE_DELOG) {
             delog({
                 text: data,
                 level,
                 error,
+                extradata,
             });
             return;
         }
@@ -49,6 +51,10 @@ class Logger {
                 console.log(
                     stringifyError(error),
                 );
+            }
+
+            if (extradata) {
+                console.log(extradata);
             }
         }
     }
