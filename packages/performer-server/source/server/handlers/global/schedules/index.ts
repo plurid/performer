@@ -14,7 +14,7 @@
 
 // #region module
 const schedules = () => {
-    const time = 1_000 * 60 * CLEAN_DOCKER_IMAGES_WINDOW_HOURS;
+    const time = 1_000 * 60 * 60 * CLEAN_DOCKER_IMAGES_WINDOW_HOURS / 2;
 
     setInterval(() => {
         cleanDockerImagesInWorker();

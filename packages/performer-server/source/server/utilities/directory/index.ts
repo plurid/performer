@@ -46,7 +46,8 @@ export const copyDirectory = async (
     return new Promise((resolve, reject) => {
         ncp(source, destination, (error) => {
             if (error) {
-                // reject(0);
+                reject(error);
+                return;
             }
 
             resolve();
