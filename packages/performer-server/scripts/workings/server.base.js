@@ -140,6 +140,7 @@ const cleanDockerImagesWorker = {
         'path',
         'fs',
         'ncp',
+        '@plurid/delog',
     ],
     plugins: [
         plugins.typescript(),
