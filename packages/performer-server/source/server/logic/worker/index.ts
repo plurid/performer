@@ -24,41 +24,35 @@
 const triggerBuildInWorker = (
     data: BuildData,
 ) => {
-    if (isMainThread) {
-        new Worker(
-            `./${BUILD_DIRECTORY}/worker_triggerBuild.js`,
-            {
-                workerData: {
-                    data,
-                },
+    new Worker(
+        `./${BUILD_DIRECTORY}/worker_triggerBuild.js`,
+        {
+            workerData: {
+                data,
             },
-        );
-    }
+        },
+    );
 }
 
 
 const handlePerformerInWorker = (
     data: any,
 ) => {
-    if (isMainThread) {
-        new Worker(
-            `./${BUILD_DIRECTORY}/worker_handlePerformer.js`,
-            {
-                workerData: {
-                    ...data,
-                },
+    new Worker(
+        `./${BUILD_DIRECTORY}/worker_handlePerformer.js`,
+        {
+            workerData: {
+                ...data,
             },
-        );
-    }
+        },
+    );
 }
 
 
 const cleanDockerImagesInWorker = () => {
-    if (isMainThread) {
-        new Worker(
-            `./${BUILD_DIRECTORY}/worker_cleanDockerImages.js`,
-        );
-    }
+    new Worker(
+        `./${BUILD_DIRECTORY}/worker_cleanDockerImages.js`,
+    );
 }
 // #endregion module
 

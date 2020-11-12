@@ -48,6 +48,11 @@ export const handlePerformer = async (
     project: string,
 ) => {
     try {
+        logger.log(
+            'performer :: handlePerformer started',
+            logLevels.trace,
+        );
+
         const {
             performer,
             performerFilePath,
@@ -79,6 +84,11 @@ export const handlePerformer = async (
         };
 
         for (const [index, stage] of stages.entries()) {
+            logger.log(
+                'performer :: handlePerformer handled stage ' + index,
+                logLevels.trace,
+            );
+
             // console.log('Running stage', index, stage);
             await handleStage(
                 id,
@@ -118,10 +128,15 @@ export const handlePerformer = async (
             workDirectoryPath,
         );
 
+        logger.log(
+            'performer :: handlePerformer finished',
+            logLevels.trace,
+        );
+
         return;
     } catch (error) {
         logger.log(
-            '[Performer Error] :: handlePerformer',
+            'performer :: handlePerformer errored',
             logLevels.error,
             error,
         );
