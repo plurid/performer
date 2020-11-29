@@ -40,6 +40,7 @@ Performer uses [plurid](https://github.com/plurid/plurid) to explore information
 + [Usage](#usage)
 + [Building](#building)
 + [Packages](#packages)
++ [Codeophon](#codeophon)
 
 
 
@@ -241,3 +242,10 @@ or customize the `delog` through any other build arguments
 [@plurid/performer-requests][performer-requests] • the API requests
 
 [performer-requests]: https://github.com/plurid/performer/tree/master/packages/performer-requests
+
+
+
+## [Codeophon](https://github.com/ly3xqhl8g9/codeophon)
+
++ licensing: [delicense](https://github.com/ly3xqhl8g9/delicense)
++ versioning: [αver](https://github.com/ly3xqhl8g9/alpha-versioning)

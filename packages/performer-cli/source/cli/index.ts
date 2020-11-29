@@ -32,7 +32,7 @@ const main = async (
     program
         .name('performer')
         .usage('<command>')
-        .version('0.0.0', '-v, --version')
+        .version('0.0.0-0', '-v, --version')
         .action(() => {
             program.outputHelp();
         });
