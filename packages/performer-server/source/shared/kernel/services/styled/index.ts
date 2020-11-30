@@ -3,16 +3,31 @@
     import styled from 'styled-components';
 
     import {
-        PluridTextline,
-        PluridPureButton,
-        PluridLinkButton,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
     // #endregion libraries
 // #endregion imports
 
 
 
 // #region module
+const {
+    buttons: {
+        PureButton: PluridPureButton,
+        LinkButton: PluridLinkButton,
+    },
+    inputs: {
+        Textline: PluridTextline,
+        InputLine: PluridInputLine,
+    },
+} = universal;
+
+
+export {
+    PluridInputLine,
+};
+
+
 export const StyledPluridTextline = styled(PluridTextline)`
     margin: 20px auto;
     width: 350px;

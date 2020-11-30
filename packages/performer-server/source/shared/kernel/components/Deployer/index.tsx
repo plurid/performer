@@ -10,10 +10,6 @@
     } from '@plurid/plurid-themes';
 
     import {
-        PluridInputLine,
-    } from '@plurid/plurid-ui-react';
-
-    import {
         GENERATE_DEPLOYER,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -29,6 +25,7 @@
     } from '#kernel-services/logic/mutations';
 
     import {
+        PluridInputLine,
         StyledPluridPureButton,
         StyledPluridLinkButton,
     } from '#kernel-services/styled';

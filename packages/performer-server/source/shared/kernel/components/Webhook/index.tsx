@@ -10,10 +10,6 @@
     } from '@plurid/plurid-themes';
 
     import {
-        PluridInputLine,
-    } from '@plurid/plurid-ui-react';
-
-    import {
         UPDATE_WEBHOOK,
         SETUP_WEBHOOK,
     } from '@plurid/performer-requests';
@@ -30,7 +26,7 @@
     } from '#kernel-services/logic/mutations';
 
     import {
-        StyledPluridTextline,
+        PluridInputLine,
         StyledPluridPureButton,
         StyledPluridLinkButton,
     } from '#kernel-services/styled';

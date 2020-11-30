@@ -10,10 +10,6 @@
     } from '@plurid/plurid-themes';
 
     import {
-        PluridInputLine,
-    } from '@plurid/plurid-ui-react';
-
-    import {
         STORE_SECRET,
     } from '@plurid/performer-requests';
     // #endregion libraries
@@ -29,7 +25,7 @@
     } from '#kernel-services/logic/mutations';
 
     import {
-        StyledPluridTextline,
+        PluridInputLine,
         StyledPluridPureButton,
         StyledPluridLinkButton,
     } from '#kernel-services/styled';

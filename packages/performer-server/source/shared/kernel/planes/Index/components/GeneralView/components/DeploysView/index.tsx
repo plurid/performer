@@ -18,8 +18,8 @@
     } from '@plurid/plurid-icons-react';
 
     import {
-        PluridLinkButton,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
 
     import {
         PluridApplicationConfigurator,
@@ -65,6 +65,13 @@
 
 
 // #region module
+const {
+    buttons: {
+        LinkButton: PluridLinkButton,
+    },
+} = universal;
+
+
 export interface DeploysViewOwnProperties {
 }
 

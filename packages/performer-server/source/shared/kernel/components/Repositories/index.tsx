@@ -14,8 +14,8 @@
     } from '@plurid/plurid-functions';
 
     import {
-        PluridSpinner,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
 
     import {
         GET_PROVIDER_REPOSITORIES,
@@ -52,6 +52,13 @@
 
 
 // #region module
+const {
+    markers: {
+        Spinner: PluridSpinner,
+    },
+} = universal;
+
+
 export interface RepositoryProperties {
     // #region required
         // #region values

@@ -7,8 +7,8 @@
     } from '@plurid/plurid-icons-react';
 
     import {
-        PluridLinkButton,
-    } from '@plurid/plurid-ui-react';
+        universal,
+    } from '@plurid/plurid-ui-components-react';
     // #endregion libraries
 
 
@@ -22,6 +22,13 @@
 
 
 // #region module
+const {
+    buttons: {
+        LinkButton: PluridLinkButton,
+    },
+} = universal;
+
+
 export const repositoryRowRenderer = (
     repository: Repository,
     unlinkRepository: any,
