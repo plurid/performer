@@ -22,13 +22,13 @@
         "access": "public"
     },
     "engines": {
-        "node": ">=12.0.0"
+        "node": ">=12",
+        "npm": ">=6"
     },
-    "main": "distribution/index.js",
-    "module": "distribution/index.es.js",
-    "typings": "distribution/types/index.d.ts",
+    "main": "build/index.js",
+    "typings": "build/index.d.ts",
     "files": [
-        "distribution"
+        "build"
     ],
     "scripts": {
         "start": "node scripts start",
@@ -66,7 +66,8 @@
         "@plurid/plurid-react": "0.0.0-0",
         "@plurid/plurid-react-server": "0.0.0-0",
         "@plurid/plurid-themes": "0.0.0-0",
-        "@plurid/plurid-ui-react": "0.0.0-0",
+        "@plurid/plurid-ui-components-react": "0.0.0-0",
+        "@plurid/plurid-ui-state-react": "0.0.0-0",
         "@rollup/plugin-commonjs": "^16.0.0",
         "@rollup/plugin-node-resolve": "^10.0.0",
         "adm-zip": "^0.5.1",
