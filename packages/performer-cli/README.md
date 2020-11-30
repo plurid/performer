@@ -22,13 +22,18 @@
 </h3>
 
 
-[Performer](https://github.com/plurid/performer) is a service or self-hosted system task-runner/builder based on GitOps.
+
+<br />
+
+
+
+`performer` is a [service](https://performer.plurid.cloud) or self-hosted system task-runner/builder based on GitOps.
 
 Specialized support for the runtimes
 
 + `NodeJS`
 
-Performer uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
+`performer` uses [plurid](https://github.com/plurid/plurid) to explore information as a 3D structure.
 
 
 <p align="center">
@@ -58,7 +63,6 @@ npm install -g @plurid/performer-cli
 
 ## Usage
 
-
 ```
 Usage: performer <command>
 
@@ -84,7 +88,6 @@ Commands:
 
 
 ## Packages
-
 
 <a target="_blank" href="https://www.npmjs.com/package/@plurid/performer">
     <img src="https://img.shields.io/npm/v/@plurid/performer.svg?logo=npm&colorB=1380C3&style=for-the-badge" alt="Version">
