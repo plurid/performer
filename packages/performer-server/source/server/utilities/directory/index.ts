@@ -50,7 +50,7 @@ export const copyDirectory = async (
                 return;
             }
 
-            resolve();
+            resolve(true);
         });
     });
 }

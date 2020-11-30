@@ -81,7 +81,7 @@ export const downloadRepository = async (
                 reject(0);
             }
 
-            resolve();
+            resolve(true);
         });
     });
 }

@@ -180,7 +180,7 @@ export const runDockerCommand = async (
                         streamData.join(''),
                     );
 
-                    resolve();
+                    resolve(true);
                 });
             } catch (error) {
                 logger.log(
@@ -268,7 +268,7 @@ export const runDockerCommand = async (
 
                     await docker.getImage(tag).remove();
 
-                    resolve();
+                    resolve(true);
                 });
             } catch (error) {
                 logger.log(
@@ -446,12 +446,12 @@ export const runInContainer = (
                             error,
                         );
 
-                        resolve();
+                        resolve(true);
                         return;
                     }
                 }
 
-                resolve();
+                resolve(true);
             });
         } catch (error) {
             logger.log(
