@@ -324,7 +324,7 @@ export const runInContainer = (
     return new Promise (async (resolve, reject) => {
         try {
             logger.log(
-                'performer :: runInContainer started',
+                'performer :: runInContainer Promise started',
                 logLevels.trace,
             );
 
