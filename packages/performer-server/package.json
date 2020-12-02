@@ -1,7 +1,7 @@
 {
     "name": "@plurid/performer",
     "version": "0.0.0-0",
-    "description": "Cloud-Native Continuous Integration/Continuous Delivery Builder",
+    "description": "Cloud Service for Continuous Integration/Continuous Delivery Builder",
     "keywords": [
         "cloud-native",
         "builder",
