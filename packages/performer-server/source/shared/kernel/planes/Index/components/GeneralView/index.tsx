@@ -22,17 +22,17 @@
     import {
         Trigger,
         Webhook,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         PERFORMER_MANUAL_LINK,
-    } from '#kernel-data/constants';
+    } from '~kernel-data/constants';
 
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
 
-    import { AppState } from '#kernel-services/state/store';
-    import selectors from '#kernel-services/state/selectors';
-    import actions from '#kernel-services/state/actions';
+    import { AppState } from '~kernel-services/state/store';
+    import selectors from '~kernel-services/state/selectors';
+    import actions from '~kernel-services/state/actions';
     // #endregion external
 
 

@@ -14,7 +14,7 @@
     import {
         Context,
         PerformerLogic,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         GRAPHQL_FAVICON,
@@ -26,24 +26,24 @@
 
         logLevel,
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         resolvers,
         schemas,
-    } from '#server/api';
+    } from '~server/api';
 
-    import loadData from '#server/logic/loader';
+    import loadData from '~server/logic/loader';
 
-    import defaultLogger from '#server/services/logger';
+    import defaultLogger from '~server/services/logger';
 
     import {
         getPrivateOwner,
-    } from '#server/logic/privateUsage';
+    } from '~server/logic/privateUsage';
 
     import {
         handleWebhooks,
-    } from '#server/logic/webhooks';
+    } from '~server/logic/webhooks';
     // #endregion external
 // #endregion imports
 

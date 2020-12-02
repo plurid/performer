@@ -6,11 +6,11 @@
         InputSetupNotifier,
         InputUpdateNotifier,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         Notifiers,
-    } from '#server/api/models';
+    } from '~server/api/models';
     // #endregion external
 // #endregion imports
 

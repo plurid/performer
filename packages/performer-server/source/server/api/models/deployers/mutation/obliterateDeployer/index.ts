@@ -3,19 +3,19 @@
     import {
         Context,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         inputCall,
-    } from '#server/api/metas';
+    } from '~server/api/metas';
 
     import {
         deregisterDeployer,
-    } from '#server/logic/deployers';
+    } from '~server/logic/deployers';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

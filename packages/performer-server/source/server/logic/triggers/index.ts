@@ -16,25 +16,25 @@
         Commit,
         BuildData,
         CodeProvider,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         repositoriesPath,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         loadTriggers,
-    } from '#server/logic/loader';
+    } from '~server/logic/loader';
 
     import {
         pushToBuildQueue,
-    } from '#server/logic/build';
+    } from '~server/logic/build';
 
-    import database from '#server/services/database';
+    import database from '~server/services/database';
 
     import {
         removeDuplicates,
-    } from '#server/utilities/general';
+    } from '~server/utilities/general';
     // #endregion external
 // #endregion libraries
 

@@ -45,6 +45,7 @@ const compressionPluginBrotli = new CompressionPlugin({
 const compressionPluginGzip = new CompressionPlugin({
     include: 'vendor.js',
     filename: 'vendor.js.gzip',
+    deleteOriginalAssets: false,
 });
 
 const processEnvironmentPlugin = new webpack.DefinePlugin({
@@ -129,6 +130,11 @@ const baseConfig = {
                 configFile: path.resolve(__dirname, '../../tsconfig.json'),
             }),
         ],
+
+        fallback: {
+            'crypto': false,
+            'stream': false,
+        },
     },
 
     stats: {

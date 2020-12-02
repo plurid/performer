@@ -20,25 +20,25 @@
         Performer,
         Trigger,
         BuildData,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         copyDirectory,
-    } from '#server/utilities';
+    } from '~server/utilities';
 
     import {
         updateWorkRepository,
-    } from '#server/logic/repository';
+    } from '~server/logic/repository';
 
     import {
         handlePerformerInWorker,
-    } from '#server/logic/worker';
+    } from '~server/logic/worker';
 
-    import logger from '#server/services/logger';
+    import logger from '~server/services/logger';
     // #endregion external
 // #endregion imports
 

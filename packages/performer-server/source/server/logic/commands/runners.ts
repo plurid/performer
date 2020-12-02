@@ -18,7 +18,7 @@
     import {
         PerformerStage,
         PerformContext,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         DOCKER_AUTH_USERNAME,
@@ -28,15 +28,15 @@
         IN_CONTAINER_HOST_BIND,
 
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import docker from '#server/logic/engine';
+    import docker from '~server/logic/engine';
 
     import {
         saveBuildlog,
-    } from '#server/logic/buildLogs';
+    } from '~server/logic/buildLogs';
 
-    import logger from '#server/services/logger';
+    import logger from '~server/services/logger';
     // #endregion external
 
 

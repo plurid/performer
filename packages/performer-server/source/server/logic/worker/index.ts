@@ -10,11 +10,11 @@
     // #region external
     import {
         BuildData,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         BUILD_DIRECTORY,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
     // #endregion external
 // #endregion imports
 

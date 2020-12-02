@@ -7,9 +7,9 @@
     // #region external
     import {
         BASE_PATH_BUILD_LOGS,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import storage from '#server/services/storage';
+    import storage from '~server/services/storage';
     // #endregion external
 // #endregion imports
 

@@ -10,22 +10,22 @@
     // #region external
     import {
         Commit,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         logLevel,
         logLevels,
         codeProvider,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         getActiveRepository,
         updateRootRepository,
-    } from '#server/logic/repository';
+    } from '~server/logic/repository';
 
     import {
         handleTriggers,
-    } from '#server/logic/triggers';
+    } from '~server/logic/triggers';
     // #endregion external
 // #endregion imports
 

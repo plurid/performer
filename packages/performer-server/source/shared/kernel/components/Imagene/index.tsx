@@ -15,7 +15,7 @@
         StyledPluridTextline,
         StyledPluridPureButton,
         StyledPluridLinkButton,
-    } from '#kernel-services/styled';
+    } from '~kernel-services/styled';
     // #endregion external
 
 

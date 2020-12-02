@@ -3,15 +3,15 @@
     import {
         Context,
         InputSetupNotifier,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         registerNotifier,
-    } from '#server/logic/notifier';
+    } from '~server/logic/notifier';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

@@ -14,7 +14,7 @@
         DatabaseUpdate,
         DatabaseObliterate,
         DatabaseObliterateAll,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         BASE_PATH_PROVIDERS,
@@ -29,9 +29,9 @@
         BASE_PATH_BUILD_LOGS,
         BASE_PATH_BUILD_QUEUE,
         BASE_PATH_DEPLOYS,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import filesystemStorage from '#server/logic/storage/filesystem';
+    import filesystemStorage from '~server/logic/storage/filesystem';
     // #endregion external
 // #endregion imports
 

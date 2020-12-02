@@ -7,8 +7,20 @@ WORKDIR /app
 COPY . .
 
 
+ARG NPM_TOKEN
+ARG NPM_REGISTRY=registry.npmjs.org
+
 ENV ENV_MODE production
 ENV NODE_ENV production
+
+ENV PLURID_BUILD_DIRECTORY build
+
+ENV NPM_TOKEN $NPM_TOKEN
+ENV NPM_REGISTRY $NPM_REGISTRY
+
+
+# Write environment variables into .npmrc
+RUN ( echo "cat <<EOF" ; cat ./configurations/.npmrcx ; echo EOF ) | sh > ./.npmrc
 
 
 RUN yarn install --production false --network-timeout 1000000
@@ -69,6 +81,8 @@ WORKDIR /app
 ENV ENV_MODE production
 ENV NODE_ENV production
 
+ENV PLURID_BUILD_DIRECTORY build
+
 ENV PORT=$PORT
 
 ENV PERFORMER_QUIET=$PERFORMER_QUIET
@@ -114,12 +128,15 @@ RUN apk add git
 RUN apk add docker
 
 
+COPY --from=builder /app/.npmrc ./
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/build/ ./build/
 COPY --from=builder /app/scripts/ ./scripts/
 
 
 RUN yarn install --production --network-timeout 1000000
+
+RUN rm -f .npmrc
 
 
 CMD ["yarn", "start"]

@@ -9,11 +9,11 @@
     // #region external
     import {
         loadWebhooks,
-    } from '#server/logic/loader';
+    } from '~server/logic/loader';
 
     import {
         handleWebhooks,
-    } from '#server/logic/webhooks';
+    } from '~server/logic/webhooks';
     // #endregion external
 // #endregion imports
 

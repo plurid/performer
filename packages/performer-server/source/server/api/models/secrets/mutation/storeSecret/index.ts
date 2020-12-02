@@ -3,15 +3,15 @@
     import {
         Context,
         InputStoreSecret,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         registerSecret,
-    } from '#server/logic/secrets';
+    } from '~server/logic/secrets';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

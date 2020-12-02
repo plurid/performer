@@ -4,11 +4,11 @@
         logLevels,
 
         CLEAN_DOCKER_IMAGES_WINDOW_HOURS,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
-    import docker from '#server/logic/engine';
+    import docker from '~server/logic/engine';
 
-    import logging from '#server/services/logger';
+    import logging from '~server/services/logger';
     // #endregion external
 // #endregion imports
 

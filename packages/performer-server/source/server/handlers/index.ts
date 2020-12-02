@@ -7,11 +7,11 @@
     // #region external
     import {
         PerformerLogic,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         BuildQueueWatcher,
-    } from '#server/logic/queue';
+    } from '~server/logic/queue';
     // #endregion external
 
 

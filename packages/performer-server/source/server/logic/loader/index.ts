@@ -14,13 +14,13 @@
         Build,
         BuildData,
         Deploy,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         compareValues,
-    } from '#server/utilities';
+    } from '~server/utilities';
 
-    import database from '#server/services/database';
+    import database from '~server/services/database';
     // #endregion external
 // #endregion imports
 

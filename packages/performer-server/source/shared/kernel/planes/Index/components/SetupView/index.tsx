@@ -15,14 +15,14 @@
 
 
     // #region external
-    import Provider from '#kernel-components/Provider';
-    import Webhook from '#kernel-components/Webhook';
-    import Repositories from '#kernel-components/Repositories';
-    import Trigger from '#kernel-components/Trigger';
+    import Provider from '~kernel-components/Provider';
+    import Webhook from '~kernel-components/Webhook';
+    import Repositories from '~kernel-components/Repositories';
+    import Trigger from '~kernel-components/Trigger';
 
-    import { AppState } from '#kernel-services/state/store';
-    import selectors from '#kernel-services/state/selectors';
-    import actions from '#kernel-services/state/actions';
+    import { AppState } from '~kernel-services/state/store';
+    import selectors from '~kernel-services/state/selectors';
+    import actions from '~kernel-services/state/actions';
     // #endregion external
 
 

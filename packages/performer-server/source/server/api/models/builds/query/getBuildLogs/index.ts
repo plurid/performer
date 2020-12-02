@@ -2,15 +2,15 @@
     // #region external
     import {
         Context,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         getBuildLogs as getBuildLogsLogic,
-    } from '#server/logic/buildLogs';
+    } from '~server/logic/buildLogs';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

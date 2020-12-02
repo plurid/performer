@@ -16,9 +16,9 @@
 
 
     // #region external
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
 
-    import actions from '#kernel-services/state/actions';
+    import actions from '~kernel-services/state/actions';
     // #endregion external
 // #endregion imports
 

@@ -8,11 +8,11 @@
     import {
         logLevels,
         USE_DELOG,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         stringifyError,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

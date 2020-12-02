@@ -17,20 +17,20 @@
         InputSetupWebhook,
         InputUpdateWebhook,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         getProvider,
-    } from '#server/api/requesters';
+    } from '~server/api/requesters';
 
-    import github from '#server/api/requesters/github';
+    import github from '~server/api/requesters/github';
 
-    import database from '#server/services/database';
+    import database from '~server/services/database';
 
     import {
         getRoutes,
         delistenRoute,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

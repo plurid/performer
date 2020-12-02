@@ -9,13 +9,13 @@
     // #region external
     import {
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         handlePerformer,
     } from '../commands';
 
-    import logger from '#server/services/logger';
+    import logger from '~server/services/logger';
     // #endregion external
 // #endregion imports
 

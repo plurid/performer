@@ -2,15 +2,15 @@
     // #region external
     import {
         Context,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         getDeployLogs as getDeployLogsLogic,
-    } from '#server/logic/deploy';
+    } from '~server/logic/deploy';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

@@ -2,13 +2,13 @@
     // #region external
     import {
         logLevels,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         cleanDockerImages,
     } from '../commands/utilities';
 
-    import logger from '#server/services/logger';
+    import logger from '~server/services/logger';
     // #endregion external
 // #endregion imports
 

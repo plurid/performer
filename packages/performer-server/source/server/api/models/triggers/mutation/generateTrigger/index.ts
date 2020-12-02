@@ -3,15 +3,15 @@
     import {
         Context,
         InputGenerateTrigger,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         registerTrigger,
-    } from '#server/logic/triggers';
+    } from '~server/logic/triggers';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

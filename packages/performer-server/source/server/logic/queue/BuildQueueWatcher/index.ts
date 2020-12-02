@@ -11,23 +11,23 @@
     // #region external
     import {
         buildQueuePath,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         BuildData,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     // import {
     //     triggerBuild,
-    // } from '#server/logic/build/triggerBuild';
+    // } from '~server/logic/build/triggerBuild';
 
     import {
         triggerBuildInWorker,
-    } from '#server/logic/worker';
+    } from '~server/logic/worker';
 
     import {
         loadBuildsQueued,
-    } from '#server/logic/loader';
+    } from '~server/logic/loader';
 
     import {
         removeFromQueue,

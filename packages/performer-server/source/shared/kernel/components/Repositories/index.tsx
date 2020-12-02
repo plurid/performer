@@ -27,14 +27,14 @@
     // #region external
     import {
         Repository as IRepository,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
-    import client from '#kernel-services/graphql/client';
+    import client from '~kernel-services/graphql/client';
 
     import {
         StyledPluridPureButton,
         StyledPluridLinkButton,
-    } from '#kernel-services/styled';
+    } from '~kernel-services/styled';
     // #endregion external
 
 

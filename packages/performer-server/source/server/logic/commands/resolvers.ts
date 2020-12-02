@@ -2,7 +2,7 @@
     // #region external
     import {
         loadStoredSecrets,
-    } from '#server/logic/loader';
+    } from '~server/logic/loader';
     // #endregion external
 // #endregion imports
 

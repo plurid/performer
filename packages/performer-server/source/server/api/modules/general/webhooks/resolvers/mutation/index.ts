@@ -6,11 +6,11 @@
         InputSetupWebhook,
         InputUpdateWebhook,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         Webhooks,
-    } from '#server/api/models';
+    } from '~server/api/models';
     // #endregion external
 // #endregion imports
 

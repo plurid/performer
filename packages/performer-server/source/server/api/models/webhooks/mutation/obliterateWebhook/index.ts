@@ -3,15 +3,15 @@
     import {
         Context,
         InputValueString,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
 
     import {
         deregisterWebhook,
-    } from '#server/logic/webhooks';
+    } from '~server/logic/webhooks';
 
     import {
         generateMethodLogs,
-    } from '#server/utilities';
+    } from '~server/utilities';
     // #endregion external
 // #endregion imports
 

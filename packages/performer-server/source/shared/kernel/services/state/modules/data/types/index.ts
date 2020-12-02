@@ -12,7 +12,7 @@
         Deployer,
         Build,
         Deploy,
-    } from '#server/data/interfaces';
+    } from '~server/data/interfaces';
     // #endregion libraries
 // #endregion imports
 

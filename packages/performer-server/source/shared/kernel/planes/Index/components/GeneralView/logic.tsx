@@ -25,15 +25,15 @@
     // #region external
     import performerLogo from '../../assets/performer-logo.png';
 
-    import Provider from '#kernel-components/Provider';
-    import Imagene from '#kernel-components/Imagene';
-    import Notifier from '#kernel-components/Notifier';
-    import Repositories from '#kernel-components/Repositories';
-    import Project from '#kernel-components/Project';
-    import Secret from '#kernel-components/Secret';
-    import Webhook from '#kernel-components/Webhook';
-    import Trigger from '#kernel-components/Trigger';
-    import Deployer from '#kernel-components/Deployer';
+    import Provider from '~kernel-components/Provider';
+    import Imagene from '~kernel-components/Imagene';
+    import Notifier from '~kernel-components/Notifier';
+    import Repositories from '~kernel-components/Repositories';
+    import Project from '~kernel-components/Project';
+    import Secret from '~kernel-components/Secret';
+    import Webhook from '~kernel-components/Webhook';
+    import Trigger from '~kernel-components/Trigger';
+    import Deployer from '~kernel-components/Deployer';
     // #endregion external
 
 

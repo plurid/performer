@@ -2,11 +2,11 @@
     // #region external
     import {
         CLEAN_DOCKER_IMAGES_WINDOW_HOURS,
-    } from '#server/data/constants';
+    } from '~server/data/constants';
 
     import {
         cleanDockerImagesInWorker,
-    } from '#server/logic/worker';
+    } from '~server/logic/worker';
     // #endregion external
 // #endregion imports
 
