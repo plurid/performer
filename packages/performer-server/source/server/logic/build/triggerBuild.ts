@@ -84,7 +84,7 @@ export const readPerformerTrigger = async (
     }
 
     const performerFile = await fs.readFile(performerFilePath, 'utf-8');
-    const performerObject = yaml.safeLoad(performerFile);
+    const performerObject = yaml.load(performerFile);
 
     if (!performerObject || typeof performerObject === 'string') {
         return;
