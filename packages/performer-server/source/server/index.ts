@@ -108,6 +108,7 @@ const options: PluridServerPartialOptions = {
     ignore: [
         '/perform',
     ],
+    hostname: `localhost:${port}`,
 };
 
 const template: PluridServerTemplateConfiguration = {

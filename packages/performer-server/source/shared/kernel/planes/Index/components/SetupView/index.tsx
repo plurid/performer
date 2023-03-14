@@ -21,6 +21,7 @@
     import Trigger from '~kernel-components/Trigger';
 
     import { AppState } from '~kernel-services/state/store';
+    import StateContext from '~kernel-services/state/context';
     import selectors from '~kernel-services/state/selectors';
     import actions from '~kernel-services/state/actions';
     // #endregion external
@@ -159,6 +160,10 @@ const mapDispatchToProperties = (
 export const ConnectedSetupView = connect(
     mapStateToProperties,
     mapDispatchToProperties,
+    null,
+    {
+        context: StateContext,
+    },
 )(SetupView);
 // #endregion module
 

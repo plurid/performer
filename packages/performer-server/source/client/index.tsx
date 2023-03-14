@@ -1,7 +1,10 @@
 // #region imports
     // #region libraries
     import React from 'react';
-    import ReactDOM from 'react-dom';
+
+    import {
+        hydrateRoot,
+    } from 'react-dom/client';
     // #endregion libraries
 
     // #region internal
@@ -17,11 +20,10 @@
 //     navigator.serviceWorker.register('/service-worker.js');
 // }
 
-const performerApp = document.getElementById('performer-application');
+const performerApplication = document.getElementById('performer-application')!;
 
-
-ReactDOM.hydrate(
+hydrateRoot(
+    performerApplication,
     <Client />,
-    performerApp,
 );
 // #endregion module
