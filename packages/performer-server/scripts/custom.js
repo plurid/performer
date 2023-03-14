@@ -4,6 +4,7 @@
 const esModules = [
     // add dependencies to be bundled as ES modules
     // string or (dependency: string): string
+    '@apollo/server',
 ];
 
 
