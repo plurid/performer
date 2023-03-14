@@ -18,7 +18,7 @@
     } from '@plurid/plurid-functions';
 
     import {
-        PluridComponentProperty,
+        PluridPlaneComponentProperty,
     } from '@plurid/plurid-react';
 
     import {
@@ -57,7 +57,7 @@
 
 // #region module
 export interface BuildOwnProperties {
-    plurid: PluridComponentProperty;
+    plurid: PluridPlaneComponentProperty;
 }
 
 export interface BuildStateProperties {
@@ -89,7 +89,7 @@ const Build: React.FC<BuildProperties> = (
 
     const {
         id,
-    } = plurid.route.plane.parameters;
+    } = plurid.plane.parameters;
     // #endregion properties
 
 
