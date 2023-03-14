@@ -23,7 +23,7 @@
 
     import {
         PluridApplicationConfigurator,
-        TOPICS,
+        PLURID_PUBSUB_TOPIC,
     } from '@plurid/plurid-react';
     // #endregion libraries
 
@@ -111,12 +111,12 @@ const DeploysView: React.FC<DeploysViewProperties> = (
     const openDeploy = (
         id: string,
     ) => {
-        pluridPubSub.publish(
-            TOPICS.VIEW_ADD_PLANE,
-            {
+        pluridPubSub.publish({
+            topic: PLURID_PUBSUB_TOPIC.VIEW_ADD_PLANE,
+            data: {
                 plane: `/build/${id}`,
             },
-        );
+        });
     }
     // #endregion handlers
 

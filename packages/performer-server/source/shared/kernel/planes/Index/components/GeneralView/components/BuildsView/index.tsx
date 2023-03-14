@@ -23,7 +23,7 @@
 
     import {
         PluridApplicationConfigurator,
-        TOPICS,
+        PLURID_PUBSUB_TOPIC,
     } from '@plurid/plurid-react';
 
     import {
@@ -119,23 +119,23 @@ const BuildsView: React.FC<BuildsViewProperties> = (
     const openBuild = (
         id: string,
     ) => {
-        pluridPubSub.publish(
-            TOPICS.VIEW_ADD_PLANE,
-            {
+        pluridPubSub.publish({
+            topic: PLURID_PUBSUB_TOPIC.VIEW_ADD_PLANE,
+            data: {
                 plane: `/build/${id}`,
             },
-        );
+        });
     }
 
     const clearBuildPlanes = () => {
-        pluridPubSub.publish(
-            TOPICS.VIEW_SET_PLANES,
-            {
+        pluridPubSub.publish({
+            topic: PLURID_PUBSUB_TOPIC.VIEW_SET_PLANES,
+            data: {
                 view: [
                     '/dashboard',
                 ],
             },
-        );
+        });
     }
 
     const clearBuilds = async () => {
