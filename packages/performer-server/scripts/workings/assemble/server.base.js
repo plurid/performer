@@ -32,8 +32,9 @@ const output = [
     {
         file: `./${BUILD_DIRECTORY}/index.js`,
         format: 'cjs',
-        exports: 'default',
+        exports: 'named',
         interop: 'auto',
+        inlineDynamicImports: true,
     },
 ];
 
