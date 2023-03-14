@@ -1,12 +1,23 @@
 // #region imports
     // #region libraries
+    import http from 'http';
+
     import {
         Application,
     } from 'express';
 
     import {
         ApolloServer,
-    } from 'apollo-server-express';
+    } from '@apollo/server';
+
+    import { expressMiddleware } from '@apollo/server/express4';
+
+    import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+
+    import {
+        ApolloServerPluginLandingPageLocalDefault,
+        ApolloServerPluginLandingPageProductionDefault,
+    } from '@apollo/server/plugin/landingPage/default';
     // #endregion libraries
 
 
@@ -44,6 +55,8 @@
     import {
         handleWebhooks,
     } from '~server/logic/webhooks';
+
+    import environment from '~kernel-services/utilities/environment';
     // #endregion external
 // #endregion imports
 
@@ -66,73 +79,86 @@ const setupGraphQLServer = async (
         ? logic.logger
         : defaultLogger;
 
+    const httpServer = http.createServer(instance);
+
     const graphQLServer = new ApolloServer({
         typeDefs: schemas,
         resolvers,
-        playground,
-        context: async ({
-            req,
-            res,
-        }: any) => {
-            const {
-                providers,
-                imagenes,
-                notifiers,
-                repositories,
-                webhooks,
-                projects,
-                secrets,
-                triggers,
-                deployers,
-                builds,
-                deploys,
-            } = await loadData();
-
-            handleWebhooks(
-                webhooks,
-                instance,
-            );
-
-            const privateOwnerIdentonym = privateUsage
-                ? getPrivateOwner(req)
-                : '';
-
-            const context: Context = {
-                request: req,
-                response: res,
-
-                instance,
-
-                providers,
-                imagenes,
-                notifiers,
-                repositories,
-                webhooks,
-                projects,
-                secrets,
-                triggers,
-                deployers,
-                builds,
-                deploys,
-
-                customLogicUsage,
-
-                privateUsage,
-                privateOwnerIdentonym,
-
-                logger,
-                logLevel,
-                logLevels,
-            };
-
-            return context;
-        },
+        plugins: [
+            ApolloServerPluginDrainHttpServer({ httpServer }),
+            environment.production
+                ? ApolloServerPluginLandingPageProductionDefault({})
+                // ? {}
+                : ApolloServerPluginLandingPageLocalDefault({}),
+        ],
     });
 
-    graphQLServer.applyMiddleware({
-        app: instance,
-        path: GRAPHQL_ENDPOINT,
-    });
+    const context = async ({
+        req,
+        res,
+    }: any) => {
+        const {
+            providers,
+            imagenes,
+            notifiers,
+            repositories,
+            webhooks,
+            projects,
+            secrets,
+            triggers,
+            deployers,
+            builds,
+            deploys,
+        } = await loadData();
+
+        handleWebhooks(
+            webhooks,
+            instance,
+        );
+
+        const privateOwnerIdentonym = privateUsage
+            ? getPrivateOwner(req)
+            : '';
+
+        const context: Context = {
+            request: req,
+            response: res,
+
+            instance,
+
+            providers,
+            imagenes,
+            notifiers,
+            repositories,
+            webhooks,
+            projects,
+            secrets,
+            triggers,
+            deployers,
+            builds,
+            deploys,
+
+            customLogicUsage,
+
+            privateUsage,
+            privateOwnerIdentonym,
+
+            logger,
+            logLevel,
+            logLevels,
+        };
+
+        return context;
+    };
+
+    await graphQLServer.start();
+
+    instance.use(
+        GRAPHQL_ENDPOINT,
+        expressMiddleware(graphQLServer, {
+            context,
+        }),
+    );
 }
 // #endregion module
 
