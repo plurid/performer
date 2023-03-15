@@ -165,7 +165,6 @@ export const handleStage = async (
     } = performContext;
 
     const resolvedImagene = resolveImagene(imagene);
-
     if (!resolvedImagene) {
         return;
     }

@@ -210,6 +210,7 @@ export const handleTrigger = async (
             repositoryRootPath,
             repositoryWorkPath,
         };
+        // console.log('buildData', buildData);
 
         await pushToBuildQueue(buildData);
     } catch (error) {

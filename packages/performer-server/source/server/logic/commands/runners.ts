@@ -315,10 +315,14 @@ export const runInContainer = (
         command,
         directory,
     } = stage;
+    // console.log('command', command);
+    // console.log('directory', directory);
+    // console.log('stage', stage);
 
     const {
         workDirectoryPath,
     } = performContext;
+    // console.log('performContext', performContext);
     // console.log('workDirectoryPath', workDirectoryPath);
 
     return new Promise (async (resolve, reject) => {

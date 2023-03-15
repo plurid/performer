@@ -14,9 +14,9 @@ export const resolveImagene = (
 ) => {
     switch (imagene) {
         case 'ubuntu':
-            return 'ubuntu:20.04';
+            return 'ubuntu:22.04';
         case 'nodejs':
-            return 'node:12.18.3';
+            return 'node:18.15-alpine';
         case 'docker':
             return 'docker';
         case 'kubectl':
