@@ -40,15 +40,16 @@
         "test": "node scripts test",
         "test.file": "jest -c ./configurations/jest.config.js",
         "containerize.production": "node scripts containerize.production",
+        "build.workers": "export NODE_OPTIONS=\"--max-old-space-size=8192\" ; rollup -c ./scripts/workings/assemble/server.workers.build.js --bundleConfigAsCjs",
         "build.client.local": "node scripts build.client.local",
         "build.client.development": "node scripts build.client.development",
         "build.client.production": "node scripts build.client.production",
         "build.server.local": "node scripts build.server.local",
-        "build.server.development": "node scripts build.server.development",
-        "build.server.production": "node scripts build.server.production",
+        "build.server.development": "export NODE_OPTIONS=\"--max-old-space-size=8192\" ; node scripts build.server.development",
+        "build.server.production": "export NODE_OPTIONS=\"--max-old-space-size=8192\" ; node scripts build.server.production",
         "build.local": "node scripts build.local",
         "build.development": "node scripts build.development",
-        "build.production": "node scripts build.production"
+        "build.production": "export NODE_OPTIONS=\"--max-old-space-size=8192\" ; node scripts build.production"
     },
     "dependencies": {
         "@apollo/client": "^3.7.10",
