@@ -1,6 +1,6 @@
 stages:
 - name: 'Setup NPM Private Access 2'
-  directory: '/packages/package-nested'
+  directory: '/fixtures/package-nested'
   imagene: 'ubuntu'
   command: [
     '/bin/bash',
@@ -11,7 +11,7 @@ stages:
   ]
 
 - name: 'Generate new imagene'
-  directory: '/packages/package-nested'
+  directory: '/fixtures/package-nested'
   imagene: 'docker'
   command: [
     'build',
@@ -21,7 +21,7 @@ stages:
   ]
 
 - name: 'Push the imagene'
-  directory: '/packages/package-nested'
+  directory: '/fixtures/package-nested'
   imagene: 'docker'
   command: [
     'push',
