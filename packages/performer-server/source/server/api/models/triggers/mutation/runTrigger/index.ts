@@ -15,6 +15,10 @@
     } from '~server/logic/projects';
 
     import {
+        getActiveRepository,
+    } from '~server/logic/repository';
+
+    import {
         getProvider,
     } from '~server/logic/provider';
 
@@ -77,6 +81,46 @@ const runTrigger = async (
             }
 
 
+            const trigger = await getTrigger(input.id);
+            if (!trigger) {
+                return {
+                    status: false,
+                };
+            }
+
+            const repository = await getActiveRepository(trigger.repository);
+            if (!repository) {
+                return {
+                    status: false,
+                };
+            }
+
+            const provider = await getProvider(repository.providerID);
+            if (!provider) {
+                return {
+                    status: false,
+                };
+            }
+
+            console.log({
+                trigger,
+                repository,
+                provider,
+            });
+
+            await handleTrigger(
+                {
+                    id: '52d74653c6427e61d06b6c4d46c9a10e44c268a1',
+                    added: [],
+                    modified: [],
+                    removed: [],
+                },
+                trigger,
+                trigger.repository,
+                trigger.branch,
+                provider.type,
+            );
+
             logger.log(
                 runTriggerLogs.infoSuccessPrivateUsage,
                 logLevels.info,
@@ -112,36 +156,6 @@ const runTrigger = async (
 
 
         // #region public usage
-        const trigger = await getTrigger(input.id);
-        if (!trigger) {
-            return {
-                status: false,
-            };
-        }
-
-        const lastCommit: any = {};
-        // const project = await getProject(trigger.project);
-        // if (!project) {
-        //     return {
-        //         status: false,
-        //     };
-        // }
-
-        const provider = await getProvider('');
-        if (!provider) {
-            return {
-                status: false,
-            };
-        }
-
-        await handleTrigger(
-            lastCommit,
-            trigger,
-            trigger.repository,
-            trigger.branch,
-            provider.type,
-        );
-
         logger.log(
             runTriggerLogs.infoSuccess,
             logLevels.info,

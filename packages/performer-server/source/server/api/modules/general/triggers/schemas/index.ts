@@ -17,7 +17,7 @@ export const queries = gql`
 export const mutations = gql`
     extend type Mutation {
         generateTrigger(input: InputGenerateTrigger!): ResponseTrigger!
-        runTrigger(input: InputRunTrigger!): ResponseTrigger!
+        runTrigger(input: InputRunTrigger!): Response!
         updateTrigger(input: InputGenerateTrigger!): ResponseTrigger!
         obliterateTrigger(input: InputValueString!): Response!
     }
