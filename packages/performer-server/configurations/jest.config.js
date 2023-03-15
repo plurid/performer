@@ -1,10 +1,10 @@
 module.exports = {
     rootDir: '../',
     transform: {
-        '.(ts|tsx)': 'ts-jest'
+        '^.+\\.tsx?$': 'ts-jest'
     },
     testEnvironment: 'node',
-    testRegex: '(/__specs__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
+    testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
     testPathIgnorePatterns: [
         'data',
     ],
@@ -33,5 +33,17 @@ module.exports = {
     collectCoverageFrom: [
         'source/*.{js,ts}'
     ],
-    testTimeout: 30000
+    testTimeout: 30000,
+    moduleNameMapper: {
+        "~client/(.*)": "<rootDir>/source/client/$1",
+        "~server/(.*)": "<rootDir>/source/server/$1",
+        "~kernel-assets/(.*)": "<rootDir>/source/shared/kernel/assets/$1",
+        "~kernel-components/(.*)": "<rootDir>/source/shared/kernel/components/$1",
+        "~kernel-containers/(.*)": "<rootDir>/source/shared/kernel/containers/$1",
+        "~kernel-planes/(.*)": "<rootDir>/source/shared/kernel/planes/$1",
+        "~kernel-data/(.*)": "<rootDir>/source/shared/kernel/data/$1",
+        "~kernel-services/(.*)": "<rootDir>/source/shared/kernel/services/$1",
+        "~routes/(.*)": "<rootDir>/source/shared/routes/$1",
+        "~shell/(.*)": "<rootDir>/source/shared/shell/$1"
+    },
 }

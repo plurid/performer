@@ -38,6 +38,7 @@
         "clean": "node scripts clean",
         "lint": "node scripts lint",
         "test": "node scripts test",
+        "test.file": "jest -c ./configurations/jest.config.js",
         "containerize.production": "node scripts containerize.production",
         "build.client.local": "node scripts build.client.local",
         "build.client.development": "node scripts build.client.development",
