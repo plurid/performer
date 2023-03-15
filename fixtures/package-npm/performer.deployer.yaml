@@ -1,6 +1,6 @@
 stages:
 - name: 'Generate Latest Deployment'
-  directory: '/packages/package-npm'
+  directory: '/fixtures/package-npm'
   imagene: 'ubuntu'
   command: [
     '/bin/bash',
@@ -9,7 +9,7 @@ stages:
   ]
 
 - name: 'Deploy Latest Imagene'
-  directory: '/packages/package-npm'
+  directory: '/fixtures/package-npm'
   imagene: 'kubectl'
   command: [
     'apply',

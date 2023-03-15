@@ -1,6 +1,6 @@
 stages:
 - name: 'Setup NPM Private Access 16'
-  directory: '/packages/package-npm'
+  directory: '/fixtures/package-npm'
   imagene: 'ubuntu'
   command: [
     '/bin/bash',
@@ -11,7 +11,7 @@ stages:
   ]
 
 - name: 'Generate new imagene'
-  directory: '/packages/package-npm'
+  directory: '/fixtures/package-npm'
   imagene: 'docker'
   command: [
     'build',
@@ -21,7 +21,7 @@ stages:
   ]
 
 - name: 'Push the imagene'
-  directory: '/packages/package-npm'
+  directory: '/fixtures/package-npm'
   imagene: 'docker'
   command: [
     'push',
