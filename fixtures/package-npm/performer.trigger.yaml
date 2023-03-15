@@ -6,6 +6,9 @@ stages:
     '/bin/bash',
     '.npmrc.sh',
   ]
+  environment: [
+    'REGISTRY=npm.plurid.cloud'
+  ]
   secretsEnvironment: [
     'NPM_TOKEN'
   ]
