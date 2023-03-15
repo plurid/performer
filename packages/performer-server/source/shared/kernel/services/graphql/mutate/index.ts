@@ -210,6 +210,20 @@ export const GENERATE_TRIGGER = gql`
 `;
 
 
+export const RUN_TRIGGER = gql`
+    mutation RunTrigger($input: InputRunTrigger!) {
+        runTrigger(input: $input) {
+            status
+            error {
+                type
+                path
+                message
+            }
+        }
+    }
+`;
+
+
 export const UPDATE_TRIGGER = gql`
     mutation UpdateTrigger($input: InputGenerateTrigger!) {
         updateTrigger(input: $input) {

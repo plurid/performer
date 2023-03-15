@@ -30,6 +30,9 @@
 
     import EntityView from '~kernel-components/EntityView';
 
+    import {
+        RUN_TRIGGER,
+    } from '~kernel-services/graphql/mutate';
     import client from '~kernel-services/graphql/client';
 
     import {
@@ -135,6 +138,14 @@ const TriggersView: React.FC<TriggersViewProperties> = (
         id: string,
     ) => {
         try {
+            await client.mutate({
+                mutation: RUN_TRIGGER,
+                variables: {
+                    input: {
+                        id,
+                    },
+                },
+            });
 
             return;
         } catch (error) {
