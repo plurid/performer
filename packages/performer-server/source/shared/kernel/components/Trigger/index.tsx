@@ -243,7 +243,7 @@ const Trigger: React.FC<TriggerProperties> = (
 
             <PluridInputLine
                 text={triggerID}
-                name="name"
+                name="id"
                 atChange={(event) => {
                     if (editID) {
                         return;
