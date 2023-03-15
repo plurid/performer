@@ -57,25 +57,29 @@ export interface InputStoreSecret {
 }
 
 
+export interface InputRunTrigger {
+    id: string;
+}
+
 export interface InputGenerateTrigger {
-    id?: string,
-    name: string,
-    repository: string,
-    branch: string,
-    path: string,
-    file: string,
-    project: string,
+    id?: string;
+    name: string;
+    repository: string;
+    branch: string;
+    path: string;
+    file: string;
+    project: string;
 }
 
 
 export interface InputGenerateDeployer {
-    id?: string,
-    name: string,
-    repository: string,
-    branch: string,
-    path: string,
-    file: string,
-    project: string,
+    id?: string;
+    name: string;
+    repository: string;
+    branch: string;
+    path: string;
+    file: string;
+    project: string;
 }
 
 

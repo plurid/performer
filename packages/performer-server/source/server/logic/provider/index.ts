@@ -20,6 +20,18 @@
 
 
 // #region module
+const getProvider = async (
+    id: string,
+): Promise<Provider | undefined> => {
+    const provider = await database.get(
+        'provider',
+        id,
+    );
+
+    return provider;
+}
+
+
 const registerProvider = async (
     input: InputAddProvider,
 ) => {
@@ -62,6 +74,7 @@ const deregisterProvider = async (
 
 // #region exports
 export {
+    getProvider,
     registerProvider,
     deregisterProvider,
 };

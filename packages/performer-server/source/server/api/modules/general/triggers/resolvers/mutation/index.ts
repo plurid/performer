@@ -4,6 +4,7 @@
         Context,
         InputOf,
         InputGenerateTrigger,
+        InputRunTrigger,
         InputValueString,
     } from '~server/data/interfaces';
 
@@ -22,6 +23,14 @@ export default {
         { input }: InputOf<InputGenerateTrigger>,
         context: Context,
     ) => Triggers.Mutation.generateTrigger(
+        input,
+        context,
+    ),
+    runTrigger: (
+        _: any,
+        { input }: InputOf<InputRunTrigger>,
+        context: Context,
+    ) => Triggers.Mutation.runTrigger(
         input,
         context,
     ),

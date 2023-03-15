@@ -41,6 +41,18 @@
 
 
 // #region module
+export const getTrigger = async (
+    id: string,
+): Promise<Trigger | undefined> => {
+    const trigger = await database.get(
+        'trigger',
+        id,
+    );
+
+    return trigger;
+}
+
+
 export const registerTrigger = async (
     input: InputGenerateTrigger,
 ) => {

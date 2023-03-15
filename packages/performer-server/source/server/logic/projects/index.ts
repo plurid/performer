@@ -18,6 +18,18 @@
 
 
 // #region module
+const getProject = async (
+    id: string,
+): Promise<Project | undefined> => {
+    const project = await database.get(
+        'project',
+        id,
+    );
+
+    return project;
+}
+
+
 const registerProject = async (
     name: string,
 ) => {
@@ -56,6 +68,7 @@ const deregisterProject = async (
 
 // #region exports
 export {
+    getProject,
     registerProject,
     deregisterProject,
 };
