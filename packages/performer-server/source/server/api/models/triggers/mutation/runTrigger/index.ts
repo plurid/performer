@@ -16,6 +16,7 @@
 
     import {
         getActiveRepository,
+        getLastCommitID,
     } from '~server/logic/repository';
 
     import {
@@ -102,6 +103,16 @@ const runTrigger = async (
                 };
             }
 
+            const lastCommitID = await getLastCommitID(
+                repository.name,
+                provider.type,
+            );
+            if (!lastCommitID) {
+                return {
+                    status: false,
+                };
+            }
+
             console.log({
                 trigger,
                 repository,
@@ -110,7 +121,7 @@ const runTrigger = async (
 
             await handleTrigger(
                 {
-                    id: '52d74653c6427e61d06b6c4d46c9a10e44c268a1',
+                    id: lastCommitID,
                     added: [],
                     modified: [],
                     removed: [],

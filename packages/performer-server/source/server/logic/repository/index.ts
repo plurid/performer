@@ -110,7 +110,7 @@ export const getActiveRepository = async (
 }
 
 
-export const updateRootRepository = async (
+export const getRepositoryRootPath = (
     repositoryName: string,
     type: CodeProvider,
 ) => {
@@ -121,6 +121,41 @@ export const updateRootRepository = async (
     const repositoryRootPath = path.join(
         repositoryPath,
         '/root',
+    );
+
+    return repositoryRootPath;
+}
+
+
+export const getLastCommitID = async (
+    repositoryName: string,
+    type: CodeProvider,
+) => {
+    try {
+        const gitCommandLastCommitID = `git log -1 --format=%H | tee`;
+        const repositoryRootPath = getRepositoryRootPath(
+            repositoryName,
+            type,
+        );
+
+        const lastCommitID = execSync(gitCommandLastCommitID, {
+            cwd: repositoryRootPath,
+        }).toString().trim();
+
+        return lastCommitID;
+    } catch (error) {
+        return;
+    }
+}
+
+
+export const updateRootRepository = async (
+    repositoryName: string,
+    type: CodeProvider,
+) => {
+    const repositoryRootPath = getRepositoryRootPath(
+        repositoryName,
+        type,
     );
 
     const gitCommandFetchOrigin = 'git fetch origin';
