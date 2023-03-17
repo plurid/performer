@@ -54,6 +54,7 @@
     "dependencies": {
         "@apollo/client": "^3.7.10",
         "@apollo/server": "^4.5.0",
+        "@aws-sdk/client-s3": "^3.293.0",
         "@google-cloud/storage": "^6.9.4",
         "@plurid/delog": "0.0.0-7",
         "@plurid/deon": "0.0.0-10",
@@ -73,7 +74,6 @@
         "@rollup/plugin-commonjs": "^24.0.1",
         "@rollup/plugin-node-resolve": "^15.0.1",
         "adm-zip": "^0.5.10",
-        "aws-sdk": "^2.1336.0",
         "body-parser": "^1.20.2",
         "cookie-parser": "^1.4.6",
         "cross-fetch": "^3.1.5",
