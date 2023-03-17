@@ -23,13 +23,13 @@ stages:
     '.'
   ]
 
-- name: 'Push the imagene'
-  directory: '/fixtures/package-npm'
-  imagene: 'docker'
-  command: [
-    'push',
-    'hypod.cloud/plurid/production/package-npm:$SHORT_SHA',
-  ]
+# - name: 'Push the imagene'
+#   directory: '/fixtures/package-npm'
+#   imagene: 'docker'
+#   command: [
+#     'push',
+#     'hypod.cloud/plurid/production/package-npm:$SHORT_SHA',
+#   ]
 
 # - name: 'Trigger deploy'
 #   imagene: 'deployer'
