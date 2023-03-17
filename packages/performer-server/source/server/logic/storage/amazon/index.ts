@@ -1,6 +1,6 @@
 // #region imports
     // #region libraries
-    import AWS from 'aws-sdk';
+    // import { S3Client } from '@aws-sdk/client-s3';
     // #endregion libraries
 
 
@@ -30,12 +30,12 @@ const accessKeyId = process.env.HYPOD_AWS_ACCESS_KEY_ID || '';
 const secretAccessKey = process.env.HYPOD_AWS_SECRET_ACCESS_KEY || '';
 const bucketName = process.env.HYPOD_STORAGE_BUCKET || '';
 
-const s3 = new AWS.S3({
-    apiVersion,
-    region,
-    accessKeyId,
-    secretAccessKey,
-});
+// const s3 = new S3Client({
+//     apiVersion,
+//     region,
+//     // accessKeyId,
+//     // secretAccessKey,
+// });
 
 
 const storageDownload: StorageDownload = async (
