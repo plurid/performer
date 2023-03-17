@@ -114,6 +114,7 @@ const runTrigger = async (
             }
 
             console.log({
+                lastCommitID,
                 trigger,
                 repository,
                 provider,
