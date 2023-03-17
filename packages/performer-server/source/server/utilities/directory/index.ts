@@ -60,9 +60,12 @@ export const obliterateDirectory = async (
     target: string,
 ) => {
     try {
-        await promisesFS.rmdir(target, {
-            recursive: true,
-        });
+        await promisesFS.rm(
+            target,
+            {
+                recursive: true,
+            },
+        );
     } catch (error) {
         if (logLevel <= logLevels.error) {
             console.log('[Performer Error] :: obliterateDirectory', error);

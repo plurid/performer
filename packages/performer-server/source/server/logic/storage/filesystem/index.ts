@@ -1,6 +1,6 @@
 // #region imports
     // #region libraries
-    import syncFs, {
+    import {
         promises as fs,
     } from 'fs';
 
@@ -191,13 +191,13 @@ const storageObliterateAll: StorageObliterateAll = async (
                 file,
             );
 
-            await fs.rmdir(
+            await fs.rm(
                 filepath,
                 { recursive: true },
             );
         }
 
-        // await fs.rmdir(filespath, {recursive: true});
+        // await fs.rm(filespath, {recursive: true});
 
         return true;
     } catch (error) {
