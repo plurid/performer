@@ -38,7 +38,7 @@ const workers = [
 ];
 
 
-const build = async () => {
+const buildWorkers = async () => {
     for (const worker of workers) {
         const context = await esbuild.context({
             ...common,
@@ -50,7 +50,12 @@ const build = async () => {
             outfile: `build/${worker.output}`,
         });
 
-        context.watch();
+        await context.watch();
     }
 }
-build();
+
+
+
+module.exports = {
+    buildWorkers,
+};

@@ -23,6 +23,6 @@ const build = async () => {
         },
     });
 
-    context.watch();
+    await context.watch();
 }
 build();

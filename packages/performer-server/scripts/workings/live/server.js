@@ -9,6 +9,10 @@ const {
     resolvedExternals: externals,
 } = require('../logic');
 
+const {
+    buildWorkers,
+} = require('./workers');
+
 
 
 const external = esModules.length === 0
@@ -33,6 +37,8 @@ const build = async () => {
         outdir: 'build',
     });
 
-    context.watch();
+    await context.watch();
+
+    buildWorkers();
 }
 build();

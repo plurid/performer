@@ -138,7 +138,7 @@ const generateCommandsText = () => {
         'mkdir -p build/client',
         'cp -r source/public/ build/client/',
         'touch build/client/vendor.js',
-        `node ./scripts/workings/live/client.js & node ./scripts/workings/live/server.js & deon environment ./environment/.env.local.deon nodemon build/index.js`,
+        `node ./scripts/workings/live/client.js & node ./scripts/workings/live/server.js & deon environment ./environment/.env.local.deon -- nodemon --watch 'source/**/*' build/index.js`,
     ];
 
     const containerizeProduction = [
